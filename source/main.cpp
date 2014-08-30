@@ -1,8 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     // We created our base framework
     QApplication app(argc, argv);
 
@@ -13,6 +12,9 @@ int main(int argc, char *argv[])
     w->resize(960, 600);
     w->show();
     w->setWindowTitle(QApplication::translate("toplevel", "FEMRIS"));
+
+
+
 
     return app.exec();
 }

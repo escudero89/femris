@@ -13,12 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    maindialog.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    maindialog.h
 
 FORMS    += \
-    mainwindow.ui
+    mainwindow.ui \
+    maindialog.ui
 
-OTHER_FILES += \
-    input.txt
+OTHER_FILES +=
+
+RESOURCES += \
+    tutorial.qrc
