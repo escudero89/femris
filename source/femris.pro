@@ -2,9 +2,11 @@ TEMPLATE = app
 
 QT += qml quick widgets
 
-SOURCES += main.cpp
+SOURCES += \
+    src/main.cpp
 
-RESOURCES += content/qml.qrc
+RESOURCES += \
+    qml/resources.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -12,4 +14,7 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
-OTHER_FILES +=
+OTHER_FILES += \
+    qml/main.qml \
+    qml/Style.qml \
+    qml/content/PrimaryButton.qml

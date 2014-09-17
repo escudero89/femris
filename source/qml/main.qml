@@ -1,14 +1,23 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.2
+import QtQuick.Layouts 1.1
+
+import QtQuick.Dialogs 1.2
 
 import "."
+import "content"
 
 ApplicationWindow {
     id: mainWindow
     visible: true
+
     width: 800
     height: 600
+
+    minimumWidth: 800
+    minimumHeight: 600
+
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
     menuBar: MenuBar {
@@ -35,21 +44,33 @@ ApplicationWindow {
         }
     }
 
-    Column {
-        id: column1
+    MessageDialog {
+        id: messageDialog
+        title: "May I have your attention please"
+        text: "It's so cool that you are using Qt Quick."
+        onAccepted: {
+            console.log("And of course you could only agree.")
+            Qt.quit()
+        }
+        Component.onCompleted: visible = true
+    }
 
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
+    ColumnLayout {
+
+        id: columnLayout
+        anchors.fill: parent
 
         Text {
-            text: "EPA EPA"
-            z: 1
+            text : qsTr("Femris version 0.1")
+            font.italic: true
+            font.pointSize: 6
+
+            anchors.bottom: parent.bottom
+            anchors.leftMargin: 10
+        }
+
+        Text {
+            text: qsTr("Bienvenido a FEMRIS")
             anchors.top: parent.top
             anchors.topMargin: 10
             anchors.horizontalCenter: parent.horizontalCenter
@@ -57,16 +78,10 @@ ApplicationWindow {
         }
 
         Rectangle {
-            color: Style.color.base3;
+            z : -700
+            color: Style.color.background;
 
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.top: parent.top
-            anchors.topMargin: 0
+            anchors.fill: parent
 
             ListView {
                 id: listView1
@@ -77,22 +92,19 @@ ApplicationWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                width: parent.width / 2;
+                width: 400;
+
                 height: 160
                 interactive: false
 
                 spacing: 50
 
                 delegate: Item {
-                    //Column {
-                    //  spacing: 20
-
                     PrimaryButton {
                         id: buttonId
 
                         width: listView1.width
                     }
-                    //}
                 }
 
                 model: ListModel {
