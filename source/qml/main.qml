@@ -43,7 +43,7 @@ ApplicationWindow {
             }
         }
     }
-
+/*
     MessageDialog {
         id: messageDialog
         title: "May I have your attention please"
@@ -54,71 +54,97 @@ ApplicationWindow {
         }
         Component.onCompleted: visible = true
     }
+*/
 
-    ColumnLayout {
-
-        id: columnLayout
+    // Para el fondo
+    Rectangle {
         anchors.fill: parent
+        color: Style.color.background
+        z: -1000
+    }
 
-        Text {
-            text : qsTr("Femris version 0.1")
-            font.italic: true
-            font.pointSize: 6
+    RowLayout {
 
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 10
-        }
+        id: parentLayout
 
-        Text {
-            text: qsTr("Bienvenido a FEMRIS")
+        anchors.fill: parent
+        anchors.margins: 50
+
+        ColumnLayout {
+
+            id: columnLayout
+
+            //anchors.fill: parent
+            //anchors.margins: 50
+
             anchors.top: parent.top
-            anchors.topMargin: 10
+            anchors.bottom: parent.bottom
+
+            Layout.maximumWidth: 900
             anchors.horizontalCenter: parent.horizontalCenter
-            x : parent.width / 2
-        }
 
-        Rectangle {
-            z : -700
-            color: Style.color.background;
+            spacing: 0
 
-            anchors.fill: parent
+            Rectangle {
+                z: -900
+
+                color: Style.color.complement_highlight
+                anchors.fill: parent
+            }
+
+            Rectangle {
+                id: header_main
+
+
+                height: 40
+                color: Style.color.complement
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                width: parent.width
+            }
 
             ListView {
-                id: listView1
+                id: blocksView
 
-                x: parent.width / 2
-                y: parent.height / 2
+                anchors.margins: 10
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: header_main.bottom
+                anchors.bottom: parent.bottom
 
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                width: 400;
-
-                height: 160
+                orientation: ListView.Horizontal
+                flickableDirection: Flickable.HorizontalFlick
                 interactive: false
 
-                spacing: 50
+                spacing: 6
 
                 delegate: Item {
-                    PrimaryButton {
-                        id: buttonId
 
-                        width: listView1.width
+                    width: blocksView.width / blocksModel.count - blocksView.spacing / (blocksModel.count - 1)
+
+                    ChoiceBlock {
+                        height: blocksView.height
+                        width: parent.width
                     }
                 }
 
                 model: ListModel {
+                    id: blocksModel
+
                     ListElement {
+                        header: "TUTORIAL"
                         buttonId: "buttonTutorial"
-                        buttonText: "Realizar Tutorial Introductorio"
+                        buttonText: "Iniciar"
                     }
                     ListElement {
+                        header: "NUEVO"
                         buttonId: "buttonCreateStudyCase"
-                        buttonText: "Nuevo Caso de Estudio"
+                        buttonText: "Crear"
                     }
                     ListElement {
+                        header: "ABRIR"
                         buttonId: "buttonModifyStudyCase"
-                        buttonText: "Cargar Caso de Estudio"
+                        buttonText: "Cargar"
                     }
                 }
 

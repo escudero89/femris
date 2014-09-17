@@ -5,7 +5,8 @@ import QtQuick.Controls.Styles 1.2
 import "../"
 
 Button {
-    height: 40
+
+    implicitHeight: 60
 
     style: ButtonStyle {
         background: Rectangle {
@@ -49,9 +50,10 @@ Button {
             z: 4
 
             text: qsTr(buttonText)
+            wrapMode: Text.WordWrap
 
             font.family: "Tahoma"
-            font.pointSize: parent.height / 2
+            font.pointSize: parent.height / 3
 
             color: control.hovered ? Style.color.grey_lighter : Style.color.grey_lighter
 

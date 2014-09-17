@@ -4,8 +4,6 @@ import QtQuick 2.2
 
 QtObject {
 
-    property string theme : "default"
-
     property QtObject color: QtObject{
         // Background tones (DARK)
         property color complement            :  "#002b36"
@@ -18,8 +16,8 @@ QtObject {
         property color comment               :  "#93a1a1"
 
         // Colores de background
-        property color background_highlight  :  "#eee8d5"
-        property color background            :  "#fdf6e3"
+        property color background            :  "#eee8d5"
+        property color background_highlight  :  "#fdf6e3"
 
         // Niveles de gris
         property color grey_darker  :           "#222"

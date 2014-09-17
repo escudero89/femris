@@ -4,5 +4,7 @@
         <file>main.qml</file>
         <file>Style.qml</file>
         <file>qmldir</file>
+        <file>content/ChoiceBlock.qml</file>
+        <file>resources/images/square_shadow.gif</file>
     </qresource>
 </RCC>
