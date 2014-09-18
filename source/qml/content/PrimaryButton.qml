@@ -6,27 +6,43 @@ import "../"
 
 Button {
 
-    implicitHeight: 60
+    property alias buttonLabel : buttonText.text
+
+    implicitWidth: 100
+    implicitHeight: 25
+
+    Text {
+        id: buttonText
+        z: 4
+
+        text: "text"
+
+        font.family: "Tahoma"
+        font.pixelSize: parent.height / 2
+        wrapMode: Text.WordWrap
+
+        color: Style.color.background_highlight
+
+        anchors.fill: parent
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+    }
 
     style: ButtonStyle {
         background: Rectangle {
             id: rectangle
 
-            implicitWidth: 100
-            implicitHeight: 25
-
             Rectangle {
                 z: 3
 
-                implicitHeight: parent.height
-                implicitWidth: parent.width
+                anchors.fill: parent
 
                 border.width: control.activeFocus ? 3 : 2
                 border.color: control.hovered ? Style.color.primary : Style.color.primary
 
                 radius: 0
 
-                color: Style.color.grey_darker
+                color: Style.color.complement
 
                 opacity: control.hovered? 0.3 : 0
             }
@@ -34,8 +50,7 @@ Button {
             Rectangle {
                 z: 2
 
-                implicitHeight: parent.height
-                implicitWidth: parent.width
+                anchors.fill: parent
 
                 border.width: control.activeFocus ? 3 : 2
                 border.color: control.hovered ? Style.color.primary : Style.color.primary
@@ -46,20 +61,7 @@ Button {
             }
         }
 
-        label: Text {
-            z: 4
 
-            text: qsTr(buttonText)
-            wrapMode: Text.WordWrap
-
-            font.family: "Tahoma"
-            font.pointSize: parent.height / 3
-
-            color: control.hovered ? Style.color.grey_lighter : Style.color.grey_lighter
-
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-        }
 
     }
 }

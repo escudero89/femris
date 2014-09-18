@@ -43,6 +43,13 @@ ApplicationWindow {
             }
         }
     }
+
+    statusBar: StatusBar {
+        Text {
+            text: "Femris Version 1.0"
+        }
+    }
+
 /*
     MessageDialog {
         id: messageDialog
@@ -59,7 +66,7 @@ ApplicationWindow {
     // Para el fondo
     Rectangle {
         anchors.fill: parent
-        color: Style.color.background
+        color: Style.color.complement_highlight
         z: -1000
     }
 
@@ -68,14 +75,13 @@ ApplicationWindow {
         id: parentLayout
 
         anchors.fill: parent
-        anchors.margins: 50
+
+        anchors.topMargin: parent.width / 40 ; anchors.bottomMargin: parent.width / 40
+        anchors.leftMargin: parent.width / 20 ; anchors.rightMargin: parent.width / 20
 
         ColumnLayout {
 
             id: columnLayout
-
-            //anchors.fill: parent
-            //anchors.margins: 50
 
             anchors.top: parent.top
             anchors.bottom: parent.bottom
@@ -86,69 +92,38 @@ ApplicationWindow {
             spacing: 0
 
             Rectangle {
-                z: -900
-
-                color: Style.color.complement_highlight
-                anchors.fill: parent
-            }
-
-            Rectangle {
                 id: header_main
 
+                Layout.preferredHeight: parent.height / 10
+                Layout.fillWidth: true
 
-                height: 40
-                color: Style.color.complement
+                color: Style.color.complement_highlight
                 anchors.top: parent.top
                 anchors.topMargin: 0
-                width: parent.width
+
             }
 
-            ListView {
-                id: blocksView
+            RowLayout {
 
-                anchors.margins: 10
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: header_main.bottom
-                anchors.bottom: parent.bottom
+                spacing: 10
 
-                orientation: ListView.Horizontal
-                flickableDirection: Flickable.HorizontalFlick
-                interactive: false
-
-                spacing: 6
-
-                delegate: Item {
-
-                    width: blocksView.width / blocksModel.count - blocksView.spacing / (blocksModel.count - 1)
-
-                    ChoiceBlock {
-                        height: blocksView.height
-                        width: parent.width
-                    }
+                ChoiceBlock {
+                    header: "TUTORIAL"
+                    buttonLabel: "Iniciar"
                 }
 
-                model: ListModel {
-                    id: blocksModel
+                ChoiceBlock {
+                    header: "NUEVO"
+                    buttonLabel: "Crear"
+                }
 
-                    ListElement {
-                        header: "TUTORIAL"
-                        buttonId: "buttonTutorial"
-                        buttonText: "Iniciar"
-                    }
-                    ListElement {
-                        header: "NUEVO"
-                        buttonId: "buttonCreateStudyCase"
-                        buttonText: "Crear"
-                    }
-                    ListElement {
-                        header: "ABRIR"
-                        buttonId: "buttonModifyStudyCase"
-                        buttonText: "Cargar"
-                    }
+                ChoiceBlock {
+                    header: "ABRIR"
+                    buttonLabel: "Cargar"
                 }
 
             }
+
         }
     }
 }

@@ -6,6 +6,9 @@ import "../"
 
 ColumnLayout {
 
+    property alias buttonLabel : primaryButton.buttonLabel
+    property alias header : headerText.text
+
     implicitWidth: 200
     implicitHeight: 400
     spacing: 0
@@ -13,20 +16,21 @@ ColumnLayout {
     Rectangle {
         id: rectangle1
 
-        Layout.preferredHeight: 40
         Layout.fillWidth: true
+        Layout.preferredHeight: width / 5
 
         color: Style.color.info
 
         Text {
+            id: headerText
             text: qsTr(header)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
-            font.pointSize: parent.height / 3
+            font.pixelSize: rectangle1.height / 2
             font.bold: true
 
-            color: Style.color.grey_lighter
+            color: Style.color.background_highlight
         }
 
     }
@@ -36,32 +40,46 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        color: Style.color.background_highlight
+        color: Style.color.background
 
         ColumnLayout {
             id: columnLayout1
             anchors.fill: parent
             anchors.margins: 20
 
-            spacing: 25
+            spacing: 15
 
-            Text {
-                text: qsTr("The source of the image is specified as a URL using the source property. Images can be supplied in any of the standard image formats supported by Qt, including bitmap formats such as PNG and JPEG, and vector graphics formats such as SVG. If you need to display animated images, use the AnimatedImage element.")
-                //anchors.top: image_insider.bottom
-                //anchors.topMargin: 20
+            Image {
+                Layout.preferredHeight: width
 
                 Layout.fillWidth: true
+                Layout.maximumWidth: parent.width / 1.5
 
-                wrapMode: Text.WordWrap
+                Layout.alignment: Qt.AlignCenter
+
+                source: "qrc:/resources/images/square_shadow.gif"
+            }
+
+            TextArea {
+                text: qsTr("The source of the image is specified as a URL using the source property. Images can be supplied in any of the standard image formats supported by Qt, including bitmap formats such as PNG and JPEG, and vector graphics formats such as SVG. If you need to display animated images, use the AnimatedImage element.")
+
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                backgroundVisible: false
+                frameVisible: false
             }
 
             PrimaryButton {
+                id: primaryButton
+
                 anchors.bottomMargin: 0
                 anchors.bottom: parent.bottom
 
                 Layout.fillWidth: true
+                Layout.preferredHeight: parent.height / 11
 
-                height: 60
+                buttonLabel: buttonLabel
             }
         }
     }
