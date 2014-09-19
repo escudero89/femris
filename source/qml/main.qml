@@ -89,13 +89,13 @@ ApplicationWindow {
 
             id: pageLoader
             onLoaded: {
-                console.log(pageLoader.item.peroqueboludo)
+//                console.log(pageLoader.item.peroqueboludo)
             }
         }
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            pageLoader.setSource("screens/Initial.qml")
+            pageLoader.setSource("test.qml")
         }
 
 /*
