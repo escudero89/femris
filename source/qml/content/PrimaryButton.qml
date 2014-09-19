@@ -13,7 +13,6 @@ Button {
 
     Text {
         id: buttonText
-        z: 4
 
         text: "text"
 
@@ -33,32 +32,25 @@ Button {
             id: rectangle
 
             Rectangle {
-                z: 3
-
                 anchors.fill: parent
 
                 border.width: control.activeFocus ? 3 : 2
                 border.color: control.hovered ? Style.color.primary : Style.color.primary
-
-                radius: 0
-
-                color: Style.color.complement
-
-                opacity: control.hovered? 0.3 : 0
-            }
-
-            Rectangle {
-                z: 2
-
-                anchors.fill: parent
-
-                border.width: control.activeFocus ? 3 : 2
-                border.color: control.hovered ? Style.color.primary : Style.color.primary
-
-                radius: 0
 
                 color: Style.color.primary
             }
+
+            Rectangle {
+                anchors.fill: parent
+
+                border.width: control.activeFocus ? 3 : 2
+                border.color: control.hovered ? Style.color.primary : Style.color.primary
+
+                color: Style.color.complement
+
+                opacity: control.hovered ? 0.3 : 0
+            }
+
         }
 
 

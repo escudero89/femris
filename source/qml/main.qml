@@ -7,6 +7,7 @@ import QtQuick.Dialogs 1.2
 
 import "."
 import "content"
+import "screens"
 
 ApplicationWindow {
     id: mainWindow
@@ -46,6 +47,7 @@ ApplicationWindow {
 
     statusBar: StatusBar {
         Text {
+            objectName: "TextBar"
             text: "Femris Version 1.0"
         }
     }
@@ -67,63 +69,44 @@ ApplicationWindow {
     Rectangle {
         anchors.fill: parent
         color: Style.color.complement_highlight
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         z: -1000
     }
 
-    RowLayout {
+    function doSomething () {
+        console.log("does something")
+    }
 
-        id: parentLayout
+    Item  {
 
         anchors.fill: parent
 
-        anchors.topMargin: parent.width / 40 ; anchors.bottomMargin: parent.width / 40
-        anchors.leftMargin: parent.width / 20 ; anchors.rightMargin: parent.width / 20
+        Loader  {
+            anchors.fill: parent
 
-        ColumnLayout {
-
-            id: columnLayout
-
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-
-            Layout.maximumWidth: 900
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            spacing: 0
-
-            Rectangle {
-                id: header_main
-
-                Layout.preferredHeight: parent.height / 10
-                Layout.fillWidth: true
-
-                color: Style.color.complement_highlight
-                anchors.top: parent.top
-                anchors.topMargin: 0
-
+            id: pageLoader
+            onLoaded: {
+                console.log(pageLoader.item.peroqueboludo)
             }
-
-            RowLayout {
-
-                spacing: 10
-
-                ChoiceBlock {
-                    header: "TUTORIAL"
-                    buttonLabel: "Iniciar"
-                }
-
-                ChoiceBlock {
-                    header: "NUEVO"
-                    buttonLabel: "Crear"
-                }
-
-                ChoiceBlock {
-                    header: "ABRIR"
-                    buttonLabel: "Cargar"
-                }
-
-            }
-
         }
+
+        // Esto activara el onLoaded cuando se complete
+        Component.onCompleted: {
+            pageLoader.setSource("screens/Initial.qml")
+        }
+
+/*
+        MouseArea  {
+            anchors.fill: parent
+            onClicked: pageLoader.source = "screens/Initial.qml"
+        }*/
+/*
+        Connections {
+            target : pageLoader.item
+            onMessage : console.log(msg)
+        }*/
     }
 }

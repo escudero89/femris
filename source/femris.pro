@@ -17,4 +17,5 @@ include(deployment.pri)
 OTHER_FILES += \
     qml/main.qml \
     qml/Style.qml \
-    qml/content/PrimaryButton.qml
+    qml/content/PrimaryButton.qml \
+    qml/screens/Initial.qml

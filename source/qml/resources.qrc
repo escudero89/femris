@@ -6,5 +6,7 @@
         <file>qmldir</file>
         <file>content/ChoiceBlock.qml</file>
         <file>resources/images/square_shadow.gif</file>
+        <file>screens/Initial.qml</file>
+        <file>test.qml</file>
     </qresource>
 </RCC>
