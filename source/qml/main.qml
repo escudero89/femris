@@ -95,7 +95,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            pageLoader.setSource("test.qml")
+            pageLoader.setSource("screens/BaseFrame.qml")
         }
 
 /*

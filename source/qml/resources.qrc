@@ -8,5 +8,19 @@
         <file>resources/images/square_shadow.gif</file>
         <file>screens/Initial.qml</file>
         <file>test.qml</file>
+        <file>screens/BaseFrame.qml</file>
+        <file>docs/index.html</file>
+        <file>content/Index.qml</file>
+        <file>content/AndroidDelegate.qml</file>
+        <file>resources/images/button_default.png</file>
+        <file>resources/images/button_pressed.png</file>
+        <file>resources/images/navigation_next_item.png</file>
+        <file>resources/images/navigation_previous_item.png</file>
+        <file>resources/images/tab_selected.png</file>
+        <file>resources/images/tabs_standard.png</file>
+        <file>resources/images/textinput.png</file>
+        <file>resources/images/toolbar.png</file>
+        <file>docs/index.xml</file>
+        <file>content/StackIndex.qml</file>
     </qresource>
 </RCC>

@@ -18,4 +18,5 @@ OTHER_FILES += \
     qml/main.qml \
     qml/Style.qml \
     qml/content/PrimaryButton.qml \
-    qml/screens/Initial.qml
+    qml/screens/Initial.qml \
+    qml/content/AndroidDelegate.qml

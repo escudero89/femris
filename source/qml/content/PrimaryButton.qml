@@ -35,7 +35,7 @@ Button {
                 anchors.fill: parent
 
                 border.width: control.activeFocus ? 3 : 2
-                border.color: control.hovered ? Style.color.primary : Style.color.primary
+                border.color: Style.color.primary
 
                 color: Style.color.primary
             }
@@ -44,7 +44,7 @@ Button {
                 anchors.fill: parent
 
                 border.width: control.activeFocus ? 3 : 2
-                border.color: control.hovered ? Style.color.primary : Style.color.primary
+                border.color: Style.color.primary
 
                 color: Style.color.complement
 

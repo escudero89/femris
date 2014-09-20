@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<body>
+/******************************************************************************/
+
+<header>
+<item title="My Item" page="myitem" />
+<item title="My Second Item" source="child1" />
+</header>
+
+<child1>
+<item title="My Child Item" source="child2" />
+<item title="My Child Second Item" page="mychild" />
+</child1>
+
+<child2>
+<item title="My GrandChild Item" page="mychild" />
+</child2>
+
+
+/******************************************************************************/
+</body>
