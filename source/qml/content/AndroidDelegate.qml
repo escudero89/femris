@@ -47,7 +47,7 @@ Item {
     implicitHeight: 22
 
     property alias text: textItem.text
-    property alias iconVisible: iconItem.visible
+    property bool hasChild: false
 
     signal clicked
 
@@ -55,7 +55,7 @@ Item {
         id: indexSelector
 
         anchors.fill: parent
-        color: Style.color.primary
+        color: (hasChild) ? Style.color.primary : Style.color.success
         opacity: 0
 
         MouseArea {
@@ -78,7 +78,7 @@ Item {
         id: textItem
 
         color: Style.color.content_emphasized
-        font.pixelSize: root.height / 2
+        font.pixelSize: root.height * .6
         text: modelData
 
         anchors.verticalCenter: parent.verticalCenter
@@ -104,6 +104,8 @@ Item {
 
         height: parent.height
         width: height
+
+        visible: (hasChild) ? true : false
 
         source: "qrc:/resources/images/navigation_next_item.png"
     }

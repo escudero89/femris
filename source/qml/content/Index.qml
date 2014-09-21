@@ -11,6 +11,9 @@ ColumnLayout {
 
     id: indexLayout
 
+    // Recarga el loader central usando el StackView
+    signal loader(string url)
+
     // Relleno de fondo
     Rectangle {
         color: Style.color.background
@@ -54,7 +57,11 @@ ColumnLayout {
                 id: backmouse
                 anchors.fill: parent
                 anchors.margins: -10
-                onClicked: stackView.pop()
+
+                onClicked: {
+                    // Le avisamos a StackView que deberia volver
+                    stackView.makePop()
+                }
             }
         }
 

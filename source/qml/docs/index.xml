@@ -3,17 +3,17 @@
 /******************************************************************************/
 
 <header>
-<item title="My Item" page="myitem" />
+<item title="My Item" page="http://www.google.com" />
 <item title="My Second Item" source="child1" />
 </header>
 
 <child1>
 <item title="My Child Item" source="child2" />
-<item title="My Child Second Item" page="mychild" />
+<item title="My Child Second Item" page="http://www.reddit.com" />
 </child1>
 
 <child2>
-<item title="My GrandChild Item" page="mychild" />
+<item title="My GrandChild Item" page="qrc:/docs/index.xml" />
 </child2>
 
 

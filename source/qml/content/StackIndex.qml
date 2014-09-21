@@ -13,6 +13,9 @@ StackView {
     Layout.fillWidth: true
     Layout.fillHeight: true
 
+    // Para volver hacia atras con la navegacion
+    signal makePop()
+
     // Donde vamos a estar parados en el Index
     property alias indexQuery : xmlModel.query
 
@@ -34,25 +37,33 @@ StackView {
             model: xmlModel
             anchors.fill: parent
             delegate: AndroidDelegate {
+                // Mi seleccion actual
+                property variant myCurrent : xmlModel.get(index)
 
                 property variant mySource: {
                     // Si existe source, le cargamos el nuevo
-                    var source = xmlModel.get(index).source;
+                    var source = myCurrent.source;
                     return (source) ? "/body/" + source + "/item" : false;
                 }
 
-                height: indexLayout.height * 0.05
+                height: indexLayout.height * 0.04
                 text: title
-                iconVisible: source ? true : false
+                hasChild: (source) ? true : false
 
                 onClicked: {
+                    // Si tiene source es porque tiene hijos, sino es porque apunta a una page
                     if (mySource) {
                         stackView.push({
                                            "item": Qt.resolvedUrl("qrc:/content/StackIndex.qml"),
                                            "properties": {
+                                               "id" : "stackChild",
                                                "indexQuery" : mySource
                                            }
                                        })
+
+                    } else {
+                        // Informamos a IndexLayout que cargue la nueva pagina
+                        indexLayout.loader(myCurrent.page)
                     }
                 }
             }
@@ -69,5 +80,12 @@ StackView {
         XmlRole { name: "title"; query: "@title/string()" }
         XmlRole { name: "source"; query: "@source/string()" }
         XmlRole { name: "page"; query: "@page/string()" }
+    }
+
+    onMakePop : {
+        // Hacemos un pop en el hijo. Si eso no funciona, el pop es en el padre
+        if (!currentItem.pop()) {
+            pop();
+        }
     }
 }

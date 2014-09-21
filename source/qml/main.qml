@@ -47,8 +47,19 @@ ApplicationWindow {
 
     statusBar: StatusBar {
         Text {
-            objectName: "TextBar"
-            text: "Femris Version 1.0"
+            id: globalInfoBox
+            horizontalAlignment: Text.AlignRight
+
+            property string baseValue : qsTr("InfoBox")
+            text: baseValue
+
+            function setInfoBox (msg, reset) {
+                if (reset) {
+                    text = baseValue
+                } else {
+                    text = msg
+                }
+            }
         }
     }
 

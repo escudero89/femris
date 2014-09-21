@@ -21,37 +21,50 @@ RowLayout {
         state: "NORMAL"
 
         Index {
+            id: indexContenido
+
             anchors.fill: parent
+            onLoader : {
+                currentWebView.url = url
+            }
         }
 
         states: [
             State {
                 name: "NORMAL"
-                PropertyChanges { target: indiceContenido; Layout.preferredWidth: rowParent.width * .3}
+                PropertyChanges { target: indiceContenido; Layout.preferredWidth: rowParent.width * .3 - ocultarIndice.width}
             },
             State {
                 name: "OCULTO"
-                PropertyChanges { target: indiceContenido; Layout.preferredWidth: rowParent.width * .03}
+                PropertyChanges { target: indiceContenido; Layout.preferredWidth: 0}
             }
         ]
-/*
+
+    }
+
+    Rectangle {
+        id: ocultarIndice
+
+        Layout.fillHeight: true
+        width: 10
+
+        color: Style.color.complement_highlight
+
         MouseArea {
             anchors.fill: parent
-            onClicked : {
-                // La primera vez no esta activado, luego si
-                indiceContenidoBehavior.enabled = true
+            hoverEnabled: true
 
-                if (indiceContenido.state == "NORMAL")
+            onContainsMouseChanged: {
+                ocultarIndice.color = (containsMouse) ? Style.color.complement : Style.color.complement_highlight
+                globalInfoBox.setInfoBox((indiceContenido.state === "NORMAL") ? qsTr("Ocultar Índice") : qsTr("Mostrar Índice"), !containsMouse)
+            }
+
+            onClicked : {
+                if (indiceContenido.state === "NORMAL")
                     indiceContenido.state = "OCULTO"
                 else
                     indiceContenido.state = "NORMAL"
             }
-        }
-*/
-        Behavior on Layout.preferredWidth {
-            id: indiceContenidoBehavior
-            enabled: false
-            NumberAnimation { duration: 100 }
         }
     }
 
@@ -61,6 +74,7 @@ RowLayout {
         spacing: 0
 
         Rectangle {
+            id: mainContentRectangle
             color: "blue"
             Layout.fillHeight: true
             Layout.preferredWidth: parent.width * .55
@@ -70,6 +84,7 @@ RowLayout {
                 height: parent.height
 
                 WebView {
+                    id: currentWebView
                     //url:  "file:///media/Cristian/Dropbox/My Campaigns D&D/El Legado/El Legado - shared/web/monstruos.html"
                     url: "qrc:/docs/index.html"
                     width: parent.width
@@ -82,7 +97,12 @@ RowLayout {
         Rectangle {
             color: Style.color.comment
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width * .45
+            Layout.preferredWidth: parent.width - mainContentRectangle.width
+
+
+            Text {
+                text: currentWebView.loadProgress
+            }
         }
     }
 
