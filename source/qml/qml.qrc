@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qmldir</file>
+        <file>content/AndroidDelegate.qml</file>
+        <file>content/ChoiceBlock.qml</file>
+        <file>content/Index.qml</file>
+        <file>content/PrimaryButton.qml</file>
+        <file>content/StackIndex.qml</file>
+        <file>content/TopMenuBar.qml</file>
+        <file>screens/BaseFrame.qml</file>
+        <file>screens/Initial.qml</file>
+        <file>main.qml</file>
+        <file>Style.qml</file>
+        <file>test.qml</file>
+    </qresource>
+</RCC>

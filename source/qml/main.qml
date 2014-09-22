@@ -21,29 +21,7 @@ ApplicationWindow {
 
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
-    menuBar: MenuBar {
-        Menu {
-            title: qsTr("Archivo")
-            MenuItem {
-                text: qsTr("Exit")
-                onTriggered: Qt.quit();
-            }
-        }
-        Menu {
-            title: qsTr("Edición")
-            MenuItem {
-                text: qsTr("Preferencias")
-                onTriggered: Qt.quit();
-            }
-        }
-        Menu {
-            title: qsTr("Ayuda")
-            MenuItem {
-                text: qsTr("Acerca de...")
-                onTriggered: Qt.quit();
-            }
-        }
-    }
+    menuBar: TopMenuBar {}
 
     statusBar: StatusBar {
         Text {
@@ -63,7 +41,6 @@ ApplicationWindow {
         }
     }
 
-/*
     MessageDialog {
         id: messageDialog
         title: "May I have your attention please"
@@ -72,9 +49,9 @@ ApplicationWindow {
             console.log("And of course you could only agree.")
             Qt.quit()
         }
-        Component.onCompleted: visible = true
+
+        visible: false
     }
-*/
 
     // Para el fondo
     Rectangle {
@@ -95,29 +72,60 @@ ApplicationWindow {
 
         anchors.fill: parent
 
+        Rectangle {
+            anchors.fill: parent
+            color: "transparent"
+
+            AnimatedImage {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                source: "qrc:/resources/images/loader.gif"
+
+                height: parent.height / 5
+                width: height
+                opacity: 0.8
+            }
+
+        }
+
         Loader  {
             anchors.fill: parent
 
-            id: pageLoader
+            id: globalLoader
+
+            // Esperamos a que se cargen los hijos antes de cargar el resto
+            asynchronous: true
+            visible: false
+
             onLoaded: {
-//                console.log(pageLoader.item.peroqueboludo)
+                visible = true;
+                globalInfoBox.setInfoBox(null, true);
+                console.debug("Loaded: " + globalLoader.source)
             }
+
         }
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            pageLoader.setSource("screens/BaseFrame.qml")
+            globalLoader.setSource("screens/BaseFrame.qml");
         }
 
-/*
-        MouseArea  {
-            anchors.fill: parent
-            onClicked: pageLoader.source = "screens/Initial.qml"
-        }*/
-/*
-        Connections {
-            target : pageLoader.item
-            onMessage : console.log(msg)
-        }*/
+    }
+
+    // Esta funcion contra el cambio entre secciones
+    function switchSection(section) {
+        var redirection = null;
+        switch (section) {
+            case "tutorial" :
+                redirection = "BaseFrame"
+                break;
+            default :
+                redirection = "Initial"
+                break;
+        }
+
+        globalInfoBox.setInfoBox("Cargando...");
+        globalLoader.visible = false;
+        globalLoader.setSource("screens/" + redirection + ".qml");
     }
 }

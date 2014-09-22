@@ -12,12 +12,10 @@ RowLayout {
 
     id: parentLayout
 
-    signal peroqueboludo (string msg)
+    anchors.fill: globalLoader
 
-    anchors.fill: parent
-
-    anchors.topMargin: parent.width / 40 ; anchors.bottomMargin: parent.width / 40
-    anchors.leftMargin: parent.width / 20 ; anchors.rightMargin: parent.width / 20
+    anchors.topMargin: globalLoader.width / 40 ; anchors.bottomMargin: globalLoader.width / 40
+    anchors.leftMargin: globalLoader.width / 20 ; anchors.rightMargin: globalLoader.width / 20
 
     ColumnLayout {
 
@@ -36,18 +34,24 @@ RowLayout {
             spacing: 10
 
             ChoiceBlock {
-                header: "TUTORIAL"
-                buttonLabel: "Iniciar"
+                header.text: "TUTORIAL"
+
+                button.buttonLabel: "Iniciar"
+                button.onClicked : mainWindow.switchSection("tutorial")
             }
 
             ChoiceBlock {
-                header: "NUEVO"
-                buttonLabel: "Crear"
+                header.text: "NUEVO"
+
+                button.buttonLabel: "Crear"
+                button.onClicked : mainWindow.switchSection("tutorial")
             }
 
             ChoiceBlock {
-                header: "ABRIR"
-                buttonLabel: "Cargar"
+                header.text: "ABRIR"
+
+                button.buttonLabel: "Cargar"
+                button.onClicked : mainWindow.switchSection("tutorial")
             }
 
         }

@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>docs/css/bootstrap.min.css</file>
+        <file>docs/js/bootstrap.min.js</file>
+        <file>docs/fonts/glyphicons-halflings-regular.eot</file>
+        <file>docs/fonts/glyphicons-halflings-regular.svg</file>
+        <file>docs/fonts/glyphicons-halflings-regular.ttf</file>
+        <file>docs/fonts/glyphicons-halflings-regular.woff</file>
+        <file>docs/js/jquery-1.11.1.min.js</file>
+        <file>docs/css/bootstrap-theme.min.css</file>
+        <file>docs/index.html</file>
+        <file>docs/index.xml</file>
+    </qresource>
+</RCC>

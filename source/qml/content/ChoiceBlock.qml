@@ -6,11 +6,8 @@ import "../"
 
 ColumnLayout {
 
-    id: pageLoader
-    objectName: "testData"
-
-    property alias buttonLabel : primaryButton.buttonLabel
-    property alias header : headerText.text
+    property alias header : headerText
+    property alias button : primaryButton
 
     implicitWidth: 200
     implicitHeight: 400
@@ -76,20 +73,11 @@ ColumnLayout {
             PrimaryButton {
                 id: primaryButton
 
-                signal message(string msg)
-
                 anchors.bottomMargin: 0
                 anchors.bottom: parent.bottom
 
                 Layout.fillWidth: true
                 Layout.preferredHeight: parent.height / 11
-
-                buttonLabel: buttonLabel
-
-                onClicked : {
-                    console.log("yeah, you click me")
-                    primaryButton.message("oh yeah!")
-                }
             }
         }
     }

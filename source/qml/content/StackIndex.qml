@@ -84,8 +84,10 @@ StackView {
 
     onMakePop : {
         // Hacemos un pop en el hijo. Si eso no funciona, el pop es en el padre
-        if (!currentItem.pop()) {
-            pop();
+        if (depth > 1) {
+            if (!currentItem.pop()) {
+                pop();
+            }
         }
     }
 }

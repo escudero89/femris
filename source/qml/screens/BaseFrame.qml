@@ -85,11 +85,11 @@ RowLayout {
 
                 WebView {
                     id: currentWebView
-                    //url:  "file:///media/Cristian/Dropbox/My Campaigns D&D/El Legado/El Legado - shared/web/monstruos.html"
                     url: "qrc:/docs/index.html"
                     width: parent.width
                     height: parent.height
                     smooth: false
+
                 }
             }
         }
@@ -98,7 +98,6 @@ RowLayout {
             color: Style.color.comment
             Layout.fillHeight: true
             Layout.preferredWidth: parent.width - mainContentRectangle.width
-
 
             Text {
                 text: currentWebView.loadProgress

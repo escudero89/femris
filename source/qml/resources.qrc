@@ -1,17 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>content/PrimaryButton.qml</file>
-        <file>main.qml</file>
-        <file>Style.qml</file>
-        <file>qmldir</file>
-        <file>content/ChoiceBlock.qml</file>
         <file>resources/images/square_shadow.gif</file>
-        <file>screens/Initial.qml</file>
-        <file>test.qml</file>
-        <file>screens/BaseFrame.qml</file>
-        <file>docs/index.html</file>
-        <file>content/Index.qml</file>
-        <file>content/AndroidDelegate.qml</file>
         <file>resources/images/button_default.png</file>
         <file>resources/images/button_pressed.png</file>
         <file>resources/images/navigation_next_item.png</file>
@@ -20,7 +9,7 @@
         <file>resources/images/tabs_standard.png</file>
         <file>resources/images/textinput.png</file>
         <file>resources/images/toolbar.png</file>
-        <file>docs/index.xml</file>
-        <file>content/StackIndex.qml</file>
+        <file>resources/images/loader.gif</file>
+        <file>resources/images/femris_logo.png</file>
     </qresource>
 </RCC>
