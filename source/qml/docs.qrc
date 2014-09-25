@@ -10,5 +10,6 @@
         <file>docs/css/bootstrap-theme.min.css</file>
         <file>docs/index.html</file>
         <file>docs/index.xml</file>
+        <file>docs/js/fem.js</file>
     </qresource>
 </RCC>
