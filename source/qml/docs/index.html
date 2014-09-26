@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>FEMRIS</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +32,7 @@ MathJax.Hub.Config({
 });
 
 </script>
-    <script type="text/javascript" src="js/MathJax.js"></script>
+<!--    <script type="text/javascript" src="js/MathJax.js"></script> -->
 
 
 <style>
@@ -49,20 +49,33 @@ background-color: #f3f3f3;
                 <div id="draw-shapes" style="background-color: #F8f8f8">
                     <div class="two-container w100p" style="height: 100%;"></div>
                 </div>
+
+                <div version="1.1" id="draw-shapes-dummy" class="hidden">
+                    <g></g>
+                </div>
             </div>
+
             <div class="col-sm-12 col-md-6">
+                <div id="draw-matrix" style="background-color: #f8f8f8">
+                    <div class="two-container w100p" style="height: 100%;"></div>
+                </div>
+
+                <svg version="1.1" id="draw-matrix-dummy" class="hidden">
+                    <g></g>
+                </svg>
+            </div>
+<!--
+            <div id="right-side" class="col-sm-12 col-md-6">
+                <canvas id="right-side-draw" style="background-color:#f5f5f5"></canvas>
+
                 <h1>Hello, world!</h1>
                 <input class="btn btn-info" value="Ehm?"></input>
 
                 <div class="box w100p" id="box" style="visibility:hidden">
                     <div id="MathOutput" class="output">$${}$$</div>
                 </div>
-
             </div>
-            
-
-            <button id="zoom-in" class="btn btn-default"><span class="glyphicon glyphicon-zoom-in"></span></button>
-            <button id="zoom-out" class="btn btn-default"><span class="glyphicon glyphicon-zoom-out"></span></button>
+ -->
 
             <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
 
@@ -75,13 +88,15 @@ background-color: #f3f3f3;
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/two.min.js"></script>
+
+    <script src="js/fem-draw.js"></script>
+    <script src="js/fem-matrix.js"></script>
     <script src="js/fem.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
             $("[data-toggle=popover]").popover();
         });
-
     </script>
 </body>
 </html>

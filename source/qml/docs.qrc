@@ -11,5 +11,9 @@
         <file>docs/index.html</file>
         <file>docs/index.xml</file>
         <file>docs/js/fem.js</file>
+        <file>docs/js/fem-draw.js</file>
+        <file>docs/js/fem-logic.js</file>
+        <file>docs/js/fem-matrix.js</file>
+        <file>docs/js/two.min.js</file>
     </qresource>
 </RCC>

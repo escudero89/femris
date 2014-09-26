@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets
+QT += qml quick widgets webkit webkit-private
 
 SOURCES += \
     src/main.cpp

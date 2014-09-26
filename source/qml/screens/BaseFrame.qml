@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 
 import QtWebKit 3.0
+import QtWebKit.experimental 1.0
 
 import "../docs"
 import "../content"
@@ -77,7 +78,7 @@ RowLayout {
             id: mainContentRectangle
             color: "blue"
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width * .55
+            Layout.preferredWidth: parent.width //* .55
 
             Flickable {
                 width: parent.width
@@ -89,6 +90,9 @@ RowLayout {
                     width: parent.width
                     height: parent.height
                     smooth: false
+
+                    experimental.preferences.webGLEnabled: true
+                    experimental.preferences.developerExtrasEnabled: true
 
                 }
             }
