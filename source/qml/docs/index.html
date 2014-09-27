@@ -94,9 +94,29 @@ background-color: #f3f3f3;
     <script src="js/fem-matrix.js"></script>
     <script src="js/fem.js"></script>
 
+    <script src="js/third-party/svg-pan-zoom.min.js"></script>
+
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("[data-toggle=popover]").popover();
+
+            var panZoomTiger = svgPanZoom('#draw-matrix svg', {
+                panEnabled: true,
+                controlIconsEnabled: false,
+                zoomEnabled: true,
+                dblClickZoomEnabled: true,
+                zoomScaleSensitivity: 0.2,
+                minZoom: 0.8,
+                maxZoom: 10,
+                fit: false,
+                center: false,
+                refreshRate: 'auto',
+                beforeZoom: function(){},
+                onZoom: function(){},
+                beforePan: function(){},
+                onPan: function(){}
+          });
         });
     </script>
 </body>

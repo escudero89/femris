@@ -16,5 +16,6 @@
         <file>docs/js/fem-matrix.js</file>
         <file>docs/js/two.min.js</file>
         <file>docs/js/femris-utils.js</file>
+        <file>docs/js/third-party/svg-pan-zoom.min.js</file>
     </qresource>
 </RCC>

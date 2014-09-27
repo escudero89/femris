@@ -1,7 +1,7 @@
 // MATRIX >>>>>>>>>
 
 var G_COLOR_DEFAULT = "#f3f3f3";
-var G_COLOR_EMPTY = "#c3c3c3";
+var G_COLOR_EMPTY = "#737373";
 
 // We set the SVG matrix as a global variable, and also the dummy (efficiency)
 var $G_DRAW_MATRIX = $("#draw-matrix");
@@ -56,13 +56,13 @@ function getNodeConnections(xnode, ielem) {
  * @param {bool} isMatrix - Indicates if it's a matrix or not
  * @return {Two.Cell} - The element cell
  */
-function coloriseCell(twoCell, ielem, valueOf, isMatrix) {
+function coloriseCell(twoCell, ielem, valueOf) {
 
     var isCellDifferentFromZero = false;
     var k;
 
     // Only if it's a matrix we are going to colorise the cells
-    for ( k = 0; k < ielem.length && isMatrix ; k++ ) {
+    for ( k = 0; k < ielem.length && twoCell.isMatrix ; k++ ) {
         if ($.inArray(valueOf.row, ielem[k]) >= 0) {
             if ($.inArray(valueOf.col, ielem[k]) >= 0) {
                 isCellDifferentFromZero = true;
@@ -71,7 +71,7 @@ function coloriseCell(twoCell, ielem, valueOf, isMatrix) {
         }
     }
 
-    if (isCellDifferentFromZero || !isMatrix) {
+    if (isCellDifferentFromZero || !twoCell.isMatrix) {
         twoCell.fill_original = G_COLOR_DEFAULT;
         twoCell.stroke_original = "#b3b3b3";
     } else {
@@ -98,17 +98,18 @@ function coloriseCell(twoCell, ielem, valueOf, isMatrix) {
 function drawCell(xnode, ielem, cellData, valueOf, isMatrix) {
 
     var twoCell = G_TWO_MATRIX.makeRectangle(
-        cellData.iniPosX + cellData.sideCell * valueOf.col,
-        cellData.iniPosY + cellData.sideCell * valueOf.row,
+        cellData.iniPosX + cellData.sideCell * ( valueOf.col - 1),
+        cellData.iniPosY + cellData.sideCell * ( valueOf.row - 1),
         cellData.sideCell,
         cellData.sideCell
     );
 
-    twoCell.id_cell = valueOf.col + xnode.length * valueOf.row;
+    twoCell.id_cell = valueOf.col + xnode.length * ( valueOf.row - 1);
     twoCell.id_row = valueOf.row;
     twoCell.id_col = valueOf.col;
+    twoCell.isMatrix = isMatrix;
 
-    coloriseCell(twoCell, ielem, valueOf, isMatrix);
+    coloriseCell(twoCell, ielem, valueOf);
 
     return twoCell;
 }
@@ -124,8 +125,6 @@ function drawCell(xnode, ielem, cellData, valueOf, isMatrix) {
  */
 function drawMatrix(xnode, ielem, cellData) {
 
-    var i, j;
-
     var groupMatrix = new Two.Group();
 
     var localParamsTextSVG = {
@@ -140,11 +139,8 @@ function drawMatrix(xnode, ielem, cellData) {
     };
 
     // We draw the matrix as a collection of rectangles
-    for ( i = 0 ; i < xnode.length ; i++ ) {
-        for ( j = 0 ; j < xnode.length ; j++ ) {
-            valueOf.col = j;
-            valueOf.row = i;
-
+    for ( valueOf.row = 1 ; valueOf.row <= xnode.length ; valueOf.row++ ) {
+        for ( valueOf.col = 1 ; valueOf.col <= xnode.length ; valueOf.col++ ) {
             groupMatrix.add(drawCell(xnode, ielem, cellData, valueOf, true));
         }
     }
@@ -181,7 +177,7 @@ function drawVector(xnode, ielem, cellData, sideVector) {
     };
 
     // We draw the matrix as a collection of rectangles
-    for ( i = 0 ; i < xnode.length ; i++ ) {
+    for ( i = 1 ; i <= xnode.length ; i++ ) {
         // It depends if we want a vertical or an horizontal vector
         if (sideVector === 'vertical') {
             valueOf.row = i;
@@ -197,21 +193,23 @@ function drawVector(xnode, ielem, cellData, sideVector) {
 }
 
 function setMatrixDrawing(xnode, ielem) {
+console.log(ielem);
+    sideCell = G_MATRIX_WIDTH * 0.9 / ( xnode.length + 3 );
 
     var cellDataMatrix = {
         'iniPosX' : G_MATRIX_WIDTH * 0.08,
         'iniPosY' : G_MATRIX_WIDTH * 0.08,
-        'sideCell': G_MATRIX_WIDTH * 0.64 / ( xnode.length )
+        'sideCell': sideCell
     };
 
     var cellDataVectorPhi = {
-        'iniPosX' : G_MATRIX_WIDTH - G_MATRIX_WIDTH * 0.08,
+        'iniPosX' : G_MATRIX_WIDTH - G_MATRIX_WIDTH * 0.08 + cellDataMatrix.sideCell,
         'iniPosY' : G_MATRIX_WIDTH * 0.08,
         'sideCell': cellDataMatrix.sideCell
     };
 
     var cellDataVectorF = {
-        'iniPosX' : ( cellDataMatrix.iniPosX + cellDataMatrix.sideCell * (xnode.length - 1) + cellDataVectorPhi.iniPosX) * 0.5,
+        'iniPosX' : ( cellDataMatrix.iniPosX + cellDataMatrix.sideCell * xnode.length + cellDataVectorPhi.iniPosX) * 0.5,
         'iniPosY' : G_MATRIX_WIDTH * 0.08,
         'sideCell': cellDataMatrix.sideCell
     };

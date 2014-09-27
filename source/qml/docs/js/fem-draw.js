@@ -109,7 +109,7 @@ function transformCoordinates(xnode) {
 
 // Crea una serie de elementos y los agrupa, en base a un xnod = [x1 y1; x2 y2; ... ; xN yN]
 // y un icone = [nodoA1 nodoA2 nodoA3 nodoA4 ; nodoN1 nodoN2 nodoN3 nodoN4]
-// (el icone comienza con indice 0, no 1)
+// (el icone comienza con indice 1)
 function makeElements(two, xnode, ielem) {
 
     var groupElem = new Two.Group();
@@ -134,10 +134,10 @@ function makeElements(two, xnode, ielem) {
 
         // Elemento rectangular
         twoElem = two.makePolygon(
-            xnode[elem[0]][0], xnode[elem[0]][1],
-            xnode[elem[1]][0], xnode[elem[1]][1],
-            xnode[elem[2]][0], xnode[elem[2]][1],
-            xnode[elem[3]][0], xnode[elem[3]][1]
+            xnode[ elem[0] - 1 ][0], xnode[ elem[0] - 1 ][1],
+            xnode[ elem[1] - 1 ][0], xnode[ elem[1] - 1 ][1],
+            xnode[ elem[2] - 1 ][0], xnode[ elem[2] - 1 ][1],
+            xnode[ elem[3] - 1 ][0], xnode[ elem[3] - 1 ][1]
         );
 
         twoElem.fill = G_COLOR_ELEM;
@@ -150,8 +150,8 @@ function makeElements(two, xnode, ielem) {
 
         // And we add the text over the element
         paramsTextSVG = localParamsTextSVG;
-        paramsTextSVG.x = 0.5 * ( xnode[elem[0]][0] + xnode[elem[2]][0] );
-        paramsTextSVG.y = 0.5 * ( xnode[elem[0]][1] + xnode[elem[2]][1] );
+        paramsTextSVG.x = 0.5 * ( xnode[ elem[0] - 1 ][0] + xnode[ elem[2] - 1 ][0] );
+        paramsTextSVG.y = 0.5 * ( xnode[ elem[0] - 1 ][1] + xnode[ elem[2] - 1 ][1] );
 
         addElementToSVG(getTextSVG("element " + twoElem.k_ielem, paramsTextSVG));
     }
@@ -162,7 +162,7 @@ function makeElements(two, xnode, ielem) {
         twoNode.fill = G_COLOR_NODE;
 
         twoNode.type = 'node';
-        twoNode.k_ielem = j;
+        twoNode.k_ielem = j + 1;
         twoNode.ielem = elem[j];
 
         groupNode.add(twoNode);

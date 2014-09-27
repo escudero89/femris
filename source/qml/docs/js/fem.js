@@ -16,33 +16,29 @@ $(document).ready(function() {
             [1, 1],
             [2, 1],
             [3, 1],
+            [4, 1],
+            [5, 1],
             [1, 2],
             [2, 2],
             [3, 2],
+            [4, 2],
+            [5, 2],
             [1, 3],
             [2, 3],
-            [3, 3]
+            [3, 3],
+            [4, 3],
+            [5, 3]
         ];
 
     var ielem = [
-            [0, 1, 4, 3],
-            [1, 2, 5, 4],
-            [3, 4, 7, 6],
-            [4, 5, 8, 7]
-        ];
-
-    var xnode = [
-            [1, 1],
-            [3, 1],
-            [1, 2],
-            [3, 2],
-            [2, 1],
-            [2, 2]
-        ];
-
-    var ielem = [
-            [2, 5, 4, 0],
-            [5, 3, 1, 4]
+            [1, 2, 7, 6],
+            [2, 3, 8, 7],
+            [3, 4, 9, 8],
+            [4, 5, 10, 9],
+            [6, 7, 12, 11],
+            [7, 8, 13, 12],
+            [8, 9, 14, 13],
+            [9, 10, 15, 14]
         ];
 
 
@@ -79,98 +75,25 @@ $(document).ready(function() {
     var groupMatrix = groupSystem.groupMatrix;
 
     $.each(group, function(index, value) {
-        $.each(group[index].children, function(idx, val) {
-            $(val._renderer.elem)
+        $.each(group[index].children, function(idx, currentElem) {
+            $(currentElem._renderer.elem)
                 .css('cursor', 'pointer')
                 .on('mouseenter', function(e) {
-                    var currentElem = group[index].children[idx];
-
                     currentElem.fill = G_COLOR_ELEM_HIGH;
                     //UpdateMath(coloredMatrix[currentElem.k_ielem]);
 
                     // We set the color of  the cells of the matrix
-                    $.each(groupMatrix.children, function(idxMat, valMat) {
-                        var currentCell = groupMatrix.children[idxMat];
-                        if ($.inArray(currentCell.id_row, currentElem.ielem) >= 0 &&
-                            $.inArray(currentCell.id_col, currentElem.ielem) >= 0) {
-                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
-                            currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
-                            currentCell.opacity = 1;
-                        }
-
-                        if (currentElem.type === 'node' &&
-                            (currentCell.id_row === currentElem.k_ielem ||
-                             currentCell.id_col === currentElem.k_ielem)) {
-                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
-                            currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
-                            currentCell.opacity = 1;
-                        }
-                    });
-
-                    // We set the color of  the cells of the vector
-                    $.each(groupSystem.groupVectorPhi.children, function(idxVecPhi, valVecPhi) {
-                        var currentCell = groupSystem.groupVectorPhi.children[idxVecPhi];
-                        if ($.inArray(currentCell.id_row, currentElem.ielem) >= 0) {
-                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
-                            currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
-                            currentCell.opacity = 1;
-                        }
-                    });
-
-                    $.each(groupSystem.groupVectorF.children, function(idxVecF, valVecF) {
-                        var currentCell = groupSystem.groupVectorF.children[idxVecF];
-                        if ($.inArray(currentCell.id_row, currentElem.ielem) >= 0) {
-                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
-                            currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
-                            currentCell.opacity = 1;
-                        }
-                    });
+                    coloriseDueToMouse(groupSystem, currentElem, true);
 
                     G_TWO_MATRIX.update();
                     two.update();
 
                 }).on('mouseleave', function(e) {
-                    group[index].children[idx].fill = G_COLOR_ELEM;
 
-                    $.each(groupMatrix.children, function(idxMat, valMat) {
-                        var currentCell = groupMatrix.children[idxMat];
+                    currentElem.fill = G_COLOR_ELEM;
 
-                        if (currentCell.fill_original === G_COLOR_EMPTY) {
-                            currentCell.fill = G_COLOR_EMPTY;
-                            currentCell.stroke = G_COLOR_EMPTY;
-                        }
-
-                        if (currentCell.fill !== currentCell.fill_original) {
-                            currentCell.opacity = 0.4;
-                        }
-                    });
-
-                    // We set the color of  the cells of the vector
-                    $.each(groupSystem.groupVectorPhi.children, function(idxVecPhi, valVecPhi) {
-                        var currentCell = groupSystem.groupVectorPhi.children[idxVecPhi];
-
-                        if (currentCell.fill_original === G_COLOR_EMPTY) {
-                            currentCell.fill = G_COLOR_EMPTY;
-                            currentCell.stroke = G_COLOR_EMPTY;
-                        }
-
-                        if (currentCell.fill !== currentCell.fill_original) {
-                            currentCell.opacity = 0.4;
-                        }
-                    });
-
-                    $.each(groupSystem.groupVectorF.children, function(idxVecF, valVecF) {
-                        var currentCell = groupSystem.groupVectorF.children[idxVecF];
-
-                        if (currentCell.fill_original === G_COLOR_EMPTY) {
-                            currentCell.fill = G_COLOR_EMPTY;
-                            currentCell.stroke = G_COLOR_EMPTY;
-                        }
-
-                        if (currentCell.fill !== currentCell.fill_original) {
-                            currentCell.opacity = 0.4;
-                        }
-                    });
+                    // We clear the color of  the cells of the matrix
+                    coloriseDueToMouse(groupSystem, currentElem, false);
 
                     //UpdateMath(cleanMatrix);
 
@@ -187,3 +110,69 @@ $(document).ready(function() {
 
     $("#draw-shapes svg").append(parseSVG($G_DRAW_SHAPES_DUMMY.html()));
 });
+
+
+function coloriseDueToMouse(groupSystem, currentElem, isEntering) {
+
+    isEntering = assignIfNecessary(isEntering, false);
+
+    // We set the color of  the cells of the matrix and the vector
+    $.each(groupSystem, function(idxGroupChildren, valGroupChildren) {
+
+        $.each(valGroupChildren.children, function(idx, currentCell) {
+
+            if (isEntering === true) {
+                coloriseDueToMouseHelper(currentElem, currentCell);
+            } else {
+                discolorDueToMouseHelper(currentElem, currentCell);
+            }
+
+        });
+
+    });
+}
+
+function coloriseDueToMouseHelper(currentElem, currentCell) {
+
+    var isEmptyCell = (currentCell.fill_original === G_COLOR_EMPTY);
+    var needsColor = false;
+
+    if (!isEmptyCell) {
+        if (currentElem.type === 'elem') {
+            var isInRow = ($.inArray(currentCell.id_row, currentElem.ielem) >= 0);
+            var isInCol = ($.inArray(currentCell.id_col, currentElem.ielem) >= 0);
+
+            if (currentCell.isMatrix) {
+                needsColor = isInRow && isInCol;
+            } else {
+                needsColor = isInRow || isInCol;
+            }
+
+        } else {
+            if (currentCell.id_row === currentElem.k_ielem ||
+                currentCell.id_col === currentElem.k_ielem) {
+                needsColor = true;
+            }
+        }
+    }
+
+    if (needsColor) {
+        currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
+        currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
+        currentCell.opacity = 1;
+    }
+
+}
+
+function discolorDueToMouseHelper(currentElem, currentCell) {
+
+    if (currentCell.fill_original === G_COLOR_EMPTY) {
+        currentCell.fill = G_COLOR_EMPTY;
+        currentCell.stroke = G_COLOR_EMPTY;
+    }
+
+    if (currentCell.fill !== currentCell.fill_original) {
+        currentCell.opacity = 0.4;
+    }
+
+}
