@@ -12,8 +12,40 @@ $(document).ready(function() {
         [0.776183, 0.530135, 0.633979, 0.672511, 0.243535, 0.146311, 0.384157, 0.532671, 0.542968]
     ];
 
-    var xnode = [[1,1], [2, 1], [3, 1], [1, 2], [2, 2], [3, 2], [1, 3], [2, 3], [3, 3]];
-    var ielem = [[0, 1, 4, 3], [1, 2, 5, 4], [3, 4, 7, 6], [4, 5, 8, 7]];
+    var xnode = [
+            [1, 1],
+            [2, 1],
+            [3, 1],
+            [1, 2],
+            [2, 2],
+            [3, 2],
+            [1, 3],
+            [2, 3],
+            [3, 3]
+        ];
+
+    var ielem = [
+            [0, 1, 4, 3],
+            [1, 2, 5, 4],
+            [3, 4, 7, 6],
+            [4, 5, 8, 7]
+        ];
+
+    var xnode = [
+            [1, 1],
+            [3, 1],
+            [1, 2],
+            [3, 2],
+            [2, 1],
+            [2, 2]
+        ];
+
+    var ielem = [
+            [2, 5, 4, 0],
+            [5, 3, 1, 4]
+        ];
+
+
     var value = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
 
     // Make an instance of two and place it on the page.
@@ -43,8 +75,8 @@ $(document).ready(function() {
     }
     */
 
-    var groupMatrix = setMatrixDrawing(xnode, ielem);
-    var groupMatrixChildren = $.extend(true, {}, groupMatrix.children);
+    var groupSystem = setMatrixDrawing(xnode, ielem);
+    var groupMatrix = groupSystem.groupMatrix;
 
     $.each(group, function(index, value) {
         $.each(group[index].children, function(idx, val) {
@@ -56,16 +88,45 @@ $(document).ready(function() {
                     currentElem.fill = G_COLOR_ELEM_HIGH;
                     //UpdateMath(coloredMatrix[currentElem.k_ielem]);
 
-                    // We set the color of  the cells of a certain element
+                    // We set the color of  the cells of the matrix
                     $.each(groupMatrix.children, function(idxMat, valMat) {
                         var currentCell = groupMatrix.children[idxMat];
                         if ($.inArray(currentCell.id_row, currentElem.ielem) >= 0 &&
                             $.inArray(currentCell.id_col, currentElem.ielem) >= 0) {
-                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1);
+                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
+                            currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
+                            currentCell.opacity = 1;
+                        }
+
+                        if (currentElem.type === 'node' &&
+                            (currentCell.id_row === currentElem.k_ielem ||
+                             currentCell.id_col === currentElem.k_ielem)) {
+                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
+                            currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
+                            currentCell.opacity = 1;
                         }
                     });
 
-                    twoMatrix.update();
+                    // We set the color of  the cells of the vector
+                    $.each(groupSystem.groupVectorPhi.children, function(idxVecPhi, valVecPhi) {
+                        var currentCell = groupSystem.groupVectorPhi.children[idxVecPhi];
+                        if ($.inArray(currentCell.id_row, currentElem.ielem) >= 0) {
+                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
+                            currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
+                            currentCell.opacity = 1;
+                        }
+                    });
+
+                    $.each(groupSystem.groupVectorF.children, function(idxVecF, valVecF) {
+                        var currentCell = groupSystem.groupVectorF.children[idxVecF];
+                        if ($.inArray(currentCell.id_row, currentElem.ielem) >= 0) {
+                            currentCell.fill = getColorFromIdx(currentElem.k_ielem - 1, 0.7);
+                            currentCell.stroke = getColorFromIdx(currentElem.k_ielem - 1);
+                            currentCell.opacity = 1;
+                        }
+                    });
+
+                    G_TWO_MATRIX.update();
                     two.update();
 
                 }).on('mouseleave', function(e) {
@@ -73,13 +134,47 @@ $(document).ready(function() {
 
                     $.each(groupMatrix.children, function(idxMat, valMat) {
                         var currentCell = groupMatrix.children[idxMat];
-                        currentCell.fill = currentCell.fill_original;
+
+                        if (currentCell.fill_original === G_COLOR_EMPTY) {
+                            currentCell.fill = G_COLOR_EMPTY;
+                            currentCell.stroke = G_COLOR_EMPTY;
+                        }
+
+                        if (currentCell.fill !== currentCell.fill_original) {
+                            currentCell.opacity = 0.4;
+                        }
+                    });
+
+                    // We set the color of  the cells of the vector
+                    $.each(groupSystem.groupVectorPhi.children, function(idxVecPhi, valVecPhi) {
+                        var currentCell = groupSystem.groupVectorPhi.children[idxVecPhi];
+
+                        if (currentCell.fill_original === G_COLOR_EMPTY) {
+                            currentCell.fill = G_COLOR_EMPTY;
+                            currentCell.stroke = G_COLOR_EMPTY;
+                        }
+
+                        if (currentCell.fill !== currentCell.fill_original) {
+                            currentCell.opacity = 0.4;
+                        }
+                    });
+
+                    $.each(groupSystem.groupVectorF.children, function(idxVecF, valVecF) {
+                        var currentCell = groupSystem.groupVectorF.children[idxVecF];
+
+                        if (currentCell.fill_original === G_COLOR_EMPTY) {
+                            currentCell.fill = G_COLOR_EMPTY;
+                            currentCell.stroke = G_COLOR_EMPTY;
+                        }
+
+                        if (currentCell.fill !== currentCell.fill_original) {
+                            currentCell.opacity = 0.4;
+                        }
                     });
 
                     //UpdateMath(cleanMatrix);
-                    console.log("exited");
 
-                    twoMatrix.update();
+                    G_TWO_MATRIX.update();
                     two.update();
                 });
         });
@@ -91,6 +186,4 @@ $(document).ready(function() {
     });
 
     $("#draw-shapes svg").append(parseSVG($G_DRAW_SHAPES_DUMMY.html()));
-
-    //fsetInterval(function() {UpdateMath(getMatrixFromArray(vals))}, 500);
 });

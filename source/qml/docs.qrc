@@ -15,5 +15,6 @@
         <file>docs/js/fem-logic.js</file>
         <file>docs/js/fem-matrix.js</file>
         <file>docs/js/two.min.js</file>
+        <file>docs/js/femris-utils.js</file>
     </qresource>
 </RCC>

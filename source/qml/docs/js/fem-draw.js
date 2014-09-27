@@ -116,10 +116,11 @@ function makeElements(two, xnode, ielem) {
     var groupNode = new Two.Group();
 
     var localParamsTextSVG = {          // These are the text's params shared locally
-        'text-anchor' : 'middle',
         'fill' : 'white',
         'font-family' : 'Georgia',
-        'style' : 'cursor:pointer'
+        'pointer-events' : 'none',
+        'style' : 'cursor:pointer',
+        'text-anchor' : 'middle'
     };
 
     var k, j, elem, twoElem, twoNode, paramsTextSVG;
@@ -141,6 +142,7 @@ function makeElements(two, xnode, ielem) {
 
         twoElem.fill = G_COLOR_ELEM;
 
+        twoElem.type = 'elem';
         twoElem.k_ielem = k + 1;
         twoElem.ielem = elem;
 
@@ -159,6 +161,7 @@ function makeElements(two, xnode, ielem) {
         twoNode = two.makeCircle(xnode[j][0], xnode[j][1], G_SHAPES_WIDTH * 0.02);
         twoNode.fill = G_COLOR_NODE;
 
+        twoNode.type = 'node';
         twoNode.k_ielem = j;
         twoNode.ielem = elem[j];
 

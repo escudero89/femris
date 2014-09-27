@@ -1,6 +1,7 @@
 // MATRIX >>>>>>>>>
 
-var G_COLOR_DEFAULT = "#c3c3c3";
+var G_COLOR_DEFAULT = "#f3f3f3";
+var G_COLOR_EMPTY = "#c3c3c3";
 
 // We set the SVG matrix as a global variable, and also the dummy (efficiency)
 var $G_DRAW_MATRIX = $("#draw-matrix");
@@ -10,10 +11,10 @@ var $G_DRAW_MATRIX_DUMMY = $('#draw-matrix-dummy');
 var G_MATRIX_WIDTH = parseInt($G_DRAW_MATRIX.css("width"));
 
 // Make an instance of two and place it on the page.
-var elem = document.getElementById('draw-matrix').children[0];
+var G_ELEM_MATRIX = document.getElementById('draw-matrix').children[0];
 
-var params = { width: "100%", height: "100%" };
-var twoMatrix = new Two(params).appendTo(elem);
+var G_PARAMS = { width: "100%", height: "100%" };
+var G_TWO_MATRIX = new Two(G_PARAMS).appendTo(G_ELEM_MATRIX);
 
 /**
  * Get an object that indicates which node connects with whom
@@ -45,133 +46,191 @@ function getNodeConnections(xnode, ielem) {
 }
 
 /**
- * Get a color from a particular idx
+ * Colorise a cell (both stroke and fill). If it is inside a matrix, colorise
+ * regarding if it has values or not inside (by checking the ielem)
  *
- * @param {number} idx - Index of reference for the color
- * @return {string} - The color in format RGB Hex Code
+ * @param {Two.Cell()} - The element cell (it could be probably a Two.makeRectangle)
+ * @param {number[]} xnode - Position of the nodes (i.e., [[x1,y1], ..., [xN,yN]])
+ * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
+ * @param {number[]} valueOf - Value of the position of the cell inside the matrix/vector
+ * @param {bool} isMatrix - Indicates if it's a matrix or not
+ * @return {Two.Cell} - The element cell
  */
-function getColorFromIdx(idx) {
-    var colorLevel = [ 255, 210, 168, 126, 84, 42 ];     // Values RGB to consider
-    var combinations = [
-                [ 1.00,    0.00,    0.00 ],
-                [ 1.00,    0.50,    0.00 ],
-                [ 0.75,    0.75,    0.00 ],
-                [ 1.00,    1.00,    0.00 ],
-                [ 0.50,    1.00,    0.00 ],
-                [ 0.00,    1.00,    0.00 ],
-                [ 0.00,    1.00,    0.50 ],
-                [ 0.00,    1.00,    1.00 ],
-                [ 0.00,    0.75,    0.75 ],
-                [ 0.00,    0.50,    1.00 ],
-                [ 0.00,    0.00,    1.00 ],
-                [ 0.50,    0.00,    1.00 ],
-                [ 1.00,    0.00,    1.00 ],
-                [ 0.75,    0.00,    0.75 ]
-            ];
+function coloriseCell(twoCell, ielem, valueOf, isMatrix) {
 
-    var numberOfLevels = combinations.length;       // Amount of gradients to consider
+    var isCellDifferentFromZero = false;
+    var k;
 
-    // We calculted what kind of color we are going to choose
-    var combinationChose = idx % numberOfLevels;
-    var colorLevelChose = Math.floor(idx / numberOfLevels);
+    // Only if it's a matrix we are going to colorise the cells
+    for ( k = 0; k < ielem.length && isMatrix ; k++ ) {
+        if ($.inArray(valueOf.row, ielem[k]) >= 0) {
+            if ($.inArray(valueOf.col, ielem[k]) >= 0) {
+                isCellDifferentFromZero = true;
+                break;
+            }
+        }
+    }
 
-    // And we get the color in RGB Hex code
-    var colorGet = "#";
-    var subColorGet = "";                           // For adding zeros in front if needed
+    if (isCellDifferentFromZero || !isMatrix) {
+        twoCell.fill_original = G_COLOR_DEFAULT;
+        twoCell.stroke_original = "#b3b3b3";
+    } else {
+        twoCell.fill_original = G_COLOR_EMPTY;
+        twoCell.stroke_original = G_COLOR_EMPTY;
+    }
 
-    $.each(combinations[combinationChose], function(idx, val) {
-        subColorGet = Math.floor(val * colorLevel[colorLevelChose]);
+    twoCell.fill = twoCell.fill_original;
+    twoCell.stroke = twoCell.stroke_original;
 
-        colorGet += ((subColorGet < 15) ? "0" : "") + subColorGet.toString(16);
-    });
+    return twoCell;
+}
 
-    return colorGet;
+
+/**
+ * Draws a cell
+ *
+ * @param {number[]} xnode - Position of the nodes (i.e., [[x1,y1], ..., [xN,yN]])
+ * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
+ * @param {number[]} cellData - Information for creating the cell
+ * @param {number[]} valueOf - Value of the position of the cell inside the matrix/vector
+ * @return {Two.makeRectangle()} - The element cell
+ */
+function drawCell(xnode, ielem, cellData, valueOf, isMatrix) {
+
+    var twoCell = G_TWO_MATRIX.makeRectangle(
+        cellData.iniPosX + cellData.sideCell * valueOf.col,
+        cellData.iniPosY + cellData.sideCell * valueOf.row,
+        cellData.sideCell,
+        cellData.sideCell
+    );
+
+    twoCell.id_cell = valueOf.col + xnode.length * valueOf.row;
+    twoCell.id_row = valueOf.row;
+    twoCell.id_col = valueOf.col;
+
+    coloriseCell(twoCell, ielem, valueOf, isMatrix);
+
+    return twoCell;
 }
 
 /**
  * Transform a string of SVG code into an object that can work along with Two.js
  * More info at: http://stackoverflow.com/a/3642265/1104116
  *
- * @param {Two} two - A Two Object
  * @param {number[]} xnode - Position of the nodes (i.e., [[x1,y1], ..., [xN,yN]])
  * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
- * @param {number} matrix_width - The width of the matrix (is a square matrix)
+ * @param {number[]} cellData - Information for creating the cells of the matrix
  * @return {Two.Group()} - The group that contains the matrix
  */
-function drawMatrix(xnode, ielem, matrix_width) {
+function drawMatrix(xnode, ielem, cellData) {
 
-    if (typeof matrix_width === undefined) {
-        matrix_width = G_MATRIX_WIDTH;
-    }
-
-    var k, i, j, twoCell;
+    var i, j;
 
     var groupMatrix = new Two.Group();
 
-    var localParamsTextSVG = {          // These are the text's params shared locally
+    var localParamsTextSVG = {
         'text-anchor' : 'middle',
         'fill' : 'white',
         'font-family' : 'Georgia'
     };
 
-    var sideRectangle = matrix_width * 0.8 / ( xnode.length - 1 ); // to get the size of each rectangle
-
-    var iniPosX = G_MATRIX_WIDTH * 0.1;
-    var iniPosY = iniPosX;
-
-    var nodeConnections = getNodeConnections(xnode, ielem);
+    var valueOf = {
+        'col' : 0,
+        'row' : 0
+    };
 
     // We draw the matrix as a collection of rectangles
     for ( i = 0 ; i < xnode.length ; i++ ) {
         for ( j = 0 ; j < xnode.length ; j++ ) {
-            twoCell = twoMatrix.makeRectangle(
-                iniPosX + sideRectangle * j,
-                iniPosY + sideRectangle * i,
-                sideRectangle,
-                sideRectangle
-            )
+            valueOf.col = j;
+            valueOf.row = i;
 
-            twoCell.id_cell = j + xnode.length * i;
-            twoCell.id_row = i;
-            twoCell.id_col = j;
-
-            // We check if the cell has a content != 0
-            var isDifferentFromZero = false;
-
-            for ( k = 0; k < ielem.length ; k++ ) {
-                if ($.inArray(i, ielem[k]) >= 0) {
-                    if ($.inArray(j, ielem[k]) >= 0) {
-                        isDifferentFromZero = true;
-                        break;
-                    }
-                }
-            }
-
-            if (isDifferentFromZero) {
-                twoCell.fill_original = "#f5f5f5";
-                twoCell.stroke_original = "#b3b3b3";
-            } else {
-                twoCell.fill_original = "#535353";
-                twoCell.stroke_original = "#535353";
-            }
-            twoCell.fill = twoCell.fill_original;
-            twoCell.stroke = twoCell.stroke_original;
-
-            groupMatrix.add(twoCell);
+            groupMatrix.add(drawCell(xnode, ielem, cellData, valueOf, true));
         }
     }
 
     return groupMatrix;
 }
 
+/**
+ * Transform a string of SVG code into an object that can work along with Two.js
+ * More info at: http://stackoverflow.com/a/3642265/1104116
+ *
+ * @param {number[]} xnode - Position of the nodes (i.e., [[x1,y1], ..., [xN,yN]])
+ * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
+ * @param {number[]} cellData - Information for creating the cells of the vector
+ * @return {Two.Group()} - The group that contains the matrix
+ */
+function drawVector(xnode, ielem, cellData, sideVector) {
+
+    sideVector = assignIfNecessary(sideVector, 'vertical');
+
+    var i;
+
+    var groupVector = new Two.Group();
+
+    var localParamsTextSVG = {
+        'text-anchor' : 'middle',
+        'fill' : 'white',
+        'font-family' : 'Georgia'
+    };
+
+    var valueOf = {
+        'col' : 0,
+        'row' : 0
+    };
+
+    // We draw the matrix as a collection of rectangles
+    for ( i = 0 ; i < xnode.length ; i++ ) {
+        // It depends if we want a vertical or an horizontal vector
+        if (sideVector === 'vertical') {
+            valueOf.row = i;
+        } else {
+            valueOf.col = i;
+        }
+
+        groupVector.add(drawCell(xnode, ielem, cellData, valueOf));
+    }
+
+    return groupVector;
+
+}
+
 function setMatrixDrawing(xnode, ielem) {
 
-    var groupMatrix = drawMatrix(xnode, ielem, G_MATRIX_WIDTH);
+    var cellDataMatrix = {
+        'iniPosX' : G_MATRIX_WIDTH * 0.08,
+        'iniPosY' : G_MATRIX_WIDTH * 0.08,
+        'sideCell': G_MATRIX_WIDTH * 0.64 / ( xnode.length )
+    };
 
-    twoMatrix.add(groupMatrix);
+    var cellDataVectorPhi = {
+        'iniPosX' : G_MATRIX_WIDTH - G_MATRIX_WIDTH * 0.08,
+        'iniPosY' : G_MATRIX_WIDTH * 0.08,
+        'sideCell': cellDataMatrix.sideCell
+    };
+
+    var cellDataVectorF = {
+        'iniPosX' : ( cellDataMatrix.iniPosX + cellDataMatrix.sideCell * (xnode.length - 1) + cellDataVectorPhi.iniPosX) * 0.5,
+        'iniPosY' : G_MATRIX_WIDTH * 0.08,
+        'sideCell': cellDataMatrix.sideCell
+    };
+
+    var groupMatrix = drawMatrix(xnode, ielem, cellDataMatrix);
+    var groupVectorPhi = drawVector(xnode, ielem, cellDataVectorPhi);
+    var groupVectorF = drawVector(xnode, ielem, cellDataVectorF);
+
+    G_TWO_MATRIX.add(groupMatrix);
+
+    G_TWO_MATRIX.add(groupVectorPhi);
+    G_TWO_MATRIX.add(groupVectorF);
 
     // And we render
-    twoMatrix.update();
+    G_TWO_MATRIX.update();
 
-    return groupMatrix;
+    return {
+        'groupMatrix' : groupMatrix,
+        'groupVectorPhi' : groupVectorPhi,
+        'groupVectorF' : groupVectorF,
+    };
 }
