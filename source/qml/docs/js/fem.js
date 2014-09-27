@@ -164,15 +164,15 @@ function coloriseDueToMouseHelper(currentElem, currentCell) {
 
 }
 
-function discolorDueToMouseHelper(currentElem, currentCell) {
+function discolorDueToMouseHelper(currentElem, currentCell, clearAll) {
 
-    if (currentCell.fill_original === G_COLOR_EMPTY) {
+    if (currentCell.fill_original === G_COLOR_EMPTY || assignIfNecessary(clearAll, false)) {
         currentCell.fill = G_COLOR_EMPTY;
         currentCell.stroke = G_COLOR_EMPTY;
     }
 
     if (currentCell.fill !== currentCell.fill_original) {
-        currentCell.opacity = 0.4;
+        currentCell.opacity = 0.2;
     }
 
 }

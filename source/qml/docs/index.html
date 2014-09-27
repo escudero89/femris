@@ -45,9 +45,66 @@ background-color: #f3f3f3;
   <body>
       <div class="container-fluid">
         <div class="row">
+
+            <div id="navbar-top" class="col-md-12" style="position:absolute; width:100%; z-index:200">
+            <nav class="navbar navbar-default" role="navigation">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">Brand</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                  </form>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+            </nav>
+            </div>
+
             <div class="col-sm-12 col-md-6">
                 <div id="draw-shapes" style="background-color: #F8f8f8">
-                    <div class="two-container w100p" style="height: 100%;"></div>
+                    <div class="two-container w100p" style="height: 97vh;"></div>
                 </div>
 
                 <div version="1.1" id="draw-shapes-dummy" class="hidden">
@@ -56,9 +113,11 @@ background-color: #f3f3f3;
             </div>
 
             <div class="col-sm-12 col-md-6">
+
                 <div id="draw-matrix" style="background-color: #f8f8f8">
-                    <div class="two-container w100p" style="height: 100%;"></div>
+                    <div class="two-container w100p" style="height: 97vh;"></div>
                 </div>
+
 
                 <svg version="1.1" id="draw-matrix-dummy" class="hidden">
                     <g></g>
@@ -75,20 +134,23 @@ background-color: #f3f3f3;
                     <div id="MathOutput" class="output">$${}$$</div>
                 </div>
             </div>
+
+<button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
  -->
 
-            <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+
 
 
         </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/third-party/jquery-1.11.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/two.min.js"></script>
+    <script src="js/third-party/bootstrap.min.js"></script>
+    <script src="js/third-party/two.min.js"></script>
 
+    <script src="js/femris-globals.js"></script>
     <script src="js/femris-utils.js"></script>
     <script src="js/fem-draw.js"></script>
     <script src="js/fem-matrix.js"></script>
@@ -105,7 +167,7 @@ background-color: #f3f3f3;
                 panEnabled: true,
                 controlIconsEnabled: false,
                 zoomEnabled: true,
-                dblClickZoomEnabled: true,
+                dblClickZoomEnabled: false,
                 zoomScaleSensitivity: 0.2,
                 minZoom: 0.8,
                 maxZoom: 10,

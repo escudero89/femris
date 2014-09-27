@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>docs/js/third-party/bootstrap.min.js</file>
+        <file>docs/js/third-party/jquery-1.11.1.min.js</file>
+        <file>docs/js/third-party/MathJax.js</file>
+        <file>docs/js/third-party/svg-pan-zoom.min.js</file>
+        <file>docs/js/third-party/two.min.js</file>
+    </qresource>
+</RCC>

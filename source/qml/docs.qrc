@@ -1,12 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>docs/css/bootstrap.min.css</file>
-        <file>docs/js/bootstrap.min.js</file>
         <file>docs/fonts/glyphicons-halflings-regular.eot</file>
         <file>docs/fonts/glyphicons-halflings-regular.svg</file>
         <file>docs/fonts/glyphicons-halflings-regular.ttf</file>
         <file>docs/fonts/glyphicons-halflings-regular.woff</file>
-        <file>docs/js/jquery-1.11.1.min.js</file>
         <file>docs/css/bootstrap-theme.min.css</file>
         <file>docs/index.html</file>
         <file>docs/index.xml</file>
@@ -14,8 +12,7 @@
         <file>docs/js/fem-draw.js</file>
         <file>docs/js/fem-logic.js</file>
         <file>docs/js/fem-matrix.js</file>
-        <file>docs/js/two.min.js</file>
         <file>docs/js/femris-utils.js</file>
-        <file>docs/js/third-party/svg-pan-zoom.min.js</file>
+        <file>docs/js/femris-globals.js</file>
     </qresource>
 </RCC>

@@ -193,24 +193,24 @@ function drawVector(xnode, ielem, cellData, sideVector) {
 }
 
 function setMatrixDrawing(xnode, ielem) {
-console.log(ielem);
-    sideCell = G_MATRIX_WIDTH * 0.9 / ( xnode.length + 3 );
+
+    var sideCell = G_MATRIX_WIDTH * 0.9 / ( xnode.length + 3 );
 
     var cellDataMatrix = {
         'iniPosX' : G_MATRIX_WIDTH * 0.08,
-        'iniPosY' : G_MATRIX_WIDTH * 0.08,
+        'iniPosY' : G_MATRIX_WIDTH * 0.08 + G_HEIGHT_NAVBAR,
         'sideCell': sideCell
     };
 
     var cellDataVectorPhi = {
         'iniPosX' : G_MATRIX_WIDTH - G_MATRIX_WIDTH * 0.08 + cellDataMatrix.sideCell,
-        'iniPosY' : G_MATRIX_WIDTH * 0.08,
+        'iniPosY' : cellDataMatrix.iniPosY,
         'sideCell': cellDataMatrix.sideCell
     };
 
     var cellDataVectorF = {
         'iniPosX' : ( cellDataMatrix.iniPosX + cellDataMatrix.sideCell * xnode.length + cellDataVectorPhi.iniPosX) * 0.5,
-        'iniPosY' : G_MATRIX_WIDTH * 0.08,
+        'iniPosY' : cellDataMatrix.iniPosY,
         'sideCell': cellDataMatrix.sideCell
     };
 

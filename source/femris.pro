@@ -9,7 +9,8 @@ RESOURCES += \
     qml/resources.qrc \
     qml/docs.qrc \
     qml/qml.qrc \
-    qml/MathJax.qrc
+    qml/MathJax.qrc \
+    qml/third-party.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

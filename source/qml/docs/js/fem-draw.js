@@ -102,6 +102,8 @@ function transformCoordinates(xnode) {
     for ( k = 0; k < xnode.length; k++ ) {
         xnode[k][0] = alpha * xnode[k][0] + beta;
         xnode[k][1] = alpha * xnode[k][1] + beta;
+
+        xnode[k][1] += G_HEIGHT_NAVBAR;
     }
 
     return xnode;
