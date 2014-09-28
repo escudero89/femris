@@ -3,14 +3,16 @@ TEMPLATE = app
 QT += qml quick widgets webkit webkit-private
 
 SOURCES += \
-    src/main.cpp
+    src/main.cpp \
+    src/fileio.cpp
 
 RESOURCES += \
     qml/resources.qrc \
-    qml/docs.qrc \
     qml/qml.qrc \
     qml/MathJax.qrc \
-    qml/third-party.qrc
+    qml/third-party.qrc \
+    qml/docs-resources.qrc \
+    qml/docs.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -24,3 +26,6 @@ OTHER_FILES += \
     qml/content/PrimaryButton.qml \
     qml/screens/Initial.qml \
     qml/content/AndroidDelegate.qml
+
+HEADERS += \
+    src/fileio.h
