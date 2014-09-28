@@ -9,6 +9,8 @@ ColumnLayout {
     property alias header : headerText
     property alias button : primaryButton
 
+    property string blockStatus : "default";        // default, used, disabled
+
     implicitWidth: 200
     implicitHeight: 400
     spacing: 0
@@ -19,7 +21,17 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: width / 5
 
-        color: Style.color.info
+        color: {
+            var finalColor = Style.color.info;
+
+            if (blockStatus === "disabled") {
+                finalColor = Style.color.comment_emphasized;
+            } else if (blockStatus === "used") {
+                finalColor = Style.color.content;
+            }
+
+            return finalColor;
+        }
 
         Text {
             id: headerText
@@ -40,12 +52,22 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        color: Style.color.background
+        color: {
+            var finalColor = Style.color.background_highlight;
+
+            if (blockStatus === "disabled") {
+                finalColor = Style.color.comment;
+            } else if (blockStatus === "used") {
+                finalColor = Style.color.background;
+            }
+
+            return finalColor;
+        }
 
         ColumnLayout {
             id: columnLayout1
             anchors.fill: parent
-            anchors.margins: 20
+            anchors.margins: 10
 
             spacing: 15
 
@@ -68,6 +90,18 @@ ColumnLayout {
 
                 backgroundVisible: false
                 frameVisible: false
+
+                textColor: {
+                    var finalColor = Style.color.complement_highlight;
+
+                    if (blockStatus === "disabled") {
+                        finalColor = Style.color.comment_emphasized;
+                    } else if (blockStatus === "used") {
+                        finalColor = Style.color.content;
+                    }
+
+                    return finalColor;
+                }
             }
 
             PrimaryButton {
@@ -78,6 +112,8 @@ ColumnLayout {
 
                 Layout.fillWidth: true
                 Layout.preferredHeight: parent.height / 11
+
+                buttonStatus: blockStatus
             }
         }
     }

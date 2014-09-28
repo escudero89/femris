@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>docs/index.html</file>
+        <file>docs/ce_results.html</file>
         <file>docs/index.xml</file>
         <file>docs/layout.html</file>
         <file>docs/about.html</file>

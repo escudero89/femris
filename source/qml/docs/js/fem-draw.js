@@ -117,18 +117,19 @@ function makeElements(two, xnode, ielem) {
     var groupElem = new Two.Group();
     var groupNode = new Two.Group();
 
+    // We transform the original coordinates so they can fit better in the SVG
+    xnode = transformCoordinates(xnode);
+
     var localParamsTextSVG = {          // These are the text's params shared locally
-        'fill' : 'white',
-        'font-family' : 'Georgia',
+        'fill'           : 'white',
+        'font-family'    : 'Georgia',
         'pointer-events' : 'none',
-        'style' : 'cursor:pointer',
-        'text-anchor' : 'middle'
+        'style'          : 'cursor:pointer',
+        'text-anchor'    : 'middle',
+        'font-size'      : 0.125 * ( xnode[ ielem[0][2] - 1 ][1] - xnode[ ielem[0][0] - 1 ][1] )
     };
 
     var k, j, elem, twoElem, twoNode, paramsTextSVG;
-
-    // We transform the original coordinates so they can fit better in the SVG
-    xnode = transformCoordinates(xnode);
 
     // First we draw the elements
     for ( k = 0 ; k < ielem.length ; k++ ) {
@@ -172,7 +173,7 @@ function makeElements(two, xnode, ielem) {
         // And we add the text over the node
         paramsTextSVG = localParamsTextSVG;
         paramsTextSVG.x = xnode[j][0];
-        paramsTextSVG.y = xnode[j][1] + 2; // the +2 it's just for the text's vertical alignment
+        paramsTextSVG.y = xnode[j][1] + localParamsTextSVG['font-size'] * 0.25; // just for the text's vertical alignment
 
         addElementToSVG(getTextSVG(twoNode.k_ielem, paramsTextSVG));
     }

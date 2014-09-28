@@ -44,7 +44,7 @@ RowLayout {
                 header.text: "NUEVO"
 
                 button.buttonLabel: "Crear"
-                button.onClicked : mainWindow.switchSection("tutorial")
+                button.onClicked : mainWindow.switchSection("CE_Overall")
             }
 
             ChoiceBlock {

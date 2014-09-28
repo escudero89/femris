@@ -7,6 +7,9 @@ import "../"
 Button {
 
     property alias buttonLabel : buttonText.text
+    property string buttonStatus : "default"
+
+    enabled: (buttonStatus !== 'disabled')
 
     implicitWidth: 100
     implicitHeight: 25
@@ -17,7 +20,7 @@ Button {
         text: "text"
 
         font.family: "Tahoma"
-        font.pixelSize: parent.height / 2
+        font.pixelSize: parent.height / 2.5
         wrapMode: Text.WordWrap
 
         color: Style.color.background_highlight
@@ -32,12 +35,23 @@ Button {
             id: rectangle
 
             Rectangle {
+                id: buttonRectangle
                 anchors.fill: parent
 
                 border.width: control.activeFocus ? 3 : 2
-                border.color: Style.color.primary
+                border.color: color
 
-                color: Style.color.primary
+                color: {
+                    var finalColor = Style.color.primary;
+
+                    if (blockStatus === "disabled") {
+                        finalColor = Style.color.comment_emphasized;
+                    } else if (blockStatus === "used") {
+                        finalColor = Style.color.content;
+                    }
+
+                    return finalColor;
+                }
             }
 
             Rectangle {

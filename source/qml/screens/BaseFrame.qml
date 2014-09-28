@@ -80,7 +80,7 @@ RowLayout {
             id: mainContentRectangle
             color: "blue"
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width //* .95
+            Layout.preferredWidth: parent.width * .55
 
             WebView {
                 id: currentWebView
