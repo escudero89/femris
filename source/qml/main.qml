@@ -107,7 +107,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_Overall.qml");
+            globalLoader.setSource("screens/CE_Model.qml");
         }
 
     }
@@ -119,11 +119,8 @@ ApplicationWindow {
             case "tutorial" :
                 redirection = "BaseFrame";
                 break;
-            case "CE_Overall":
-                redirection = "CE_Overall";
-                break;
             default :
-                redirection = "Initial";
+                redirection = section;
                 break;
         }
 

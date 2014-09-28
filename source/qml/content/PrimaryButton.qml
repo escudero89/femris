@@ -6,6 +6,7 @@ import "../"
 
 Button {
 
+    property alias buttonText : buttonText
     property alias buttonLabel : buttonText.text
     property string buttonStatus : "default"
 
@@ -44,10 +45,14 @@ Button {
                 color: {
                     var finalColor = Style.color.primary;
 
-                    if (blockStatus === "disabled") {
-                        finalColor = Style.color.comment_emphasized;
-                    } else if (blockStatus === "used") {
-                        finalColor = Style.color.content;
+                    switch (buttonStatus) {
+                        case "white":    finalColor = Style.color.background_highlight;break;
+                        case "warning":  finalColor = Style.color.warning;             break;
+                        case "danger":   finalColor = Style.color.danger;              break;
+                        case "info":     finalColor = Style.color.info;                break;
+                        case "success":  finalColor = Style.color.success;             break;
+                        case "disabled": finalColor = Style.color.comment_emphasized;  break;
+                        case "used":     finalColor = Style.color.content;             break;
                     }
 
                     return finalColor;

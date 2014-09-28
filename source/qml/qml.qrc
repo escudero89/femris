@@ -14,5 +14,6 @@
         <file>test.qml</file>
         <file>screens/CE_Results.qml</file>
         <file>screens/CE_Overall.qml</file>
+        <file>screens/CE_Model.qml</file>
     </qresource>
 </RCC>

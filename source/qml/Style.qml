@@ -8,6 +8,15 @@ QtObject {
     // colorSolarized
     // colorBootstrap
 
+    property QtObject fontSize: QtObject {
+        property int h1 : 36
+        property int h2 : 30
+        property int h3 : 24
+        property int h4 : 18
+        property int h5 : 14
+        property int h6 : 12
+    }
+
     //property alias g_theme : theme
     property string theme : "colorBootstrap"
 
@@ -27,7 +36,7 @@ QtObject {
                         case "comment_emphasized"    : colour = "#999"; break;
                         case "comment"               : colour = "#bbb"; break;
                         case "background"            : colour = "#eee"; break;
-                        case "background_highlight"  : colour = "#fff"; break;
+                        case "background_highlight"  : colour = "#f8f8f8"; break;
                         case "primary"               : colour = "#428bca"; break;
                         case "success"               : colour = "#5cb85c"; break;
                         case "info"                  : colour = "#5bc0de"; break;

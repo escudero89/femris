@@ -22,7 +22,7 @@ MenuBar {
             title: qsTr("Ir")
             MenuItem {
                 text: qsTr("Pantalla de Inicio")
-                onTriggered: mainWindow.switchSection();
+                onTriggered: mainWindow.switchSection("Initial");
             }
         }
         Menu {
