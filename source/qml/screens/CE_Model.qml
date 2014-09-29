@@ -13,7 +13,7 @@ RowLayout {
     id: rowParent
 
     spacing: 0
-    width: parent.width
+    anchors.fill: globalLoader
 
     Rectangle {
         id: leftContentRectangle
@@ -145,6 +145,8 @@ Note that the <b>Supported HTML Subset </b>is limited. Also, if the text contain
                 buttonLabel: "Vista General"
                 buttonStatus: "primary"
                 buttonText.font.pixelSize: height / 2
+
+                onClicked : mainWindow.switchSection("CE_Overall")
 
                 Layout.fillWidth: true
             }

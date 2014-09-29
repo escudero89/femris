@@ -39,7 +39,7 @@ RowLayout {
                 header.text: "MODELO FÍSICO"
 
                 button.buttonLabel: "Elegir"
-                button.onClicked : mainWindow.switchSection("tutorial")
+                button.onClicked : mainWindow.switchSection("CE_Model")
 
                 blockStatus : (stepOnStudyCase > 1) ? "used" : "default";
             }
