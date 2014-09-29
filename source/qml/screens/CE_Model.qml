@@ -47,6 +47,7 @@ RowLayout {
 
             PrimaryButton {
                 buttonLabel: "Nuevo Modelo"
+                buttonStatus: "white"
                 buttonText.font.pixelSize: height / 2
                 Layout.fillWidth: true
             }
@@ -82,9 +83,8 @@ Note that the <b>Supported HTML Subset </b>is limited. Also, if the text contain
         }
     }
 
-    Rectangle {
+    Column {
         id: mainContentRectangle
-        color: "blue"
         Layout.fillHeight: true
         Layout.preferredWidth: (parent.width - leftContentRectangle.width) * .55
 
@@ -99,13 +99,67 @@ Note that the <b>Supported HTML Subset </b>is limited. Also, if the text contain
 
     }
 
-    Rectangle {
-        color: Style.color.comment
+    Column {
         Layout.fillHeight: true
         Layout.preferredWidth: parent.width - mainContentRectangle.width - leftContentRectangle.width
 
-        Text {
-            text: currentWebView.loadProgress
+        Rectangle {
+
+            color: leftContentRectangle.color
+            width: parent.width
+            height: parent.height - continueButton.height
+
+            ColumnLayout {
+
+                height: parent.height * 0.95
+                width: parent.width * 0.9
+                spacing: 0
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+                WebView {
+                    Layout.fillWidth: parent.width
+                    Layout.fillHeight: parent.height
+
+                    url: "qrc:/docs/current.html"
+
+                }
+
+                PrimaryButton {
+                    buttonLabel: "Ir hasta aqui"
+                    buttonStatus: "white"
+                    buttonText.font.pixelSize: height / 2
+
+                    Layout.fillWidth: parent.width
+                }
+            }
         }
+
+        RowLayout {
+
+            spacing: 0
+            width: parent.width
+
+            PrimaryButton {
+                buttonLabel: "Vista General"
+                buttonStatus: "primary"
+                buttonText.font.pixelSize: height / 2
+
+                Layout.fillWidth: true
+            }
+
+            PrimaryButton {
+                id: continueButton
+
+                buttonLabel: "Guardar y Continuar"
+                buttonStatus: "success"
+                buttonText.font.pixelSize: height / 2
+
+                Layout.preferredWidth: 0.6 * parent.width
+            }
+        }
+
+
     }
 }

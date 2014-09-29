@@ -46,7 +46,10 @@ Button {
                     var finalColor = Style.color.primary;
 
                     switch (buttonStatus) {
-                        case "white":    finalColor = Style.color.background_highlight;break;
+                        case "white":
+                            finalColor = Style.color.background;
+                            buttonText.color = Style.color.complement;
+                            break;
                         case "warning":  finalColor = Style.color.warning;             break;
                         case "danger":   finalColor = Style.color.danger;              break;
                         case "info":     finalColor = Style.color.info;                break;
@@ -63,7 +66,7 @@ Button {
                 anchors.fill: parent
 
                 border.width: control.activeFocus ? 3 : 2
-                border.color: Style.color.primary
+                border.color: color
 
                 color: Style.color.complement
 
