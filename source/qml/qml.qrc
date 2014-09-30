@@ -15,5 +15,10 @@
         <file>screens/CE_Results.qml</file>
         <file>screens/CE_Overall.qml</file>
         <file>screens/CE_Model.qml</file>
+        <file>content/LeftContentBox.qml</file>
+        <file>content/RightTutorialBox.qml</file>
+        <file>content/MiddleTutorialBox.qml</file>
+        <file>screens/CE_Domain.qml</file>
+        <file>content/FirstTimeBox.qml</file>
     </qresource>
 </RCC>

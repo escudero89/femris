@@ -63,10 +63,7 @@ RowLayout {
             }
 
             onClicked : {
-                if (indiceContenido.state === "NORMAL")
-                    indiceContenido.state = "OCULTO"
-                else
-                    indiceContenido.state = "NORMAL"
+                indiceContenido.state = (indiceContenido.state !== 'OCULTO') ? 'OCULTO' : 'NORMAL';
             }
         }
     }

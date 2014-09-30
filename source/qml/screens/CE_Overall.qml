@@ -48,7 +48,7 @@ RowLayout {
                 header.text: "DOMINIO"
 
                 button.buttonLabel: "Crear"
-                button.onClicked : mainWindow.switchSection("tutorial")
+                button.onClicked : mainWindow.switchSection("CE_Domain")
 
                 blockStatus :
                     (stepOnStudyCase > 2) ? "used" :

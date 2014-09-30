@@ -50,6 +50,12 @@ Button {
                             finalColor = Style.color.background;
                             buttonText.color = Style.color.complement;
                             break;
+
+                        case "black":
+                            finalColor = Style.color.complement;
+                            buttonRectangleHover.color = Style.color.primary;
+                            break;
+
                         case "warning":  finalColor = Style.color.warning;             break;
                         case "danger":   finalColor = Style.color.danger;              break;
                         case "info":     finalColor = Style.color.info;                break;
@@ -63,6 +69,9 @@ Button {
             }
 
             Rectangle {
+
+                id: buttonRectangleHover
+
                 anchors.fill: parent
 
                 border.width: control.activeFocus ? 3 : 2
@@ -73,6 +82,20 @@ Button {
                 opacity: control.hovered ? 0.3 : 0
             }
 
+            Rectangle {
+
+                anchors.fill: parent
+
+                border.width: control.activeFocus ? 3 : 2
+                border.color: color
+
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: Style.color.background }
+                    GradientStop { position: 1.0; color: Style.color.complement }
+                }
+
+                opacity: 0.075
+            }
         }
 
 
