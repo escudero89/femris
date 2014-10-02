@@ -22,18 +22,19 @@ ColumnLayout {
 
         id: rectanglePrimeraVezAqui
 
-        Layout.preferredHeight: textPrimeraVezAqui.height * 2
+        Layout.preferredHeight: textPrimeraVezAqui.height * 1.5
         Layout.fillWidth: true
 
         color: Style.color.complement
+        border.color: Style.color.complement
 
         Text {
             id: textPrimeraVezAqui
-            text: qsTr("¿Primera vez?")
+            text: qsTr("¿Primera vez aquí?")
             font.italic: true
 
             color: Style.color.background_highlight
-            font.pixelSize: Style.fontSize.h4
+            font.pixelSize: Style.fontSize.h5
 
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -44,6 +45,8 @@ ColumnLayout {
 
         id: textAreaPrimeraVezAqui
         color: Style.color.complement_highlight
+
+        border.color: Style.color.complement
 
         Layout.preferredHeight: columnLayout1.height * 0.5
         Layout.fillWidth: true

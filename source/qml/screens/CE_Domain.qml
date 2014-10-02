@@ -30,7 +30,7 @@ RowLayout {
         Layout.preferredWidth: (parent.width - leftContentRectangle.width) * .55
     }
 
-    RightTutorialBox {
+    RightCodeBox {
         id: rightContentRectangle
 
         Layout.fillHeight: true

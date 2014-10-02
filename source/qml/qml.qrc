@@ -20,5 +20,6 @@
         <file>content/MiddleTutorialBox.qml</file>
         <file>screens/CE_Domain.qml</file>
         <file>content/FirstTimeBox.qml</file>
+        <file>content/RightCodeBox.qml</file>
     </qresource>
 </RCC>
