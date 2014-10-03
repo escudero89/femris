@@ -82,14 +82,16 @@ Column {
 
                 FileIO {
                     id: io_code
-                    source: "docs/layout.html"
+                    source: "scripts/domain.m"
                     onError: console.log(msg)
-                    /*
-                    Behavior on source {
 
-                    }*/
+                    onSourceChanged: {
+                        console.log(source);
+                        console.log("asd");
+                        console.debug("hola");
+                    }
                 }
-
+//^\s*function.+domain\((.*)\)$
                 Component.onCompleted: {
                     codeArea.text = io_code.read();
                 }
@@ -161,7 +163,7 @@ Column {
 
         onAccepted: {
             console.log("You chose: " + scriptDialog.fileUrl)
-            io_code.source = scriptDialog.fileUrl
+            io_code.setSource(scriptDialog.fileUrl);
 
             codeArea.text = io_code.read();
         }

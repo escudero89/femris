@@ -4,7 +4,8 @@ QT += qml quick widgets webkit webkit-private
 
 SOURCES += \
     src/main.cpp \
-    src/fileio.cpp
+    src/fileio.cpp \
+    src/processhandler.cpp
 
 RESOURCES += \
     qml/resources.qrc \
@@ -28,4 +29,5 @@ OTHER_FILES += \
     qml/content/AndroidDelegate.qml
 
 HEADERS += \
-    src/fileio.h
+    src/fileio.h \
+    src/processhandler.h

@@ -4,33 +4,31 @@
 #include <QObject>
 
 class FileIO : public QObject {
-        Q_OBJECT
+    Q_OBJECT
 
-    public:
-        Q_PROPERTY ( QString source
-                     READ source
-                     WRITE setSource
-                     NOTIFY sourceChanged )
-        explicit FileIO ( QObject *parent = 0 );
+    Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
 
-        Q_INVOKABLE QString read();
-        Q_INVOKABLE bool write ( const QString& data );
+  public:
+    FileIO();
 
-        QString source() {
-            return mSource;
-        };
+    Q_INVOKABLE QString read();
+    Q_INVOKABLE bool write(const QString& data);
 
-    public slots:
-        void setSource ( const QString& source ) {
-            mSource = source;
-        };
+    QString source() const;
 
-    signals:
-        void sourceChanged ( const QString& source );
-        void error ( const QString& msg );
+  public Q_SLOTS:
 
-    private:
-        QString mSource;
+    void setSource(QString arg);
+
+  Q_SIGNALS:
+
+    void error(const QString& msg);
+    void sourceChanged();
+
+  private:
+
+    QString m_source;
+
 };
 
 #endif // FILEIO_H
