@@ -2,6 +2,8 @@
 #define STUDYCASE_H
 
 #include <QObject>
+#include <QDateTime>
+#include <QMap>
 
 #include <armadillo>
 
@@ -12,10 +14,15 @@ public:
 
     StudyCase() {};
 
-    void createNew(QString source);
+    void createNew();
+
+    QMap<QString, QString> createMapForReplacementInConfiguration();
+
+    QString matToQString(arma::mat&, const QString &);
 
 private:
 
+    QString m_fileTitle;
     QString m_source;
 
     double m_youngModulus;
@@ -25,11 +32,14 @@ private:
 
     int m_typeOfProblem;
 
-    arma::mat m_coordinates;
-    arma::mat m_elements;
-    arma::mat m_fixnodes;
-    arma::mat m_pointload;
-    arma::mat m_sideload;
+    arma::mat *m_coordinates;
+    arma::mat *m_elements;
+    arma::mat *m_fixnodes;
+    arma::mat *m_pointload;
+    arma::mat *m_sideload;
+
+    QDateTime m_created;
+    QDateTime m_modified;
 };
 
 #endif // STUDYCASE_H

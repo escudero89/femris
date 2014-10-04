@@ -24,7 +24,12 @@
 ##    Cases. Be careful and try NOT to EDIT this file directly.       ##
 ##                                                                    ##
 ##====================================================================##
-                                        
+
+##==============|| STUDY CASE Information   ||==============>>>>>>>>>>>>
+
+  created = {{CREATED}} ;
+  modified = {{MODIFIED}} ;
+
 ##==============|| STUDY CASE Configuration ||==============>>>>>>>>>>>>
 %=======================================================================
 % MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
@@ -35,7 +40,7 @@
 %  Material Properties
 %
   young = {{YOUNG_MODULUS}} ;
-  poiss = {{POISSON_COEFF}} ;
+  poiss = {{POISSON_COEFFICIENT}} ;
   denss = {{DENSITY_OF_DOMAIN}} ;
   pstrs = {{TYPE_OF_PROBLEM}} ;
   thick = {{THICK_OF_DOMAIN}} ;
