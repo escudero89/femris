@@ -5,7 +5,8 @@ QT += qml quick widgets webkit webkit-private
 SOURCES += \
     src/main.cpp \
     src/fileio.cpp \
-    src/processhandler.cpp
+    src/processhandler.cpp \
+    src/studycase.cpp
 
 RESOURCES += \
     qml/resources.qrc \
@@ -30,4 +31,5 @@ OTHER_FILES += \
 
 HEADERS += \
     src/fileio.h \
-    src/processhandler.h
+    src/processhandler.h \
+    src/studycase.h

@@ -7,53 +7,59 @@ FileIO::FileIO()
     : m_source(-1) {
 }
 
-QString FileIO::read() {
-    if (m_source.isEmpty()) {
-        emit error("Source is Empty");
-        return QString();
+bool FileIO::isSourceEmpty() {
+    bool is_empty = m_source.isEmpty();
+
+    if (is_empty) {
+        emit error("Source is empty");
     }
 
-    // We replace the prefix (if exists)
-    m_source.replace("file://", "");
-    QFile file(m_source);
+    return is_empty;
+}
+
+QString FileIO::read() {
     QString fileContent;
 
-    if (file.open(QIODevice::ReadOnly)) {
-        QString line;
-        QTextStream t(&file);
+    if (!this->isSourceEmpty()) {
+        QFile file(m_source);
 
-        do {
-            line = t.readLine();
-            fileContent += line + "\r\n";
-        } while (!line.isNull());
+        if (file.open(QIODevice::ReadOnly)) {
+            QString line;
+            QTextStream t(&file);
 
-        file.close();
+            do {
+                line = t.readLine();
+                fileContent += line + "\r\n";
+            } while (!line.isNull());
 
-    } else {
-        emit error("Unable to open the file");
-        return QString();
+            file.close();
+
+        } else {
+            emit error("Unable to open the file");
+        }
     }
 
     return fileContent;
 }
 
 bool FileIO::write(const QString& data) {
-    if (m_source.isEmpty()) {
-        emit error("Source is Empty");
-        return false;
+    bool success_in_writing = false;
+
+    if (!this->isSourceEmpty()) {
+        QFile file(m_source);
+
+        if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+            QTextStream out(&file);
+            out << data;
+            file.close();
+            success_in_writing = true;
+
+        } else {
+            emit error("Can't open the file");
+        }
     }
 
-    QFile file(m_source);
-
-    if (!file.open(QFile::WriteOnly | QFile::Truncate)) {
-        emit error("Can't open the file");
-        return false;
-    }
-
-    QTextStream out(&file);
-    out << data;
-    file.close();
-    return true;
+    return success_in_writing;
 }
 
 QString FileIO::source() const {
@@ -63,6 +69,8 @@ QString FileIO::source() const {
 void FileIO::setSource(QString arg) {
     if (m_source != arg) {
         m_source = arg;
+        // We replace the prefix (if exists)
+        m_source.replace("file://", "");
         emit sourceChanged();
     }
 }

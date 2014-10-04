@@ -15,6 +15,7 @@ class FileIO : public QObject {
     Q_INVOKABLE bool write(const QString& data);
 
     QString source() const;
+    bool isSourceEmpty();
 
   public Q_SLOTS:
 
