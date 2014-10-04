@@ -1,5 +1,7 @@
 #include "studycase.h"
 
+#include "fileio.h"
+
 void StudyCase::createNew() {
 
     m_fileTitle             = "";
@@ -11,16 +13,23 @@ void StudyCase::createNew() {
 
     m_typeOfProblem         = 0 ;
 
-    m_created = QDateTime::currentDateTime();
-    m_modified = m_created;
-
-    m_source = "/temp/" + QString(m_created.toTime_t()) + ".femris.old";
-
     m_coordinates           =   new arma::mat();
     m_elements              =   new arma::mat();
     m_fixnodes              =   new arma::mat();
     m_pointload             =   new arma::mat();
     m_sideload              =   new arma::mat();
+
+    m_created = QDateTime::currentDateTime();
+    m_modified = m_created;
+
+    m_source = "/temp/" + m_created.toString("yyyyMMdd-hhmmss") + ".femris.old";
+
+    saveCurrentConfiguration();
+
+}
+
+void StudyCase::saveCurrentConfiguration() {
+    FileIO::writeConfigurationFile("base", m_source, createMapForReplacementInConfiguration());
 }
 
 QMap<QString, QString> StudyCase::createMapForReplacementInConfiguration() {
@@ -32,11 +41,11 @@ QMap<QString, QString> StudyCase::createMapForReplacementInConfiguration() {
     mapReplacement["CREATED"]               = m_created.toString();
     mapReplacement["MODIFIED"]              = m_modified.toString();
 
-    mapReplacement["YOUNG_MODULUS"]         = m_youngModulus;
-    mapReplacement["POISSON_COEFFICIENT"]   = m_poissonCoefficient;
-    mapReplacement["DENSITY_OF_DOMAIN"]     = m_densityOfDomain;
-    mapReplacement["TYPE_OF_PROBLEM"]       = m_typeOfProblem;
-    mapReplacement["THICK_OF_DOMAIN"]       = m_thickOfDomain;
+    mapReplacement["YOUNG_MODULUS"]         = QString::number(m_youngModulus);
+    mapReplacement["POISSON_COEFFICIENT"]   = QString::number(m_poissonCoefficient);
+    mapReplacement["DENSITY_OF_DOMAIN"]     = QString::number(m_densityOfDomain);
+    mapReplacement["TYPE_OF_PROBLEM"]       = QString::number(m_typeOfProblem);
+    mapReplacement["THICK_OF_DOMAIN"]       = QString::number(m_thickOfDomain);
 
     mapReplacement["COORDINATES"]           = matToQString(*m_coordinates, "coordinates");
     mapReplacement["ELEMENTS"]              = matToQString(*m_elements, "elements");
@@ -51,23 +60,30 @@ QString StudyCase::matToQString(arma::mat &matBase, const QString &name) {
 
     QString matQString = name;
 
-    matQString += " = [\n\r";
+    matQString += " = [\r\n";
 
-    arma::mat::row_iterator firstRow = matBase.begin_row(1);
-    arma::mat::row_iterator lastRow = matBase.end_row(matBase.n_rows);
+    if (matBase.n_rows > 0 && matBase.n_cols > 0) {
 
-    arma::mat::col_iterator firstColumn = matBase.begin_col(1);
-    arma::mat::col_iterator lastColumn = matBase.end_col(matBase.n_cols);
+        arma::mat::row_iterator firstRow = matBase.begin_row(1);
+        arma::mat::row_iterator lastRow = matBase.end_row(matBase.n_rows);
 
-    for (arma::mat::row_iterator i = firstRow ; i != lastRow ; i++ ) {
-        for (arma::mat::col_iterator j = firstColumn ; j != lastColumn ; j++ ) {
-            if (j + 1 != lastColumn) {
-                matQString += QString::number(*j) + ", ";
-            } else {
+        arma::mat::col_iterator firstColumn = matBase.begin_col(1);
+        arma::mat::col_iterator lastColumn = matBase.end_col(matBase.n_cols);
+
+        for (arma::mat::row_iterator i = firstRow ; i != lastRow ; i++ ) {
+            for (arma::mat::col_iterator j = firstColumn ; j != lastColumn ; j++ ) {
+
                 matQString += QString::number(*j);
+
+                if (j + 1 != lastColumn) {
+                     matQString += ", ";
+                }
+
             }
+
+            matQString += " ;\r\n";
         }
-        matQString += " ;\n\r";
+
     }
 
     matQString += "];";

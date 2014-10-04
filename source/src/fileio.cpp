@@ -86,13 +86,18 @@ bool FileIO::readConfigurationFile(QString configurationTemplate, const QString 
     return true;
 }
 
-void FileIO::writeConfigurationFile(QString configurationTemplate, const QMap<QString, QString> &replacement) {
+void FileIO::writeConfigurationFile(const QString &configurationTemplate,
+                                    const QString &configurationPath,
+                                    const QMap<QString, QString> &replacement) {
 
-    QString pathFile = qApp->applicationDirPath();
-    QString currentFile = pathFile + "/scripts/current.femris";
+    QString pathDir = qApp->applicationDirPath();
+    QString currentFile = pathDir + configurationPath;
 
-    if (configurationTemplate == "studyCase") {
+    QString pathFile = pathDir;
+
+    if (configurationTemplate == "base") {
         pathFile += "/scripts/base.femris";
+        std::cout << "WORKS" << std::endl;
     }
 
     FileIO fileIO;

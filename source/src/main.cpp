@@ -37,15 +37,9 @@ int main(int argc, char *argv[]) {
 
 
     StudyCaseHandler studyCaseHandler;
+    studyCaseHandler.createNewStudyCase();
 
-    QMap<QString, QString> replacement;
-    replacement["YOUNG_MODULUS"] = "210000000000";
-    replacement["POISSON_COEFF"] = "0.2";
-    replacement["DENSITY_OF_DOMAIN"] = "78000";
-    replacement["TYPE_OF_PROBLEM"] = "1";
-    replacement["THICK_OF_DOMAIN"] = "0.1";
 
-    FileIO::writeConfigurationFile("studyCase", replacement);
 exit(0);
     return app.exec();
 }

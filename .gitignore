@@ -27,3 +27,8 @@ build-*
 # QtCreator
 
 *.autosave
+
+# FEMRIS
+
+*.femris.old
+*.femris.bak

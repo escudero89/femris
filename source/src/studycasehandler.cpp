@@ -4,7 +4,7 @@ StudyCaseHandler::StudyCaseHandler() {
     m_studyCase = new StudyCase();
 }
 
-bool StudyCaseHandler::createNewStudyCase(const QString& filePath) {
+bool StudyCaseHandler::createNewStudyCase() {
 
     m_studyCase->createNew();
 

@@ -11,7 +11,7 @@ class StudyCaseHandler : public QObject
 public:
     StudyCaseHandler();
 
-    Q_INVOKABLE bool createNewStudyCase(const QString&);
+    Q_INVOKABLE bool createNewStudyCase();
 
 signals:
 

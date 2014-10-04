@@ -15,6 +15,7 @@ public:
     StudyCase() {};
 
     void createNew();
+    void saveCurrentConfiguration();
 
     QMap<QString, QString> createMapForReplacementInConfiguration();
 
