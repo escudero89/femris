@@ -127,5 +127,7 @@ ApplicationWindow {
         globalInfoBox.setInfoBox("Cargando...");
         globalLoader.visible = false;
         globalLoader.setSource("screens/" + redirection + ".qml");
+
+        console.log(StudyCaseHandler.createNewStudyCase());
     }
 }

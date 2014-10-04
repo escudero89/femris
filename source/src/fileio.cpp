@@ -93,12 +93,7 @@ void FileIO::writeConfigurationFile(const QString &configurationTemplate,
     QString pathDir = qApp->applicationDirPath();
     QString currentFile = pathDir + configurationPath;
 
-    QString pathFile = pathDir;
-
-    if (configurationTemplate == "base") {
-        pathFile += "/scripts/base.femris";
-        std::cout << "WORKS" << std::endl;
-    }
+    QString pathFile = pathDir + "/scripts/" + configurationTemplate + ".femris";
 
     FileIO fileIO;
     fileIO.setSource(pathFile);

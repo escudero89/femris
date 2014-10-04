@@ -30,16 +30,20 @@
 #include "studycasehandler.h"
 
 int main(int argc, char *argv[]) {
+
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
     qmlRegisterType<FileIO>("FileIO", 1, 0, "FileIO");
 
-
     StudyCaseHandler studyCaseHandler;
-    studyCaseHandler.createNewStudyCase();
+
+    engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);
+
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
 
-exit(0);
+
     return app.exec();
+
 }
