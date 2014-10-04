@@ -8,25 +8,28 @@ class FileIO : public QObject {
 
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
 
-  public:
+public:
     FileIO();
 
     Q_INVOKABLE QString read();
-    Q_INVOKABLE bool write(const QString& data);
+    Q_INVOKABLE bool write(const QString &data);
 
     QString source() const;
     bool isSourceEmpty();
 
-  public Q_SLOTS:
+    static bool readConfigurationFile(QString, const QString &);
+    static void writeConfigurationFile(QString, const QMap<QString, QString> &);
+
+public Q_SLOTS:
 
     void setSource(QString arg);
 
-  Q_SIGNALS:
+Q_SIGNALS:
 
-    void error(const QString& msg);
+    void error(const QString &msg);
     void sourceChanged();
 
-  private:
+private:
 
     QString m_source;
 

@@ -1,22 +1,26 @@
 #include "fileio.h"
 
+#include <QApplication>
 #include <QFile>
 #include <QTextStream>
+
+#include <armadillo>
 
 FileIO::FileIO()
     : m_source(-1) {
 }
 
 bool FileIO::isSourceEmpty() {
-    bool is_empty = m_source.isEmpty();
-    if (is_empty) {
+    bool isEmpty = m_source.isEmpty();
+
+    if (isEmpty) {
         emit error("Source is empty");
     }
-    return is_empty;
+
+    return isEmpty;
 }
 
 QString FileIO::read() {
-
     QString fileContent;
 
     if (!this->isSourceEmpty()) {
@@ -41,9 +45,8 @@ QString FileIO::read() {
     return fileContent;
 }
 
-bool FileIO::write(const QString& data) {
-
-    bool success_in_writing = false;
+bool FileIO::write(const QString &data) {
+    bool successInWriting = false;
 
     if (!this->isSourceEmpty()) {
         QFile file(m_source);
@@ -52,14 +55,14 @@ bool FileIO::write(const QString& data) {
             QTextStream out(&file);
             out << data;
             file.close();
-            
-            success_in_writing = true; // @TODO Ver si podes hacer success_in_writing = file.close()
+            successInWriting = true;
+
         } else {
             emit error("Can't open the file");
         }
     }
-        
-    return success_in_writing;
+
+    return successInWriting;
 }
 
 QString FileIO::source() const {
@@ -69,10 +72,40 @@ QString FileIO::source() const {
 void FileIO::setSource(QString arg) {
     if (m_source != arg) {
         m_source = arg;
-        
         // We replace the prefix (if exists)
         m_source.replace("file://", "");
-
         emit sourceChanged();
     }
+}
+
+//----------------------------------------------------------------------------//
+//--                           STATIC FUNCTIONS                             --//
+//----------------------------------------------------------------------------//
+
+bool FileIO::readConfigurationFile(QString configurationTemplate, const QString &data) {
+    return true;
+}
+
+bool FileIO::writeConfigurationFile(QString configurationTemplate, const QString &data) {
+
+    QString pathFile = qApp->applicationDirPath();
+
+    if (configurationTemplate == "studyCase") {
+        pathFile += "/scripts/base.femris";
+    }
+
+    FileIO fileIO;
+    fileIO.setSource(pathFile);
+
+    QString configurationFile = fileIO.read();
+
+
+    std::cout << pathFile.toStdString() << std::endl;
+/*
+    switch (configurationTemplate) {
+    case "study_case":
+        //pathFile =
+        break;
+    }
+*/
 }

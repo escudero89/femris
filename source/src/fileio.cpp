@@ -1,20 +1,23 @@
 #include "fileio.h"
 
+#include <QApplication>
 #include <QFile>
 #include <QTextStream>
+
+#include <armadillo>
 
 FileIO::FileIO()
     : m_source(-1) {
 }
 
 bool FileIO::isSourceEmpty() {
-    bool is_empty = m_source.isEmpty();
+    bool isEmpty = m_source.isEmpty();
 
-    if (is_empty) {
+    if (isEmpty) {
         emit error("Source is empty");
     }
 
-    return is_empty;
+    return isEmpty;
 }
 
 QString FileIO::read() {
@@ -42,8 +45,8 @@ QString FileIO::read() {
     return fileContent;
 }
 
-bool FileIO::write(const QString& data) {
-    bool success_in_writing = false;
+bool FileIO::write(const QString &data) {
+    bool successInWriting = false;
 
     if (!this->isSourceEmpty()) {
         QFile file(m_source);
@@ -52,14 +55,14 @@ bool FileIO::write(const QString& data) {
             QTextStream out(&file);
             out << data;
             file.close();
-            success_in_writing = true;
+            successInWriting = true;
 
         } else {
             emit error("Can't open the file");
         }
     }
 
-    return success_in_writing;
+    return successInWriting;
 }
 
 QString FileIO::source() const {
@@ -73,4 +76,40 @@ void FileIO::setSource(QString arg) {
         m_source.replace("file://", "");
         emit sourceChanged();
     }
+}
+
+//----------------------------------------------------------------------------//
+//--                           STATIC FUNCTIONS                             --//
+//----------------------------------------------------------------------------//
+
+bool FileIO::readConfigurationFile(QString configurationTemplate, const QString &data) {
+    return true;
+}
+
+void FileIO::writeConfigurationFile(QString configurationTemplate, const QMap<QString, QString> &replacement) {
+
+    QString pathFile = qApp->applicationDirPath();
+    QString currentFile = pathFile + "/scripts/current.femris";
+
+    if (configurationTemplate == "studyCase") {
+        pathFile += "/scripts/base.femris";
+    }
+
+    FileIO fileIO;
+    fileIO.setSource(pathFile);
+
+    QString configurationFileContent = fileIO.read();
+
+    QMapIterator<QString, QString> iteratorMap(replacement);
+    while (iteratorMap.hasNext()) {
+        iteratorMap.next();
+
+        // All the keys in the configuration are surrounded by {{key}}
+        QString replacementKey = "{{" + iteratorMap.key() + "}}";
+        configurationFileContent.replace(replacementKey, iteratorMap.value());
+    }
+
+    fileIO.setSource(currentFile);
+    fileIO.write(configurationFileContent);
+
 }
