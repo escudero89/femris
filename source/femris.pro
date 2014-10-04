@@ -1,12 +1,21 @@
 TEMPLATE = app
 
+# Armadillo, LAPACK and BLAS is already installed. Just remember to link
+# to these. In Qt Creator, just add the following line to your .pro file:
+# In Windows, you need to define ARMADILL_ROOT as system's variable
+INCLUDEPATH += $(ARMADILLO_ROOT)/include
+INCLUDEPATH += $(ARMADILLO_ROOT)/examples/lib_win32
+
+LIBS += -llapack -lblas -larmadillo
+
 QT += qml quick widgets webkit webkit-private
 
 SOURCES += \
     src/main.cpp \
     src/fileio.cpp \
     src/processhandler.cpp \
-    src/studycase.cpp
+    src/studycase.cpp \
+    src/studycasehandler.cpp
 
 RESOURCES += \
     qml/resources.qrc \
@@ -32,4 +41,5 @@ OTHER_FILES += \
 HEADERS += \
     src/fileio.h \
     src/processhandler.h \
-    src/studycase.h
+    src/studycase.h \
+    src/studycasehandler.h

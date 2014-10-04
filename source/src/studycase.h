@@ -5,17 +5,18 @@
 
 #include <armadillo>
 
-class StudyCase : public QObject
+class StudyCase
 {
-    Q_OBJECT
+
 public:
-    explicit StudyCase(QObject *parent = 0);
 
-signals:
+    StudyCase() {};
 
-public slots:
+    void createNew(QString source);
 
 private:
+
+    QString m_source;
 
     double m_youngModulus;
     double m_poissonCoefficient;

@@ -27,12 +27,16 @@
 #include <QDebug>
 
 #include "fileio.h"
+#include "studycasehandler.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     qmlRegisterType<FileIO>("FileIO", 1, 0, "FileIO");
+
+
+    StudyCaseHandler studyCaseHandler;
 
     QMap<QString, QString> replacement;
     replacement["YOUNG_MODULUS"] = "210000000000";
