@@ -13,17 +13,20 @@ class StudyCase
 public:
 
     StudyCase() {};
-    ~StudyCase();
+    virtual ~StudyCase();
 
     void createNew();
     void saveCurrentConfiguration();
     void setMapOfInformation();
 
+    virtual void createLocalNew() {};
+    virtual void setLocalMapOfInformation() {};
+
     QString matToQString(arma::mat&, const QString &);
 
     QMap<QString, QString> getMapOfInformation();
 
-private:
+protected:
 
     QString m_fileTitle;
     QString m_source;

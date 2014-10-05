@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QTextStream>
 
+#include <QDebug>
+
 #include <armadillo>
 
 FileIO::FileIO()
@@ -14,7 +16,7 @@ bool FileIO::isSourceEmpty() {
     bool isEmpty = m_source.isEmpty();
 
     if (isEmpty) {
-        emit error("Source is empty");
+        emit error("FileIO::isSourceEmpty(): Source is empty");
     }
 
     return isEmpty;
@@ -38,7 +40,7 @@ QString FileIO::read() {
             file.close();
 
         } else {
-            emit error("Unable to open the file");
+            emit error("FileIO::read(): Unable to open the file");
         }
     }
 
@@ -58,7 +60,7 @@ bool FileIO::write(const QString &data) {
             successInWriting = true;
 
         } else {
-            emit error("Can't open the file");
+            emit error("FileIO::write(): Can't open the file");
         }
     }
 
@@ -112,4 +114,53 @@ void FileIO::writeConfigurationFile(const QString &configurationTemplate,
     fileIO.setSource(currentFile);
     fileIO.write(configurationFileContent);
 
+}
+
+bool FileIO::splitAndMergeConfigurationFile(const QString &configurationPath,
+                                            const QStringList &capturedTextFilter) {
+
+    bool successInSplitingAndMerging = false;
+
+    QString pathDir = qApp->applicationDirPath();
+    QString pathFile = pathDir + configurationPath;
+    QString pathMatFemFile = pathDir + "/temp/current-mat-fem-file.m";
+
+    QString matFemFileContent = "";
+
+    QFile fileConfiguration(pathFile);
+
+    if (fileConfiguration.open(QIODevice::ReadOnly)) {
+
+        QString line;
+        QTextStream streamConfiguration(&fileConfiguration);
+
+        QRegExp regex("^##.* STUDY CASE (\\S*)\\s* .*>>$");
+
+        bool saveDataInMatFemFile = false;
+
+        do {
+            line = streamConfiguration.readLine();
+
+            // If there is a match, the regex will contain the matched captures
+            if (line.contains(regex)) {
+                //QString capturedText = regex.cap(1);
+                //saveDataInMatFemFile = (capturedText == "MAT-fem" || capturedText == "Configuration");
+                saveDataInMatFemFile = capturedTextFilter.contains(regex.cap(1));
+
+            // And we don't want to save the previous line, so we jump it
+            } else if (saveDataInMatFemFile) {
+                matFemFileContent += line + "\r\n";
+            }
+
+        } while (!line.isNull());
+
+        fileConfiguration.close();
+
+        FileIO fileCurrentMatFem;
+        fileCurrentMatFem.setSource(pathMatFemFile);
+
+        successInSplitingAndMerging = fileCurrentMatFem.write(matFemFileContent);
+    }
+
+    return successInSplitingAndMerging;
 }

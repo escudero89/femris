@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "studycase.h"
+#include "studycasestructural.h"
 
 class StudyCaseHandler : public QObject
 {

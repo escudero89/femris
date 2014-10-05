@@ -17,8 +17,9 @@ public:
     QString source() const;
     bool isSourceEmpty();
 
-    static bool readConfigurationFile(QString, const QString &);
-    static void writeConfigurationFile(const QString&, const QString&, const QMap<QString, QString> &);
+    static bool readConfigurationFile(QString, const QString&);
+    static void writeConfigurationFile(const QString&, const QString&, const QMap<QString, QString>&);
+    static bool splitAndMergeConfigurationFile(const QString&, const QStringList&);
 
 public Q_SLOTS:
 

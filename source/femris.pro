@@ -16,7 +16,8 @@ SOURCES += \
     src/processhandler.cpp \
     src/studycase.cpp \
     src/studycasehandler.cpp \
-    src/utils.cpp
+    src/utils.cpp \
+    src/studycasestructural.cpp
 
 RESOURCES += \
     qml/resources.qrc \

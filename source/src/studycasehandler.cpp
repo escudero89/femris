@@ -3,7 +3,7 @@
 #include <QDebug>
 
 StudyCaseHandler::StudyCaseHandler() {
-    m_studyCase = new StudyCase();
+    m_studyCase = new StudyCaseStructural();
 }
 
 StudyCaseHandler::~StudyCaseHandler() {

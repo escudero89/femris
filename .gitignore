@@ -29,6 +29,6 @@ build-*
 *.autosave
 
 # FEMRIS
-
+source/temp/
 *.femris.old
 *.femris.bak

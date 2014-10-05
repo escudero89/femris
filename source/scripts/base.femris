@@ -30,7 +30,7 @@
 #    created = {{created}} ;
 #    modified = {{modified}} ;
 
-##==============|| STUDY CASE Configuration ||==============>>>>>>>>>>>>
+##==============|| STUDY CASE MAT-fem       ||==============>>>>>>>>>>>>
 %=======================================================================
 % MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
 %                the Finite Element Method with MATLAB and GiD
@@ -44,6 +44,21 @@
   denss = {{densityOfDomain}} ;
   pstrs = {{typeOfProblem}} ;
   thick = {{thickOfDomain}} ;
+
+##==============|| STUDY CASE MAT-femCal    ||==============>>>>>>>>>>>>
+%=======================================================================
+% MAT-femcCal 1.0  - MAT-femCal is a learning tool for undestanding 
+%                    the Finite Element Method with MATLAB and GiD
+%=======================================================================
+% PROBLEM TITLE = {{fileTitle}}
+%
+%  Material Properties
+%
+  kx =             63.00000 ;
+  ky =             63.00000 ;
+ heat=              0.00000 ;
+
+##==============|| STUDY CASE Configuration ||==============>>>>>>>>>>>>
 %
 % Coordinates
 %
@@ -66,7 +81,3 @@ global elements
 % Uniform Side loads
 %
 {{sideload}}
-
-##====================================================================##
-##                       END CONFIGURATION FILE                       ##
-##====================================================================##

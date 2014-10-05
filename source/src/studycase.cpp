@@ -2,18 +2,15 @@
 
 #include "fileio.h"
 
+#include <QStringList>
+
 void StudyCase::createNew() {
 
     m_fileTitle             = "";
 
     m_stepOfProcess         = 0 ;
 
-    m_youngModulus          = 0 ;
-    m_poissonCoefficient    = 0 ;
-    m_densityOfDomain       = 0 ;
-    m_thickOfDomain         = 0 ;
-
-    m_typeOfProblem         = 0 ;
+    createLocalNew();
 
     m_coordinates           = new arma::mat();
     m_elements              = new arma::mat();
@@ -40,25 +37,25 @@ StudyCase::~StudyCase() {
 
 void StudyCase::saveCurrentConfiguration() {
     setMapOfInformation();
-    QMap<QString, QString> empty = m_mapOfInformation;
-    FileIO::writeConfigurationFile("base", m_source, empty);
+
+    FileIO::writeConfigurationFile("base", m_source, m_mapOfInformation);
+
+    QStringList configurationFilter;
+    configurationFilter << "Configuration" << "MAT-fem";
+    FileIO::splitAndMergeConfigurationFile(m_source, configurationFilter);
 }
 
 void StudyCase::setMapOfInformation() {
 
     m_mapOfInformation.clear();
 
-    m_mapOfInformation["stepOfProcess"]            = m_fileTitle;
-    m_mapOfInformation["created"]       = QString::number(m_stepOfProcess);
+    m_mapOfInformation["stepOfProcess"]          = m_fileTitle;
+    m_mapOfInformation["created"]                = QString::number(m_stepOfProcess);
 
     m_mapOfInformation["modified"]               = m_created.toString();
     m_mapOfInformation["fileTitle"]              = m_modified.toString();
 
-    m_mapOfInformation["youngModulus"]         = QString::number(m_youngModulus);
-    m_mapOfInformation["poissonCoefficient"]   = QString::number(m_poissonCoefficient);
-    m_mapOfInformation["densityOfDomain"]     = QString::number(m_densityOfDomain);
-    m_mapOfInformation["typeOfProblem"]       = QString::number(m_typeOfProblem);
-    m_mapOfInformation["thickOfDomain"]       = QString::number(m_thickOfDomain);
+    setLocalMapOfInformation();
 
     m_mapOfInformation["coordinates"]           = matToQString(*m_coordinates, "coordinates");
     m_mapOfInformation["elements"]              = matToQString(*m_elements, "elements");
