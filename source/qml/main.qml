@@ -107,7 +107,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_Domain.qml");
+            globalLoader.setSource("screens/Initial.qml");
         }
 
     }
@@ -127,7 +127,5 @@ ApplicationWindow {
         globalInfoBox.setInfoBox("Cargando...");
         globalLoader.visible = false;
         globalLoader.setSource("screens/" + redirection + ".qml");
-
-        console.log(StudyCaseHandler.createNewStudyCase());
     }
 }

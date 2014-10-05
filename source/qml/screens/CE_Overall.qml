@@ -12,7 +12,9 @@ RowLayout {
 
     id: parentLayout
 
-    property int stepOnStudyCase : 5;
+    property int stepOnStudyCase : {
+        return parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
+    }
 
     anchors.fill: globalLoader
 

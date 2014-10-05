@@ -13,18 +13,22 @@ class StudyCase
 public:
 
     StudyCase() {};
+    ~StudyCase();
 
     void createNew();
     void saveCurrentConfiguration();
-
-    QMap<QString, QString> createMapForReplacementInConfiguration();
+    void setMapOfInformation();
 
     QString matToQString(arma::mat&, const QString &);
+
+    QMap<QString, QString> getMapOfInformation();
 
 private:
 
     QString m_fileTitle;
     QString m_source;
+
+    unsigned char m_stepOfProcess;
 
     double m_youngModulus;
     double m_poissonCoefficient;
@@ -41,6 +45,8 @@ private:
 
     QDateTime m_created;
     QDateTime m_modified;
+
+    QMap<QString, QString> m_mapOfInformation;
 };
 
 #endif // STUDYCASE_H

@@ -6,6 +6,8 @@ void StudyCase::createNew() {
 
     m_fileTitle             = "";
 
+    m_stepOfProcess         = 0 ;
+
     m_youngModulus          = 0 ;
     m_poissonCoefficient    = 0 ;
     m_densityOfDomain       = 0 ;
@@ -13,47 +15,57 @@ void StudyCase::createNew() {
 
     m_typeOfProblem         = 0 ;
 
-    m_coordinates           =   new arma::mat();
-    m_elements              =   new arma::mat();
-    m_fixnodes              =   new arma::mat();
-    m_pointload             =   new arma::mat();
-    m_sideload              =   new arma::mat();
+    m_coordinates           = new arma::mat();
+    m_elements              = new arma::mat();
+    m_fixnodes              = new arma::mat();
+    m_pointload             = new arma::mat();
+    m_sideload              = new arma::mat();
 
-    m_created = QDateTime::currentDateTime();
-    m_modified = m_created;
+    m_created               = QDateTime::currentDateTime();
+    m_modified              = m_created;
 
-    m_source = "/temp/" + m_created.toString("yyyyMMdd-hhmmss") + ".femris.old";
+    m_source                = "/temp/" + m_created.toString("yyyyMMdd-hhmmss") + ".femris.old";
 
     saveCurrentConfiguration();
 
 }
 
-void StudyCase::saveCurrentConfiguration() {
-    FileIO::writeConfigurationFile("base", m_source, createMapForReplacementInConfiguration());
+StudyCase::~StudyCase() {
+    delete m_coordinates;
+    delete m_elements;
+    delete m_fixnodes;
+    delete m_pointload;
+    delete m_sideload;
 }
 
-QMap<QString, QString> StudyCase::createMapForReplacementInConfiguration() {
+void StudyCase::saveCurrentConfiguration() {
+    setMapOfInformation();
+    QMap<QString, QString> empty = m_mapOfInformation;
+    FileIO::writeConfigurationFile("base", m_source, empty);
+}
 
-    QMap<QString, QString> mapReplacement;
+void StudyCase::setMapOfInformation() {
 
-    mapReplacement["FILE_TITLE"]            = m_fileTitle;
+    m_mapOfInformation.clear();
 
-    mapReplacement["CREATED"]               = m_created.toString();
-    mapReplacement["MODIFIED"]              = m_modified.toString();
+    m_mapOfInformation["stepOfProcess"]            = m_fileTitle;
+    m_mapOfInformation["created"]       = QString::number(m_stepOfProcess);
 
-    mapReplacement["YOUNG_MODULUS"]         = QString::number(m_youngModulus);
-    mapReplacement["POISSON_COEFFICIENT"]   = QString::number(m_poissonCoefficient);
-    mapReplacement["DENSITY_OF_DOMAIN"]     = QString::number(m_densityOfDomain);
-    mapReplacement["TYPE_OF_PROBLEM"]       = QString::number(m_typeOfProblem);
-    mapReplacement["THICK_OF_DOMAIN"]       = QString::number(m_thickOfDomain);
+    m_mapOfInformation["modified"]               = m_created.toString();
+    m_mapOfInformation["fileTitle"]              = m_modified.toString();
 
-    mapReplacement["COORDINATES"]           = matToQString(*m_coordinates, "coordinates");
-    mapReplacement["ELEMENTS"]              = matToQString(*m_elements, "elements");
-    mapReplacement["FIXNODES"]              = matToQString(*m_fixnodes, "fixnodes");
-    mapReplacement["POINTLOAD"]             = matToQString(*m_pointload, "pointload");
-    mapReplacement["SIDELOAD"]              = matToQString(*m_sideload, "sideload");
+    m_mapOfInformation["youngModulus"]         = QString::number(m_youngModulus);
+    m_mapOfInformation["poissonCoefficient"]   = QString::number(m_poissonCoefficient);
+    m_mapOfInformation["densityOfDomain"]     = QString::number(m_densityOfDomain);
+    m_mapOfInformation["typeOfProblem"]       = QString::number(m_typeOfProblem);
+    m_mapOfInformation["thickOfDomain"]       = QString::number(m_thickOfDomain);
 
-    return mapReplacement;
+    m_mapOfInformation["coordinates"]           = matToQString(*m_coordinates, "coordinates");
+    m_mapOfInformation["elements"]              = matToQString(*m_elements, "elements");
+    m_mapOfInformation["fixnodes"]              = matToQString(*m_fixnodes, "fixnodes");
+    m_mapOfInformation["pointload"]             = matToQString(*m_pointload, "pointload");
+    m_mapOfInformation["sideload"]              = matToQString(*m_sideload, "sideload");
+
 }
 
 QString StudyCase::matToQString(arma::mat &matBase, const QString &name) {
@@ -90,3 +102,12 @@ QString StudyCase::matToQString(arma::mat &matBase, const QString &name) {
 
     return matQString;
 }
+
+//----------------------------------------------------------------------------//
+//--                          GETTER AND SETTERS                            --//
+//----------------------------------------------------------------------------//
+
+QMap<QString, QString> StudyCase::getMapOfInformation() {
+    return m_mapOfInformation;
+}
+

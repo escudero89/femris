@@ -44,7 +44,10 @@ RowLayout {
                 header.text: "NUEVO"
 
                 button.buttonLabel: "Crear"
-                button.onClicked : mainWindow.switchSection("CE_Overall")
+                button.onClicked : {
+                    StudyCaseHandler.createNewStudyCase();
+                    mainWindow.switchSection("CE_Overall");
+                }
             }
 
             ChoiceBlock {

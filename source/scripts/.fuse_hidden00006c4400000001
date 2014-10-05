@@ -26,46 +26,45 @@
 
 ##==============|| STUDY CASE Information   ||==============>>>>>>>>>>>>
 
-#    step_of_process = {{stepOfProcess}} ;
-#    created = {{created}} ;
-#    modified = {{modified}} ;
+#    created = {{CREATED}} ;
+#    modified = {{MODIFIED}} ;
 
 ##==============|| STUDY CASE Configuration ||==============>>>>>>>>>>>>
 %=======================================================================
 % MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
 %                the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% PROBLEM TITLE = {{fileTitle}}
+% PROBLEM TITLE = {{FILE_TITLE}}
 %
 %  Material Properties
 %
-  young = {{youngModulus}} ;
-  poiss = {{poissonCoefficient}} ;
-  denss = {{densityOfDomain}} ;
-  pstrs = {{typeOfProblem}} ;
-  thick = {{thickOfDomain}} ;
+  young = {{YOUNG_MODULUS}} ;
+  poiss = {{POISSON_COEFFICIENT}} ;
+  denss = {{DENSITY_OF_DOMAIN}} ;
+  pstrs = {{TYPE_OF_PROBLEM}} ;
+  thick = {{THICK_OF_DOMAIN}} ;
 %
 % Coordinates
 %
 global coordinates
-{{coordinates}}
+{{COORDINATES}}
 %
 % Elements
 %
 global elements
- {{elements}}
+ {{ELEMENTS}}
 %
 % Fixed Nodes
 %
-{{fixnodes}}
+{{FIXNODES}}
 %
 % Point loads
 %
-{{pointload}}
+{{POINTLOAD}}
 %
 % Uniform Side loads
 %
-{{sideload}}
+{{SIDELOAD}}
 
 ##====================================================================##
 ##                       END CONFIGURATION FILE                       ##

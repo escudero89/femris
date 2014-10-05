@@ -15,7 +15,8 @@ SOURCES += \
     src/fileio.cpp \
     src/processhandler.cpp \
     src/studycase.cpp \
-    src/studycasehandler.cpp
+    src/studycasehandler.cpp \
+    src/utils.cpp
 
 RESOURCES += \
     qml/resources.qrc \
@@ -41,5 +42,4 @@ OTHER_FILES += \
 HEADERS += \
     src/fileio.h \
     src/processhandler.h \
-    src/studycase.h \
     src/studycasehandler.h

@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
 
     StudyCaseHandler studyCaseHandler;
 
+    // We make the StudyCaseHandler instance accessible from QML
     engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
