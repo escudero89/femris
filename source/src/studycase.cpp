@@ -6,7 +6,7 @@ void StudyCase::createNew() {
 
     m_fileTitle             = "";
 
-    m_stepOfProcess         = 0 ;
+    m_stepOfProcess         = 1 ;
 
     createLocalNew();
 

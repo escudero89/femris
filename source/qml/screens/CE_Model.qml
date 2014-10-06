@@ -11,6 +11,7 @@ import "../"
 RowLayout {
 
     id: rowParent
+    objectName: "CE_Model"
 
     spacing: 0
     anchors.fill: globalLoader
@@ -30,7 +31,7 @@ RowLayout {
         Layout.preferredWidth: (parent.width - leftContentRectangle.width) * .55
     }
 
-    RightTutorialBox {
+    CE_RightBlock {
         id: rightContentRectangle
 
         Layout.fillHeight: true

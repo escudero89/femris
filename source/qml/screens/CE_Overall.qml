@@ -11,6 +11,7 @@ import "../content"
 RowLayout {
 
     id: parentLayout
+    objectName: "CE_Overall"
 
     property int stepOnStudyCase : {
         return parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));

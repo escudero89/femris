@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>content/AndroidDelegate.qml</file>
+        <file>content/ChoiceBlock.qml</file>
+        <file>content/Index.qml</file>
+        <file>content/PrimaryButton.qml</file>
+        <file>content/StackIndex.qml</file>
+        <file>content/TopMenuBar.qml</file>
+        <file>content/LeftContentBox.qml</file>
+        <file>content/CE_RightBlock.qml</file>
+        <file>content/MiddleTutorialBox.qml</file>
+        <file>content/FirstTimeBox.qml</file>
+        <file>content/smallBoxes/ModelElectionSBox.qml</file>
+        <file>content/smallBoxes/VariablesSBox.qml</file>
+        <file>content/smallBoxes/TutorialSBox.qml</file>
+        <file>content/smallBoxes/CodeSBox.qml</file>
+    </qresource>
+</RCC>

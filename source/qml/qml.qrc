@@ -1,25 +1,14 @@
 <RCC>
     <qresource prefix="/">
         <file>qmldir</file>
-        <file>content/AndroidDelegate.qml</file>
-        <file>content/ChoiceBlock.qml</file>
-        <file>content/Index.qml</file>
-        <file>content/PrimaryButton.qml</file>
-        <file>content/StackIndex.qml</file>
-        <file>content/TopMenuBar.qml</file>
         <file>screens/BaseFrame.qml</file>
         <file>screens/Initial.qml</file>
-        <file>main.qml</file>
-        <file>Style.qml</file>
-        <file>test.qml</file>
         <file>screens/CE_Results.qml</file>
         <file>screens/CE_Overall.qml</file>
         <file>screens/CE_Model.qml</file>
-        <file>content/LeftContentBox.qml</file>
-        <file>content/RightTutorialBox.qml</file>
-        <file>content/MiddleTutorialBox.qml</file>
         <file>screens/CE_Domain.qml</file>
-        <file>content/FirstTimeBox.qml</file>
-        <file>content/RightCodeBox.qml</file>
+        <file>main.qml</file>
+        <file>Style.qml</file>
+        <file>test.qml</file>
     </qresource>
 </RCC>

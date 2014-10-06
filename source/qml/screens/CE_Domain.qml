@@ -11,6 +11,7 @@ import "../"
 RowLayout {
 
     id: rowParent
+    objectName: "CE_Domain"
 
     spacing: 0
     anchors.fill: globalLoader
@@ -30,7 +31,7 @@ RowLayout {
         Layout.preferredWidth: (parent.width - leftContentRectangle.width) * .55
     }
 
-    RightCodeBox {
+    CE_RightBlock {
         id: rightContentRectangle
 
         Layout.fillHeight: true
