@@ -16,6 +16,7 @@ public:
     Q_INVOKABLE bool createNewStudyCase();
 
     Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&);
+    Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString&);
 
 signals:
 

@@ -3,13 +3,15 @@
 
 #include "studycase.h"
 
-class StudyCaseStructural : public virtual StudyCase {
+class StudyCaseStructural : public virtual StudyCase
+{
 public:
     StudyCaseStructural();
     ~StudyCaseStructural() {};
 
     void createLocalNew();
     void setLocalMapOfInformation();
+    void saveLocalCurrentConfiguration();
 };
 
 #endif // STUDYCASESTRUCTURAL_H

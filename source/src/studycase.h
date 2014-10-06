@@ -21,17 +21,22 @@ public:
 
     virtual void createLocalNew() {};
     virtual void setLocalMapOfInformation() {};
+    virtual void saveLocalCurrentConfiguration() {};
 
     QString matToQString(arma::mat&, const QString &);
 
+    // Getters and setters
     QMap<QString, QString> getMapOfInformation();
+    void setMapOfInformation(const QMap<QString, QString> &);
 
 protected:
+
+    QString m_typeOfStudyCase;
 
     QString m_fileTitle;
     QString m_source;
 
-    unsigned char m_stepOfProcess;
+    unsigned int m_stepOfProcess;
 
     double m_youngModulus;
     double m_poissonCoefficient;

@@ -2,8 +2,6 @@
 
 #include "fileio.h"
 
-#include <QStringList>
-
 void StudyCase::createNew() {
 
     m_fileTitle             = "";
@@ -23,6 +21,7 @@ void StudyCase::createNew() {
 
     m_source                = "/temp/" + m_created.toString("yyyyMMdd-hhmmss") + ".femris.old";
 
+    setMapOfInformation();
     saveCurrentConfiguration();
 
 }
@@ -36,24 +35,20 @@ StudyCase::~StudyCase() {
 }
 
 void StudyCase::saveCurrentConfiguration() {
-    setMapOfInformation();
-
     FileIO::writeConfigurationFile("base", m_source, m_mapOfInformation);
-
-    QStringList configurationFilter;
-    configurationFilter << "Configuration" << "MAT-fem";
-    FileIO::splitAndMergeConfigurationFile(m_source, configurationFilter);
+    saveLocalCurrentConfiguration();
 }
 
 void StudyCase::setMapOfInformation() {
 
     m_mapOfInformation.clear();
 
-    m_mapOfInformation["stepOfProcess"]          = m_fileTitle;
-    m_mapOfInformation["created"]                = QString::number(m_stepOfProcess);
+    m_mapOfInformation["typeOfStudyCase"]        = m_typeOfStudyCase;
+    m_mapOfInformation["fileTitle"]              = m_fileTitle;
+    m_mapOfInformation["stepOfProcess"]          = QString::number(m_stepOfProcess);
 
-    m_mapOfInformation["modified"]               = m_created.toString();
-    m_mapOfInformation["fileTitle"]              = m_modified.toString();
+    m_mapOfInformation["created"]                = m_created.toString();
+    m_mapOfInformation["modified"]               = m_modified.toString();
 
     setLocalMapOfInformation();
 
@@ -108,3 +103,6 @@ QMap<QString, QString> StudyCase::getMapOfInformation() {
     return m_mapOfInformation;
 }
 
+void StudyCase::setMapOfInformation(const QMap<QString, QString> &newMapOfInformation) {
+    m_mapOfInformation = newMapOfInformation;
+}

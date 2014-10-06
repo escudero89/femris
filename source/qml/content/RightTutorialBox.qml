@@ -68,6 +68,11 @@ Column {
             buttonText.font.pixelSize: height / 2
 
             Layout.preferredWidth: 0.6 * parent.width
+
+            onClicked: {
+                StudyCaseHandler.setSingleStudyCaseInformation("stepOfProcess", "1");
+                mainWindow.switchSection("CE_Domain");
+            }
         }
     }
 }

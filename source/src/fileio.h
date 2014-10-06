@@ -19,7 +19,7 @@ public:
 
     static bool readConfigurationFile(QString, const QString&);
     static void writeConfigurationFile(const QString&, const QString&, const QMap<QString, QString>&);
-    static bool splitAndMergeConfigurationFile(const QString&, const QStringList&);
+    static bool splitConfigurationFile(const QString&, const QString&, const QStringList&, bool);
 
 public Q_SLOTS:
 

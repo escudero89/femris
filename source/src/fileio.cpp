@@ -116,16 +116,17 @@ void FileIO::writeConfigurationFile(const QString &configurationTemplate,
 
 }
 
-bool FileIO::splitAndMergeConfigurationFile(const QString &configurationPath,
-                                            const QStringList &capturedTextFilter) {
+bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
+                                    const QString &configurationPath,
+                                    const QStringList &capturedTextFilter,
+                                    bool jumpSeparationLines) {
 
     bool successInSplitingAndMerging = false;
 
     QString pathDir = qApp->applicationDirPath();
     QString pathFile = pathDir + configurationPath;
-    QString pathMatFemFile = pathDir + "/temp/current-mat-fem-file.m";
 
-    QString matFemFileContent = "";
+    QString octaveFileContent = "";
 
     QFile fileConfiguration(pathFile);
 
@@ -136,30 +137,31 @@ bool FileIO::splitAndMergeConfigurationFile(const QString &configurationPath,
 
         QRegExp regex("^##.* STUDY CASE (\\S*)\\s* .*>>$");
 
-        bool saveDataInMatFemFile = false;
+        bool saveDataInOctaveFile = false;
+        bool inDefinitionLine = false;
 
         do {
             line = streamConfiguration.readLine();
+            inDefinitionLine = line.contains(regex);
 
             // If there is a match, the regex will contain the matched captures
-            if (line.contains(regex)) {
-                //QString capturedText = regex.cap(1);
-                //saveDataInMatFemFile = (capturedText == "MAT-fem" || capturedText == "Configuration");
-                saveDataInMatFemFile = capturedTextFilter.contains(regex.cap(1));
+            if (inDefinitionLine) {
+                saveDataInOctaveFile = capturedTextFilter.contains(regex.cap(1));
+            }
 
-            // And we don't want to save the previous line, so we jump it
-            } else if (saveDataInMatFemFile) {
-                matFemFileContent += line + "\r\n";
+            // If we don't want to save the previous line, we jump it
+            if (saveDataInOctaveFile && (!inDefinitionLine || !jumpSeparationLines)) {
+                octaveFileContent += line + "\r\n";
             }
 
         } while (!line.isNull());
 
         fileConfiguration.close();
 
-        FileIO fileCurrentMatFem;
-        fileCurrentMatFem.setSource(pathMatFemFile);
+        FileIO fileCurrentOctave;
+        fileCurrentOctave.setSource(pathDir + "/temp/" + configurationTemplate);
 
-        successInSplitingAndMerging = fileCurrentMatFem.write(matFemFileContent);
+        successInSplitingAndMerging = fileCurrentOctave.write(octaveFileContent);
     }
 
     return successInSplitingAndMerging;

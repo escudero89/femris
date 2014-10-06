@@ -22,7 +22,7 @@ Rectangle {
         width : parent.width * 0.9
 
         spacing: 0
-
+/*
         Component {
             id: contactDelegate
 
@@ -122,34 +122,9 @@ Rectangle {
                 }
             }
         }
+*/
 
 
-/*
-        GridLayout {
-
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-
-            columns: 2
-
-            Text {
-                id: textField
-
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-
-                text: "Input"
-            }
-
-            TextField {
-                Layout.preferredHeight: textField.height
-                Layout.fillWidth: true
-
-                text: "EH?"
-            }
-
-        }*/
-/*
         TableView {
 
             Layout.fillHeight: true
@@ -162,12 +137,17 @@ Rectangle {
             }
 
             model: ListModel {
-               ListElement{ title: "Ecuación de Transporte" ; author: "Gabriel" }
-               ListElement{ title: "Brilliance"    ; author: "Jens" }
-               ListElement{ title: "Outstanding"   ; author: "Frederik" }
+                id: listModelProblem
+                ListElement{ title: "Ecuación de Transporte" ; author: "Gabriel" }
+                ListElement{ title: "Brilliance"    ; author: "Jens" }
+                ListElement{ title: "Outstanding"   ; author: "Frederik" }
+            }
+
+            onClicked: {
+                console.log(listModelProblem.get(row).author);
             }
         }
-*/
+/*
         PrimaryButton {
             buttonLabel: "Nuevo Modelo"
             buttonStatus: "white"
@@ -175,7 +155,7 @@ Rectangle {
 
             Layout.fillWidth: true
         }
-
+*/
         Rectangle {
             color: "transparent"
             Layout.preferredHeight: columnLayout1.height * 0.02

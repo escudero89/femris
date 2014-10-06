@@ -82,7 +82,7 @@ Column {
 
                 FileIO {
                     id: io_code
-                    source: "scripts/domain.m"
+                    source: "temp/current-octave-model.m"
                     onError: console.log(msg)
 
                     onSourceChanged: {
