@@ -85,8 +85,10 @@ RowLayout {
                 width: parent.width
                 height: parent.height
 
-                //experimental.preferences.webGLEnabled: true
-                //experimental.preferences.developerExtrasEnabled: true
+                objectName: webViewCurrent
+
+                experimental.preferences.webGLEnabled: true
+                experimental.preferences.developerExtrasEnabled: true
 
                 // We load the layout and the view, and put the info in the WebView
                 FileIO {
@@ -107,7 +109,8 @@ RowLayout {
                     onError: console.log(msg)
 
                     onSourceChanged: {
-                        currentWebView.url = "../docs/current.html";
+                        //currentWebView.url = "../docs/current.html";
+                        // loadHtml(io_current.read());
                         console.debug("asd");
                     }
 

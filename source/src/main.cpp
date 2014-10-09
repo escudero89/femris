@@ -37,9 +37,11 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<FileIO>("FileIO", 1, 0, "FileIO");
 
     StudyCaseHandler studyCaseHandler;
+    FileIO currentFileIO;
 
     // We make the StudyCaseHandler instance accessible from QML
     engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);
+    engine.rootContext()->setContextProperty("CurrentFileIO", &currentFileIO);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

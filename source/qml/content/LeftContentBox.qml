@@ -15,6 +15,8 @@ Rectangle {
 
     property int stepOfProcess : parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
 
+    property string parentStage : parent.objectName
+
     ColumnLayout {
 
         id: columnLayout1
@@ -27,19 +29,10 @@ Rectangle {
 
         spacing: 0
 
+        ModelElectionSBox { visible : { return parentStage === 'CE_Model' } }
 
-        ModelElectionSBox { visible : { return stepOfProcess <= 1; } }
+        VariablesSBox { visible : { return parentStage === 'CE_Domain'; } }
 
-        VariablesSBox { visible : { return stepOfProcess == 2; } }
-/*
-        PrimaryButton {
-            buttonLabel: "Nuevo Modelo"
-            buttonStatus: "white"
-            buttonText.font.pixelSize: height / 2
-
-            Layout.fillWidth: true
-        }
-*/
         Rectangle {
             color: "transparent"
             Layout.preferredHeight: columnLayout1.height * 0.02

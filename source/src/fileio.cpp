@@ -44,6 +44,8 @@ QString FileIO::read() {
         }
     }
 
+    emit performedRead(fileContent);
+
     return fileContent;
 }
 

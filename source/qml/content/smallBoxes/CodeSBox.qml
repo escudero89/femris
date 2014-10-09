@@ -5,8 +5,6 @@ import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 import QtWebKit 3.0
 
-import FileIO 1.0
-
 import "../../docs"
 import "../../screens"
 import "../../"
@@ -79,20 +77,9 @@ Rectangle {
 
             wrapMode: Text.NoWrap
 
-            FileIO {
-                id: io_code
-                source: "temp/current-octave-model.m"
-                onError: console.log(msg)
-
-                onSourceChanged: {
-                    console.log(source);
-                    console.log("asd");
-                    console.debug("hola");
-                }
-            }
-//^\s*function.+domain\((.*)\)$
             Component.onCompleted: {
-                codeArea.text = io_code.read();
+                CurrentFileIO.setSource("temp/current-octave-domain.m");
+                codeArea.text = CurrentFileIO.read();
             }
 
             Rectangle {
@@ -136,9 +123,9 @@ Rectangle {
 
         onAccepted: {
             console.log("You chose: " + scriptDialog.fileUrl)
-            io_code.setSource(scriptDialog.fileUrl);
+            CurrentFileIO.setSource(scriptDialog.fileUrl);
 
-            codeArea.text = io_code.read();
+            codeArea.text = CurrentFileIO.read();
         }
         onRejected: {
             console.log("Canceled")

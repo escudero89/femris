@@ -83,7 +83,7 @@ global elements
 %
 {{sideload}}
 
-##==============|| STUDY CASE Octave-model  ||==============>>>>>>>>>>>>
+##==============|| STUDY CASE Octave-domain ||==============>>>>>>>>>>>>
 #! /usr/bin/octave -qf
 
 function [xnode, ielem] = domain(eje_x, eje_y)

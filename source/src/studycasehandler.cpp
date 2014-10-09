@@ -2,6 +2,9 @@
 
 #include <QDebug>
 
+/**
+ * @brief StudyCaseHandler::StudyCaseHandler
+ */
 StudyCaseHandler::StudyCaseHandler() {
     m_studyCase = new StudyCaseStructural();
 }
@@ -10,6 +13,10 @@ StudyCaseHandler::~StudyCaseHandler() {
     delete m_studyCase;
 }
 
+/**
+ * @brief StudyCaseHandler::createNewStudyCase
+ * @return
+ */
 bool StudyCaseHandler::createNewStudyCase() {
 
     m_studyCase->createNew();
@@ -18,6 +25,11 @@ bool StudyCaseHandler::createNewStudyCase() {
     return true;
 }
 
+/**
+ * @brief StudyCaseHandler::getSingleStudyCaseInformation
+ * @param variable
+ * @return
+ */
 QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable) {
 
     if (!m_currentStudyCaseVariables.contains(variable)) {
@@ -27,6 +39,11 @@ QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable)
     return m_currentStudyCaseVariables.value(variable);
 }
 
+/**
+ * @brief StudyCaseHandler::setSingleStudyCaseInformation
+ * @param variable
+ * @param newVariable
+ */
 void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
                                                      const QString& newVariable) {
 
@@ -40,9 +57,11 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
     m_studyCase->saveCurrentConfiguration();
 }
 
-/*
- *
- **/
+/**
+ * @brief StudyCaseHandler::saveAndContinue
+ * @param parentStage
+ * @return
+ */
 QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
 
     unsigned int stepOfProcess = getSingleStudyCaseInformation("stepOfProcess").toUInt();
@@ -51,7 +70,12 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
     int currentStepOfProcess = 1;
 
     QStringList stagesList;
-    stagesList << "CE_Model" << "CE_Domain" << "CE_Overall";
+    stagesList << "CE_Model"
+               << "CE_Domain"
+               << "CE_Properties"
+               << "CE_ShapeFunction"
+               << "CE_Results"
+               << "CE_Overall";
 
     while (newStepOfProcess == 0) {
 
@@ -77,10 +101,25 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
     return stagesList.at(newStepOfProcess - 1);
 }
 
+/**
+ * @brief StudyCaseHandler::saveAndContinueHelper
+ * @param parentStage
+ * @param comparisonStage
+ * @param stepOfProcess
+ * @param stepOfProcessForComparison
+ * @return
+ */
 bool StudyCaseHandler::saveAndContinueHelper(const QString &parentStage,
                                              const QString &comparisonStage,
                                              const unsigned int &stepOfProcess,
                                              const unsigned int &stepOfProcessForComparison) {
 
     return (parentStage == comparisonStage && stepOfProcess == stepOfProcessForComparison);
+}
+
+
+bool StudyCaseHandler::createDomainFromOctaveFile(const QString &pathfile, const QString &args) {
+
+
+
 }

@@ -12,5 +12,6 @@
         <file>docs/js/fem-matrix.js</file>
         <file>docs/js/femris-utils.js</file>
         <file>docs/js/femris-globals.js</file>
+        <file>docs/js/temp/current-domain.js</file>
     </qresource>
 </RCC>

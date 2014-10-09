@@ -11,7 +11,7 @@ import "../"
 RowLayout {
 
     id: rowParent
-    objectName: "CE_Domain"
+    objectName: "CE_ShapeFunction"
 
     spacing: 0
     anchors.fill: globalLoader
@@ -26,8 +26,6 @@ RowLayout {
 
     MiddleTutorialBox {
         id: mainContentRectangle
-
-        urlWebView: "qrc:/docs/ce_domain.html"
 
         Layout.fillHeight: true
         Layout.preferredWidth: (parent.width - leftContentRectangle.width) * .55

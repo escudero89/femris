@@ -29,6 +29,7 @@ Q_SIGNALS:
 
     void error(const QString &msg);
     void sourceChanged();
+    void performedRead(const QString &content);
 
 private:
 

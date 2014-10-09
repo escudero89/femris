@@ -35,8 +35,8 @@ void StudyCaseStructural::saveLocalCurrentConfiguration() {
     FileIO::splitConfigurationFile("current-mat-fem-file.m", m_source, configurationFilter, true);
 
     configurationFilter.clear();
-    configurationFilter << "Octave-model";
-    FileIO::splitConfigurationFile("current-octave-model.m", m_source, configurationFilter, true);
+    configurationFilter << "Octave-domain";
+    FileIO::splitConfigurationFile("current-octave-domain.m", m_source, configurationFilter, true);
 
     configurationFilter.clear();
     configurationFilter << "Octave-ff";

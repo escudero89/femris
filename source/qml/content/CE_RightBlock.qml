@@ -14,8 +14,13 @@ Column {
 
     property string parentStage : parent.objectName
 
-    //CodeSBox { }
-    TutorialSBox { }
+    TutorialSBox {
+        visible: parentStage === 'CE_Model'
+    }
+
+    CodeSBox {
+        visible: parentStage === 'CE_Domain'
+    }
 
     RowLayout {
 

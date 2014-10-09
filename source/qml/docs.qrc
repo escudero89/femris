@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>docs/ce_domain.html</file>
         <file>docs/ce_results.html</file>
         <file>docs/index.xml</file>
         <file>docs/layout.html</file>

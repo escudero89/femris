@@ -18,7 +18,7 @@ class ProcessHandler : public QObject {
   public slots:
 
     void cppSlot(const QString &, const QString &, float);
-    void invokingOctave(float);
+    static void invokingOctave(float);
 };
 
 

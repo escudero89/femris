@@ -10,10 +10,12 @@ import "."
 
 Rectangle {
 
+    id: variablesSBox
+
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    border.color: Style.color.complement
+    border.color: Style.color.background_highlight
 
     ColumnLayout {
 
@@ -27,9 +29,9 @@ Rectangle {
             id: variablesRectangle
 
             Layout.preferredHeight: textCode.height * 1.5
-            Layout.fillWidth: true
+            Layout.preferredWidth: variablesList.width
 
-            color: Style.color.complement
+            color: Style.color.background_highlight
 
             Text {
                 id: textCode
@@ -37,8 +39,9 @@ Rectangle {
                 text: qsTr("Variables")
                 font.italic: true
 
-                color: Style.color.background_highlight
-                font.pixelSize: 0
+                color: Style.color.complement
+                font.pixelSize: Style.fontSize.h5
+                font.bold: true
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -49,7 +52,7 @@ Rectangle {
 
             id: variablesList
 
-            Layout.preferredHeight: parent.height
+            Layout.preferredHeight: parent.height - buttonSaveVariables.height - variablesRectangle.height
             Layout.preferredWidth: parent.width
 
             delegate: Rectangle {
@@ -76,7 +79,7 @@ Rectangle {
                     TextField {
                         id: variablesTextField
 
-                        Layout.preferredWidth: parent.width / 3
+                        Layout.preferredWidth: parent.width / 2
                         text: author
                     }
                 }
@@ -87,17 +90,60 @@ Rectangle {
             z: variablesRectangle.z - 1
 
             model: ListModel {
-                ListElement{ title: "Ecuación de Transporte" ; author: "Gabriel" }
-                ListElement{ title: "Brilliance"    ; author: "Jens" }
-                ListElement{ title: "Outstanding"   ; author: "Frederik" }
-                ListElement{ title: "Outstanding"   ; author: "Frederik" }
-                ListElement{ title: "Outstanding"   ; author: "Frederik" }
-                ListElement{ title: "Outstanding"   ; author: "Frederik" }
-                ListElement{ title: "Outstanding"   ; author: "Frederik" }
-                ListElement{ title: "Outstanding"   ; author: "Frederik" }
-                ListElement{ title: "Outstanding"   ; author: "Frederik" }
-                ListElement{ title: "Outstanding"   ; author: "Frederik" }
+                id: listModelVariablesSBox
+            }
+
+            Connections {
+                target: CurrentFileIO
+
+                onPerformedRead: {
+                    var dynamicVariables = getArgsFromOctaveFile(content);
+                    var dynamicVariablesKeys = Object.keys(dynamicVariables);
+                    var k;
+
+                    for ( k = 0 ; k < dynamicVariablesKeys.length ; k++ ) {
+                        listModelVariablesSBox.append({
+                            'title': dynamicVariablesKeys[k],
+                            'author' : dynamicVariables[dynamicVariablesKeys[k]]
+                        });
+                    }
+                }
             }
         }
+
+        PrimaryButton {
+            id: buttonSaveVariables
+            Layout.fillWidth: true
+
+            buttonText.font.pixelSize: height / 2
+            buttonLabel: qsTr('Guardar')
+
+            buttonStatus: 'white'
+        }
     }
+
+    function getArgsFromOctaveFile(content) {
+        var regex = new RegExp("^\s*function.*\\[(.*)\\].+domain\\((.*)\\)$", "m");
+        var match = regex.exec(content);
+
+        var returned_values = match[1].split(',');
+        var args = match[2].split(',');
+        var kArgs;
+
+        var dynamicVariables = {};
+        var dynamicArgs;
+
+        for ( kArgs = 0; kArgs < args.length; kArgs++ ) {
+            if (args[kArgs].search('=') > 0) {
+                dynamicArgs = args[kArgs].split('=');
+                dynamicVariables[dynamicArgs[0].trim()] = dynamicArgs[1].trim();
+                console.log(dynamicArgs[1].trim());
+            } else {
+                dynamicVariables[args[kArgs].trim()] = '';
+            }
+        }
+
+        return dynamicVariables;
+    }
+
 }
