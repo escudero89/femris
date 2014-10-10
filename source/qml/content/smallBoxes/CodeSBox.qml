@@ -47,7 +47,7 @@ Rectangle {
 
                 id: textCode
 
-                text: qsTr("Script de GNU Octave (sólo lectura)")
+                text: qsTr("Script ha utilizar (sólo lectura)")
                 font.italic: true
 
                 color: Style.color.background_highlight
@@ -117,9 +117,9 @@ Rectangle {
 
     FileDialog {
         id: scriptDialog
-        title: "Por favor seleccione un script de GNU Octave"
+        title: "Por favor seleccione un script de MATLAB"
 
-        nameFilters: [ "Archivos de GNU Octave (*.m *.octave)", "Todos los archivos (*)" ]
+        nameFilters: [ "Archivos de MATLAB (*.m *.matlab *.octave)", "Todos los archivos (*)" ]
 
         onAccepted: {
             console.log("You chose: " + scriptDialog.fileUrl)

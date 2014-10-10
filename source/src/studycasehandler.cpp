@@ -120,14 +120,13 @@ bool StudyCaseHandler::saveAndContinueHelper(const QString &parentStage,
 }
 
 /**
- * @brief StudyCaseHandler::createDomainFromOctaveFile
+ * @brief StudyCaseHandler::createDomainFromScriptFile
  * @param pathfile
  * @return
  */
-bool StudyCaseHandler::createDomainFromOctaveFile(const QString &fileContent) {
+bool StudyCaseHandler::createDomainFromScriptFile(const QString &fileContent) {
 
     emit loadingStart();
-
     emit callProcess();
 
     emit loadingDone();

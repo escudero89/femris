@@ -15,7 +15,7 @@ public:
     ~StudyCaseHandler();
 
     Q_INVOKABLE bool createNewStudyCase();
-    Q_INVOKABLE bool createDomainFromOctaveFile(const QString&);
+    Q_INVOKABLE bool createDomainFromScriptFile(const QString&);
 
     Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&);
     Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString&);

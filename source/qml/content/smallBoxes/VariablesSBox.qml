@@ -99,7 +99,7 @@ Rectangle {
                 target: CurrentFileIO
 
                 onPerformedRead: {
-                    var dynamicVariables = getArgsFromOctaveFile(content);
+                    var dynamicVariables = getArgsFromScriptFile(content);
                     var dynamicVariablesKeys = Object.keys(dynamicVariables);
                     var k;
 
@@ -125,7 +125,7 @@ Rectangle {
             buttonStatus: 'white'
 
             onClicked: {
-                StudyCaseHandler.createDomainFromOctaveFile(CurrentFileIO.read());
+                StudyCaseHandler.createDomainFromScriptFile(CurrentFileIO.read());
             }
 
             Connections {
@@ -163,7 +163,7 @@ Rectangle {
         }
     }
 
-    function getArgsFromOctaveFile(content) {
+    function getArgsFromScriptFile(content) {
         var regex = new RegExp("^\s*function.*\\[(.*)\\].+domain\\((.*)\\)$", "m");
         var match = regex.exec(content);
 

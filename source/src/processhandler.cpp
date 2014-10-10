@@ -64,29 +64,7 @@ void ProcessHandler::callingMatlab() {
 
     m_process.start("/media/Cristian/MatLabLinux/bin/matlab", processArgs, QIODevice::ReadWrite);
 
-    /*if (!matlab.waitForStarted()) {
-        qDebug() << "ProcessHandler::invokingOctave(): There was a problem initializing Octave.";
-        qDebug() << matlab.errorString();
-    }*/
-
-/*
-    matlab.write(fileContent.toUtf8().constData());
-
-    //QString test = "[xnode ielem] = domain([1:10]',[1:10]');";
-    //QString test = "function [x] = a(z); x=z+3; endfunction; disp(a(3));";
-    QString test = "cd temp/; ls;  [xnode ielem] = domain([1:10]',[1:10]')";
-    matlab.write(test.toUtf8().constData());
-
-    matlab.closeWriteChannel();
-    matlab.waitForBytesWritten();
-
-    //if (!matlab.waitForFinished(16000)) {
-      //  qDebug() << "ProcessHandler::invokingOctave(): Octave took too much to end. Killing process...";
-    //}
-
-    QByteArray result = matlab.readAll();
-    qDebug() << "Result: "  << result;
-    */
+    m_writing = false;
 }
 
 void ProcessHandler::writingInProcess() {
@@ -120,5 +98,5 @@ void ProcessHandler::finishingProcess() {
 
     m_process.close();
 
-    m_writing = false;
+    emit finishedProcess();
 }

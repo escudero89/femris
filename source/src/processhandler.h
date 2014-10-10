@@ -27,11 +27,12 @@ public Q_SLOTS:
 Q_SIGNALS:
 
     void proccessCalled();
+    void finishedProcess();
 
 private:
 
     QProcess m_process;
-    bool m_writing = false;
+    bool m_writing;
 };
 
 
