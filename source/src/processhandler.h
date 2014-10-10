@@ -23,6 +23,7 @@ public Q_SLOTS:
     void writingInProcess();
     void readingInProcess();
     void finishingProcess();
+    void exitingProcess();
 
 Q_SIGNALS:
 

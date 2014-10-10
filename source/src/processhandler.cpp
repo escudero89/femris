@@ -10,6 +10,7 @@ ProcessHandler::ProcessHandler() {
     connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(writingInProcess()));
     connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readingInProcess()));
     connect(&m_process, SIGNAL(readChannelFinished()), this, SLOT(finishingProcess()));
+    connect(&m_process, SIGNAL(finished(int)), this, SLOT(exitingProcess()));
 }
 
 
@@ -89,19 +90,24 @@ void ProcessHandler::readingInProcess() {
 
         QByteArray result = m_process.readAll();
         qDebug() << "Result: "  << result;
-
-        emit processRead();
     }
 }
 
 void ProcessHandler::finishingProcess() {
     if (m_stepOfProcessManipulation == 1) {
 
-        m_stepOfProcessManipulation = 0;
+        m_stepOfProcessManipulation = 2;
 
         qDebug() << "ProcessHandler::readingInProcess(): Closing process...";
         m_process.close();
 
+        emit processRead();
+    }
+}
+
+void ProcessHandler::exitingProcess() {
+    if (m_stepOfProcessManipulation == 2) {
+        m_stepOfProcessManipulation = 0;
         emit processFinished();
     }
 }

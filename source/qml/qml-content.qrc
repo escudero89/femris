@@ -14,5 +14,6 @@
         <file>content/smallBoxes/VariablesSBox.qml</file>
         <file>content/smallBoxes/TutorialSBox.qml</file>
         <file>content/smallBoxes/CodeSBox.qml</file>
+        <file>content/LoadingModal.qml</file>
     </qresource>
 </RCC>
