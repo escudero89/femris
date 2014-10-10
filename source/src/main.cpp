@@ -24,10 +24,12 @@
 #include <QQmlApplicationEngine>
 #include <QtQml>
 
+#include <QObject>
 #include <QDebug>
 
 #include "fileio.h"
 #include "studycasehandler.h"
+#include "processhandler.h"
 
 int main(int argc, char *argv[]) {
 
@@ -37,15 +39,17 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<FileIO>("FileIO", 1, 0, "FileIO");
 
     StudyCaseHandler studyCaseHandler;
+    ProcessHandler processHandler;
     FileIO currentFileIO;
+
+    QObject::connect(&studyCaseHandler, SIGNAL(callProcess()),
+                     &processHandler, SLOT(callingMatlab()));
 
     // We make the StudyCaseHandler instance accessible from QML
     engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);
     engine.rootContext()->setContextProperty("CurrentFileIO", &currentFileIO);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
-
 
     return app.exec();
 

@@ -1,5 +1,7 @@
 #include "studycasehandler.h"
 
+#include "processhandler.h"
+
 #include <QDebug>
 
 /**
@@ -117,9 +119,19 @@ bool StudyCaseHandler::saveAndContinueHelper(const QString &parentStage,
     return (parentStage == comparisonStage && stepOfProcess == stepOfProcessForComparison);
 }
 
+/**
+ * @brief StudyCaseHandler::createDomainFromOctaveFile
+ * @param pathfile
+ * @return
+ */
+bool StudyCaseHandler::createDomainFromOctaveFile(const QString &fileContent) {
 
-bool StudyCaseHandler::createDomainFromOctaveFile(const QString &pathfile, const QString &args) {
+    emit loadingStart();
 
+    emit callProcess();
 
+    emit loadingDone();
+
+    return true;
 
 }

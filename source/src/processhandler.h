@@ -4,21 +4,34 @@
 #include <QObject>
 #include <QDebug>
 
-// Para procesar con gnuplot
 #include <QProcess>
 
-class ProcessHandler : public QObject {
+class ProcessHandler : public QObject
+{
     Q_OBJECT
 
-  public:
-    ProcessHandler() {};
-
-  signals:
-
-  public slots:
+public:
+    ProcessHandler();
+    ~ProcessHandler() {};
 
     void cppSlot(const QString &, const QString &, float);
-    static void invokingOctave(float);
+    static void invokingOctave(const QString&);
+
+public Q_SLOTS:
+
+    void callingMatlab();
+    void writingInProcess();
+    void readingInProcess();
+    void finishingProcess();
+
+Q_SIGNALS:
+
+    void proccessCalled();
+
+private:
+
+    QProcess m_process;
+    bool m_writing = false;
 };
 
 

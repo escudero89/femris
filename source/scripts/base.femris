@@ -1,37 +1,37 @@
-##====================================================================##
-##  ----------------------------------------------------------------  ##
-##  |   ~ FEMRIS 1.0 ~ Finite Element Method leaRnIng Software ~   |  ##
-##  |                                                              |  ##
-##  |         Copyright (C) 2014-2015 | Cristian Escudero          |  ##
-##  |                                                              |  ##
-##  | This program is free software; you can redistribute it       |  ##
-##  | and/or modify it under the terms of the GNU Lesser General   |  ##
-##  | Public License (LGPL) as published by the Free Software      |  ##
-##  | Foundation; either version 2.1 of the License, or (at your   |  ##
-##  | option) any later version.                                   |  ##
-##  |                                                              |  ##
-##  | This program is distributed in the hope that it will be      |  ##
-##  | useful, but WITHOUT ANY WARRANTY; without even the implied   |  ##
-##  | warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR      |  ##
-##  | PURPOSE. See the GNU Library General Public License for      |  ##
-##  | more details.                                                |  ##
-##  |                                                              |  ##
-##  | License File: http://www.gnu.org/licenses/lgpl.txt           |  ##
-##  ----------------------------------------------------------------  ##
-##                                                                    ##
-##    This file is used by FEMRIS for the manipulation of Study       ##
-##    Cases. Be careful and try NOT to EDIT this file directly.       ##
-##                                                                    ##
-##====================================================================##
+%%====================================================================%%
+%%  ----------------------------------------------------------------  %%
+%%  |   ~ FEMRIS 1.0 ~ Finite Element Method leaRnIng Software ~   |  %%
+%%  |                                                              |  %%
+%%  |         Copyright (C) 2014-2015 | Cristian Escudero          |  %%
+%%  |                                                              |  %%
+%%  | This program is free software; you can redistribute it       |  %%
+%%  | and/or modify it under the terms of the GNU Lesser General   |  %%
+%%  | Public License (LGPL) as published by the Free Software      |  %%
+%%  | Foundation; either version 2.1 of the License, or (at your   |  %%
+%%  | option) any later version.                                   |  %%
+%%  |                                                              |  %%
+%%  | This program is distributed in the hope that it will be      |  %%
+%%  | useful, but WITHOUT ANY WARRANTY; without even the implied   |  %%
+%%  | warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR      |  %%
+%%  | PURPOSE. See the GNU Library General Public License for      |  %%
+%%  | more details.                                                |  %%
+%%  |                                                              |  %%
+%%  | License File: http://www.gnu.org/licenses/lgpl.txt           |  %%
+%%  ----------------------------------------------------------------  %%
+%%                                                                    %%
+%%    This file is used by FEMRIS for the manipulation of Study       %%
+%%    Cases. Be careful and try NOT to EDIT this file directly.       %%
+%%                                                                    %%
+%%====================================================================%%
 
-##==============|| STUDY CASE Information   ||==============>>>>>>>>>>>>
+%%==============|| STUDY CASE Information   ||==============>>>>>>>>>>>>
 
-#    type_of_study_case = {{typeOfStudyCase}};
-#    step_of_process = {{stepOfProcess}} ;
-#    created = {{created}} ;
-#    modified = {{modified}} ;
+%    type_of_study_case = {{typeOfStudyCase}};
+%    step_of_process = {{stepOfProcess}} ;
+%    created = {{created}} ;
+%    modified = {{modified}} ;
 
-##==============|| STUDY CASE MAT-fem       ||==============>>>>>>>>>>>>
+%%==============|| STUDY CASE MAT-fem       ||==============>>>>>>>>>>>>
 %=======================================================================
 % MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
 %                the Finite Element Method with MATLAB and GiD
@@ -46,7 +46,7 @@
   pstrs = {{typeOfProblem}} ;
   thick = {{thickOfDomain}} ;
 
-##==============|| STUDY CASE MAT-femCal    ||==============>>>>>>>>>>>>
+%%==============|| STUDY CASE MAT-femCal    ||==============>>>>>>>>>>>>
 %=======================================================================
 % MAT-femcCal 1.0  - MAT-femCal is a learning tool for undestanding 
 %                    the Finite Element Method with MATLAB and GiD
@@ -59,7 +59,7 @@
   ky = {{ky}} ;
  heat= {{heat}} ;
 
-##==============|| STUDY CASE MAT-variables ||==============>>>>>>>>>>>>
+%%==============|| STUDY CASE MAT-variables ||==============>>>>>>>>>>>>
 %
 % Coordinates
 %
@@ -83,14 +83,12 @@ global elements
 %
 {{sideload}}
 
-##==============|| STUDY CASE Octave-domain ||==============>>>>>>>>>>>>
-#! /usr/bin/octave -qf
-
+%%==============|| STUDY CASE Matlab-domain ||==============>>>>>>>>>>>>
 function [xnode, ielem] = domain(eje_x, eje_y)
     
-    [xnode, ielem] = qq3d(x1,x2);
+    [xnode, ielem] = qq3d(eje_x, eje_y);
 
-endfunction
+end
 
 function [xnod, ielem] = qq3d(x1,x2,x3)
 %
@@ -111,10 +109,10 @@ function [xnod, ielem] = qq3d(x1,x2,x3)
     %% Lo que hacemos aca es transformar los vectores columnas en matrices con ceros en las otras dos columnas
 
     [N1, m1] = size(x1);
-    if (m1 != 1), error([' Ver dimension del vector x1, m1 = ' num2str(m1)]);end
+    if (m1 ~= 1), error([' Ver dimension del vector x1, m1 = ' num2str(m1)]);end
 
     [N2, m2] = size(x2);
-    if (m2 != 1), error([' Ver dimension del vector x2, m2 = ' num2str(m2)]);end
+    if (m2 ~= 1), error([' Ver dimension del vector x2, m2 = ' num2str(m2)]);end
 
     x1 = [x1, zeros(N1, ndm-1)];
     x2 = [zeros(N2, 1), x2, zeros(N2, ndm-2)];
@@ -122,7 +120,7 @@ function [xnod, ielem] = qq3d(x1,x2,x3)
     if ndm == 3,
 
         [N3, m3] = size(x3);
-        if (m3 != 1), error([' Ver dimension del vector x3, m3 = ' num2str(m3)]);end
+        if (m3 ~= 1), error([' Ver dimension del vector x3, m3 = ' num2str(m3)]);end
 
         x3 = [zeros(N3, ndm-1), x3];
 
@@ -184,11 +182,7 @@ function [xnod, ielem] = qq3d(x1,x2,x3)
     return;
 end
 
-endfunction
-
-##==============|| STUDY CASE Octave-ff     ||==============>>>>>>>>>>>>
-#! /usr/bin/octave -qf
-
+%%==============|| STUDY CASE Matlab-ff     ||==============>>>>>>>>>>>>
 function [] = shapeform()
 
 endfunction

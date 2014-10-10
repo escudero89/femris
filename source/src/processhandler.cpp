@@ -4,12 +4,15 @@
 #include <QDebug>
 #include <QProcess>
 
-/*
-ProcessHandler::ProcessHandler(QObject *parent) :
-    QObject(parent)
-{
+#include <QStringList>
+
+ProcessHandler::ProcessHandler() {
+    //connect(this, &ProcessHandler::proccessCalled, this, &ProcessHandler::writingInProcess);
+    connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(writingInProcess()));
+    connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readingInProcess()));
+    connect(&m_process, SIGNAL(readChannelFinished()), this, SLOT(finishingProcess()));
 }
-*/
+
 
 void ProcessHandler::cppSlot(const QString &msg, const QString &amplitud, float freq = 1) {
     qDebug() << "Called the C++ slot with message:" << msg << " and " << amplitud;
@@ -50,34 +53,72 @@ void ProcessHandler::cppSlot(const QString &msg, const QString &amplitud, float 
     QByteArray result = gnuplot.readAll();
 }
 
-void ProcessHandler::invokingOctave(float amplitud = 1) {
-    QProcess octave;
-    octave.start("octave --silent", QIODevice::ReadWrite);
+void ProcessHandler::callingMatlab() {
 
-    if (!octave.waitForStarted()) {
-        qDebug() << "octave no :c";
-        qDebug() << octave.errorString();
+    QStringList processArgs;
 
-    } else {
-        qDebug() << "octave yeah!";
+    processArgs << " -nojvm "          // start MATLAB without the JVM software
+                << " -nodisplay "      // Start the Oracle® JVM™ software, but do not start the MATLAB desktop
+                << " -nosplash ";      // does  not display the splash screen during startup
+               //<< "-r";             // executes the specified MATLAB command
+
+    m_process.start("/media/Cristian/MatLabLinux/bin/matlab", processArgs, QIODevice::ReadWrite);
+
+    /*if (!matlab.waitForStarted()) {
+        qDebug() << "ProcessHandler::invokingOctave(): There was a problem initializing Octave.";
+        qDebug() << matlab.errorString();
+    }*/
+
+/*
+    matlab.write(fileContent.toUtf8().constData());
+
+    //QString test = "[xnode ielem] = domain([1:10]',[1:10]');";
+    //QString test = "function [x] = a(z); x=z+3; endfunction; disp(a(3));";
+    QString test = "cd temp/; ls;  [xnode ielem] = domain([1:10]',[1:10]')";
+    matlab.write(test.toUtf8().constData());
+
+    matlab.closeWriteChannel();
+    matlab.waitForBytesWritten();
+
+    //if (!matlab.waitForFinished(16000)) {
+      //  qDebug() << "ProcessHandler::invokingOctave(): Octave took too much to end. Killing process...";
+    //}
+
+    QByteArray result = matlab.readAll();
+    qDebug() << "Result: "  << result;
+    */
+}
+
+void ProcessHandler::writingInProcess() {
+
+    if (m_process.state() == QProcess::Running && !m_writing) {
+
+        m_writing = true;
+
+        qDebug() << "writingInProcess";
+        QString test = "cd temp/; ls;  [xnode ielem] = domain([1:10]',[1:10]')";
+        m_process.write(test.toUtf8().constData());
+        m_process.closeWriteChannel();
+
+        m_process.waitForBytesWritten();
     }
+}
 
-    // Nos paramos en el directorio y ejecutamos la funcion
-    QString str;
-    str.setNum(amplitud);
-    QString message  = QString("cd temp; testing(%1);").arg(str);
-    octave.write(message.toUtf8().constData());
-    // Cerramos
-    octave.closeWriteChannel();
-    octave.waitForBytesWritten();
+void ProcessHandler::readingInProcess() {
 
-    if (!octave.waitForFinished(3000)) {
-        qDebug() << "octave crashing :c";
+    if (m_process.state() == QProcess::Running && m_writing) {
+        QByteArray result = m_process.readAll();
+        qDebug() << "Result: "  << result;
 
-    } else {
-        qDebug() << "octave turning off...";
+        m_process.waitForReadyRead();
     }
+}
 
-    QByteArray result = octave.readAll();
-    qDebug() << result;
+void ProcessHandler::finishingProcess() {
+
+    qDebug() << "ProcessHandler::readingInProcess(): Closing process...";
+
+    m_process.close();
+
+    m_writing = false;
 }

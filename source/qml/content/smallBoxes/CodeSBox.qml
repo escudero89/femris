@@ -78,7 +78,7 @@ Rectangle {
             wrapMode: Text.NoWrap
 
             Component.onCompleted: {
-                CurrentFileIO.setSource("temp/current-octave-domain.m");
+                CurrentFileIO.setSource("temp/domain.m");
                 codeArea.text = CurrentFileIO.read();
             }
 

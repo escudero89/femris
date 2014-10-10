@@ -35,10 +35,10 @@ void StudyCaseStructural::saveLocalCurrentConfiguration() {
     FileIO::splitConfigurationFile("current-mat-fem-file.m", m_source, configurationFilter, true);
 
     configurationFilter.clear();
-    configurationFilter << "Octave-domain";
-    FileIO::splitConfigurationFile("current-octave-domain.m", m_source, configurationFilter, true);
+    configurationFilter << "Matlab-domain";
+    FileIO::splitConfigurationFile("domain.m", m_source, configurationFilter, true);
 
     configurationFilter.clear();
-    configurationFilter << "Octave-ff";
-    FileIO::splitConfigurationFile("current-octave-ff.m", m_source, configurationFilter, true);
+    configurationFilter << "Matlab-ff";
+    FileIO::splitConfigurationFile("ff.m", m_source, configurationFilter, true);
 }

@@ -2,6 +2,8 @@ import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 
+import QtQuick.Dialogs 1.2
+
 import "../../docs"
 import "../../screens"
 import "../../"
@@ -101,6 +103,8 @@ Rectangle {
                     var dynamicVariablesKeys = Object.keys(dynamicVariables);
                     var k;
 
+                    listModelVariablesSBox.clear();
+
                     for ( k = 0 ; k < dynamicVariablesKeys.length ; k++ ) {
                         listModelVariablesSBox.append({
                             'title': dynamicVariablesKeys[k],
@@ -119,6 +123,43 @@ Rectangle {
             buttonLabel: qsTr('Guardar')
 
             buttonStatus: 'white'
+
+            onClicked: {
+                StudyCaseHandler.createDomainFromOctaveFile(CurrentFileIO.read());
+            }
+
+            Connections {
+                target: StudyCaseHandler
+
+                onLoadingStart: {
+                    loadingDialog.visible = true;
+                }
+
+                onLoadingDone: {
+                    loadingDialog.visible = false;
+                }
+            }
+        }
+    }
+
+    Dialog {
+        id: loadingDialog
+        visible: false
+        title: "Blue sky dialog"
+
+        contentItem: Rectangle {
+            color: "lightskyblue"
+            implicitWidth: 400
+            implicitHeight: 100
+            Text {
+                text: "Hello blue sky!"
+                color: "navy"
+                anchors.centerIn: parent
+            }
+
+            ProgressBar {
+                indeterminate: true
+            }
         }
     }
 

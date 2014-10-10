@@ -9,21 +9,27 @@
 class StudyCaseHandler : public QObject
 {
     Q_OBJECT
+
 public:
     StudyCaseHandler();
     ~StudyCaseHandler();
 
     Q_INVOKABLE bool createNewStudyCase();
-    Q_INVOKABLE bool createDomainFromOctaveFile(const QString&, const QString&);
+    Q_INVOKABLE bool createDomainFromOctaveFile(const QString&);
 
     Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&);
     Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString&);
 
     Q_INVOKABLE QString saveAndContinue(const QString&);
 
-signals:
+public Q_SLOTS:
 
-public slots:
+Q_SIGNALS:
+
+    void loadingStart();
+    void loadingDone();
+
+    void callProcess();
 
 private:
 

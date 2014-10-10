@@ -128,7 +128,7 @@ bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
     QString pathDir = qApp->applicationDirPath();
     QString pathFile = pathDir + configurationPath;
 
-    QString octaveFileContent = "";
+    QString matlabFileContent = "";
 
     QFile fileConfiguration(pathFile);
 
@@ -137,9 +137,9 @@ bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
         QString line;
         QTextStream streamConfiguration(&fileConfiguration);
 
-        QRegExp regex("^##.* STUDY CASE (\\S*)\\s* .*>>$");
+        QRegExp regex("^%%.* STUDY CASE (\\S*)\\s* .*>>$");
 
-        bool saveDataInOctaveFile = false;
+        bool saveDataInMatlabFile = false;
         bool inDefinitionLine = false;
 
         do {
@@ -148,22 +148,22 @@ bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
 
             // If there is a match, the regex will contain the matched captures
             if (inDefinitionLine) {
-                saveDataInOctaveFile = capturedTextFilter.contains(regex.cap(1));
+                saveDataInMatlabFile = capturedTextFilter.contains(regex.cap(1));
             }
 
             // If we don't want to save the previous line, we jump it
-            if (saveDataInOctaveFile && (!inDefinitionLine || !jumpSeparationLines)) {
-                octaveFileContent += line + "\r\n";
+            if (saveDataInMatlabFile && (!inDefinitionLine || !jumpSeparationLines)) {
+                matlabFileContent += line + "\r\n";
             }
 
         } while (!line.isNull());
 
         fileConfiguration.close();
 
-        FileIO fileCurrentOctave;
-        fileCurrentOctave.setSource(pathDir + "/temp/" + configurationTemplate);
+        FileIO fileCurrentMatlab;
+        fileCurrentMatlab.setSource(pathDir + "/temp/" + configurationTemplate);
 
-        successInSplitingAndMerging = fileCurrentOctave.write(octaveFileContent);
+        successInSplitingAndMerging = fileCurrentMatlab.write(matlabFileContent);
     }
 
     return successInSplitingAndMerging;
