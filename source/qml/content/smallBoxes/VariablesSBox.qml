@@ -127,39 +127,6 @@ Rectangle {
             onClicked: {
                 StudyCaseHandler.createDomainFromScriptFile(CurrentFileIO.read());
             }
-
-            Connections {
-                target: StudyCaseHandler
-
-                onLoadingStart: {
-                    loadingDialog.visible = true;
-                }
-
-                onLoadingDone: {
-                    loadingDialog.visible = false;
-                }
-            }
-        }
-    }
-
-    Dialog {
-        id: loadingDialog
-        visible: false
-        title: "Blue sky dialog"
-
-        contentItem: Rectangle {
-            color: "lightskyblue"
-            implicitWidth: 400
-            implicitHeight: 100
-            Text {
-                text: "Hello blue sky!"
-                color: "navy"
-                anchors.centerIn: parent
-            }
-
-            ProgressBar {
-                indeterminate: true
-            }
         }
     }
 

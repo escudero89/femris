@@ -27,12 +27,14 @@ public Q_SLOTS:
 Q_SIGNALS:
 
     void proccessCalled();
-    void finishedProcess();
+    void processWrote();
+    void processRead();
+    void processFinished();
 
 private:
 
     QProcess m_process;
-    bool m_writing;
+    unsigned int m_stepOfProcessManipulation;
 };
 
 

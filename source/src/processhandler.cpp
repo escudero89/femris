@@ -7,7 +7,6 @@
 #include <QStringList>
 
 ProcessHandler::ProcessHandler() {
-    //connect(this, &ProcessHandler::proccessCalled, this, &ProcessHandler::writingInProcess);
     connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(writingInProcess()));
     connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readingInProcess()));
     connect(&m_process, SIGNAL(readChannelFinished()), this, SLOT(finishingProcess()));
@@ -60,18 +59,19 @@ void ProcessHandler::callingMatlab() {
     processArgs << " -nojvm "          // start MATLAB without the JVM software
                 << " -nodisplay "      // Start the Oracle® JVM™ software, but do not start the MATLAB desktop
                 << " -nosplash ";      // does  not display the splash screen during startup
-               //<< "-r";             // executes the specified MATLAB command
 
     m_process.start("/media/Cristian/MatLabLinux/bin/matlab", processArgs, QIODevice::ReadWrite);
 
-    m_writing = false;
+    m_stepOfProcessManipulation = 0;
+
+    emit proccessCalled();
 }
 
 void ProcessHandler::writingInProcess() {
 
-    if (m_process.state() == QProcess::Running && !m_writing) {
+    if (m_process.state() == QProcess::Running && m_stepOfProcessManipulation == 0) {
 
-        m_writing = true;
+        m_stepOfProcessManipulation = 1;
 
         qDebug() << "writingInProcess";
         QString test = "cd temp/; ls;  [xnode ielem] = domain([1:10]',[1:10]')";
@@ -79,24 +79,29 @@ void ProcessHandler::writingInProcess() {
         m_process.closeWriteChannel();
 
         m_process.waitForBytesWritten();
+
+        emit processWrote();
     }
 }
 
 void ProcessHandler::readingInProcess() {
+    if (m_process.state() == QProcess::Running && m_stepOfProcessManipulation == 1) {
 
-    if (m_process.state() == QProcess::Running && m_writing) {
         QByteArray result = m_process.readAll();
         qDebug() << "Result: "  << result;
 
-        m_process.waitForReadyRead();
+        emit processRead();
     }
 }
 
 void ProcessHandler::finishingProcess() {
+    if (m_stepOfProcessManipulation == 1) {
 
-    qDebug() << "ProcessHandler::readingInProcess(): Closing process...";
+        m_stepOfProcessManipulation = 0;
 
-    m_process.close();
+        qDebug() << "ProcessHandler::readingInProcess(): Closing process...";
+        m_process.close();
 
-    emit finishedProcess();
+        emit processFinished();
+    }
 }
