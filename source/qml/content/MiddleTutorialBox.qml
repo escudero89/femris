@@ -12,7 +12,7 @@ import "."
 
 Column {
 
-    property string urlWebView: "qrc:/docs/current.html"
+    property string urlWebView: "qrc:/docs/ce_shapefunction.html"
 
     WebView {
         id: currentWebView
@@ -22,7 +22,8 @@ Column {
 
         width: parent.width
         height: parent.height
-onLinkHovered: console.log(hoveredUrl)
+
+        onLinkHovered: console.log(hoveredUrl)
         url: urlWebView
     }
 

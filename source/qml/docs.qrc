@@ -6,5 +6,6 @@
         <file>docs/layout.html</file>
         <file>docs/about.html</file>
         <file>docs/current.html</file>
+        <file>docs/ce_shapefunction.html</file>
     </qresource>
 </RCC>

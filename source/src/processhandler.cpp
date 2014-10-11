@@ -61,6 +61,9 @@ void ProcessHandler::callingMatlab() {
                 << " -nodisplay "      // Start the Oracle® JVM™ software, but do not start the MATLAB desktop
                 << " -nosplash ";      // does  not display the splash screen during startup
 
+    //processArgs.clear();
+    //m_process.start("octave", processArgs, QIODevice::ReadWrite);
+
     m_process.start("/media/Cristian/MatLabLinux/bin/matlab", processArgs, QIODevice::ReadWrite);
 
     m_stepOfProcessManipulation = 0;

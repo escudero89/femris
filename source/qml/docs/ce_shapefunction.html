@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>My WebPage</title>
+<meta name="author" content="Cristian Escudero">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<link rel="stylesheet" type="text/css" href="jsxgraph/jsxgraph.css" />
+</head>
+<body>
+
+<div id="box" class="jxgbox" style="width:100%; height:90vh;"></div>
+
+<input id="Ni" value="(xj - x) / h" ></input>
+<input id="Nj" value="(x - xi) / h" ></input>
+<input type="button" value="Update Graph!" onclick="updateGraph()"></input>
+
+<script type="text/javascript" src="js/third-party/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/femris-utils.js"></script>
+<script type="text/javascript" src="jsxgraph/jsxgraphcore.js"></script>
+<script type="text/javascript">
+
+function updateGraph() {
+
+    $("#box").html("");
+
+    var Y_MIN = -0.5;
+    var Y_MAX = 10;
+
+    var X_MIN = 0;
+    var X_MAX = 1;
+    var QUANTITY_OF_ELEMENTS = 7;
+
+    function getPointsFromQuantityOfElements() {
+
+        var stepValue = X_MAX / QUANTITY_OF_ELEMENTS;
+        var currentPosition = X_MIN;
+
+        var points = [];
+
+        while (currentPosition <= X_MAX) {
+            points.push(currentPosition);
+            currentPosition += stepValue;
+        }
+
+        return points;
+    }
+
+    function getValuesForInterpolation(pointsForElement) {
+        
+        var phi_m = [];
+
+        $.each(pointsForElement, function(idx, val) {
+            phi_m.push(baseFunction(val));
+        });
+
+        return phi_m;
+
+    };
+
+    var baseFunction = function(x) {
+        return Math.sin(x * 13) + (Y_MAX - Y_MIN) * 0.5 + 1;
+    };
+
+    var board = JXG.JSXGraph.initBoard('box', {boundingbox: [X_MIN, Y_MAX, X_MAX, Y_MIN], axis: false, grid:true});
+
+    var basegraph = board.create('functiongraph', [baseFunction], {strokeColor:'#ff0000'});
+
+    var pointsForElement = getPointsFromQuantityOfElements();
+    var valuesForPoints = getValuesForInterpolation(pointsForElement);
+
+    board.suspendUpdate();
+
+    var kElem = 0;
+    var Ni = $("#Ni").val();
+    var Nj = $("#Nj").val();
+
+    var phi = "(" + Ni + ") * phi_i + (" + Nj + ") * phi_j";
+
+    while (kElem < QUANTITY_OF_ELEMENTS) {
+
+        var counterOfSidesDone = 2;
+
+        var phi_i = valuesForPoints[kElem];
+        var phi_j = valuesForPoints[kElem + 1];
+
+        var xi = pointsForElement[kElem];
+        var xj = pointsForElement[kElem + 1];
+        var h = xj - xi;
+
+        for ( ; counterOfSidesDone > 0 ; counterOfSidesDone-- ) {
+
+            board.create('functiongraph', [
+                function(x) { 
+
+                    var value = 0;
+
+                    if (x >= xi && x <= xj) {
+                        // We are at the left side of the element
+                        if (counterOfSidesDone === 2) {
+                            value = eval(Ni);
+
+                        // And now in the right side
+                        } else {
+                            value = eval(Nj);
+                        }
+                    }
+
+                    return value;
+                }, xi, xj], 
+                {strokeColor: getColorFromIdx(kElem)});
+
+        }
+
+        board.create('functiongraph', [
+            function(x) {
+                var value = 0;
+
+                value = eval(phi);
+
+                return value;
+            }, xi, xj],
+            {strokeColor: getColorFromIdx(kElem)});
+
+        kElem++;
+    }
+
+    var kPoint = 0;
+
+
+
+    for ( ; kPoint < pointsForElement.length ; kPoint++ ) {
+        var cPoint = pointsForElement[kPoint];
+
+        var y2 = board.create('point', [cPoint, baseFunction(cPoint)], { name: '', fixed: true});
+    }
+
+}
+
+$(document).ready(function() {
+
+    updateGraph();
+
+    $(window).resize(function() {
+        document.location.reload();
+    });
+
+    console.log();
+
+});
+</script>
+
+</body>
+</html>

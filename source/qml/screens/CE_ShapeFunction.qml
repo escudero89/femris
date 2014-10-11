@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 
 import QtWebKit 3.0
+import QtWebKit.experimental 1.0
 
 import "../docs"
 import "../content"
@@ -22,19 +23,28 @@ RowLayout {
         color: Style.color.content_emphasized
         Layout.fillHeight: true
         Layout.preferredWidth: parent.width * 0.20
+
     }
 
-    MiddleTutorialBox {
+    Column {
+
         id: mainContentRectangle
 
         Layout.fillHeight: true
-        Layout.preferredWidth: (parent.width - leftContentRectangle.width) * .55
+        Layout.preferredWidth: parent.width - leftContentRectangle.width
+
+        WebView {
+            id: currentWebView
+
+            experimental.preferences.webGLEnabled: true
+            experimental.preferences.developerExtrasEnabled: true
+
+            width: parent.width
+            height: parent.height
+
+            url: "qrc:/docs/ce_shapefunction.html"
+        }
+
     }
 
-    CE_RightBlock {
-        id: rightContentRectangle
-
-        Layout.fillHeight: true
-        Layout.preferredWidth: parent.width - mainContentRectangle.width - leftContentRectangle.width
-    }
 }

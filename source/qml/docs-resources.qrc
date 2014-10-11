@@ -13,5 +13,7 @@
         <file>docs/js/femris-utils.js</file>
         <file>docs/js/femris-globals.js</file>
         <file>docs/js/temp/current-domain.js</file>
+        <file>docs/jsxgraph/jsxgraph.css</file>
+        <file>docs/jsxgraph/jsxgraphcore.js</file>
     </qresource>
 </RCC>
