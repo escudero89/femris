@@ -12,7 +12,7 @@ import "smallBoxes"
 
 Item {
     id: loadingModal
-    visible: true
+    visible: false
 
     anchors.fill: parent
     anchors.rightMargin: 0
