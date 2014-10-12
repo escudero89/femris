@@ -128,6 +128,9 @@
 % Graphic representation.
   ToGiD (file_name,u,reaction,Strnod);
 
+% JSON Representation.
+  ToJSON (file_name, u, reaction, Strnod);
+
   ttim = timing('Time  used to write  the  solution',ttim); %Reporting time
   itim = toc;                                               %Close last tic
   fprintf(1,'\n Total running time %12.6f \n',ttim);  %Reporting final time

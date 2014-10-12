@@ -34,7 +34,7 @@ function ToGiD (file_name,u,reaction,Strnod)
   fprintf(fid,['MESH dimension %3.0f   Elemtype %s   Nnode %2.0f \n \n'],2,eletyp,nnode);
   fprintf(fid,['coordinates \n']);
   for i = 1 : npnod
-    fprintf(fid,['%6.0f %12.5d %12.5d \n'],i,coordinates(i,:));
+    fprintf(fid,['%6.0f %12.5e %12.5e \n'],i,coordinates(i,:));
   end
   fprintf(fid,['end coordinates \n \n']);
   fprintf(fid,['elements \n']);
@@ -60,7 +60,7 @@ function ToGiD (file_name,u,reaction,Strnod)
   fprintf(fid,['ComponentNames "X-Displ", "Y-Displ", "Z-Displ" \n']);
   fprintf(fid,['Values \n']);
   for i = 1 : npnod
-    fprintf(fid,['%6.0i %13.5d %13.5d \n'],i,u(i*2-1),u(i*2));
+    fprintf(fid,['%6.0i %13.5e %13.5e \n'],i,u(i*2-1),u(i*2));
   end
   fprintf(fid,['End Values \n']);
   fprintf(fid,'# \n');
@@ -68,7 +68,7 @@ function ToGiD (file_name,u,reaction,Strnod)
   fprintf(fid,['ComponentNames "Rx", "Ry", "Rz" \n']);
   fprintf(fid,['Values \n']);
   for i = 1 : npnod
-    fprintf(fid,['%6.0f %12.5d %12.5d \n'],i,reaction(i*2-1),reaction(i*2));
+    fprintf(fid,['%6.0f %12.5e %12.5e \n'],i,reaction(i*2-1),reaction(i*2));
   end
   fprintf(fid,['End Values \n']);
   fprintf(fid,'# \n');
@@ -76,19 +76,14 @@ function ToGiD (file_name,u,reaction,Strnod)
   fprintf(fid,['ComponentNames "Sx", "Sy", "Sz", "Sxy", "Syz", "Sxz" \n']);
   fprintf(fid,['Values \n']);
   
-  if (size(Strnod(2)) == 3) 
+  if (size(Strnod)(2) == 3) 
     for i = 1 : npnod
-      fprintf(fid,['%6.0f %12.5d %12.5d  0.0 %12.5d  0.0  0.0 \n'],i,Strnod(i,:));
+      fprintf(fid,['%6.0f %12.5e %12.5e  0.0 %12.5e  0.0  0.0 \n'],i,Strnod(i,:));
     end
   else
     for i = 1 : npnod
-      fprintf(fid,['%6.0f %12.5d %12.5d %12.5d %12.5d  0.0  0.0 \n'],i,Strnod(i,:));
+      fprintf(fid,['%6.0f %12.5e %12.5e %12.5e %12.5e  0.0  0.0 \n'],i,Strnod(i,:));
     end
   end  
   fprintf(fid,['End Values \n']);
   status = fclose(fid);
-
-
-
-
-
