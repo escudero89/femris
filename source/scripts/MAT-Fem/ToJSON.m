@@ -47,13 +47,56 @@ function ToJSON (file_name, nodalDisplacements, reactions, nodalStresses)
     fprintf(fid, jsonParser('_comment', 'This file was generated automatically usign ToJSON.m for its use in FEMRIS'));
 
     %%
+        
+    fprintf(fid, jsonParser('_coordinates', 'The values are [ x-coord y-coord ]'));    
+    fprintf(fid, jsonParser('coordinates', '[\r\n', true));
     
-    fprintf(fid, jsonParser('_displacements', 'The values are [ index-node x-displacement y-displacement ]'));    
+    for i = 1 : numberOfNodes
+        fprintf(fid, '    [');
+        fprintf(fid, ['%13.5e, %13.5e'], coordinates(i,:));
+        
+        if (i ~= numberOfNodes)
+            fprintf(fid, '],\r\n');
+        else 
+            fprintf(fid, ']\r\n');
+        end
+    end
+
+    fprintf(fid, '  ],\r\n');
+
+    %%
+
+    fprintf(fid, jsonParser('_elements', 'The values are [ indx-node1 ... indx-nodeN ]'));    
+    fprintf(fid, jsonParser('elements', '[\r\n', true));
+    
+    stringForNodesPerElement = ['%6.0i, %6.0i, %6.0i'];
+
+    if (numberOfNodesPerElement == 4)
+        stringForNodesPerElement = [ stringForNodesPerElement ', %6.0i'];
+    end 
+
+    for i = 1 : numberOfElements
+        
+        fprintf(fid, '    [');
+        fprintf(fid, stringForNodesPerElement, elements(i,:));
+        
+        if (i ~= numberOfElements)
+            fprintf(fid, '],\r\n');
+        else 
+            fprintf(fid, ']\r\n');
+        end
+    end
+
+    fprintf(fid, '  ],\r\n');
+
+    %%
+
+    fprintf(fid, jsonParser('_displacements', 'The values are [ x-displacement y-displacement ]'));    
     fprintf(fid, jsonParser('displacements', '[\r\n', true));
     
     for i = 1 : numberOfNodes
         fprintf(fid, '    [');
-        fprintf(fid, ['%6.0i, %13.5e, %13.5e'], i, nodalDisplacements(i * 2 - 1), nodalDisplacements(i * 2));
+        fprintf(fid, ['%13.5e, %13.5e'], nodalDisplacements(i * 2 - 1), nodalDisplacements(i * 2));
         
         if (i ~= numberOfNodes)
             fprintf(fid, '],\r\n');
@@ -66,12 +109,12 @@ function ToJSON (file_name, nodalDisplacements, reactions, nodalStresses)
 
     %%
 
-    fprintf(fid, jsonParser('_reactions', 'The values are [ index-node x-reaction y-reaction ]'));
+    fprintf(fid, jsonParser('_reactions', 'The values are [ x-reaction y-reaction ]'));
     fprintf(fid, jsonParser('reactions', '[\r\n', true));
     
     for i = 1 : numberOfNodes
         fprintf(fid, '    [');
-        fprintf(fid, ['%6.0i, %13.5e, %13.5e'], i, reactions(i * 2 - 1), reactions(i * 2));
+        fprintf(fid, [ '%13.5e, %13.5e'], reactions(i * 2 - 1), reactions(i * 2));
         
         if (i ~= numberOfNodes)
             fprintf(fid, '],\r\n');
@@ -84,13 +127,13 @@ function ToJSON (file_name, nodalDisplacements, reactions, nodalStresses)
 
     %%
 
-    fprintf(fid, jsonParser('_stresses', 'The values are [ index-node Sx Sy Sz Sxy Syz Sxz ]'));
+    fprintf(fid, jsonParser('_stresses', 'The values are [ Sx Sy Sz Sxy Syz Sxz ]'));
     fprintf(fid, jsonParser('stresses', '[\r\n', true));
 
     if (size(nodalStresses)(2) == 3)
         for i = 1 : numberOfNodes
             fprintf(fid, '    [');
-            fprintf(fid, ['%6.0i, %12.5e, %12.5e,  0.0, %12.5e,  0.0,  0.0'], i, nodalStresses(i, :));
+            fprintf(fid, ['%12.5e, %12.5e,  0.0, %12.5e,  0.0,  0.0'], nodalStresses(i, :));
             
             if (i ~= numberOfNodes)
                 fprintf(fid, '],\r\n');
@@ -101,7 +144,7 @@ function ToJSON (file_name, nodalDisplacements, reactions, nodalStresses)
     else
         for i = 1 : numberOfNodes
             fprintf(fid, '    [');
-            fprintf(fid, ['%6.0i, %12.5e, %12.5e,  %12.5e, %12.5e,  0.0,  0.0'], i, nodalStresses(i, :));
+            fprintf(fid, ['%12.5e, %12.5e,  %12.5e, %12.5e,  0.0,  0.0'], nodalStresses(i, :));
             
             if (i ~= numberOfNodes)
                 fprintf(fid, '],\r\n');

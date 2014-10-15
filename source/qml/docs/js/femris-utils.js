@@ -40,3 +40,24 @@ function getColorFromIdx(idx, alpha) {
 
     return typeSchema + '(' + huePos + ', 100%, 50%' + alphaValue + ')';
 }
+
+
+/**
+ * Get a color from a particular value, having a max and a min for comparison.
+ * Returns a color with 100% saturation and 50% lightness (i.e, RGB(255,0,0))
+ *
+ * @param {number} current - current value
+ * @param {number} min - min value (blue)
+ * @param {number} max - max value (red)
+ * @param {number} alpha - For transparency
+ * @return {string} - The color in format HSL ("hsl(120, 100%, 50%, alpha)")
+ */
+function getColorFromInterpolation(current, min, max, alpha) {
+
+    var huePos = (1 - (current - min) / (max - min)) * 240;
+
+    var typeSchema = exists(alpha) ? 'hsla' : 'hsl';
+    var alphaValue = exists(alpha) ? (', ' + alpha) : '';
+
+    return typeSchema + '(' + huePos + ', 100%, 50%' + alphaValue + ')';
+}

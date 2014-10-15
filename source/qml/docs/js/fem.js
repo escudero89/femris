@@ -35,9 +35,9 @@ $(document).ready(function() {
 
     if (typeof(setMatrixDrawing) === 'function') {
 
-        var groupSystem = setMatrixDrawing(xnode, ielem);
-        var groupMatrix = groupSystem.groupMatrix;
-
+        //var groupSystem = setMatrixDrawing(xnode, ielem);
+        //var groupMatrix = groupSystem.groupMatrix;
+/*
         $.each(group, function(index, value) {
             $.each(group[index].children, function(idx, currentElem) {
                 $(currentElem._renderer.elem)
@@ -66,7 +66,7 @@ $(document).ready(function() {
                     });
             });
         });
-
+*/
     }
 
     // If the window changes its size, we reload the page

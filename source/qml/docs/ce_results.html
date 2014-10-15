@@ -3,13 +3,15 @@
 <head>
     <meta charset="iso-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <title>FEMRIS</title>
     <meta name="author" content="Cristian Escudero">
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -173,16 +175,16 @@ background-color: #f3f3f3;
         $(document).ready(function() {
             $("[data-toggle=popover]").popover();
 
-            var panZoomTiger = svgPanZoom('#draw-matrix svg', {
+            var panZoomTiger = svgPanZoom('#draw-shapes svg, #draw-matrix svg', {
                 panEnabled: true,
-                controlIconsEnabled: false,
+                controlIconsEnabled: true,
                 zoomEnabled: true,
                 dblClickZoomEnabled: false,
                 zoomScaleSensitivity: 0.2,
                 minZoom: 0.8,
                 maxZoom: 10,
-                fit: false,
-                center: false,
+                fit: true,
+                center: true,
                 refreshRate: 'auto',
                 beforeZoom: function(){},
                 onZoom: function(){},

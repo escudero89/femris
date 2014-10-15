@@ -41,11 +41,11 @@ RowLayout {
             WebView {
                 id: currentWebView
 
-                url: "qrc:/docs/ce_results.html"
+              url: "qrc:/docs/ce_results.html"
+             //  url: "http://html5test.com/"
                 width: parent.width
                 height: parent.height
 
-                experimental.preferences.webGLEnabled: true
                 experimental.preferences.developerExtrasEnabled: true
             }
 

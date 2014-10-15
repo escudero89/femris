@@ -1,1 +1,1 @@
-var G_HEIGHT_NAVBAR = parseInt($("#navbar-top").css("height"));
+var G_HEIGHT_NAVBAR = parseInt($("#navbar-top").css("height")) * .5;

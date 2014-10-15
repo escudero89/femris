@@ -80,6 +80,9 @@ function transformCoordinates(xnode) {
 
     var x_min = xnode[0][0];    // minimum x coordinate
     var x_max = x_min;          // maximum x coordinate
+
+    var y_max = xnode[0][1];
+
     var k;                      // counter
 
     var alpha;                  // alpha * x + beta = new_x
@@ -92,6 +95,10 @@ function transformCoordinates(xnode) {
         } else if (xnode[k][0] > x_max) {
             x_max = xnode[k][0];
         }
+
+        if (xnode[k][0] > y_max) {
+            y_max = xnode[k][1]
+        }
     }
 
     // Then we calculate the maximum width of SVG and with that we set the scale factor
@@ -100,8 +107,10 @@ function transformCoordinates(xnode) {
 
     // Finally we apply the scale factor to the coordinates
     for ( k = 0; k < xnode.length; k++ ) {
-        xnode[k][0] = alpha * xnode[k][0] + beta;
-        xnode[k][1] = alpha * xnode[k][1] + beta;
+        //xnode[k][0] = alpha * xnode[k][0] + beta;
+        xnode[k][0] = alpha * ( xnode[k][0] + G_DISPLACEMENTS[k][0] * 38747.4 ) + beta;
+        //xnode[k][1] = alpha * ( y_max - xnode[k][1] ) + beta; // We need to flip de y-axis
+        xnode[k][1] = alpha * ( y_max - xnode[k][1] - G_DISPLACEMENTS[k][1] * 38747.4) + beta; // We need to flip de y-axis
 
         xnode[k][1] += G_HEIGHT_NAVBAR;
     }
@@ -126,24 +135,57 @@ function makeElements(two, xnode, ielem) {
         'pointer-events' : 'none',
         'style'          : 'cursor:pointer',
         'text-anchor'    : 'middle',
-        'font-size'      : 0.125 * ( xnode[ ielem[0][2] - 1 ][1] - xnode[ ielem[0][0] - 1 ][1] )
+        'font-size'      : 0.125 * Math.abs( xnode[ ielem[0][2] - 1 ][1] - xnode[ ielem[0][0] - 1 ][1] )
     };
 
+    if (localParamsTextSVG['font-size'] === 0) {
+        localParamsTextSVG['font-size'] = 0.25 * Math.abs( xnode[ ielem[0][1] - 1 ][1] - xnode[ ielem[0][0] - 1 ][1] );
+    }
+
     var k, j, elem, twoElem, twoNode, paramsTextSVG;
+
+    var isTriangle = false;
+
+    // We don't count the first col of index
+    if (ielem[0].length === 3) {
+        isTriangle = true;
+    }
+
+
+    // For the colors
+
+    var minDisplacement = G_DISPLACEMENTS[0][0];
+    var maxDisplacement = G_DISPLACEMENTS[0][0];
+
+    for ( k = 0 ; k < G_DISPLACEMENTS.length ; k++ ) {
+        if (G_DISPLACEMENTS[k][0] > maxDisplacement) {
+            maxDisplacement = G_DISPLACEMENTS[k][0];
+        }
+        if (G_DISPLACEMENTS[k][0] < minDisplacement) {
+            minDisplacement = G_DISPLACEMENTS[k][0];
+        }
+    }
 
     // First we draw the elements
     for ( k = 0 ; k < ielem.length ; k++ ) {
         elem = ielem[k];
 
-        // Elemento rectangular
-        twoElem = two.makePolygon(
-            xnode[ elem[0] - 1 ][0], xnode[ elem[0] - 1 ][1],
-            xnode[ elem[1] - 1 ][0], xnode[ elem[1] - 1 ][1],
-            xnode[ elem[2] - 1 ][0], xnode[ elem[2] - 1 ][1],
-            xnode[ elem[3] - 1 ][0], xnode[ elem[3] - 1 ][1]
-        );
+        if (isTriangle) {
+            twoElem = two.makePolygon(
+                xnode[ elem[0] - 1 ][0], xnode[ elem[0] - 1 ][1],
+                xnode[ elem[1] - 1 ][0], xnode[ elem[1] - 1 ][1],
+                xnode[ elem[2] - 1 ][0], xnode[ elem[2] - 1 ][1]
+            );
+        } else {
+            twoElem = two.makePolygon(
+                xnode[ elem[0] - 1 ][0], xnode[ elem[0] - 1 ][1],
+                xnode[ elem[1] - 1 ][0], xnode[ elem[1] - 1 ][1],
+                xnode[ elem[2] - 1 ][0], xnode[ elem[2] - 1 ][1],
+                xnode[ elem[3] - 1 ][0], xnode[ elem[3] - 1 ][1]
+            );
+        }
 
-        twoElem.fill = G_COLOR_ELEM;
+
 
         twoElem.type = 'elem';
         twoElem.k_ielem = k + 1;
@@ -152,17 +194,35 @@ function makeElements(two, xnode, ielem) {
         groupElem.add(twoElem);
 
         // And we add the text over the element
-        paramsTextSVG = localParamsTextSVG;
-        paramsTextSVG.x = 0.5 * ( xnode[ elem[0] - 1 ][0] + xnode[ elem[2] - 1 ][0] );
-        paramsTextSVG.y = 0.5 * ( xnode[ elem[0] - 1 ][1] + xnode[ elem[2] - 1 ][1] );
+/*        paramsTextSVG = localParamsTextSVG;
+*/
+        var xy_gravity_center = {
+            'x' : 0,
+            'y' : 0
+        };
 
-        addElementToSVG(getTextSVG("element " + twoElem.k_ielem, paramsTextSVG));
+        var currentValueInterpolated = 0;
+
+        for ( j = 0; j < elem.length ; j++ ) {
+            xy_gravity_center['x'] += xnode[ elem[j] - 1 ][0];
+            xy_gravity_center['y'] += xnode[ elem[j] - 1 ][1];
+
+            currentValueInterpolated += G_DISPLACEMENTS[ elem[j] - 1 ][0];
+        }
+/*
+        paramsTextSVG.x = xy_gravity_center.x / elem.length;
+        paramsTextSVG.y = xy_gravity_center.y / elem.length;
+
+        addElementToSVG(getTextSVG("e" + twoElem.k_ielem, paramsTextSVG));*/
+
+        // And we paint the element (by interpolation between the values of the nodes)
+        twoElem.fill = getColorFromInterpolation(currentValueInterpolated / elem.length, minDisplacement, maxDisplacement);
     }
 
     // Then we draw the nodes
     for ( j = 0; j < xnode.length; j++ ) {
-        twoNode = two.makeCircle(xnode[j][0], xnode[j][1], G_SHAPES_WIDTH * 0.02);
-        twoNode.fill = G_COLOR_NODE;
+        twoNode = two.makeCircle(xnode[j][0], xnode[j][1], G_SHAPES_WIDTH * 0.0175);
+        twoNode.fill = getColorFromInterpolation(G_DISPLACEMENTS[j][0], minDisplacement, maxDisplacement);;
 
         twoNode.type = 'node';
         twoNode.k_ielem = j + 1;
