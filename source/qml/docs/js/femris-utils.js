@@ -54,7 +54,11 @@ function getColorFromIdx(idx, alpha) {
  */
 function getColorFromInterpolation(current, min, max, alpha) {
 
-    var huePos = (1 - (current - min) / (max - min)) * 240;
+    var huePos = 240;
+
+    if ( (max -min) !== 0) {
+        huePos = (1 - (current - min) / (max - min)) * 240;
+    }
 
     var typeSchema = exists(alpha) ? 'hsla' : 'hsl';
     var alphaValue = exists(alpha) ? (', ' + alpha) : '';

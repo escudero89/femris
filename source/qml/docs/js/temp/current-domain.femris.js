@@ -1,5 +1,5 @@
-{
-  "_comment" : "This file was generated automatically usign ToJSON.m for its use in FEMRIS",
+var G_CURRENT_DOMAIN = {
+  "_comment" : "This file was generated automatically usign ToJS.m for its use in FEMRIS",
   "_coordinates" : "The values are [ x-coord y-coord ]",
   "coordinates" : [
     [  0.00000e+00,   1.00000e+00],

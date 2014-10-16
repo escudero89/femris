@@ -27,6 +27,8 @@
 #include <QObject>
 #include <QDebug>
 
+#include <QDesktopServices>
+
 #include "fileio.h"
 #include "studycasehandler.h"
 #include "processhandler.h"
@@ -51,6 +53,9 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("CurrentFileIO", &currentFileIO);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+    QString link = "docs/ce_results.html";
+    QDesktopServices::openUrl(QUrl(link));
 
     return app.exec();
 

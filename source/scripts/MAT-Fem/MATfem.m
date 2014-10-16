@@ -128,7 +128,8 @@
 % Graphic representation.
   ToGiD (file_name,u,reaction,Strnod);
 
-% JSON Representation.
+% JS and JSON Representation.
+  ToJS (file_name, u, reaction, Strnod);
   ToJSON (file_name, u, reaction, Strnod);
 
   ttim = timing('Time  used to write  the  solution',ttim); %Reporting time

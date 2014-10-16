@@ -1,10 +1,91 @@
+function getSingleColFromCurrentDomain(variable, col_idx) {
+
+    var singleCol = [];
+
+    if ($.isArray(col_idx)) {
+
+        $.each(col_idx, function(idx, val) {
+            if (singleCol.length > 0) {
+                singleCol = getSingleColFromCurrentDomainHelper(variable, val, singleCol);
+            } else {
+                singleCol = getSingleColFromCurrentDomainHelper(variable, val);
+            }
+        });
+
+    } else {
+        singleCol = getSingleColFromCurrentDomainHelper(variable, col_idx);
+    }
+
+    return singleCol;
+
+}
+
+function getSingleColFromCurrentDomainHelper(variable, col_idx, singleColumnArrayPassed) {
+
+    if (!exists(G_CURRENT_DOMAIN[variable])) {
+        throw new Error("getSingleColFromCurrentDomain() : Invalid variable [" + variable + "]")
+    }
+
+    assignIfNecessary(singleColumnArrayPassed, false);
+    var singleColArray = (singleColumnArrayPassed) ? singleColumnArrayPassed : [];
+
+    if (singleColumnArrayPassed) {
+        for ( var k = 0 ; k < G_CURRENT_DOMAIN[variable].length ; k++ ) {
+            singleColArray[k] = Math.abs(singleColArray[k]) + Math.abs(G_CURRENT_DOMAIN[variable][k][col_idx]);
+        }
+    } else {
+        for ( var k = 0 ; k < G_CURRENT_DOMAIN[variable].length ; k++ ) {
+            singleColArray.push(G_CURRENT_DOMAIN[variable][k][col_idx]);
+        }
+    }
+
+    return singleColArray;
+
+}
+
+function drawCurrentDomain(two, xnode, ielem, params) {
+
+    assignIfNecessary(params, false);
+    var options = false;
+
+    var localParamsTextSVG = {          // These are the text's params shared locally
+        'fill'           : 'white',
+        'font-family'    : 'Georgia',
+        'pointer-events' : 'none',
+        'style'          : 'cursor:pointer',
+        'text-anchor'    : 'middle',
+        'font-size'      : 0.125 * Math.abs( xnode[ ielem[0][2] - 1 ][1] - xnode[ ielem[0][0] - 1 ][1] )
+    };
+
+    if (localParamsTextSVG['font-size'] === 0) {
+        localParamsTextSVG['font-size'] = 0.25 * Math.abs( xnode[ ielem[0][1] - 1 ][1] - xnode[ ielem[0][0] - 1 ][1] );
+    }
+
+    if (params.valuesToColorise) {
+
+        // For the colors
+        options = {
+            minValue : params.valuesToColorise[0],
+            maxValue : params.valuesToColorise[0]
+        };
+
+        for ( k = 0 ; k < params.valuesToColorise.length ; k++ ) {
+            if (params.valuesToColorise[k] > options.maxValue) {
+                options.maxValue = params.valuesToColorise[k];
+            }
+            if (params.valuesToColorise[k] < options.minValue) {
+                options.minValue = params.valuesToColorise[k];
+            }
+        }
+
+    }
+
+    return makeElements(two, G_XNODE, G_IELEM, params.valuesToColorise, options);
+
+}
+
+
 $(document).ready(function() {
-
-    var vals = G_VALS;
-    var xnode = G_XNODE;
-    var ielem = G_IELEM;
-
-    var value = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
 
     // Make an instance of two and place it on the page.
     var elem = document.getElementById('draw-shapes').children[0];
@@ -12,12 +93,44 @@ $(document).ready(function() {
     var params = { width: "100%", height: "100%" };
     var two = new Two(params).appendTo(elem);
 
-    var group = makeElements(two, xnode, ielem);
+    var options = {
+        valuesToColorise : getSingleColFromCurrentDomain('displacements', 1)
+    }
+
+    // We transform the original coordinates so they can fit better in the SVG
+    G_XNODE = transformCoordinates(G_XNODE);
+
+    var group = drawCurrentDomain(two, G_XNODE, G_IELEM, options);
     var groupElem = group.elems;
 
     // Don't forget to tell two to render everything
     // to the screen
     two.update();
+
+    $(".visualization li").on('click', function(e) {
+        var $this = $(this);
+
+        $(".visualization li").removeClass("active");
+        $this.addClass("active");
+
+        var whichVariable = $this.parent().attr('name');
+        var indexColumn = $this.attr('name');
+
+        if (indexColumn.search(',') > 0) {
+            indexColumn = indexColumn.split(',');
+        }
+
+        options = {
+            valuesToColorise : getSingleColFromCurrentDomain(whichVariable, indexColumn)
+        }
+
+        two.clear();
+
+        group = drawCurrentDomain(two, G_XNODE, G_IELEM, options);
+        groupElem = group.elems;
+
+        two.update();
+    });
 
     /*
     var cleanMatrix = getMatrixFromArray(vals);
@@ -70,9 +183,9 @@ $(document).ready(function() {
     }
 
     // If the window changes its size, we reload the page
-    $(window).resize(function() {
-        document.location.reload();
-    });
+  //  $(window).resize(function() {
+  //      document.location.reload();
+  //  });
 
     $("#draw-shapes svg").append(parseSVG($G_DRAW_SHAPES_DUMMY.html()));
 });

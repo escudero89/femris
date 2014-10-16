@@ -733,7 +733,3 @@ var G_CURRENT_JSON = {
     ]
   }
 
-var G_XNODE = G_CURRENT_JSON.coordinates;
-var G_IELEM = G_CURRENT_JSON.elements;
-
-var G_DISPLACEMENTS = G_CURRENT_JSON.displacements;
