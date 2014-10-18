@@ -209,14 +209,12 @@ function drawElements(two, xnode, ielem, valuesToColorise, options) {
 
 function drawNodes(two, xnode, ielem, valuesToColorise, options) {
 
-    var j, twoNode, paramsTextSVG;
+    var k, j, twoNode, paramsTextSVG;
 
     var groupNode = new Two.Group();
 
     // Then we draw the nodes
     for ( j = 0; j < xnode.length; j++ ) {
-
-        var elem = ielem[k];
 
         twoNode = two.makeCircle(xnode[j][0], xnode[j][1], G_SHAPES_WIDTH * 0.0175);
 
@@ -228,7 +226,7 @@ function drawNodes(two, xnode, ielem, valuesToColorise, options) {
 
         twoNode.type = 'node';
         twoNode.k_ielem = j + 1;
-        twoNode.ielem = elem[j];
+        twoNode.ielem = j;
 
         groupNode.add(twoNode);
 

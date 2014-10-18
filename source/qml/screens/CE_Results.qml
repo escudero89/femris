@@ -41,8 +41,8 @@ RowLayout {
             WebView {
                 id: currentWebView
 
-              url: "qrc:/docs/ce_results.html"
-             //  url: "http://html5test.com/"
+             // url: "qrc:/docs/ce_results.html"
+             url: "http://seiyria.github.io/bootstrap-slider/"
                 width: parent.width
                 height: parent.height
 

@@ -132,7 +132,7 @@ $(document).ready(function() {
         two.update();
     });
 
-    /*
+/*    
     var cleanMatrix = getMatrixFromArray(vals);
     var coloredMatrix = {};
     var k = 0;
@@ -148,7 +148,7 @@ $(document).ready(function() {
 
     if (typeof(setMatrixDrawing) === 'function') {
 
-        //var groupSystem = setMatrixDrawing(xnode, ielem);
+        //var groupSystem = setMatrixDrawing(G_XNODE, G_IELEM);
         //var groupMatrix = groupSystem.groupMatrix;
 /*
         $.each(group, function(index, value) {
@@ -178,8 +178,8 @@ $(document).ready(function() {
                         two.update();
                     });
             });
-        });
-*/
+        });*/
+
     }
 
     // If the window changes its size, we reload the page

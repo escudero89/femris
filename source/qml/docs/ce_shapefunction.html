@@ -1,19 +1,158 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>My WebPage</title>
-<meta name="author" content="Cristian Escudero">
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-<link rel="stylesheet" type="text/css" href="jsxgraph/jsxgraph.css" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>FEMRIS</title>
+    <meta name="author" content="Cristian Escudero">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="jsxgraph/jsxgraph.css" />
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
 </head>
 <body>
+<div class="container-fluid" style="margin-top:1em">
+    <div class="row">
+        <div class="col-md-5">
 
-<div id="box" class="jxgbox" style="width:100%; height:90vh;"></div>
+            <div class="panel panel-default">
+                    <div class="row">
+                        <div class="col-md-6">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><em>Panel de Control</em></h3>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input class="btn btn-primary pull-right" type="button" value="Guardar" onclick="updateGraph()"></input>
+                        </div>
+                </div>
 
-<input id="Ni" value="(xj - x) / h" ></input>
-<input id="Nj" value="(x - xi) / h" ></input>
-<input type="button" value="Update Graph!" onclick="updateGraph()"></input>
+                <div class="panel-body" onchange="updateShapeFunction()">
+
+                    <div class="form-group">
+                        <label>Elige un tipo de Función de Forma</label>
+                        <div class="radio">
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" checked> Lagrange
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Hermite
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Personalizada
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div id="singleShapeFunction" class="jxgbox w100p" style="height:34vh" ></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">N<sub>i</sub></div>
+                            <input class="form-control" id="Ni" value="(xj - x) / h" type="text" disabled></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">N<sub>j</sub></div>
+                            <input class="form-control" id="Nj" value="(x - xi) / h" disabled></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cantidad de nodos por elemento</label>
+                        <select id="quantityOfNodes" class="form-control">
+                            <option selected="selected">2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Posición de nodos internos</label>
+
+                        <div class="row" id="innerNodes">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon">X<sub>2</sub></div>
+                                    <input class="form-control" size="5" type="number" step="0.01" min="0" max="1" placeholder="0.25" ></input>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon">X<sub>3</sub></div>
+                                    <input class="form-control" type="number" maxlength="5" step="0.01" min="0" max="1" placeholder="0.50" ></input>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon">X<sub>4</sub></div>
+                                    <input class="form-control" type="number" maxlength="5" step="0.01" min="0" max="1" placeholder="0.75" ></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cantidad de elementos</label>
+                        <select class="form-control">
+                            <option selected="selected">1</option>
+                            <option>2</option><option>3</option><option>4</option><option>5</option>
+                            <option>6</option><option>7</option><option>8</option><option>5</option>
+                            <option>10</option><option>11</option><option>12</option><option>13</option>
+                            <option>14</option><option>15</option><option>16</option><option>17</option>
+                            <option>18</option><option>19</option><option>20</option>
+                        </select>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-7">
+            <div id="box" class="jxgbox" style="width:100%; height:90vh;"></div>
+
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Ni</div>
+                        <input class="form-control" id="Ni" value="(xj - x) / h" ></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">Nj</div>
+                        <input class="form-control" id="Nj" value="(x - xi) / h" ></input>
+                    </div>
+                </div>
+                <input class="btn btn-default" type="button" value="Update Graph!" onclick="updateGraph()"></input>
+                </div>
+            </form>
+        </div>
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/third-party/jquery-1.11.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/third-party/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="js/third-party/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="js/femris-utils.js"></script>
@@ -137,13 +276,175 @@ function updateGraph() {
 
 }
 
+function lagrangeInterpolation(p) {
+
+    var w = [],
+        /** @ignore */
+        fct = function (x, suspendedUpdate) {
+            var i, j, k, xi, s, M,
+                len = p.length,
+                num = 0,
+                denom = 0;
+
+            if (!suspendedUpdate) {
+                for (i = 0; i < len; i++) {
+                    w[i] = 1.0;
+                    xi = p[i].X();
+
+                    for (k = 0; k < len; k++) {
+                        if (k !== i) {
+                            w[i] *= (xi - p[k].X());
+                        }
+                    }
+
+                    w[i] = 1 / w[i];
+                }
+
+                M = [];
+
+                for (j = 0; j < len; j++) {
+                    M.push([1]);
+                }
+            }
+
+            for (i = 0; i < len; i++) {
+                xi = p[i].X();
+
+                if (x === xi) {
+                    return p[i].Y();
+                }
+
+                s = w[i] / (x - xi);
+                denom += s;
+                num += s * p[i].Y();
+            }
+
+            return num / denom;
+        };
+
+    fct.getTerm = function () {
+        return '';
+    };
+
+    return fct;
+}
+
+function updateShapeFunction() {
+
+    var $innerNodes = $("#innerNodes input");
+    var innerNodesValues = [];
+
+    $.each($innerNodes, function(idx, val) {
+        innerNodesValues.push($(this).val());
+    });
+
+    var board = JXG.JSXGraph.initBoard('singleShapeFunction', {
+        boundingbox: [-0.1, 1.5, 1.1, -0.5],
+        axis: true,
+        grid: false,
+        showCopyright: false
+    });
+
+    var pointsForPolynomial = [];
+    var currentPointPosition = { 
+        'x' : 0,
+        'y' : 0
+    };
+
+    var nodeOptions = {
+        size: '4',
+        fixed: true,
+        name: ''
+    }
+
+    var nodeFace = ['o','[]','x','+','^'];
+
+    var elementColor;
+
+    var quantityOfNodes = $("#quantityOfNodes").val();
+    var kQuantity;
+    var kFunction;
+
+    var stepForNodesLocation = 1 / ( quantityOfNodes - 1 );
+
+    // The outer loop is for each equation, and the inner loop is for each node
+    for ( kFunction = 0 ; kFunction < quantityOfNodes ; kFunction++ ) {
+
+        pointsForPolynomial = [];
+
+        elementColor = getColorFromIdx(kFunction, 0.9);
+        nodeOptions['color'] = elementColor;
+        nodeOptions['face'] = nodeFace[kFunction];
+
+        for ( kQuantity = 0 ; kQuantity < quantityOfNodes ; kQuantity++ ) {
+
+            currentPointPosition.x = kQuantity * stepForNodesLocation;
+            currentPointPosition.y = (kFunction === kQuantity) ? 1 : 0;
+
+            if ( kQuantity !== 0 && kQuantity !== quantityOfNodes - 1 ) {
+
+                var currentInnerNodeValue = innerNodesValues[kQuantity - 1];
+
+                if (currentInnerNodeValue !== '') {
+                    currentPointPosition.x = currentInnerNodeValue;
+                }
+            }
+
+            pointsForPolynomial[kQuantity] = board.create(
+                'point', 
+                [currentPointPosition.x, currentPointPosition.y], 
+                nodeOptions
+            );
+        }
+
+        /// Code for the label
+        var nodeLabelXPosition = kFunction * stepForNodesLocation;
+        if (kFunction > 0 && kFunction < quantityOfNodes - 1 && innerNodesValues[kFunction - 1] !== '') {
+            nodeLabelXPosition = innerNodesValues[kFunction - 1];
+        }
+
+        board.create(
+            'point', 
+            [ nodeLabelXPosition, 0], 
+            { name: 'X<sub>' + (kFunction+1) + '</sub>', fixed: true, size: 0});
+
+
+        /// We draw the function
+        board.create('functiongraph', lagrangeInterpolation(pointsForPolynomial), {strokeColor: elementColor});
+    }
+
+    updateInputs(quantityOfNodes);
+
+}
+
+function updateInputs(quantityOfNodes) {
+
+    var stepForNodesLocation = 1 / ( quantityOfNodes - 1 );
+    
+    $("#innerNodes input").attr("placeholder", function (idx, val) {
+
+        var returnedPlaceholder = '0.0';
+
+        if (idx < quantityOfNodes - 2) {
+            returnedPlaceholder = Math.round(( idx + 1) * stepForNodesLocation * 100000) / 100000;
+            $(this).removeAttr('disabled');
+        } else {
+            $(this).attr('disabled', 'disabled');
+        }
+
+        return returnedPlaceholder;
+    });
+
+}
+
 $(document).ready(function() {
 
-    updateGraph();
-
+    updateShapeFunction();
+  //  updateGraph();
+/*
     $(window).resize(function() {
         document.location.reload();
-    });
+    });*/
 
     console.log();
 
