@@ -27,16 +27,7 @@
         <div class="col-md-5">
 
             <div class="panel panel-default">
-                    <div class="row">
-                        <div class="col-md-6">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><em>Panel de Control</em></h3>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <input class="btn btn-primary pull-right" type="button" value="Guardar" onclick="updateGraph()"></input>
-                        </div>
-                </div>
+                <input class="btn btn-primary pull-right" type="button" value="Guardar" onclick="updateGraph()"></input>
 
                 <div class="panel-body" onchange="updateShapeFunction()">
 
@@ -61,22 +52,41 @@
 
                     <div class="form-group">
                         <div class="input-group">
-                            <div class="input-group-addon">N<sub>i</sub></div>
-                            <input class="form-control" id="Ni" value="(xj - x) / h" type="text" disabled></input>
+                            <div class="input-group-addon">N<sub>1</sub></div>
+                            <input class="form-control" value="(xj - x) / h" type="text" disabled></input>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <div class="input-group-addon">N<sub>j</sub></div>
-                            <input class="form-control" id="Nj" value="(x - xi) / h" disabled></input>
+                            <div class="input-group-addon">N<sub>2</sub></div>
+                            <input class="form-control" value="(x - xi) / h" disabled></input>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">N<sub>3</sub></div>
+                            <input class="form-control" value="(x - xi) / h" disabled></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">N<sub>4</sub></div>
+                            <input class="form-control" value="(x - xi) / h" disabled></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">N<sub>5</sub></div>
+                            <input class="form-control" value="(x - xi) / h" disabled></input>
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label>Cantidad de nodos por elemento</label>
                         <select id="quantityOfNodes" class="form-control">
-                            <option selected="selected">2</option>
-                            <option>3</option>
+                            <option>2</option>
+                            <option selected="selected">3</option>
                             <option>4</option>
                             <option>5</option>
                         </select>
@@ -110,7 +120,7 @@
 
                     <div class="form-group">
                         <label>Cantidad de elementos</label>
-                        <select class="form-control">
+                        <select id="quantityOfElements" class="form-control">
                             <option selected="selected">1</option>
                             <option>2</option><option>3</option><option>4</option><option>5</option>
                             <option>6</option><option>7</option><option>8</option><option>5</option>
@@ -132,14 +142,20 @@
             <form class="form-inline" role="form">
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">Ni</div>
-                        <input class="form-control" id="Ni" value="(xj - x) / h" ></input>
+                        <div class="input-group-addon">N<sub>1</sub></div>
+                        <input class="form-control" id="N1" value="(x2 - x) / (x2-x1) * (x3-x)/(x3-x1)" ></input>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">Nj</div>
-                        <input class="form-control" id="Nj" value="(x - xi) / h" ></input>
+                        <div class="input-group-addon">N<sub>2</sub></div>
+                        <input class="form-control" id="N2" value="(x - x1) / (x2-x1) * (x3 - x) / (x3-x2)" ></input>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">N<sub>3</sub></div>
+                        <input class="form-control" id="N3" value="(x - x1) / (x3-x1) * (x - x2) / (x3-x2)" ></input>
                     </div>
                 </div>
                 <input class="btn btn-default" type="button" value="Update Graph!" onclick="updateGraph()"></input>
@@ -159,7 +175,7 @@
 <script type="text/javascript" src="jsxgraph/jsxgraphcore.js"></script>
 <script type="text/javascript">
 
-function updateGraph() {
+function updateGraph(interpolationFunction) {
 
     $("#box").html("");
 
@@ -167,12 +183,13 @@ function updateGraph() {
     var Y_MAX = 10;
 
     var X_MIN = 0;
-    var X_MAX = 1;
-    var QUANTITY_OF_ELEMENTS = 7;
+    var X_MAX = 2;
+    var QUANTITY_OF_ELEMENTS = $("#quantityOfElements").val();
+    var QUANTITY_OF_NODES = $("#quantityOfNodes").val();
 
     function getPointsFromQuantityOfElements() {
 
-        var stepValue = X_MAX / QUANTITY_OF_ELEMENTS;
+        var stepValue = ( X_MAX - X_MIN ) / ( QUANTITY_OF_ELEMENTS * ( QUANTITY_OF_NODES - 1 ) );
         var currentPosition = X_MIN;
 
         var points = [];
@@ -198,7 +215,7 @@ function updateGraph() {
     };
 
     var baseFunction = function(x) {
-        return Math.sin(x * 13) + (Y_MAX - Y_MIN) * 0.5 + 1;
+        return Math.sin(x * 10) + (Y_MAX - Y_MIN) * 0.5 + 1;
     };
 
     var board = JXG.JSXGraph.initBoard('box', {boundingbox: [X_MIN, Y_MAX, X_MAX, Y_MIN], axis: false, grid:true});
@@ -208,47 +225,67 @@ function updateGraph() {
     var pointsForElement = getPointsFromQuantityOfElements();
     var valuesForPoints = getValuesForInterpolation(pointsForElement);
 
+
     board.suspendUpdate();
 
     var kElem = 0;
-    var Ni = $("#Ni").val();
-    var Nj = $("#Nj").val();
 
-    var phi = "(" + Ni + ") * phi_i + (" + Nj + ") * phi_j";
+    var N = [];
+    
+    N[1] = $("#N1").val();
+    N[2] = $("#N2").val();
+    N[3] = $("#N3").val();
 
+    var phi = "";
+
+    for ( var k = 0; k < QUANTITY_OF_NODES ; k++ ) {
+        phi += "+ (" + N[k + 1] + ") * phi_vector[" +  k + "] ";
+    }
+
+    console.log(phi);
+    
     while (kElem < QUANTITY_OF_ELEMENTS) {
 
-        var counterOfSidesDone = 2;
+        var counterOfSidesDone = QUANTITY_OF_NODES;
 
-        var phi_i = valuesForPoints[kElem];
-        var phi_j = valuesForPoints[kElem + 1];
+        var phi_vector = [];
+        var x_vector = [];
 
-        var xi = pointsForElement[kElem];
-        var xj = pointsForElement[kElem + 1];
-        var h = xj - xi;
+        for ( var k = 0; k < QUANTITY_OF_NODES ; k++ ) {
+            phi_vector.push(valuesForPoints[k + ( QUANTITY_OF_NODES - 1) * kElem]);
+            x_vector.push(pointsForElement[k + ( QUANTITY_OF_NODES - 1 ) * kElem]);
+        }
+
+        // Variables for our eval
+        var x1 = x_vector[0];
+        var x2 = x_vector[1];
+
+        var x3 = (x_vector.length > 2) ? x_vector[2] : 0;
+        var x4 = (x_vector.length > 3) ? x_vector[3] : 0;
+        var x5 = (x_vector.length > 4) ? x_vector[4] : 0;
+
+        var x_ini = x_vector[0];
+        var x_fin = x_vector[ x_vector.length - 1 ];
+        
+        console.log(x1,x2,x3,x4,x5);
 
         for ( ; counterOfSidesDone > 0 ; counterOfSidesDone-- ) {
 
             board.create('functiongraph', [
+
                 function(x) { 
 
                     var value = 0;
 
-                    if (x >= xi && x <= xj) {
-                        // We are at the left side of the element
-                        if (counterOfSidesDone === 2) {
-                            value = eval(Ni);
-
-                        // And now in the right side
-                        } else {
-                            value = eval(Nj);
-                        }
+                    if (x >= x_ini && x <= x_fin) {
+                        value = eval(N[counterOfSidesDone]);
                     }
 
                     return value;
-                }, xi, xj], 
-                {strokeColor: getColorFromIdx(kElem)});
+                }, x_ini, x_fin], 
+                {strokeColor: getColorFromIdx(kElem)}
 
+            );
         }
 
         board.create('functiongraph', [
@@ -258,7 +295,7 @@ function updateGraph() {
                 value = eval(phi);
 
                 return value;
-            }, xi, xj],
+            }, x_ini, x_fin],
             {strokeColor: getColorFromIdx(kElem)});
 
         kElem++;
@@ -266,12 +303,14 @@ function updateGraph() {
 
     var kPoint = 0;
 
-
-
     for ( ; kPoint < pointsForElement.length ; kPoint++ ) {
         var cPoint = pointsForElement[kPoint];
 
-        var y2 = board.create('point', [cPoint, baseFunction(cPoint)], { name: '', fixed: true});
+        board.create(
+            'point', 
+            [cPoint, baseFunction(cPoint)], 
+            { color: getColorFromIdx(kPoint), name: '', fixed: true}
+        );
     }
 
 }
@@ -414,6 +453,7 @@ function updateShapeFunction() {
     }
 
     updateInputs(quantityOfNodes);
+    updateGraph();
 
 }
 
@@ -440,7 +480,7 @@ function updateInputs(quantityOfNodes) {
 $(document).ready(function() {
 
     updateShapeFunction();
-  //  updateGraph();
+    updateGraph();
 /*
     $(window).resize(function() {
         document.location.reload();
