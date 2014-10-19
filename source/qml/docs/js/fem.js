@@ -12,6 +12,10 @@ function getSingleColFromCurrentDomain(variable, col_idx) {
             }
         });
 
+        $.each(singleCol, function(idx, val) {
+            singleCol[idx] = Math.sqrt(val);
+        });
+
     } else {
         singleCol = getSingleColFromCurrentDomainHelper(variable, col_idx);
     }

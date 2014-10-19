@@ -33,15 +33,15 @@
 
                     <div class="form-group">
                         <label>Elige un tipo de Función de Forma</label>
-                        <div class="radio">
+                        <div class="radio" id="shapeFunctionChose">
                             <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" checked> Lagrange
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="lagrange" checked> Lagrange
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Hermite
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="hermite"> Hermite
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Personalizada
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="custom"> Personalizada
                             </label>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                             <div class="col-md-4">
                                 <div class="input-group">
                                     <div class="input-group-addon">X<sub>2</sub></div>
-                                    <input class="form-control" size="5" type="number" step="0.01" min="0" max="1" placeholder="0.25" />
+                                    <input class="form-control" size="5" type="number" step="0.01" min="0" max="1" placeholder="0.25" value="0.3"/>
                                 </div>
                             </div>
 
@@ -146,7 +146,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div style="position:relative">
-                        <input class="alert-warning form-control pull-right" style="position:absolute; right: 0; width: 12%; z-index:999" id="errorValue" value="Error: 0.00%" disabled/>
+                        <input class="alert-warning form-control pull-right" style="position:absolute; right: 0; width: 12%; z-index:999" id="errorValue" value="RMS: 0.00%" disabled/>
                     </div>
 
                     <div id="box" class="" style="width:100%; height:45vh;"></div>
@@ -230,16 +230,88 @@ function updateGraph(interpolationFunction) {
 
     var BASE_FUNCTION = $("#baseFunction").val();
 
+    var $innerNodesInputEq0 = $("#innerNodes input:eq(0)");
+    var $innerNodesInputEq1 = $("#innerNodes input:eq(1)");
+    var $innerNodesInputEq2 = $("#innerNodes input:eq(2)");
+
+    // From x3 to x5
+    var X_custom = [
+        {
+            value : $innerNodesInputEq0.val(),
+            placeholder : $innerNodesInputEq0.attr('placeholder')
+        },
+        {
+            value : $innerNodesInputEq1.val(),
+            placeholder : $innerNodesInputEq1.attr('placeholder')
+        },
+        {
+            value : $innerNodesInputEq2.val(),
+            placeholder : $innerNodesInputEq2.attr('placeholder')
+        }
+    ];
+
+    function getStepsFromArray(nodesLocation) {
+
+        var steps = [];
+
+        for ( var k = 0 ; k < nodesLocation.length - 1 ; k++ ) {
+            steps.push(nodesLocation[k + 1] - nodesLocation[k]);
+        }
+
+        return steps;
+    }
+
+    function getNodesInLocation() {
+
+        if (QUANTITY_OF_NODES > 2) {
+
+            var nodesLocation = [0, 1];
+
+            // Inserts the new node X2 in the middle
+            var nodeX2 = ( X_custom[0].value !== '' ) ? X_custom[0].value : X_custom[0].placeholder;
+            nodesLocation.splice(1, 0, nodeX2);
+
+            if (QUANTITY_OF_NODES > 3) {
+                var nodeX3 = ( X_custom[1].value !== '' ) ? X_custom[1].value : X_custom[1].placeholder;
+                nodesLocation.splice(2, 0, nodeX3);
+
+                if (QUANTITY_OF_NODES > 4) {
+                    var nodeX4 = ( X_custom[2].value !== '' ) ? X_custom[2].value : X_custom[2].placeholder;
+                    nodesLocation.splice(3, 0, nodeX4);
+                }
+            }
+        }
+
+        return nodesLocation;
+    }
+
     function getPointsFromQuantityOfElements() {
 
-        var stepValue = ( X_MAX - X_MIN ) / ( QUANTITY_OF_ELEMENTS * ( QUANTITY_OF_NODES - 1 ) );
+        var lengthElement = (X_MAX - X_MIN) / QUANTITY_OF_ELEMENTS;
+
+        var newStepsArray = getStepsFromArray(getNodesInLocation());
+        
+        var loopStepsValue = [];
+        var kLoop = 1;
+
+        for ( ; kLoop < QUANTITY_OF_NODES ; kLoop++ ) {
+            loopStepsValue.push( lengthElement * newStepsArray[kLoop - 1]);
+        }
+
         var currentPosition = X_MIN;
 
         var points = [];
 
-        while (currentPosition <= X_MAX) {
+        // For the precision error
+        var epsilon = 1e-10;
+
+        kLoop = 0;
+        while (currentPosition <= X_MAX + epsilon) {
             points.push(currentPosition);
-            currentPosition += stepValue;
+            currentPosition += loopStepsValue[kLoop];
+
+            kLoop++;
+            kLoop = (kLoop >= QUANTITY_OF_NODES - 1) ? 0 : kLoop;
         }
 
         return points;
@@ -305,7 +377,8 @@ function updateGraph(interpolationFunction) {
         phi += "+ (" + N[k + 1] + ") * phi_vector[" +  k + "] ";
     }
 
-    var errorPercent = 0;
+    var errorRMS = 0;
+    var nErrorRms = 0;
     
     while (kElem < QUANTITY_OF_ELEMENTS) {
 
@@ -329,8 +402,6 @@ function updateGraph(interpolationFunction) {
 
         var x_ini = x_vector[0];
         var x_fin = x_vector[ x_vector.length - 1 ];
-        
-        console.log(x1,x2,x3,x4,x5);
 
         for ( ; counterOfSidesDone > 0 ; counterOfSidesDone-- ) {
 
@@ -357,7 +428,9 @@ function updateGraph(interpolationFunction) {
 
                 value = eval(phi);
 
-                errorPercent += baseFunction(x) - value;
+                // for calculating the root-mean-square error
+                errorRMS += Math.pow(baseFunction(x) - value, 2);
+                nErrorRms ++;
 
                 return value;
             }, x_ini, x_fin],
@@ -365,6 +438,10 @@ function updateGraph(interpolationFunction) {
 
         kElem++;
     }
+
+    errorRMS = Math.sqrt(errorRMS/nErrorRms);
+
+    $("#errorValue").val("RMS: " + Math.round(errorRMS * 100) / 100)
 
     var kPoint = 0;
 
@@ -458,6 +535,22 @@ function getLagrangeInterpolationString(quantityOfNodes, idx_position) {
 }
 
 
+function drawSingleShapeFunction(positionsForPolynomial, idxShapeFunction) {
+    
+
+
+
+    var fct = function (x, suspendedUpdate) {
+        eval(N[idxShapeFunction]);
+    };
+
+    fct.getTerm = function () {
+        return '';
+    };
+
+    return fct;
+}
+
 function updateShapeFunction() {
 
     var $innerNodes = $("#innerNodes input");
@@ -475,6 +568,7 @@ function updateShapeFunction() {
     });
 
     var pointsForPolynomial = [];
+    var positionsForPolynomial = [];
     var currentPointPosition = { 
         'x' : 0,
         'y' : 0
@@ -496,10 +590,13 @@ function updateShapeFunction() {
 
     var stepForNodesLocation = 1 / ( quantityOfNodes - 1 );
 
+    updateInputs(quantityOfNodes);
+
     // The outer loop is for each equation, and the inner loop is for each node
     for ( kFunction = 0 ; kFunction < quantityOfNodes ; kFunction++ ) {
 
         pointsForPolynomial = [];
+        positionsForPolynomial = [];
 
         elementColor = getColorFromIdx(kFunction, 0.9);
         nodeOptions['color'] = elementColor;
@@ -519,6 +616,8 @@ function updateShapeFunction() {
                 }
             }
 
+            positionsForPolynomial.push(currentPointPosition.x);
+
             pointsForPolynomial[kQuantity] = board.create(
                 'point', 
                 [currentPointPosition.x, currentPointPosition.y], 
@@ -537,12 +636,36 @@ function updateShapeFunction() {
             [ nodeLabelXPosition, 0], 
             { name: 'X<sub>' + (kFunction+1) + '</sub>', fixed: true, size: 0});
 
-
         /// We draw the function
-        board.create('functiongraph', lagrangeInterpolation(pointsForPolynomial), {strokeColor: elementColor});
+        var N = [];
+    
+        N[1] = $("#N1").val();
+        N[2] = $("#N2").val();
+        N[3] = $("#N3").val();
+        N[4] = $("#N4").val();
+        N[5] = $("#N5").val();
+
+        var x_vector = [];
+
+        for ( var k = 0; k < positionsForPolynomial.length ; k++ ) {
+            x_vector.push(positionsForPolynomial[k]);
+        }
+
+        // Variables for our eval
+        var x1 = x_vector[0];
+        var x2 = x_vector[1];
+
+        var x3 = (x_vector.length > 2) ? x_vector[2] : 0;
+        var x4 = (x_vector.length > 3) ? x_vector[3] : 0;
+        var x5 = (x_vector.length > 4) ? x_vector[4] : 0;
+
+        var x_ini = x_vector[0];
+        var x_fin = x_vector[ x_vector.length - 1 ];
+        
+        //board.create('functiongraph', lagrangeInterpolation(pointsForPolynomial), {strokeColor: elementColor});
+        board.create('functiongraph', function(x) { return eval(N[kFunction + 1])}, {strokeColor: elementColor});
     }
 
-    updateInputs(quantityOfNodes);
     //updateGraph();
 
 }
@@ -570,8 +693,20 @@ function updateInputs(quantityOfNodes) {
         $("#shapeFunctions .form-group:eq(" + k + ")").removeClass('hidden');
     }
 
+    var selectedOption = $("#shapeFunctionChose input:checked").val();
+    var selectedShapeFunctionInput;
+
     $.each($("#shapeFunctions .form-group"), function(idx, val) {
-        $("#shapeFunctions input:eq(" + idx + ")").val(getLagrangeInterpolationString(quantityOfNodes, idx + 1));
+
+        selectedShapeFunctionInput = $("#shapeFunctions input:eq(" + idx + ")");
+
+        if (selectedOption === 'lagrange') {
+            selectedShapeFunctionInput.val(getLagrangeInterpolationString(quantityOfNodes, idx + 1));
+            selectedShapeFunctionInput.attr('disabled', 'disabled');
+
+        } else if (selectedOption === 'custom') {
+            selectedShapeFunctionInput.removeAttr('disabled');
+        }
     });
 }
 
