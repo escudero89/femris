@@ -31,7 +31,7 @@ function getSingleColFromCurrentDomainHelper(variable, col_idx, singleColumnArra
 
     if (singleColumnArrayPassed) {
         for ( var k = 0 ; k < G_CURRENT_DOMAIN[variable].length ; k++ ) {
-            singleColArray[k] = Math.abs(singleColArray[k]) + Math.abs(G_CURRENT_DOMAIN[variable][k][col_idx]);
+            singleColArray[k] = Math.pow(singleColArray[k], 2) + Math.pow(G_CURRENT_DOMAIN[variable][k][col_idx], 2);
         }
     } else {
         for ( var k = 0 ; k < G_CURRENT_DOMAIN[variable].length ; k++ ) {
