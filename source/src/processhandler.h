@@ -19,7 +19,10 @@ public:
 
 public Q_SLOTS:
 
+    void callingProcess();
+    void callingOctave();
     void callingMatlab();
+
     void writingInProcess();
     void readingInProcess();
     void finishingProcess();

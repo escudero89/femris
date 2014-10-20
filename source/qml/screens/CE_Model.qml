@@ -29,6 +29,8 @@ RowLayout {
 
         Layout.fillHeight: true
         Layout.preferredWidth: (parent.width - leftContentRectangle.width) * .55
+
+        urlWebView: "qrc:/docs/ce_domain.html"
     }
 
     CE_RightBlock {

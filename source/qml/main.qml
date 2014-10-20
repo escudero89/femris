@@ -19,6 +19,8 @@ ApplicationWindow {
     minimumWidth: 800
     minimumHeight: 600
 
+   // visibility: "Maximized"
+
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
     menuBar: TopMenuBar {}
@@ -107,7 +109,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_ShapeFunction.qml");
+            globalLoader.setSource("screens/Initial.qml");
         }
 
     }

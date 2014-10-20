@@ -14,17 +14,20 @@ public:
     StudyCaseHandler();
     ~StudyCaseHandler();
 
-    Q_INVOKABLE bool createNewStudyCase();
-    Q_INVOKABLE bool createDomainFromScriptFile(const QString&);
+    Q_INVOKABLE void selectNewTypeStudyCase(const QString&);
+    Q_INVOKABLE void createNewStudyCase();
+    Q_INVOKABLE bool createDomainFromScriptFile();
 
     Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&);
-    Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString&);
+    void setSingleStudyCaseInformation(const QString&, const QString&);
 
     Q_INVOKABLE QString saveAndContinue(const QString&);
 
 public Q_SLOTS:
 
 Q_SIGNALS:
+
+    void newStudyCaseChose(const QString& studyCaseType);
 
     void loadingStart();
     void loadingDone();
@@ -35,6 +38,7 @@ private:
 
     bool saveAndContinueHelper(const QString&, const QString&, const unsigned int&, const unsigned int&);
 
+    QString m_studyCaseType;
     StudyCase *m_studyCase;
 
     QMap<QString, QString> m_currentStudyCaseVariables;

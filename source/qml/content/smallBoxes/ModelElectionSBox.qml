@@ -21,12 +21,13 @@ TableView {
 
     model: ListModel {
         id: listModelProblem
-        ListElement{ title: "Ecuación de Transporte" ; author: "Gabriel" }
-        ListElement{ title: "Brilliance"    ; author: "Jens" }
-        ListElement{ title: "Outstanding"   ; author: "Frederik" }
+      //  ListElement{ title: "Transporte de calor" ; soCalled: "heat" }
+        ListElement{ title: "Tensión plana"   ; soCalled: "plain-stress" }
+        ListElement{ title: "Deformación plana"    ; soCalled: "plain-strain" }
     }
 
     onClicked: {
-        console.log(listModelProblem.get(row).author);
+        var studyCaseType = listModelProblem.get(row).soCalled;
+        StudyCaseHandler.selectNewTypeStudyCase(studyCaseType);
     }
 }

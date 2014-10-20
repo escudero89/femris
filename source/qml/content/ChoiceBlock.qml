@@ -6,6 +6,7 @@ import "../"
 
 ColumnLayout {
 
+    property alias textArea : choiceBlockTextArea
     property alias header : headerText
     property alias button : primaryButton
 
@@ -83,7 +84,12 @@ ColumnLayout {
             }
 
             TextArea {
+                id: choiceBlockTextArea
+
                 text: qsTr("The source of the image is specified as a URL using the source property. Images can be supplied in any of the standard image formats supported by Qt, including bitmap formats such as PNG and JPEG, and vector graphics formats such as SVG. If you need to display animated images, use the AnimatedImage element.")
+                textFormat: TextEdit.RichText
+
+                font.pixelSize: Math.max(parent.width / 15, 12)
 
                 Layout.fillHeight: true
                 Layout.fillWidth: true
@@ -115,6 +121,7 @@ ColumnLayout {
 
                 buttonStatus: blockStatus
             }
+
         }
     }
 

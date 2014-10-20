@@ -36,6 +36,8 @@ RowLayout {
             ChoiceBlock {
                 header.text: "TUTORIAL"
 
+                textArea.text : qsTr(Content.initial.tutorial);
+
                 button.buttonLabel: "Iniciar"
                 button.onClicked : mainWindow.switchSection("tutorial")
             }
@@ -43,9 +45,10 @@ RowLayout {
             ChoiceBlock {
                 header.text: "NUEVO"
 
+                textArea.text : qsTr(Content.initial.initiate);
+
                 button.buttonLabel: "Crear"
                 button.onClicked : {
-                    StudyCaseHandler.createNewStudyCase();
                     mainWindow.switchSection("CE_Overall");
                 }
             }
@@ -53,11 +56,32 @@ RowLayout {
             ChoiceBlock {
                 header.text: "ABRIR"
 
+                textArea.text : qsTr(Content.initial.load);
+
                 button.buttonLabel: "Cargar"
-                button.onClicked : mainWindow.switchSection("tutorial")
+                button.onClicked : {
+                    femrisLoader.visible = true;
+                    //
+                }
             }
-
         }
+    }
 
+    FileDialog {
+        id: femrisLoader
+        title: "Por favor seleccione un archivo de FEMRIS"
+
+        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
+
+        onAccepted: {
+            console.log("You chose: " + femrisLoader.fileUrl);
+            mainWindow.switchSection("CE_Overall");
+            //CurrentFileIO.setSource(femrisLoader.fileUrl);
+
+            //codeArea.text = CurrentFileIO.read();
+        }
+        onRejected: {
+            console.log("Canceled");
+        }
     }
 }

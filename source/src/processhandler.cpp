@@ -53,6 +53,19 @@ void ProcessHandler::cppSlot(const QString &msg, const QString &amplitud, float 
     QByteArray result = gnuplot.readAll();
 }
 
+void ProcessHandler::callingProcess() {
+    callingMatlab();
+}
+
+void ProcessHandler::callingOctave() {
+
+    m_process.start("octave", QIODevice::ReadWrite);
+
+    m_stepOfProcessManipulation = 0;
+
+    emit proccessCalled();
+}
+
 void ProcessHandler::callingMatlab() {
 
     QStringList processArgs;

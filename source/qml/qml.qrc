@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>qmldir</file>
-        <file>screens/BaseFrame.qml</file>
         <file>screens/Initial.qml</file>
+        <file>screens/BaseFrame.qml</file>
         <file>screens/CE_Results.qml</file>
         <file>screens/CE_Overall.qml</file>
         <file>screens/CE_Model.qml</file>
@@ -12,5 +12,6 @@
         <file>test.qml</file>
         <file>screens/CE_Properties.qml</file>
         <file>screens/CE_ShapeFunction.qml</file>
+        <file>Content.qml</file>
     </qresource>
 </RCC>

@@ -41,12 +41,21 @@ Column {
             id: continueButton
 
             buttonLabel: "Guardar y Continuar"
-            buttonStatus: "success"
+            buttonStatus: "disabled"
             buttonText.font.pixelSize: height / 2
 
             Layout.preferredWidth: 0.6 * parent.width
 
+            Connections {
+                target: StudyCaseHandler
+
+                onNewStudyCaseChose: {
+                    continueButton.buttonStatus = "success";
+                }
+            }
+
             onClicked: {
+                StudyCaseHandler.createNewStudyCase();
                 mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
             }
         }

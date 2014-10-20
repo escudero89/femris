@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QString link = "docs/ce_results.html";
-    QDesktopServices::openUrl(QUrl(link));
+    //QDesktopServices::openUrl(QUrl(link));
 
     return app.exec();
 
