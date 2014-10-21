@@ -1,5 +1,3 @@
-<img style="position:absolute; right: 0; top: 0" alt="femris logo" src="source/qml/resources/images/femris_logo.png">
-
 FEMRIS
 ======
 
