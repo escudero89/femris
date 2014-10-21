@@ -33,7 +33,7 @@ Liberado bajo una licencia **LGPL 2.1**:
 >
 > License File* at http://www.gnu.org/licenses/lgpl.txt
 
-**Free Software, Hell Yeah!**
+**Free Software, Awww Yeah!**
 
 [Método de Elementos Finitos]:http://es.wikipedia.org/wiki/M%C3%A9todo_de_los_elementos_finitos
 [MATLAB]:http://www.mathworks.com/products/matlab/
