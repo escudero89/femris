@@ -46,6 +46,31 @@ function getNodeConnections(xnode, ielem) {
 }
 
 /**
+ * Checks if a cell is empty, so we don't draw it.
+ *
+ * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
+ * @param {number[]} valueOf - Value of the position of the cell inside the matrix/vector
+ * @param {bool} isMatrix - Tells if the node belongs to a matrix (true) or not (false)
+ * @return {bool} indicates if we draw it or not
+ */
+function isCellDifferentFromZero(ielem, valueOf, isMatrix) {
+
+    var isDifferentFromZero = false;
+
+    // Only if it's a matrix we are going to colorise the cells
+    for ( var k = 0; k < ielem.length && isMatrix ; k++ ) {
+        if ($.inArray(valueOf.row, ielem[k]) >= 0) {
+            if ($.inArray(valueOf.col, ielem[k]) >= 0) {
+                isDifferentFromZero = true;
+                break;
+            }
+        }
+    }
+
+    return isDifferentFromZero;
+}
+
+/**
  * Colorise a cell (both stroke and fill). If it is inside a matrix, colorise
  * regarding if it has values or not inside (by checking the ielem)
  *
@@ -53,23 +78,10 @@ function getNodeConnections(xnode, ielem) {
  * @param {number[]} xnode - Position of the nodes (i.e., [[x1,y1], ..., [xN,yN]])
  * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
  * @param {number[]} valueOf - Value of the position of the cell inside the matrix/vector
- * @param {bool} isMatrix - Indicates if it's a matrix or not
+ * @param {bool} isCellDifferentFromZero - Indicates if it's empty or not
  * @return {Two.Cell} - The element cell
  */
-function coloriseCell(twoCell, ielem, valueOf) {
-
-    var isCellDifferentFromZero = false;
-    var k;
-
-    // Only if it's a matrix we are going to colorise the cells
-    for ( k = 0; k < ielem.length && twoCell.isMatrix ; k++ ) {
-        if ($.inArray(valueOf.row, ielem[k]) >= 0) {
-            if ($.inArray(valueOf.col, ielem[k]) >= 0) {
-                isCellDifferentFromZero = true;
-                break;
-            }
-        }
-    }
+function coloriseCell(twoCell, ielem, valueOf, isCellDifferentFromZero) {
 
     if (isCellDifferentFromZero || !twoCell.isMatrix) {
         twoCell.fill_original = G_COLOR_DEFAULT;
@@ -93,23 +105,30 @@ function coloriseCell(twoCell, ielem, valueOf) {
  * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
  * @param {number[]} cellData - Information for creating the cell
  * @param {number[]} valueOf - Value of the position of the cell inside the matrix/vector
- * @return {Two.makeRectangle()} - The element cell
+ * @param {bool} isMatrix - Tells if the node belongs to a matrix (true) or not (false)
+ * @return {Two.makeRectangle() || bool} - The element cell or false if it doesn't have data
  */
 function drawCell(xnode, ielem, cellData, valueOf, isMatrix) {
 
-    var twoCell = G_TWO_MATRIX.makeRectangle(
-        cellData.iniPosX + cellData.sideCell * ( valueOf.col - 1),
-        cellData.iniPosY + cellData.sideCell * ( valueOf.row - 1),
-        cellData.sideCell,
-        cellData.sideCell
-    );
+    var isDifferentFromZero = isMatrix && isCellDifferentFromZero(ielem, valueOf, isMatrix);
+    var twoCell = false;
 
-    twoCell.id_cell = valueOf.col + xnode.length * ( valueOf.row - 1);
-    twoCell.id_row = valueOf.row;
-    twoCell.id_col = valueOf.col;
-    twoCell.isMatrix = isMatrix;
+    // Vectors are all always different from zero
+    if (isDifferentFromZero || !isMatrix) {
+        twoCell = G_TWO_MATRIX.makeRectangle(
+            cellData.iniPosX + cellData.sideCell * ( valueOf.col - 1),
+            cellData.iniPosY + cellData.sideCell * ( valueOf.row - 1),
+            cellData.sideCell,
+            cellData.sideCell
+        );
 
-    coloriseCell(twoCell, ielem, valueOf);
+        twoCell.id_cell = valueOf.col + xnode.length * ( valueOf.row - 1);
+        twoCell.id_row = valueOf.row;
+        twoCell.id_col = valueOf.col;
+        twoCell.isMatrix = isMatrix;
+
+        coloriseCell(twoCell, ielem, valueOf, isDifferentFromZero);
+    }
 
     return twoCell;
 }
@@ -127,12 +146,6 @@ function drawMatrix(xnode, ielem, cellData) {
 
     var groupMatrix = new Two.Group();
 
-    var localParamsTextSVG = {
-        'text-anchor' : 'middle',
-        'fill' : 'white',
-        'font-family' : 'Georgia'
-    };
-
     var valueOf = {
         'col' : 0,
         'row' : 0
@@ -141,7 +154,11 @@ function drawMatrix(xnode, ielem, cellData) {
     // We draw the matrix as a collection of rectangles
     for ( valueOf.row = 1 ; valueOf.row <= xnode.length ; valueOf.row++ ) {
         for ( valueOf.col = 1 ; valueOf.col <= xnode.length ; valueOf.col++ ) {
-            groupMatrix.add(drawCell(xnode, ielem, cellData, valueOf, true));
+            var cell = drawCell(xnode, ielem, cellData, valueOf, true);
+            // We only add the cell if it's different from zero
+            if (cell) {
+                groupMatrix.add(cell);
+            }
         }
     }
 
@@ -165,12 +182,6 @@ function drawVector(xnode, ielem, cellData, sideVector) {
 
     var groupVector = new Two.Group();
 
-    var localParamsTextSVG = {
-        'text-anchor' : 'middle',
-        'fill' : 'white',
-        'font-family' : 'Georgia'
-    };
-
     var valueOf = {
         'col' : 0,
         'row' : 0
@@ -190,6 +201,25 @@ function drawVector(xnode, ielem, cellData, sideVector) {
 
     return groupVector;
 
+}
+
+function drawBackground(data, boundingRect) {
+
+    var twoBackground = G_TWO_MATRIX.makePolygon(
+        data.iniPosX, data.iniPosY,
+        data.iniPosX, data.iniPosY + boundingRect.width,
+        data.iniPosX + boundingRect.height, data.iniPosY + boundingRect.width,
+        data.iniPosX + boundingRect.height, data.iniPosY,
+        true
+    );
+
+    twoBackground.fill_original = G_COLOR_EMPTY;
+    twoBackground.stroke_original = G_COLOR_EMPTY;
+
+    twoBackground.fill = twoBackground.fill_original;
+    twoBackground.stroke = twoBackground.stroke_original;
+
+    return twoBackground;
 }
 
 function setMatrixDrawing(xnode, ielem) {
@@ -217,6 +247,10 @@ function setMatrixDrawing(xnode, ielem) {
     var groupMatrix = drawMatrix(xnode, ielem, cellDataMatrix);
     var groupVectorPhi = drawVector(xnode, ielem, cellDataVectorPhi);
     var groupVectorF = drawVector(xnode, ielem, cellDataVectorF);
+
+    G_TWO_MATRIX.add(drawBackground(cellDataMatrix, groupMatrix.getBoundingClientRect(true)));
+    G_TWO_MATRIX.add(drawBackground(cellDataVectorPhi, groupVectorPhi.getBoundingClientRect(true)));
+    G_TWO_MATRIX.add(drawBackground(cellDataVectorF, groupVectorF.getBoundingClientRect(true)));
 
     G_TWO_MATRIX.add(groupMatrix);
 

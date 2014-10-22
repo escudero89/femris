@@ -1,3 +1,43 @@
+function drawCurrentMatrix() {
+
+    if (typeof(setMatrixDrawing) === 'function') {
+
+        var groupSystem = setMatrixDrawing(G_XNODE, G_IELEM);
+        var groupMatrix = groupSystem.groupMatrix;
+
+/*
+        $.each(group, function(index, value) {
+            $.each(group[index].children, function(idx, currentElem) {
+                $(currentElem._renderer.elem)
+                    .css('cursor', 'pointer')
+                    .on('mouseenter', function(e) {
+                        currentElem.fill = G_COLOR_ELEM_HIGH;
+                        //UpdateMath(coloredMatrix[currentElem.k_ielem]);
+
+                        // We set the color of  the cells of the matrix
+                        coloriseDueToMouse(groupSystem, currentElem, true);
+
+                        G_TWO_MATRIX.update();
+                        two.update();
+
+                    }).on('mouseleave', function(e) {
+
+                        currentElem.fill = G_COLOR_ELEM;
+
+                        // We clear the color of  the cells of the matrix
+                        coloriseDueToMouse(groupSystem, currentElem, false);
+
+                        //UpdateMath(cleanMatrix);
+
+                        G_TWO_MATRIX.update();
+                        two.update();
+                    });
+            });
+        });*/
+
+    }
+}
+
 function getSingleColFromCurrentDomain(variable, col_idx) {
 
     var singleCol = [];
@@ -136,7 +176,7 @@ $(document).ready(function() {
         two.update();
     });
 
-/*    
+/*
     var cleanMatrix = getMatrixFromArray(vals);
     var coloredMatrix = {};
     var k = 0;
@@ -148,43 +188,7 @@ $(document).ready(function() {
     for ( k = 0 ; k < ielem.length ; k++ ) {
         coloredMatrix[k] = getMatrixFromArray(getValuesColorised(vals, ielem[k]));
     }
-    */
-
-    if (typeof(setMatrixDrawing) === 'function') {
-
-        //var groupSystem = setMatrixDrawing(G_XNODE, G_IELEM);
-        //var groupMatrix = groupSystem.groupMatrix;
-/*
-        $.each(group, function(index, value) {
-            $.each(group[index].children, function(idx, currentElem) {
-                $(currentElem._renderer.elem)
-                    .css('cursor', 'pointer')
-                    .on('mouseenter', function(e) {
-                        currentElem.fill = G_COLOR_ELEM_HIGH;
-                        //UpdateMath(coloredMatrix[currentElem.k_ielem]);
-
-                        // We set the color of  the cells of the matrix
-                        coloriseDueToMouse(groupSystem, currentElem, true);
-
-                        G_TWO_MATRIX.update();
-                        two.update();
-
-                    }).on('mouseleave', function(e) {
-
-                        currentElem.fill = G_COLOR_ELEM;
-
-                        // We clear the color of  the cells of the matrix
-                        coloriseDueToMouse(groupSystem, currentElem, false);
-
-                        //UpdateMath(cleanMatrix);
-
-                        G_TWO_MATRIX.update();
-                        two.update();
-                    });
-            });
-        });*/
-
-    }
+  */  
 
     // If the window changes its size, we reload the page
   //  $(window).resize(function() {
