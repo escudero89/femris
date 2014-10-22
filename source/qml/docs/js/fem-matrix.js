@@ -94,6 +94,8 @@ function coloriseCell(twoCell, ielem, valueOf, isCellDifferentFromZero) {
     twoCell.fill = twoCell.fill_original;
     twoCell.stroke = twoCell.stroke_original;
 
+    twoCell.linewidth = 0;
+
     return twoCell;
 }
 
@@ -116,10 +118,10 @@ function drawCell(xnode, ielem, cellData, valueOf, isMatrix) {
     // Vectors are all always different from zero
     if (isDifferentFromZero || !isMatrix) {
         twoCell = G_TWO_MATRIX.makeRectangle(
-            cellData.iniPosX + cellData.sideCell * ( valueOf.col - 1),
-            cellData.iniPosY + cellData.sideCell * ( valueOf.row - 1),
-            cellData.sideCell,
-            cellData.sideCell
+            cellData.iniPosX + cellData.sideCell / 2 + cellData.sideCell * ( valueOf.col - 1),
+            cellData.iniPosY + cellData.sideCell / 2 + cellData.sideCell * ( valueOf.row - 1),
+            cellData.sideCell - 1,
+            cellData.sideCell - 1
         );
 
         twoCell.id_cell = valueOf.col + xnode.length * ( valueOf.row - 1);
@@ -207,9 +209,9 @@ function drawBackground(data, boundingRect) {
 
     var twoBackground = G_TWO_MATRIX.makePolygon(
         data.iniPosX, data.iniPosY,
-        data.iniPosX, data.iniPosY + boundingRect.width,
-        data.iniPosX + boundingRect.height, data.iniPosY + boundingRect.width,
-        data.iniPosX + boundingRect.height, data.iniPosY,
+        data.iniPosX + boundingRect.width, data.iniPosY,
+        data.iniPosX + boundingRect.width, data.iniPosY + boundingRect.height,
+        data.iniPosX, data.iniPosY + boundingRect.height,
         true
     );
 
@@ -224,7 +226,7 @@ function drawBackground(data, boundingRect) {
 
 function setMatrixDrawing(xnode, ielem) {
 
-    var sideCell = G_MATRIX_WIDTH * 0.9 / ( xnode.length + 3 );
+    var sideCell = (G_MATRIX_WIDTH * 0.9 / ( xnode.length + 3 ));
 
     var cellDataMatrix = {
         'iniPosX' : G_MATRIX_WIDTH * 0.08,
@@ -249,8 +251,6 @@ function setMatrixDrawing(xnode, ielem) {
     var groupVectorF = drawVector(xnode, ielem, cellDataVectorF);
 
     G_TWO_MATRIX.add(drawBackground(cellDataMatrix, groupMatrix.getBoundingClientRect(true)));
-    G_TWO_MATRIX.add(drawBackground(cellDataVectorPhi, groupVectorPhi.getBoundingClientRect(true)));
-    G_TWO_MATRIX.add(drawBackground(cellDataVectorF, groupVectorF.getBoundingClientRect(true)));
 
     G_TWO_MATRIX.add(groupMatrix);
 
