@@ -1,10 +1,7 @@
 // DRAW >>>>>>>>>
 
-// We define some variables for the colors
 var G_COLOR_NODE = "#428bca";
 var G_COLOR_ELEM = "#428bca";
-var G_COLOR_NODE_HIGH = "#d9534f";
-var G_COLOR_ELEM_HIGH = "#d9534f";
 
 // We set the SVG as a global variable, and also the dummy (efficiency)
 var $G_DRAW_SHAPES = $("#draw-shapes");
@@ -74,9 +71,12 @@ function addElementToSVG(elem) {
  * Scales an array of xnode
  *
  * @param {number[]} xnode - An array of nodes (i.e., [[x1,y1], ..., [xN,yN]])
+ * @param {number} factorOfDeformation - How much is scaled the deformation (if any)
  * @return {Number[]} xnode - The array scaled
  */
-function transformCoordinates(xnode) {
+function transformCoordinates(xnode, factorOfDeformation) {
+
+    factorOfDeformation = assignIfNecessary(factorOfDeformation, 0); //38747.4
 
     var x_min = xnode[0][0];    // minimum x coordinate
     var x_max = x_min;          // maximum x coordinate
@@ -105,161 +105,275 @@ function transformCoordinates(xnode) {
     alpha = 8 / 10 * ( G_SHAPES_WIDTH / ( x_max - x_min ) );
     beta  = G_SHAPES_WIDTH / 10 * ( 1 - 8 * x_min / ( x_max - x_min ) );
 
+    var new_xnode = [];
+
     // Finally we apply the scale factor to the coordinates
     for ( k = 0; k < xnode.length; k++ ) {
         //xnode[k][0] = alpha * xnode[k][0] + beta;
-        xnode[k][0] = alpha * ( xnode[k][0] + G_DISPLACEMENTS[k][0] * 38747.4 ) + beta;
         //xnode[k][1] = alpha * ( y_max - xnode[k][1] ) + beta; // We need to flip de y-axis
-        xnode[k][1] = alpha * ( y_max - xnode[k][1] - G_DISPLACEMENTS[k][1] * 38747.4) + beta; // We need to flip de y-axis
+        new_xnode[k] = [];
+        new_xnode[k][0] = alpha * ( xnode[k][0] + G_DISPLACEMENTS[k][0] * factorOfDeformation ) + beta;
+        new_xnode[k][1] = alpha * ( y_max - xnode[k][1] - G_DISPLACEMENTS[k][1] * factorOfDeformation) + beta; // We need to flip de y-axis
 
-        xnode[k][1] += G_HEIGHT_NAVBAR;
+        new_xnode[k][1] += G_HEIGHT_NAVBAR;
     }
 
-    return xnode;
+    return new_xnode;
 }
 
-function drawElement(two, xnode, ielem, k, isTriangle) {
+// We define our domain under an Object
+var domainObject = {
 
-    assignIfNecessary(isTriangle, false);
+    two                             : false,
+    xnode                           : false,
+    ielem                           : false,
+    currentValuesToColorise         : false,
+    options                         : false,
 
-    var twoElem;
-    var elem = ielem[k];
+    groupNode                       : false,
+    groupElem                       : false,
+    group                           : false,
 
-    if (isTriangle) {
-        twoElem = two.makePolygon(
-            xnode[ elem[0] - 1 ][0], xnode[ elem[0] - 1 ][1],
-            xnode[ elem[1] - 1 ][0], xnode[ elem[1] - 1 ][1],
-            xnode[ elem[2] - 1 ][0], xnode[ elem[2] - 1 ][1]
-        );
-    } else {
-        twoElem = two.makePolygon(
-            xnode[ elem[0] - 1 ][0], xnode[ elem[0] - 1 ][1],
-            xnode[ elem[1] - 1 ][0], xnode[ elem[1] - 1 ][1],
-            xnode[ elem[2] - 1 ][0], xnode[ elem[2] - 1 ][1],
-            xnode[ elem[3] - 1 ][0], xnode[ elem[3] - 1 ][1]
-        );
-    }
+    drawElement : function (k, isTriangle) {
 
-    twoElem.type = 'elem';
-    twoElem.k_ielem = k + 1;
-    twoElem.ielem = elem;
+        isTriangle = assignIfNecessary(isTriangle, false);
 
-    return twoElem;
+        var twoElem;
+        var elem = this.ielem[k];
 
-}
-
-function drawElements(two, xnode, ielem, valuesToColorise, options) {
-
-    assignIfNecessary(options, false);
-    assignIfNecessary(valuesToColorise, false);
-
-    var k, j, paramsTextSVG;
-
-    var groupElem = new Two.Group();
-
-    // We don't count the first col of index
-    var isTriangle = (ielem[0].length === 3);
-
-    // First we draw the elements
-    for ( k = 0 ; k < ielem.length ; k++ ) {
-
-        // We add the polygon
-        var twoElem = drawElement(two, xnode, ielem, k, isTriangle);
-
-        var xy_gravity_center = {
-            'x' : 0,
-            'y' : 0
-        };
-
-        var currentValueInterpolated = 0;
-
-        var elem = ielem[k];
-
-        for ( j = 0; j < elem.length ; j++ ) {
-            xy_gravity_center['x'] += xnode[ elem[j] - 1 ][0];
-            xy_gravity_center['y'] += xnode[ elem[j] - 1 ][1];
-
-            currentValueInterpolated += valuesToColorise[ elem[j] - 1 ];
-        }
-
-        if ( options && options.localParamsTextSVG ) {
-            // And we add the text over the element
-            paramsTextSVG = options.localParamsTextSVG;
-
-            paramsTextSVG.x = xy_gravity_center.x / elem.length;
-            paramsTextSVG.y = xy_gravity_center.y / elem.length;
-
-            addElementToSVG(getTextSVG("e" + twoElem.k_ielem, paramsTextSVG));
-        }
-
-        // And we paint the element (by interpolation between the values of the nodes)
-        if (valuesToColorise && options) {
-            twoElem.fill = getColorFromInterpolation(currentValueInterpolated / elem.length, options.minValue, options.maxValue);
+        if (isTriangle) {
+            twoElem = this.two.makePolygon(
+                this.xnode[ elem[0] - 1 ][0], this.xnode[ elem[0] - 1 ][1],
+                this.xnode[ elem[1] - 1 ][0], this.xnode[ elem[1] - 1 ][1],
+                this.xnode[ elem[2] - 1 ][0], this.xnode[ elem[2] - 1 ][1]
+            );
         } else {
-            twoElem.fill = G_COLOR_ELEM;
+            twoElem = this.two.makePolygon(
+                this.xnode[ elem[0] - 1 ][0], this.xnode[ elem[0] - 1 ][1],
+                this.xnode[ elem[1] - 1 ][0], this.xnode[ elem[1] - 1 ][1],
+                this.xnode[ elem[2] - 1 ][0], this.xnode[ elem[2] - 1 ][1],
+                this.xnode[ elem[3] - 1 ][0], this.xnode[ elem[3] - 1 ][1]
+            );
         }
 
-        twoElem.fill_original = twoElem.fill;
+        twoElem.type = 'elem';
+        twoElem.k_ielem = k + 1;
+        twoElem.ielem = elem;
 
-        groupElem.add(twoElem);
+        return twoElem;
+    },
+
+    drawElements : function () {
+
+        this.options = assignIfNecessary(this.options, false);
+        this.currentValuesToColorise = assignIfNecessary(this.currentValuesToColorise, false);
+
+        var paramsTextSVG;
+
+        var groupElem = new Two.Group();
+
+        // We don't count the first col of index
+        var isTriangle = (this.ielem[0].length === 3);
+
+        // First we draw the elements
+        for ( var k = 0 ; k < this.ielem.length ; k++ ) {
+
+            // We add the polygon
+            var twoElem = this.drawElement(k, isTriangle);
+
+            var xy_gravity_center = {
+                'x' : 0,
+                'y' : 0
+            };
+
+            var currentValueInterpolated = 0;
+
+            var elem = this.ielem[k];
+
+            for ( var j = 0; j < elem.length ; j++ ) {
+                xy_gravity_center.x += this.xnode[ elem[j] - 1 ][0];
+                xy_gravity_center.y += this.xnode[ elem[j] - 1 ][1];
+
+                currentValueInterpolated += this.currentValuesToColorise[ elem[j] - 1 ];
+            }
+
+            if ( this.options && this.options.localParamsTextSVG ) {
+                // And we add the text over the element
+                paramsTextSVG = this.options.localParamsTextSVG;
+
+                paramsTextSVG.x = xy_gravity_center.x / elem.length;
+                paramsTextSVG.y = xy_gravity_center.y / elem.length;
+
+                addElementToSVG(getTextSVG("e" + twoElem.k_ielem, paramsTextSVG));
+            }
+
+            // And we paint the element (by interpolation between the values of the nodes)
+            if (this.currentValuesToColorise && this.options) {
+
+                twoElem.fill = getColorFromInterpolation(
+                    currentValueInterpolated / elem.length, 
+                    this.options.minValue, 
+                    this.options.maxValue);
+
+            } else {
+                twoElem.fill = G_COLOR_ELEM;
+            }
+
+            twoElem.fill_original = twoElem.fill;
+
+            groupElem.add(twoElem);
+        }
+
+        groupElem.opacity = 0.7;
+
+        return groupElem;
+    },
+
+    drawNodes : function () {
+
+        var twoNode;
+        var paramsTextSVG;
+        var groupNode = new Two.Group();
+
+        // Then we draw the nodes
+        for ( var j = 0; j < this.xnode.length; j++ ) {
+
+            twoNode = this.two.makeCircle(this.xnode[j][0], this.xnode[j][1], G_SHAPES_WIDTH * 0.0175);
+
+            if (this.currentValuesToColorise && this.options) {
+
+                twoNode.fill = getColorFromInterpolation(
+                    this.currentValuesToColorise[j], 
+                    this.options.minValue, 
+                    this.options.maxValue);
+
+            } else {
+                twoNode.fill = G_COLOR_ELEM;
+            }
+
+            twoNode.fill_original = twoNode.fill;
+
+            twoNode.type = 'node';
+            twoNode.k_ielem = j + 1;
+            twoNode.ielem = j;
+
+            groupNode.add(twoNode);
+
+            // And we add the text over the node
+            if ( this.options && this.options.localParamsTextSVG ) {
+                paramsTextSVG = this.options.localParamsTextSVG;
+                paramsTextSVG.x = this.xnode[j][0];
+                paramsTextSVG.y = this.xnode[j][1] + this.options.localParamsTextSVG['font-size'] * 0.25; // just for the text's vertical alignment
+
+                addElementToSVG(getTextSVG(twoNode.k_ielem, paramsTextSVG));
+            }
+        }
+
+        groupNode.opacity = 0.95;
+
+        return groupNode;
+    },
+
+    changeFactorOfDeformation : function(xnode, factorOfDeformation) {
+        this.xnode = transformCoordinates(xnode, factorOfDeformation);
+
+        $G_DRAW_SHAPES_DUMMY.children().html('');
+        $("#draw-shapes svg").html('');
+        this.two.clear();
+        this.makeElementsHelper();
+        this.two.update();
+    },
+
+    /**
+     * Change the color of all the elements of the domain usign the new values passed
+     *
+     * @param {number[]}
+     * @return {Two.group()}
+     */
+    changeColorDueToValues : function(options) {
+
+        // We update our previous values
+        this.currentValuesToColorise = options.valuesToColorise;
+        this.options = options;
+
+        // To use this inside jQuery's function we need to do this
+        local = this;
+
+        $.each(this.groupNode.children, function(idx, twoNode) {
+            twoNode.fill = getColorFromInterpolation(
+                options.valuesToColorise[twoNode.ielem], 
+                options.minValue, 
+                options.maxValue);
+
+            twoNode.fill_original = twoNode.fill;
+        });
+
+        $.each(this.groupElem.children, function(idx, twoElem) {
+
+            var xy_gravity_center = {
+                'x' : 0,
+                'y' : 0
+            };
+
+            var currentValueInterpolated = 0;
+
+            for ( var j = 0; j < twoElem.ielem.length ; j++ ) {
+                xy_gravity_center.x += local.xnode[ twoElem.ielem[j] - 1 ][0];
+                xy_gravity_center.y += local.xnode[ twoElem.ielem[j] - 1 ][1];
+
+                currentValueInterpolated += local.currentValuesToColorise[ twoElem.ielem[j] - 1 ];
+            }
+
+            twoElem.fill = getColorFromInterpolation(
+                currentValueInterpolated / twoElem.ielem.length, 
+                options.minValue, 
+                options.maxValue);
+
+            twoElem.fill_original = twoElem.fill;
+        });
+
+        this.two.update();
+
+    },
+
+    changeColorDueToValuesHelper : function (twoObject) {
+        twoObject.fill = getColorFromInterpolation(
+            this.currentValuesToColorise[j], 
+            this.options.minValue, 
+            this.options.maxValue); 
+
+        return twoObject;
+    },
+
+    /**
+     * Basis function that creates the drawing of the domain in SVG
+     * @return {Two.group()}
+     */
+    makeElements : function (two, xnode, ielem, options) {
+
+        two.clear();
+
+        this.two = two;
+        this.xnode = xnode;
+        this.ielem = ielem;
+
+        this.currentValuesToColorise = options.valuesToColorise;
+
+        this.options = options;
+
+        this.makeElementsHelper();
+
+    },
+
+    makeElementsHelper : function () {
+        // And we draw the elements
+        this.groupElem = this.drawElements();
+        this.groupNode = this.drawNodes();
+
+        this.two.add(this.groupElem);
+        this.two.add(this.groupNode);
+
+        this.group = { 'elems' : this.groupElem, 'nodes' : this.groupNode };
     }
 
-    groupElem.opacity = 0.7;
-
-    return groupElem;
-}
-
-function drawNodes(two, xnode, ielem, valuesToColorise, options) {
-
-    var k, j, twoNode, paramsTextSVG;
-
-    var groupNode = new Two.Group();
-
-    // Then we draw the nodes
-    for ( j = 0; j < xnode.length; j++ ) {
-
-        twoNode = two.makeCircle(xnode[j][0], xnode[j][1], G_SHAPES_WIDTH * 0.0175);
-
-        if (valuesToColorise && options) {
-            twoNode.fill = getColorFromInterpolation(valuesToColorise[j], options.minValue, options.maxValue);
-        } else {
-            twoNode.fill = G_COLOR_ELEM;
-        }
-
-        twoNode.fill_original = twoNode.fill;
-
-        twoNode.type = 'node';
-        twoNode.k_ielem = j + 1;
-        twoNode.ielem = j;
-
-        groupNode.add(twoNode);
-
-        // And we add the text over the node
-        if ( options && options.localParamsTextSVG ) {
-            paramsTextSVG = options.localParamsTextSVG;
-            paramsTextSVG.x = xnode[j][0];
-            paramsTextSVG.y = xnode[j][1] + options.localParamsTextSVG['font-size'] * 0.25; // just for the text's vertical alignment
-
-            addElementToSVG(getTextSVG(twoNode.k_ielem, paramsTextSVG));
-        }
-    }
-
-    groupNode.opacity = 0.95;
-
-    return groupNode;
-}
-
-// Crea una serie de elementos y los agrupa, en base a un xnod = [x1 y1; x2 y2; ... ; xN yN]
-// y un icone = [nodoA1 nodoA2 nodoA3 nodoA4 ; nodoN1 nodoN2 nodoN3 nodoN4]
-// (el icone comienza con indice 1)
-function makeElements(two, xnode, ielem, valuesToColorise, options) {
-
-    // And we draw the elements
-    var groupElem = drawElements(two, xnode, ielem, valuesToColorise, options);
-    var groupNode = drawNodes(two, xnode, ielem, valuesToColorise, options);
-
-    two.add(groupElem);
-    two.add(groupNode);
-
-    return { 'elems' : groupElem, 'nodes' : groupNode };
-}
+};

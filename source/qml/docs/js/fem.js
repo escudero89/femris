@@ -1,6 +1,10 @@
-var GROUP;
+// We define some variables for the colors
+var G_COLOR_NODE_HIGH = "#d9534f";
+var G_COLOR_ELEM_HIGH = "#d9534f";
 
 function drawCurrentMatrix(two, group) {
+
+    //@TODO Optimizar el index de elementos. Podria crear un vector que mapee el id de Two con el ielem
 
     if (typeof(setMatrixDrawing) === 'function') {
 
@@ -118,7 +122,7 @@ function getSingleColFromCurrentDomainHelper(variable, col_idx, singleColumnArra
         throw new Error("getSingleColFromCurrentDomain() : Invalid variable [" + variable + "]")
     }
 
-    assignIfNecessary(singleColumnArrayPassed, false);
+    singleColumnArrayPassed = assignIfNecessary(singleColumnArrayPassed, false);
     var singleColArray = (singleColumnArrayPassed) ? singleColumnArrayPassed : [];
 
     if (singleColumnArrayPassed) {
@@ -135,10 +139,9 @@ function getSingleColFromCurrentDomainHelper(variable, col_idx, singleColumnArra
 
 }
 
-function drawCurrentDomain(two, xnode, ielem, params) {
+function getOptions(xnode, ielem, params) {
 
-    assignIfNecessary(params, false);
-    var options = false;
+    params = assignIfNecessary(params, false);
 
     var localParamsTextSVG = {          // These are the text's params shared locally
         'fill'           : 'black',
@@ -158,25 +161,24 @@ function drawCurrentDomain(two, xnode, ielem, params) {
     if (params.valuesToColorise) {
 
         // For the colors
-        options = {
+        params = {
+            valuesToColorise : params.valuesToColorise,
             minValue : params.valuesToColorise[0],
             maxValue : params.valuesToColorise[0],
             localParamsTextSVG : localParamsTextSVG
         };
 
         for ( k = 0 ; k < params.valuesToColorise.length ; k++ ) {
-            if (params.valuesToColorise[k] > options.maxValue) {
-                options.maxValue = params.valuesToColorise[k];
+            if (params.valuesToColorise[k] > params.maxValue) {
+                params.maxValue = params.valuesToColorise[k];
             }
-            if (params.valuesToColorise[k] < options.minValue) {
-                options.minValue = params.valuesToColorise[k];
+            if (params.valuesToColorise[k] < params.minValue) {
+                params.minValue = params.valuesToColorise[k];
             }
         }
-
     }
 
-    return makeElements(two, G_XNODE, G_IELEM, params.valuesToColorise, options);
-
+    return params;
 }
 
 
@@ -190,12 +192,20 @@ $(document).ready(function() {
 
     var options = {
         valuesToColorise : getSingleColFromCurrentDomain('displacements', 1)
-    }
+    };
 
     // We transform the original coordinates so they can fit better in the SVG
     G_XNODE = transformCoordinates(G_XNODE);
+    G_XNODE_ORIGINAL = G_CURRENT_DOMAIN.coordinates;
 
-    var group = drawCurrentDomain(two, G_XNODE, G_IELEM, options);
+    params = getOptions(G_XNODE, G_IELEM, options);
+
+    domainObject.makeElements(two, G_XNODE, G_IELEM, params);
+
+
+    domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, 30000);
+
+    //domainObject.changeColorDueToValues(params);
 
     // Don't forget to tell two to render everything
     // to the screen
@@ -216,13 +226,10 @@ $(document).ready(function() {
 
         options = {
             valuesToColorise : getSingleColFromCurrentDomain(whichVariable, indexColumn)
-        }
+        };
 
-        two.clear();
-
-        GROUP = drawCurrentDomain(two, G_XNODE, G_IELEM, options);
-
-        two.update();
+        params = getOptions(G_XNODE, G_IELEM, options);
+        domainObject.changeColorDueToValues(params);
     });
 
 /*
@@ -239,7 +246,7 @@ $(document).ready(function() {
     }
   */ 
 
-    drawCurrentMatrix(two, group);
+    drawCurrentMatrix(two, domainObject.group);
 
     // If the window changes its size, we reload the page
   //  $(window).resize(function() {
