@@ -199,6 +199,8 @@ function drawElements(two, xnode, ielem, valuesToColorise, options) {
             twoElem.fill = G_COLOR_ELEM;
         }
 
+        twoElem.fill_original = twoElem.fill;
+
         groupElem.add(twoElem);
     }
 
@@ -224,6 +226,8 @@ function drawNodes(two, xnode, ielem, valuesToColorise, options) {
             twoNode.fill = G_COLOR_ELEM;
         }
 
+        twoNode.fill_original = twoNode.fill;
+
         twoNode.type = 'node';
         twoNode.k_ielem = j + 1;
         twoNode.ielem = j;
@@ -232,9 +236,9 @@ function drawNodes(two, xnode, ielem, valuesToColorise, options) {
 
         // And we add the text over the node
         if ( options && options.localParamsTextSVG ) {
-            paramsTextSVG = localParamsTextSVG;
+            paramsTextSVG = options.localParamsTextSVG;
             paramsTextSVG.x = xnode[j][0];
-            paramsTextSVG.y = xnode[j][1] + localParamsTextSVG['font-size'] * 0.25; // just for the text's vertical alignment
+            paramsTextSVG.y = xnode[j][1] + options.localParamsTextSVG['font-size'] * 0.25; // just for the text's vertical alignment
 
             addElementToSVG(getTextSVG(twoNode.k_ielem, paramsTextSVG));
         }

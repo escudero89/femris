@@ -94,8 +94,6 @@ function coloriseCell(twoCell, ielem, valueOf, isCellDifferentFromZero) {
     twoCell.fill = twoCell.fill_original;
     twoCell.stroke = twoCell.stroke_original;
 
-    twoCell.linewidth = 0;
-
     return twoCell;
 }
 
@@ -226,7 +224,7 @@ function drawBackground(data, boundingRect) {
 
 function setMatrixDrawing(xnode, ielem) {
 
-    var sideCell = (G_MATRIX_WIDTH * 0.9 / ( xnode.length + 3 ));
+    var sideCell = (G_MATRIX_WIDTH * 0.9 / ( xnode.length + 3 )) * .9;
 
     var cellDataMatrix = {
         'iniPosX' : G_MATRIX_WIDTH * 0.08,
