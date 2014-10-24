@@ -50,50 +50,50 @@ background-color: #f3f3f3;
         <div class="row">
 
             <div id="navbar-top" class="col-md-12" style="position:absolute; width:100%; z-index:200">
-                <nav class="navbar navbar-default" role="navigation">
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                     <div class="container-fluid">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Desplazamientos<span class="caret"></span></a>
-                                <ul name="displacements" class="dropdown-menu visualization" role="menu">
-                                    <li name="0"><a href="#">Eje X</a></li>
-                                    <li name="1"><a href="#">Eje Y</a></li>
-                                    <li class="divider"></li>
-                                    <li name="0,1"><a href="#">Totales</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reacciones<span class="caret"></span></a>
-                                <ul name="reactions" class="dropdown-menu visualization" role="menu">
-                                    <li name="0"><a href="#">Rx</a></li>
-                                    <li name="1"><a href="#">Ry</a></li>
-                                    <li class="divider"></li>
-                                    <li name="0,1"><a href="#">[Reacci&oacute;n]</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tensiones<span class="caret"></span></a>
-                                <ul name="stresses" class="dropdown-menu visualization" role="menu">
-                                    <li name="0"><a href="#">Sx</a></li>
-                                    <li name="1"><a href="#">Sy</a></li>
-                                    <li name="2"><a href="#">Sz</a></li>
-                                    <li class="divider"></li>
-                                    <li name="3"><a href="#">Sxy</a></li>
-                                    <li name="4"><a href="#">Syz</a></li>
-                                    <li name="5"><a href="#">Szx</a></li>
-                                    <li class="divider"></li>
-                                    <li onclick="alert('Not done')"><a href="#">Totales</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                         <div class="form-group navbar-form">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Desplazamientos<span class="caret"></span></a>
+                                    <ul name="displacements" class="dropdown-menu visualization" role="menu">
+                                        <li name="0"><a href="#">Eje X</a></li>
+                                        <li name="1"><a href="#">Eje Y</a></li>
+                                        <li class="divider"></li>
+                                        <li name="0,1"><a href="#">Totales</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reacciones<span class="caret"></span></a>
+                                    <ul name="reactions" class="dropdown-menu visualization" role="menu">
+                                        <li name="0"><a href="#">Rx</a></li>
+                                        <li name="1"><a href="#">Ry</a></li>
+                                        <li class="divider"></li>
+                                        <li name="0,1"><a href="#">[Reacci&oacute;n]</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tensiones<span class="caret"></span></a>
+                                    <ul name="stresses" class="dropdown-menu visualization" role="menu">
+                                        <li name="0"><a href="#">Sx</a></li>
+                                        <li name="1"><a href="#">Sy</a></li>
+                                        <li name="2"><a href="#">Sz</a></li>
+                                        <li class="divider"></li>
+                                        <li name="3"><a href="#">Sxy</a></li>
+                                        <li name="4"><a href="#">Syz</a></li>
+                                        <li name="5"><a href="#">Szx</a></li>
+                                        <li class="divider"></li>
+                                        <li onclick="alert('Not done')"><a href="#">Totales</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                             <div class="input-group">
                                 <div class="input-group-addon">Factor de escala</div>
-                                <input type="text" class="form-control" placeholder="Factor" value="1000"/>
+                                <input id="changeFactorOfDeformation" type="number" min="0" max="1000000" step="5000" class="form-control" placeholder="Factor" value="1000"/>
                             </div>
-                            <input type="button" class="btn btn-default navbar-btn" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, 30000);" value="Visualizar Matriz"/>
+                            <input type="button" class="btn btn-default navbar-btn" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, $('#changeFactorOfDeformation').val());" value="Visualizar Deformaci&oacute;n"/>
                             <input type="button" class="btn btn-default navbar-btn" onclick="drawCurrentMatrix()" value="Visualizar Matriz"/>
                         </div>
                     </div>  
@@ -102,7 +102,7 @@ background-color: #f3f3f3;
 
             <div class="col-sm-6">
                 <div id="draw-shapes" style="background-color: #F8f8f8">
-                    <div class="two-container w100p" style="height: 97vh;"></div>
+                    <div class="two-container w100p" style="height: 93vh;"></div>
                 </div>
 
                 <div version="1.1" id="draw-shapes-dummy" class="hidden">
@@ -113,9 +113,16 @@ background-color: #f3f3f3;
             <div class="col-sm-6">
 
                 <div id="draw-matrix" style="background-color: #f8f8f8">
-                    <div class="two-container w100p" style="height: 97vh;"></div>
+                    <div class="two-container w100p" style="height: 93vh;"></div>
                 </div>
 
+                <div id="draw-elemental-matrix" class="hidden" style="background-color: #f8f8f8; ">
+                    <div class="two-container w100p" style="height: 93vh;"></div>
+                </div>
+                
+                <svg version="1.1" id="draw-elemental-matrix-dummy" class="hidden">
+                    <g></g>
+                </svg>
 
                 <svg version="1.1" id="draw-matrix-dummy" class="hidden">
                     <g></g>
@@ -142,12 +149,57 @@ background-color: #f3f3f3;
 <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
  -->
 
+        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <div class="container">
+                <div class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <p id="minValue" class="navbar-text">Val1</p>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-control" style="background: #00ff00 url('img/gradient.png') no-repeat; background-size: 100% 100%; height: 2.4em; width: 10em">
+                            <p class="text-center" style="background-color: black; color:white" >
+                                <strong>3.413</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p id="maxValue" class="navbar-text">Val1</p>
+                    </div>
+                    <div class="form-group">
+                        <p class="navbar-text">Signed in as Mark Otto</p>
+                        <!-- Button trigger modal -->
+                        <button class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#myModal">
+                          Launch demo modal
+                        </button>
+                    </div>
+                </div>
 
+          </div>
+        </nav>
 
 
         </div>
     </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/third-party/jquery-1.11.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -170,7 +222,7 @@ background-color: #f3f3f3;
         $(document).ready(function() {
             $("[data-toggle=popover]").popover();
 
-            var panZoomTiger = svgPanZoom('#draw-shapes svg, #draw-matrix svg', {
+            var panZoomTiger = svgPanZoom('#draw-shapes svg', {
                 panEnabled: true,
                 controlIconsEnabled: true,
                 zoomEnabled: true,
@@ -185,7 +237,24 @@ background-color: #f3f3f3;
                 onZoom: function(){},
                 beforePan: function(){},
                 onPan: function(){}
-          });
+            });
+
+            var panZoomTiger = svgPanZoom('#draw-matrix svg', {
+                panEnabled: true,
+                controlIconsEnabled: true,
+                zoomEnabled: true,
+                dblClickZoomEnabled: false,
+                zoomScaleSensitivity: 0.2,
+                minZoom: 0.5,
+                maxZoom: 10,
+                fit: true,
+                center: true,
+                refreshRate: 'auto',
+                beforeZoom: function(){},
+                onZoom: function(){},
+                beforePan: function(){},
+                onPan: function(){}
+            });
         });
     </script>
 </body>

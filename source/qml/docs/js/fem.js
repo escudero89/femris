@@ -6,88 +6,123 @@ function drawCurrentMatrix(two, group) {
 
     //@TODO Optimizar el index de elementos. Podria crear un vector que mapee el id de Two con el ielem
 
-    if (typeof(setMatrixDrawing) === 'function') {
+    var groupSystem = globalMatrixObject.setMatrixDrawing('draw-matrix', 'draw-matrix-dummy', G_XNODE, G_IELEM);
 
-        var groupSystem = setMatrixDrawing(G_XNODE, G_IELEM);
+    $.each(group, function(index, value) {
+        $.each(group[index].children, function(idx, currentElem) {
+            $(currentElem._renderer.elem)
+                .css('cursor', 'pointer')
+                .on('mouseenter', function(e) {
+                    currentElem.fill = G_COLOR_ELEM_HIGH;
 
-        $.each(group, function(index, value) {
-            $.each(group[index].children, function(idx, currentElem) {
-                $(currentElem._renderer.elem)
-                    .css('cursor', 'pointer')
-                    .on('mouseenter', function(e) {
-                        currentElem.fill = G_COLOR_ELEM_HIGH;
+                    // We set the color of  the cells of the matrix
+                    coloriseDueToMouse(groupSystem, currentElem, true);
 
-                        // We set the color of  the cells of the matrix
-                        coloriseDueToMouse(groupSystem, currentElem, true);
+                    globalMatrixObject.TwoMatrix.update();
+                    two.update();
 
-                        G_TWO_MATRIX.update();
-                        two.update();
+                }).on('mouseleave', function(e) {
 
-                    }).on('mouseleave', function(e) {
+                    currentElem.fill = currentElem.fill_original;
 
-                        currentElem.fill = currentElem.fill_original;
+                    // We clear the color of  the cells of the matrix
+                    coloriseDueToMouse(groupSystem, currentElem, false);
 
-                        // We clear the color of  the cells of the matrix
-                        coloriseDueToMouse(groupSystem, currentElem, false);
+                    globalMatrixObject.TwoMatrix.update();
+                    two.update();
+                }).on('click', function (e){
+                    
+                    if (currentElem.type === 'elem') {
 
-                        G_TWO_MATRIX.update();
-                        two.update();
-                    });
-            });
+                        var currentXnode = [];
+
+                        for ( var kNode = 0 ; kNode < currentElem.ielem.length ; kNode++ ) {
+                            currentXnode.push(
+                                [
+                                    G_XNODE[currentElem.ielem[kNode] - 1][0],
+                                    G_XNODE[currentElem.ielem[kNode] - 1][1]
+                                ]
+                            );
+
+                            currentElem.ielem[kNode] = kNode + 1;
+                        }
+
+                        var $drawElementalMatrix = $('#draw-elemental-matrix');
+                        var $drawMatrix = $("#draw-matrix");
+
+                        $drawElementalMatrix.css('width', $drawMatrix.css('width'));
+                        $drawElementalMatrix.css('height', $drawMatrix.css('height'));
+
+                        $drawMatrix.fadeOut(400, function () {
+                            $drawElementalMatrix.removeClass('hidden');
+                            
+                            elementalMatrixObject.setMatrixDrawing(
+                                'draw-elemental-matrix', 
+                                'draw-elemental-matrix-dummy', 
+                                currentXnode,
+                                [currentElem.ielem]
+                            );
+
+                            $drawElementalMatrix.fadeIn();
+                        });
+                    }
+                });
         });
+    });
 
-        $.each(groupSystem, function(index, value) {
-            $.each(groupSystem[index].children, function(idx, currentCell) {
-                $(currentCell._renderer.elem)
-                    .css('cursor', 'pointer')
-                    .on('mouseenter', function(e) {
+    $.each(groupSystem, function(index, value) {
+        $.each(groupSystem[index].children, function(idx, currentCell) {
+            $(currentCell._renderer.elem)
+                .css('cursor', 'pointer')
+                .on('mouseenter', function(e) {
 
-                        currentCell.fill = G_COLOR_ELEM_HIGH;
+                    currentCell.fill = G_COLOR_ELEM_HIGH;
+                    currentCell.stroke = currentCell.fill;
 
-                        $.each(group.nodes.children, function(idx, currentNode) {
-                            if (currentNode.k_ielem === currentCell.id_row) {
-                                currentNode.fill = G_COLOR_ELEM_HIGH;
-                            } else {
-                                currentNode.fill = currentNode.fill_original;
-                            }
-                        });
-
-                        $.each(group.elems.children, function(idx, currentElem) {
-                            if ($.inArray(currentCell.id_row, currentElem.ielem) !== -1) {
-                                currentElem.fill = G_COLOR_ELEM_HIGH;
-                            } else {
-                                currentElem.fill = currentElem.fill_original;
-                            }
-                        });
-
-                        // We set the color of  the cells of the matrix
-                        //coloriseDueToMouse(groupSystem, currentElem, true);
-
-                        G_TWO_MATRIX.update();
-                        two.update();
-
-                    }).on('mouseleave', function(e) {
-
-                        currentCell.fill = currentCell.fill_original;
-
-                        $.each(group.nodes.children, function(idx, currentNode) {
+                    $.each(group.nodes.children, function(idx, currentNode) {
+                        if (currentNode.k_ielem === currentCell.id_row) {
+                            currentNode.fill = G_COLOR_ELEM_HIGH;
+                        } else {
                             currentNode.fill = currentNode.fill_original;
-                        });
-
-                        $.each(group.elems.children, function(idx, currentElem) {
-                            currentElem.fill = currentElem.fill_original;
-                        });
-
-                        // We clear the color of  the cells of the matrix
-                        //coloriseDueToMouse(groupSystem, currentElem, false);
-
-                        G_TWO_MATRIX.update();
-                        two.update();
+                        }
                     });
-            });
-        });
 
-    }
+                    $.each(group.elems.children, function(idx, currentElem) {
+                        if ($.inArray(currentCell.id_row, currentElem.ielem) !== -1) {
+                            currentElem.fill = G_COLOR_ELEM_HIGH;
+                        } else {
+                            currentElem.fill = currentElem.fill_original;
+                        }
+                    });
+
+                    // We set the color of  the cells of the matrix
+                    //coloriseDueToMouse(groupSystem, currentElem, true);
+
+                    globalMatrixObject.TwoMatrix.update();
+                    two.update();
+
+                }).on('mouseleave', function(e) {
+
+                    currentCell.fill = currentCell.fill_original;
+                    currentCell.stroke = currentCell.stroke_original;
+
+                    $.each(group.nodes.children, function(idx, currentNode) {
+                        currentNode.fill = currentNode.fill_original;
+                    });
+
+                    $.each(group.elems.children, function(idx, currentElem) {
+                        currentElem.fill = currentElem.fill_original;
+                    });
+
+                    // We clear the color of  the cells of the matrix
+                    //coloriseDueToMouse(groupSystem, currentElem, false);
+
+                    globalMatrixObject.TwoMatrix.update();
+                    two.update();
+                });
+        });
+    });
+
 }
 
 function getSingleColFromCurrentDomain(variable, col_idx) {
@@ -176,6 +211,9 @@ function getOptions(xnode, ielem, params) {
                 params.minValue = params.valuesToColorise[k];
             }
         }
+
+        $("p#minValue").html(params.minValue);
+        $("p#maxValue").html(params.maxValue);
     }
 
     return params;
@@ -183,12 +221,6 @@ function getOptions(xnode, ielem, params) {
 
 
 $(document).ready(function() {
-
-    // Make an instance of two and place it on the page.
-    var elem = document.getElementById('draw-shapes').children[0];
-
-    var params = { width: "100%", height: "100%" };
-    var two = new Two(params).appendTo(elem);
 
     var options = {
         valuesToColorise : getSingleColFromCurrentDomain('displacements', 1)
@@ -200,16 +232,11 @@ $(document).ready(function() {
 
     params = getOptions(G_XNODE, G_IELEM, options);
 
-    domainObject.makeElements(two, G_XNODE, G_IELEM, params);
+    domainObject.makeElements(G_XNODE, G_IELEM, params);
 
-
-    domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, 30000);
+    //domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, 30000);
 
     //domainObject.changeColorDueToValues(params);
-
-    // Don't forget to tell two to render everything
-    // to the screen
-    two.update();
 
     $(".visualization li").on('click', function(e) {
         var $this = $(this);
@@ -232,29 +259,14 @@ $(document).ready(function() {
         domainObject.changeColorDueToValues(params);
     });
 
-/*
-    var cleanMatrix = getMatrixFromArray(vals);
-    var coloredMatrix = {};
-    var k = 0;
-
-    /// @@TODO Emparejar nodos con colores. Crear elementos para todas las matrices
-    /// y simplemente visualizar aquella que pongas el mouse arriba, mas que renderizar una a una.
-    /// Y POR ZEUS FIJASE COMO ACHICAR ESE MATHJAX
-
-    for ( k = 0 ; k < ielem.length ; k++ ) {
-        coloredMatrix[k] = getMatrixFromArray(getValuesColorised(vals, ielem[k]));
-    }
-  */ 
-
-    drawCurrentMatrix(two, domainObject.group);
+    drawCurrentMatrix(domainObject.two, domainObject.group);
 
     // If the window changes its size, we reload the page
   //  $(window).resize(function() {
   //      document.location.reload();
   //  });
 
-    // Adds the text
-    $("#draw-shapes svg").append(parseSVG($G_DRAW_SHAPES_DUMMY.html()));
+    
 });
 
 

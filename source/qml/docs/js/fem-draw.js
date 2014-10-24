@@ -275,12 +275,14 @@ var domainObject = {
     },
 
     changeFactorOfDeformation : function(xnode, factorOfDeformation) {
+
         this.xnode = transformCoordinates(xnode, factorOfDeformation);
 
-        $G_DRAW_SHAPES_DUMMY.children().html('');
-        $("#draw-shapes svg").html('');
-        this.two.clear();
-        this.makeElementsHelper();
+        $("#draw-shapes-dummy").html('<g></g>');
+        $("#draw-shapes").html('<div class="two-container w100p" style="height: 93vh;"></div>');
+        
+        this.makeElements(this.xnode, this.ielem, this.options);
+
         this.two.update();
     },
 
@@ -349,11 +351,14 @@ var domainObject = {
      * Basis function that creates the drawing of the domain in SVG
      * @return {Two.group()}
      */
-    makeElements : function (two, xnode, ielem, options) {
+    makeElements : function (xnode, ielem, options) {
+    
+        // Make an instance of two and place it on the page.
+        this.two = new Two({
+                width: "100%",
+                height: "100%"
+            }).appendTo(document.getElementById('draw-shapes').children[0]);
 
-        two.clear();
-
-        this.two = two;
         this.xnode = xnode;
         this.ielem = ielem;
 
@@ -361,11 +366,6 @@ var domainObject = {
 
         this.options = options;
 
-        this.makeElementsHelper();
-
-    },
-
-    makeElementsHelper : function () {
         // And we draw the elements
         this.groupElem = this.drawElements();
         this.groupNode = this.drawNodes();
@@ -374,6 +374,12 @@ var domainObject = {
         this.two.add(this.groupNode);
 
         this.group = { 'elems' : this.groupElem, 'nodes' : this.groupNode };
+
+        // Don't forget to tell two to render everything to the screen
+        this.two.update();
+
+        // Adds the text
+        $("#draw-shapes svg").append(parseSVG($G_DRAW_SHAPES_DUMMY.html()));
     }
 
 };
