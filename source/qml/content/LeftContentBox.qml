@@ -31,7 +31,7 @@ Rectangle {
 
         ModelElectionSBox { visible : { return parentStage === 'CE_Model' } }
 
-        VariablesSBox { visible : { return parentStage === 'CE_Domain'; } }
+        VariablesSBox { visible : { return parentStage === 'CE_DomainOriginal'; } }
 
         Rectangle {
             color: "transparent"
@@ -39,7 +39,6 @@ Rectangle {
             Layout.fillWidth: true
         }
 
-        FirstTimeBox {
-        }
+        FirstTimeBox {}
     }
 }

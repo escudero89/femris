@@ -7,6 +7,7 @@
         <file>screens/CE_Overall.qml</file>
         <file>screens/CE_Model.qml</file>
         <file>screens/CE_Domain.qml</file>
+        <file>screens/CE_DomainOriginal.qml</file>
         <file>main.qml</file>
         <file>Style.qml</file>
         <file>test.qml</file>

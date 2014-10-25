@@ -32,3 +32,4 @@ build-*
 source/temp/
 *.femris.old
 *.femris.bak
+*.fuse_hidden*
