@@ -17,7 +17,6 @@ StudyCaseHandler::StudyCaseHandler() {
 }
 
 StudyCaseHandler::~StudyCaseHandler() {
-    delete m_studyCase;
 }
 
 /**
