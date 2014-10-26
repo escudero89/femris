@@ -1,4 +1,4 @@
-import QtQuick 2.2
+import QtQuick 2.3
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 
@@ -41,11 +41,11 @@ RowLayout {
 
                 GridView {
 
-                    property int z_index : z
-
                     id: gridViewDomain
 
                     anchors.fill : parent
+
+                    boundsBehavior: Flickable.StopAtBounds
 
                     cellWidth: width / 2
 
@@ -93,7 +93,25 @@ RowLayout {
                                 anchors.fill: parent
                                 onClicked: {
                                     gridViewDomain.currentIndex = index
-                                    console.log(index)
+                                    console.log(index);
+                                    CurrentFileIO.setSource(':/resources/examples/example1.m');
+                                    var json = CurrentFileIO.read();
+                                    //console.log(json);
+                                    var ehmp = CurrentFileIO.getVarFromJsonString(json);
+                                    console.log(ehmp["_comment"]);
+
+                                    var keys=[];
+                                    for(var k in ehmp) keys.push(k);
+
+                                    console.log("total " + keys.length + " keys: " + keys);
+                                }
+
+                                Connections {
+                                    target: CurrentFileIO
+
+                                    onError: {
+                                        console.log(msg);
+                                    }
                                 }
                             }
                         }
@@ -343,7 +361,7 @@ RowLayout {
                     }
 
                     onClicked: {
-                        StudyCaseHandler.createNewStudyCase();
+                        //StudyCaseHandler.createNewStudyCase();
                         mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
                     }
                 }

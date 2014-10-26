@@ -12,7 +12,7 @@ import "."
 
 Rectangle {
 
-    id: variablesSBox
+    id: propertiesAssignationSBox
 
     Layout.fillHeight: true
     Layout.fillWidth: true
@@ -38,7 +38,7 @@ Rectangle {
             Text {
                 id: textCode
 
-                text: qsTr("Variables")
+                text: qsTr("Propiedades")
                 font.italic: true
 
                 color: Style.color.complement
@@ -75,14 +75,16 @@ Rectangle {
 
                     Text {
                         Layout.fillWidth: true
-                        text: title
+                        text: math
                     }
 
                     TextField {
                         id: variablesTextField
 
-                        Layout.preferredWidth: parent.width / 2
-                        text: author
+                        Layout.preferredWidth: parent.width / 1.5
+                        placeholderText: name
+
+                        inputMethodHints: Qt.ImhFormattedNumbersOnly
                     }
                 }
             }
@@ -93,11 +95,31 @@ Rectangle {
 
             model: ListModel {
                 id: listModelVariablesSBox
-            }
 
+                ListElement {
+                    math: 'E'
+                    name: 'Módulo de Young'
+                }
+
+                ListElement {
+                    math: '𝜈'
+                    name: 'Coeficiente de Poisson'
+                }
+
+                ListElement {
+                    math: 'ρ'
+                    name: 'Densidad'
+                }
+
+                ListElement {
+                    math: 't'
+                    name: 'Espesor'
+                }
+            }
+/*
             Connections {
                 target: CurrentFileIO
-/*
+
                 onPerformedRead: {
                     var dynamicVariables = getArgsFromScriptFile(content);
                     var dynamicVariablesKeys = Object.keys(dynamicVariables);
@@ -111,8 +133,8 @@ Rectangle {
                             'author' : dynamicVariables[dynamicVariablesKeys[k]]
                         });
                     }
-                }*/
-            }
+                }
+            }*/
         }
 
         PrimaryButton {
@@ -120,38 +142,13 @@ Rectangle {
             Layout.fillWidth: true
 
             buttonText.font.pixelSize: height / 2
-            buttonLabel: qsTr('Guardar')
+            buttonLabel: qsTr('Cargar desde archivo')
 
             buttonStatus: 'white'
 
             onClicked: {
-                StudyCaseHandler.createDomainFromScriptFile(CurrentFileIO.read());
+                //StudyCaseHandler.createDomainFromScriptFile(CurrentFileIO.read());
             }
         }
     }
-
-    function getArgsFromScriptFile(content) {
-        var regex = new RegExp("^\s*function.*\\[(.*)\\].+domain\\((.*)\\)$", "m");
-        var match = regex.exec(content);
-
-        var returned_values = match[1].split(',');
-        var args = match[2].split(',');
-        var kArgs;
-
-        var dynamicVariables = {};
-        var dynamicArgs;
-
-        for ( kArgs = 0; kArgs < args.length; kArgs++ ) {
-            if (args[kArgs].search('=') > 0) {
-                dynamicArgs = args[kArgs].split('=');
-                dynamicVariables[dynamicArgs[0].trim()] = dynamicArgs[1].trim();
-                console.log(dynamicArgs[1].trim());
-            } else {
-                dynamicVariables[args[kArgs].trim()] = '';
-            }
-        }
-
-        return dynamicVariables;
-    }
-
 }

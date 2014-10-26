@@ -15,5 +15,6 @@
         <file>content/smallBoxes/TutorialSBox.qml</file>
         <file>content/smallBoxes/CodeSBox.qml</file>
         <file>content/LoadingModal.qml</file>
+        <file>content/smallBoxes/PropertiesAssignationSBox.qml</file>
     </qresource>
 </RCC>

@@ -4,6 +4,9 @@
 #include <QFile>
 #include <QTextStream>
 
+#include <QJsonDocument>
+#include <QJsonObject>
+
 #include <QDebug>
 
 #include <armadillo>
@@ -81,6 +84,18 @@ void FileIO::setSource(QString arg) {
         emit sourceChanged();
     }
 }
+
+QJsonObject FileIO::getVarFromJsonString(const QString& jsonFile) {
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(jsonFile.toUtf8());
+
+    if (jsonResponse.isNull()) {
+        emit error("FileIO::getVarFromJsonString() : jsonFile is not a valid JSON object");
+    }
+
+    return jsonResponse.object();
+}
+
 
 //----------------------------------------------------------------------------//
 //--                           STATIC FUNCTIONS                             --//

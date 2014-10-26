@@ -2,6 +2,7 @@
 #define FILEIO_H
 
 #include <QObject>
+#include <QJsonObject>
 
 class FileIO : public QObject {
     Q_OBJECT
@@ -12,7 +13,8 @@ public:
     FileIO();
 
     Q_INVOKABLE QString read();
-    Q_INVOKABLE bool write(const QString &data);
+    Q_INVOKABLE bool write(const QString&);
+    Q_INVOKABLE QJsonObject getVarFromJsonString(const QString&);
 
     QString source() const;
     bool isSourceEmpty();
