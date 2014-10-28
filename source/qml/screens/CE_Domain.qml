@@ -10,6 +10,8 @@ import "../"
 
 RowLayout {
 
+    property variant jsonDomain : false
+
     id: rowParent
     objectName: "CE_Domain"
 
@@ -57,7 +59,6 @@ RowLayout {
                     focus: true
 
                     delegate: Component {
-                        //   id: contactsDelegate
 
                         Rectangle {
                             id: wrapper
@@ -91,19 +92,9 @@ RowLayout {
 
                             MouseArea {
                                 anchors.fill: parent
+
                                 onClicked: {
-                                    gridViewDomain.currentIndex = index
-                                    console.log(index);
-                                    CurrentFileIO.setSource(':/resources/examples/example1.m');
-                                    var json = CurrentFileIO.read();
-                                    //console.log(json);
-                                    var ehmp = CurrentFileIO.getVarFromJsonString(json);
-                                    console.log(ehmp["_comment"]);
-
-                                    var keys=[];
-                                    for(var k in ehmp) keys.push(k);
-
-                                    console.log("total " + keys.length + " keys: " + keys);
+                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
                                 }
 
                                 Connections {
@@ -114,6 +105,13 @@ RowLayout {
                                     }
                                 }
                             }
+
+                            Component.onCompleted: {
+                                // We just load the conditions for the first component
+                                if (index === 0) {
+                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
+                                }
+                            }
                         }
                     }
 
@@ -122,11 +120,25 @@ RowLayout {
                         ListElement {
                             name: "Example 1"
                             portrait: "qrc:/resources/examples/example1.png"
+                            exampleFile: "example1.json"
                         }
                         ListElement {
                             name: "Example 2"
                             portrait: "qrc:/resources/examples/example2.png"
+                            exampleFile: "example2.json"
                         }
+                    }
+
+                    function fillSideLoadAndFixedNodes(index, exampleFile) {
+
+                        gridViewDomain.currentIndex = index;
+                        console.log(index);
+                        CurrentFileIO.setSource(':/resources/examples/' + exampleFile);
+
+                        jsonDomain = CurrentFileIO.getVarFromJsonString(CurrentFileIO.read());
+
+                        sideLoadContainer.objectRepeater.model = jsonDomain["sideloadNodes"].length
+                        nodesContainer.objectRepeater.model = jsonDomain["coordinates"].length
                     }
                 }
             }
@@ -136,7 +148,7 @@ RowLayout {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
-                color: Style.color.background
+                color: Style.color.background_highlight
 
                 GridLayout {
 
@@ -146,183 +158,18 @@ RowLayout {
                     columns : 2
                     rows : 2
 
-                    RowLayout {
+                    FlickableRepeaterNodes {
+                        id: sideLoadContainer
 
-                        Layout.columnSpan: 2
-
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-
-                        Repeater {
-
-                            model: ["Ancho", "Alto"]
-
-                            delegate: RowLayout {
-
-                                Layout.fillHeight: true
-                                Layout.fillWidth: true
-
-                                Text {
-                                    text: qsTr(modelData)
-                                }
-
-                                TextField {
-                                    text: "Text"
-                                }
-                            }
-                        }
-
+                        objectHeader.text: qsTr("Condiciones de borde")
+                        textRow: "Lado #"
                     }
 
-                    ColumnLayout {
+                    FlickableRepeaterNodes {
+                        id: nodesContainer
 
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-
-                        Text {
-                            text: qsTr("Sideloads")
-
-                            font.pointSize: Style.fontSize.h4
-                        }
-
-                        Flickable {
-
-                            id: flickable
-
-                            clip: true
-
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-
-                            contentWidth: flickable.width
-                            contentHeight: 40 * repeater.model
-
-                            onMovementStarted: Style.color.complement
-                            onMovementEnded: Style.color.background
-
-                            flickableDirection: Flickable.VerticalFlick
-                            boundsBehavior: Flickable.StopAtBounds
-
-                            ColumnLayout {
-
-                                height: flickable.contentHeight
-                                width: flickable.contentWidth
-
-                                spacing: 0
-
-                                Repeater {
-
-                                    id: repeater
-
-                                    model: 30
-
-                                    delegate: Rectangle {
-
-                                        anchors.horizontalCenter: parent.horizontalCenter
-
-                                        Layout.preferredHeight: 40
-                                        Layout.preferredWidth: flickable.contentWidth
-
-                                        color: (index % 2 === 0) ? Style.color.background_highlight :  Style.color.background;
-
-                                        RowLayout {
-
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            height: parent.height
-                                            width: parent.width * .95
-
-                                            spacing: 0
-
-                                            Text {
-                                                Layout.fillWidth: true
-                                                text: index + 1
-                                            }
-
-                                            TextField {
-                                                id: variablesTextField
-
-                                                Layout.preferredWidth: parent.width / 2
-                                                placeholderText: index
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    ColumnLayout {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-
-                        Text {
-                            text: qsTr("Sideloads")
-
-                            font.pointSize: Style.fontSize.h4
-                        }
-
-                        Flickable {
-
-                            id: flickable2
-
-                            clip: true
-
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-
-                            contentWidth: flickable2.width
-                            contentHeight: 40 * repeater2.model
-
-                            onMovementStarted: Style.color.complement
-                            onMovementEnded: Style.color.background
-
-                            flickableDirection: Flickable.VerticalFlick
-                            boundsBehavior: Flickable.StopAtBounds
-
-                            ColumnLayout {
-
-                                height: flickable2.contentHeight
-                                width: flickable2.contentWidth
-
-                                spacing: 0
-
-                                Repeater {
-
-                                    id: repeater2
-
-                                    model: 30
-
-                                    delegate: Rectangle {
-
-                                        anchors.horizontalCenter: parent.horizontalCenter
-
-                                        Layout.preferredHeight: 40
-                                        Layout.preferredWidth: flickable2.contentWidth
-
-                                        color: (index % 2 === 0) ? Style.color.background_highlight :  Style.color.background;
-
-                                        RowLayout {
-
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            height: parent.height
-                                            width: parent.width * .95
-
-                                            spacing: 0
-
-                                            Text {
-                                                Layout.fillWidth: true
-                                                text: index + 1
-                                            }
-
-                                            TextField {
-                                                Layout.preferredWidth: parent.width / 2
-                                                placeholderText: index
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        objectHeader.text: qsTr("Cargas puntuales y fijas")
+                        textRow: "Nodo #"
                     }
                 }
             }
@@ -347,22 +194,66 @@ RowLayout {
                     id: continueButton
 
                     buttonLabel: "Guardar y Continuar"
-                    buttonStatus: "disabled"
+                    buttonStatus: "success"
                     buttonText.font.pixelSize: height / 2
 
                     Layout.preferredWidth: 0.6 * parent.width
-
+/*
                     Connections {
                         target: StudyCaseHandler
 
                         onNewStudyCaseChose: {
                             continueButton.buttonStatus = "success";
                         }
-                    }
+                    }*/
 
                     onClicked: {
-                        //StudyCaseHandler.createNewStudyCase();
-                        mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+                        // First we adjust the coordinates usign the width and height set
+                        var maxCoord = {
+                            x : jsonDomain['coordinates'][0][0],
+                            y : jsonDomain['coordinates'][0][1]
+                        }
+
+                        var minCoord = {
+                            x :jsonDomain['coordinates'][0][0],
+                            y :jsonDomain['coordinates'][0][1]
+                        }
+
+                        var scaleFactor = {
+                            width  : StudyCaseHandler.getSingleStudyCaseInformation('width', true),
+                            height : StudyCaseHandler.getSingleStudyCaseInformation('height', true)
+                        }
+
+                        scaleFactor.width = (scaleFactor.width !== '') ? parseFloat(scaleFactor.width) : 1;
+                        scaleFactor.height = (scaleFactor.height !== '') ? parseFloat(scaleFactor.height) : 1;
+
+                        // For normalizing
+                        for ( var k = 0 ; k < jsonDomain['coordinates'].length ; k++ ) {
+                            if (jsonDomain['coordinates'][k][0] > maxCoord.x) {
+                                maxCoord.x = jsonDomain['coordinates'][k][0];
+
+                            } else if (jsonDomain['coordinates'][k][0] < minCoord.x) {
+                                minCoord.x = jsonDomain['coordinates'][k][0];
+                            }
+
+                            if (jsonDomain['coordinates'][k][0] > maxCoord.y) {
+                                maxCoord.y = jsonDomain['coordinates'][k][1];
+
+                            } else if (jsonDomain['coordinates'][k][0] < minCoord.y) {
+                                minCoord.y = jsonDomain['coordinates'][k][1];
+                            }
+                        }
+
+                        var coordinates = jsonDomain['coordinates'];
+
+                        for ( var k = 0 ; k < coordinates.length ; k++ ) {
+                            coordinates[k][0] *= scaleFactor.width / ( maxCoord.x - minCoord.x );
+                            coordinates[k][1] *= scaleFactor.height / ( maxCoord.y - minCoord.y );
+                        }
+
+                        StudyCaseHandler.setSingleStudyCaseInformation('coordinates', coordinates);
+
+                        //mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
                     }
                 }
             }

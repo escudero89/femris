@@ -18,8 +18,8 @@ public:
     Q_INVOKABLE void createNewStudyCase();
     Q_INVOKABLE bool createDomainFromScriptFile();
 
-    Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&);
-    void setSingleStudyCaseInformation(const QString&, const QString&);
+    Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&, bool = false);
+    Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString&, bool = false);
 
     Q_INVOKABLE QString saveAndContinue(const QString&);
 
@@ -42,6 +42,7 @@ private:
     StudyCase *m_studyCase;
 
     QMap<QString, QString> m_currentStudyCaseVariables;
+    QMap<QString, QString> m_temporalStudyCaseVariables;
 };
 
 #endif // STUDYCASEHANDLER_H

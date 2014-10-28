@@ -54,6 +54,8 @@ Rectangle {
 
             id: variablesList
 
+            boundsBehavior: Flickable.StopAtBounds
+
             Layout.preferredHeight: parent.height - buttonSaveVariables.height - variablesRectangle.height
             Layout.preferredWidth: parent.width
 
@@ -85,6 +87,18 @@ Rectangle {
                         placeholderText: name
 
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
+
+                        validator: DoubleValidator { bottom: 0;}
+                        focus: true
+
+                        onEditingFinished: {
+                            if (variable) {
+                                StudyCaseHandler.setSingleStudyCaseInformation(variable, text);
+                                console.log(variable);
+                            } else {
+                                StudyCaseHandler.setSingleStudyCaseInformation(variableTemp, text, true);
+                            }
+                        }
                     }
                 }
             }
@@ -97,23 +111,39 @@ Rectangle {
                 id: listModelVariablesSBox
 
                 ListElement {
+                    math: 'Ancho'
+                    name: 'Ancho del dominio'
+                    variableTemp: 'width'
+                }
+
+                ListElement {
+                    math: 'Alto'
+                    name: 'Alto del dominio'
+                    variableTemp: 'height'
+                }
+
+                ListElement {
                     math: 'E'
                     name: 'Módulo de Young'
+                    variable: 'youngModulus'
                 }
 
                 ListElement {
                     math: '𝜈'
                     name: 'Coeficiente de Poisson'
+                    variable: 'poissonCoefficient'
                 }
 
                 ListElement {
                     math: 'ρ'
                     name: 'Densidad'
+                    variable: 'densityOfDomain'
                 }
 
                 ListElement {
                     math: 't'
                     name: 'Espesor'
+                    variable: 'thickOfDomain'
                 }
             }
 /*

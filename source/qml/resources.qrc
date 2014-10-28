@@ -11,9 +11,9 @@
         <file>resources/images/toolbar.png</file>
         <file>resources/images/loader.gif</file>
         <file>resources/images/femris_logo.png</file>
-        <file>resources/examples/example1.m</file>
+        <file>resources/examples/example1.json</file>
         <file>resources/examples/example1.png</file>
-        <file>resources/examples/example2.m</file>
+        <file>resources/examples/example2.json</file>
         <file>resources/examples/example2.png</file>
         <file>resources/examples/pltmsh.m</file>
     </qresource>

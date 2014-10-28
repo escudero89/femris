@@ -55,13 +55,21 @@ void StudyCaseHandler::createNewStudyCase() {
  * @param variable
  * @return
  */
-QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable) {
+QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable, bool isTemporal) {
 
-    if (!m_currentStudyCaseVariables.contains(variable)) {
-        Utils::throwErrorAndExit("StudyCaseHandler::getStudyCaseInformationAbout(): unknown variable" + variable);
+    if (!m_currentStudyCaseVariables.contains(variable) && !isTemporal) {
+        Utils::throwErrorAndExit("StudyCaseHandler::getStudyCaseInformationAbout(): unknown variable " + variable);
     }
 
-    return m_currentStudyCaseVariables.value(variable);
+    if (isTemporal) {
+        if (!m_temporalStudyCaseVariables.contains(variable)) {
+            m_temporalStudyCaseVariables.insert(variable, "");
+        }
+    }
+
+    return (isTemporal) ?
+                m_temporalStudyCaseVariables.value(variable) :
+                m_currentStudyCaseVariables.value(variable);
 }
 
 /**
@@ -70,16 +78,24 @@ QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable)
  * @param newVariable
  */
 void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
-                                                     const QString& newVariable) {
+                                                     const QString& newVariable,
+                                                     bool isTemporal) {
 
-    if (!m_currentStudyCaseVariables.contains(variable)) {
-        Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable" + variable);
+    if (isTemporal) {
+        m_temporalStudyCaseVariables.insert(variable, newVariable);
+
+    } else {
+
+        if (!m_currentStudyCaseVariables.contains(variable)) {
+            Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable" + variable);
+        }
+
+        m_currentStudyCaseVariables[variable] = newVariable;
+
+        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+        m_studyCase->saveCurrentConfiguration();
+
     }
-
-    m_currentStudyCaseVariables[variable] = newVariable;
-
-    m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
-    m_studyCase->saveCurrentConfiguration();
 }
 
 /**

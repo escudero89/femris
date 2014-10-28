@@ -16,5 +16,6 @@
         <file>content/smallBoxes/CodeSBox.qml</file>
         <file>content/LoadingModal.qml</file>
         <file>content/smallBoxes/PropertiesAssignationSBox.qml</file>
+        <file>content/FlickableRepeaterNodes.qml</file>
     </qresource>
 </RCC>

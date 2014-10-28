@@ -1,7 +1,8 @@
 #include "studycase.h"
-
+#include <QDebug>
 #include "fileio.h"
-
+//@TODO repensar el caso de estudio, ya que realmente no manejamos nada de matrices al final aca
+// Todo se hace en MATFem
 void StudyCase::createNew() {
 
     m_fileTitle             = "";
