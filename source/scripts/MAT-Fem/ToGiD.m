@@ -76,7 +76,7 @@ function ToGiD (file_name,u,reaction,Strnod)
   fprintf(fid,['ComponentNames "Sx", "Sy", "Sz", "Sxy", "Syz", "Sxz" \n']);
   fprintf(fid,['Values \n']);
   
-  if (size(Strnod)(2) == 3) 
+  if (size(Strnod, 2) == 3) 
     for i = 1 : npnod
       fprintf(fid,['%6.0f %12.5e %12.5e  0.0 %12.5e  0.0  0.0 \n'],i,Strnod(i,:));
     end

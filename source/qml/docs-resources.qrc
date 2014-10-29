@@ -18,5 +18,6 @@
         <file>docs/jsxgraph/jsxgraphcore.js</file>
         <file>docs/js/temp/current-domain.femris.json</file>
         <file>docs/js/temp/current-domain.femris.js</file>
+        <file>../temp/currentMatFemFile.femris.js</file>
     </qresource>
 </RCC>

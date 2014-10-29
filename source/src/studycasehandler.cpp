@@ -4,6 +4,8 @@
 
 #include "utils.h"
 
+#include <QJsonArray>
+
 /**
  * @brief StudyCaseHandler::StudyCaseHandler
  */
@@ -87,7 +89,7 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
     } else {
 
         if (!m_currentStudyCaseVariables.contains(variable)) {
-            Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable" + variable);
+            Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
         }
 
         m_currentStudyCaseVariables[variable] = newVariable;
@@ -96,6 +98,75 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
         m_studyCase->saveCurrentConfiguration();
 
     }
+}
+
+/**
+ * @brief StudyCaseHandler::setSingleStudyCaseInformation
+ * @param variable
+ * @param newVariable
+ */
+void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
+                                              const QJsonArray& newVariable,
+                                              bool isTemporal) {
+
+    if (isTemporal) {
+        //m_temporalStudyCaseVariables.insert(variable, newVariable.toString());
+
+    } else {
+
+        if (!m_currentStudyCaseVariables.contains(variable)) {
+            Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
+        }
+
+        m_currentStudyCaseVariables[variable] = setSingleStudyCaseJsonHelper(variable, newVariable);
+
+        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+        m_studyCase->saveCurrentConfiguration();
+
+    }
+}
+
+/**
+ * @brief StudyCaseHandler::setSingleStudyCaseJsonHelper
+ * @param nameVariable
+ * @param jsonVariable
+ * @return
+ */
+QString StudyCaseHandler::setSingleStudyCaseJsonHelper(const QString& nameVariable,
+                                                       const QJsonArray& jsonVariable) {
+
+    QString jsonQString = nameVariable;
+
+    jsonQString += " = [\r\n";
+
+
+    if (!jsonVariable.isEmpty()) {
+
+        for ( int l = 0 ; l < jsonVariable.size() ; l++ ) {
+
+            jsonQString += "    ";
+
+            QJsonArray jsonVariableInside = jsonVariable[l].toArray();
+
+            for ( int m = 0 ; m < jsonVariableInside.size() ; m++ ) {
+
+                jsonQString += QString::number(jsonVariableInside[m].toDouble());
+
+                if (m + 1 < jsonVariableInside.size()) {
+                     jsonQString += ",    ";
+                }
+
+            }
+
+            jsonQString += " ;\r\n";
+
+        }
+    }
+
+    jsonQString += "];\r\n";
+
+    return jsonQString;
+
 }
 
 /**
@@ -113,8 +184,8 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
     QStringList stagesList;
     stagesList << "CE_Model"
                << "CE_Domain"
-               << "CE_Properties"
-               << "CE_ShapeFunction"
+        //       << "CE_Properties"
+        //       << "CE_ShapeFunction"
                << "CE_Results"
                << "CE_Overall";
 
@@ -163,13 +234,8 @@ bool StudyCaseHandler::saveAndContinueHelper(const QString &parentStage,
  * @param pathfile
  * @return
  */
-bool StudyCaseHandler::createDomainFromScriptFile() {
-
+void StudyCaseHandler::createDomainFromScriptFile() {
     emit loadingStart();
     emit callProcess();
-
     emit loadingDone();
-
-    return true;
-
 }

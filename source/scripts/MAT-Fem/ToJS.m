@@ -131,7 +131,7 @@ function ToJS (file_name, nodalDisplacements, reactions, nodalStresses)
     fprintf(fid, jsonParser('_stresses', 'The values are [ Sx Sy Sz Sxy Syz Sxz ]'));
     fprintf(fid, jsonParser('stresses', '[\r\n', true));
 
-    if (size(nodalStresses)(2) == 3)
+    if (size(nodalStresses, 2) == 3)
         for i = 1 : numberOfNodes
             fprintf(fid, '    [');
             fprintf(fid, ['%12.5e, %12.5e,  0.0, %12.5e,  0.0,  0.0'], nodalStresses(i, :));
@@ -161,16 +161,5 @@ function ToJS (file_name, nodalDisplacements, reactions, nodalStresses)
     fprintf(fid, '}');
 
     status = fclose(fid);
-
-end
-
-
-function [parsed] = jsonParser(key, value, cleanValue = false)
-
-    parsed = [ '  "' key '" : "' value '",\r\n'];
-
-    if (cleanValue)
-        parsed = [ '  "' key '" : ' value ];
-    end
 
 end

@@ -17,6 +17,8 @@ public:
     void cppSlot(const QString &, const QString &, float);
     static void invokingOctave(const QString&);
 
+    Q_INVOKABLE void setCommand(const QString &);
+
 public Q_SLOTS:
 
     void callingProcess();
@@ -39,6 +41,8 @@ private:
 
     QProcess m_process;
     unsigned int m_stepOfProcessManipulation;
+
+    QString m_command;
 };
 
 

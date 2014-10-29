@@ -32,7 +32,7 @@ void StudyCaseStructural::setLocalMapOfInformation() {
 void StudyCaseStructural::saveLocalCurrentConfiguration() {
     QStringList configurationFilter;
     configurationFilter << "MAT-variables" << "MAT-fem";
-    FileIO::splitConfigurationFile("current-mat-fem-file.m", m_source, configurationFilter, true);
+    FileIO::splitConfigurationFile("currentMatFemFile.m", m_source, configurationFilter, true);
 
     configurationFilter.clear();
     configurationFilter << "Matlab-domain";

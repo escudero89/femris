@@ -16,10 +16,11 @@ public:
 
     Q_INVOKABLE void selectNewTypeStudyCase(const QString&);
     Q_INVOKABLE void createNewStudyCase();
-    Q_INVOKABLE bool createDomainFromScriptFile();
+    Q_INVOKABLE void createDomainFromScriptFile();
 
     Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&, bool = false);
-    Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString&, bool = false);
+    Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString &, bool = false);
+    Q_INVOKABLE void setSingleStudyCaseJson(const QString&, const QJsonArray&, bool = false);
 
     Q_INVOKABLE QString saveAndContinue(const QString&);
 
@@ -36,6 +37,7 @@ Q_SIGNALS:
 
 private:
 
+    QString setSingleStudyCaseJsonHelper(const QString&, const QJsonArray&);
     bool saveAndContinueHelper(const QString&, const QString&, const unsigned int&, const unsigned int&);
 
     QString m_studyCaseType;

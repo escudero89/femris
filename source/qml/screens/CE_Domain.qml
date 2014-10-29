@@ -163,6 +163,8 @@ RowLayout {
 
                         objectHeader.text: qsTr("Condiciones de borde")
                         textRow: "Lado #"
+
+                        textInformation: "sideload"
                     }
 
                     FlickableRepeaterNodes {
@@ -170,6 +172,8 @@ RowLayout {
 
                         objectHeader.text: qsTr("Cargas puntuales y fijas")
                         textRow: "Nodo #"
+
+                        textInformation: "pointload"
                     }
                 }
             }
@@ -198,7 +202,7 @@ RowLayout {
                     buttonText.font.pixelSize: height / 2
 
                     Layout.preferredWidth: 0.6 * parent.width
-/*
+                    /*
                     Connections {
                         target: StudyCaseHandler
 
@@ -208,55 +212,128 @@ RowLayout {
                     }*/
 
                     onClicked: {
-                        // First we adjust the coordinates usign the width and height set
-                        var maxCoord = {
-                            x : jsonDomain['coordinates'][0][0],
-                            y : jsonDomain['coordinates'][0][1]
+                        rowParent.saveCurrentLoads();
+
+                        ProcessHandler.setCommand("clear; cd temp; currentMatFemFile; cd ../scripts/MAT-Fem; MATfemris");
+                        ProcessHandler.callingProcess();
+                    }
+
+                    Connections {
+                        target: ProcessHandler
+
+                        onProcessFinished: {
+                            mainWindow.switchSection(StudyCaseHandler.saveAndContinue(rowParent.objectName));
                         }
-
-                        var minCoord = {
-                            x :jsonDomain['coordinates'][0][0],
-                            y :jsonDomain['coordinates'][0][1]
-                        }
-
-                        var scaleFactor = {
-                            width  : StudyCaseHandler.getSingleStudyCaseInformation('width', true),
-                            height : StudyCaseHandler.getSingleStudyCaseInformation('height', true)
-                        }
-
-                        scaleFactor.width = (scaleFactor.width !== '') ? parseFloat(scaleFactor.width) : 1;
-                        scaleFactor.height = (scaleFactor.height !== '') ? parseFloat(scaleFactor.height) : 1;
-
-                        // For normalizing
-                        for ( var k = 0 ; k < jsonDomain['coordinates'].length ; k++ ) {
-                            if (jsonDomain['coordinates'][k][0] > maxCoord.x) {
-                                maxCoord.x = jsonDomain['coordinates'][k][0];
-
-                            } else if (jsonDomain['coordinates'][k][0] < minCoord.x) {
-                                minCoord.x = jsonDomain['coordinates'][k][0];
-                            }
-
-                            if (jsonDomain['coordinates'][k][0] > maxCoord.y) {
-                                maxCoord.y = jsonDomain['coordinates'][k][1];
-
-                            } else if (jsonDomain['coordinates'][k][0] < minCoord.y) {
-                                minCoord.y = jsonDomain['coordinates'][k][1];
-                            }
-                        }
-
-                        var coordinates = jsonDomain['coordinates'];
-
-                        for ( var k = 0 ; k < coordinates.length ; k++ ) {
-                            coordinates[k][0] *= scaleFactor.width / ( maxCoord.x - minCoord.x );
-                            coordinates[k][1] *= scaleFactor.height / ( maxCoord.y - minCoord.y );
-                        }
-
-                        StudyCaseHandler.setSingleStudyCaseInformation('coordinates', coordinates);
-
-                        //mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
                     }
                 }
             }
         }
+    }
+
+    function saveCurrentLoads() {
+        // First we adjust the coordinates usign the width and height set
+        var maxCoord = {
+            x : jsonDomain['coordinates'][0][0],
+            y : jsonDomain['coordinates'][0][1]
+        }
+
+        var minCoord = {
+            x :jsonDomain['coordinates'][0][0],
+            y :jsonDomain['coordinates'][0][1]
+        }
+
+        var scaleFactor = {
+            width  : StudyCaseHandler.getSingleStudyCaseInformation('width', true),
+            height : StudyCaseHandler.getSingleStudyCaseInformation('height', true)
+        }
+
+        scaleFactor.width = (scaleFactor.width !== '') ? parseFloat(scaleFactor.width) : 1;
+        scaleFactor.height = (scaleFactor.height !== '') ? parseFloat(scaleFactor.height) : 1;
+
+        // For normalizing
+        for ( var k = 0 ; k < jsonDomain['coordinates'].length ; k++ ) {
+            if (jsonDomain['coordinates'][k][0] > maxCoord.x) {
+                maxCoord.x = jsonDomain['coordinates'][k][0];
+
+            } else if (jsonDomain['coordinates'][k][0] < minCoord.x) {
+                minCoord.x = jsonDomain['coordinates'][k][0];
+            }
+
+            if (jsonDomain['coordinates'][k][0] > maxCoord.y) {
+                maxCoord.y = jsonDomain['coordinates'][k][1];
+
+            } else if (jsonDomain['coordinates'][k][0] < minCoord.y) {
+                minCoord.y = jsonDomain['coordinates'][k][1];
+            }
+        }
+
+        var coordinates = jsonDomain['coordinates'];
+
+        for ( var k = 0 ; k < coordinates.length ; k++ ) {
+            coordinates[k][0] *= scaleFactor.width / ( maxCoord.x - minCoord.x );
+            coordinates[k][1] *= scaleFactor.height / ( maxCoord.y - minCoord.y );
+        }
+
+        StudyCaseHandler.setSingleStudyCaseJson('coordinates', coordinates);
+
+        StudyCaseHandler.setSingleStudyCaseJson('elements', jsonDomain['elements']);
+
+        /// SIDELOAD
+
+        var sideloadNodes = jsonDomain['sideloadNodes'];
+        var sideload = [];
+
+        for ( var k = 0 ; k < sideloadNodes.length ; k++ ) {
+            var temp_x = StudyCaseHandler.getSingleStudyCaseInformation('sideloadx' + ( k + 1 ), true);
+            var temp_y = StudyCaseHandler.getSingleStudyCaseInformation('sideloady' + ( k + 1 ), true);
+
+            if (temp_x !== '' || temp_y !== '') {
+
+                temp_x = (temp_x === '') ? 0.0 : parseFloat(temp_x);
+                temp_y = (temp_y === '') ? 0.0 : parseFloat(temp_y);
+
+                for ( var j = 0 ; j < sideloadNodes[k].length - 1 ; j++ ) {
+                    sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_x, temp_y ]);
+                }
+            }
+        }
+
+        console.log(sideload);
+
+        StudyCaseHandler.setSingleStudyCaseJson('sideload', sideload);
+
+        /// POINTLOAD & FIXNODES
+
+        var pointload = [];
+        var fixnodes = [];
+
+        // For comparing float with 0
+        var epsilon = 1e-10;
+
+        for ( var k = 0 ; k < coordinates.length ; k++ ) {
+            var temp_x = StudyCaseHandler.getSingleStudyCaseInformation('pointloadx' + ( k + 1 ), true);
+            var temp_y = StudyCaseHandler.getSingleStudyCaseInformation('pointloady' + ( k + 1 ), true);
+
+            if (temp_x !== '' || temp_y !== '') {
+
+                temp_x = (temp_x === '') ? 0.0 : parseFloat(temp_x);
+                temp_y = (temp_y === '') ? 0.0 : parseFloat(temp_y);
+
+                if (Math.abs(temp_x) < epsilon) {
+                    fixnodes.push([ k + 1, 1, temp_x ]);
+                } else {
+                    pointload.push([ k + 1, 1, temp_x ]);
+                }
+
+                if (Math.abs(temp_y) < epsilon) {
+                    fixnodes.push([ k + 1, 2, temp_y ]);
+                } else {
+                    pointload.push([ k + 1, 2, temp_y ]);
+                }
+            }
+        }
+
+        StudyCaseHandler.setSingleStudyCaseJson('fixnodes', fixnodes);
+        StudyCaseHandler.setSingleStudyCaseJson('pointload', pointload);
     }
 }

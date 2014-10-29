@@ -262,9 +262,9 @@ $(document).ready(function() {
     drawCurrentMatrix(domainObject.two, domainObject.group);
 
     // If the window changes its size, we reload the page
-  //  $(window).resize(function() {
-  //      document.location.reload();
-  //  });
+    $(window).resize(function() {
+        document.location.reload();
+    });
 
     
 });

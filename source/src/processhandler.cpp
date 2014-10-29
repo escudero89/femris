@@ -11,6 +11,8 @@ ProcessHandler::ProcessHandler() {
     connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readingInProcess()));
     connect(&m_process, SIGNAL(readChannelFinished()), this, SLOT(finishingProcess()));
     connect(&m_process, SIGNAL(finished(int)), this, SLOT(exitingProcess()));
+
+    m_command = "ls";
 }
 
 
@@ -54,7 +56,7 @@ void ProcessHandler::cppSlot(const QString &msg, const QString &amplitud, float 
 }
 
 void ProcessHandler::callingProcess() {
-    callingMatlab();
+    callingOctave();
 }
 
 void ProcessHandler::callingOctave() {
@@ -74,9 +76,6 @@ void ProcessHandler::callingMatlab() {
                 << " -nodisplay "      // Start the Oracle® JVM™ software, but do not start the MATLAB desktop
                 << " -nosplash ";      // does  not display the splash screen during startup
 
-    //processArgs.clear();
-    //m_process.start("octave", processArgs, QIODevice::ReadWrite);
-
     m_process.start("/media/Cristian/MatLabLinux/bin/matlab", processArgs, QIODevice::ReadWrite);
 
     m_stepOfProcessManipulation = 0;
@@ -90,9 +89,9 @@ void ProcessHandler::writingInProcess() {
 
         m_stepOfProcessManipulation = 1;
 
-        qDebug() << "writingInProcess";
-        QString test = "cd temp/; ls;  [xnode ielem] = domain([1:10]',[1:10]')";
-        m_process.write(test.toUtf8().constData());
+        qDebug() << "writingInProcess... " << m_command;
+        //m_command = "cd temp/; ls;  [xnode ielem] = domain([1:10]',[1:10]')";
+        m_process.write(m_command.toUtf8().constData());
         m_process.closeWriteChannel();
 
         m_process.waitForBytesWritten();
@@ -126,4 +125,12 @@ void ProcessHandler::exitingProcess() {
         m_stepOfProcessManipulation = 0;
         emit processFinished();
     }
+}
+
+//----------------------------------------------------------------------------//
+//--                          GETTER AND SETTERS                            --//
+//----------------------------------------------------------------------------//
+
+void ProcessHandler::setCommand(const QString& command) {
+    m_command = command;
 }

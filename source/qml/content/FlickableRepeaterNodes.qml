@@ -16,6 +16,8 @@ ColumnLayout {
 
     property string textRow : "Lado #"
 
+    property string textInformation : "sideload"
+
     Layout.fillHeight: true
     Layout.fillWidth: true
 
@@ -79,10 +81,21 @@ ColumnLayout {
                         }
 
                         TextField {
-                            id: variablesTextField
+                            Layout.preferredWidth: parent.width / 3
+                            placeholderText: "x_" + ( index + 1 )
 
-                            Layout.preferredWidth: parent.width / 2
-                            placeholderText: index + 1
+                            onEditingFinished: {
+                                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
+                            }
+                        }
+
+                        TextField {
+                            Layout.preferredWidth: parent.width / 3
+                            placeholderText: "y_" + ( index + 1 )
+
+                            onEditingFinished: {
+                                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
+                            }
                         }
                     }
                 }
