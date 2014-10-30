@@ -10,7 +10,6 @@ import "."
 
 TableView {
 
-    Layout.fillHeight: true
     Layout.fillWidth: true
 
     TableViewColumn {

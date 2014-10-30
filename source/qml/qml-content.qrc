@@ -9,7 +9,6 @@
         <file>content/LeftContentBox.qml</file>
         <file>content/CE_RightBlock.qml</file>
         <file>content/MiddleTutorialBox.qml</file>
-        <file>content/FirstTimeBox.qml</file>
         <file>content/smallBoxes/ModelElectionSBox.qml</file>
         <file>content/smallBoxes/VariablesSBox.qml</file>
         <file>content/smallBoxes/TutorialSBox.qml</file>
@@ -17,5 +16,6 @@
         <file>content/LoadingModal.qml</file>
         <file>content/smallBoxes/PropertiesAssignationSBox.qml</file>
         <file>content/FlickableRepeaterNodes.qml</file>
+        <file>content/ScrollBar.qml</file>
     </qresource>
 </RCC>

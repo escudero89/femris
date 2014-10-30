@@ -11,7 +11,6 @@ import "../docs"
 import "../content"
 import "../"
 
-
 RowLayout {
 
     id: rowParent
@@ -41,12 +40,20 @@ RowLayout {
             WebView {
                 id: currentWebView
 
-                url: "qrc:/docs/ce_results.html"
-             //url: "http://seiyria.github.io/bootstrap-slider/"
+                url: "file://" + applicationDirPath + "/docs/ce_results.html"
                 width: parent.width
                 height: parent.height
 
                 experimental.preferences.developerExtrasEnabled: true
+
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked : {
+                        currentWebView.reload()
+                        console.log("file://" + applicationDirPath + "docs/ce_results.html")
+                    }
+                }
             }
 
         }

@@ -4,7 +4,9 @@
 
 #include "utils.h"
 
+#include <QDesktopServices>
 #include <QJsonArray>
+#include <QUrl>
 
 /**
  * @brief StudyCaseHandler::StudyCaseHandler
@@ -184,8 +186,7 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
     QStringList stagesList;
     stagesList << "CE_Model"
                << "CE_Domain"
-        //       << "CE_Properties"
-        //       << "CE_ShapeFunction"
+               << "CE_ShapeFunction"
                << "CE_Results"
                << "CE_Overall";
 
@@ -238,4 +239,8 @@ void StudyCaseHandler::createDomainFromScriptFile() {
     emit loadingStart();
     emit callProcess();
     emit loadingDone();
+}
+
+void StudyCaseHandler::loadUrlInBrowser(QString link) {
+    QDesktopServices::openUrl(QUrl(link));
 }

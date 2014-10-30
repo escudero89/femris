@@ -26,12 +26,14 @@ RowLayout {
 
     }
 
-    Column {
+    ColumnLayout {
 
         id: mainContentRectangle
 
         Layout.fillHeight: true
         Layout.preferredWidth: parent.width - leftContentRectangle.width
+
+        spacing: 0
 
         WebView {
             id: currentWebView
@@ -39,12 +41,41 @@ RowLayout {
             experimental.preferences.webGLEnabled: true
             experimental.preferences.developerExtrasEnabled: true
 
-            width: parent.width
-            height: parent.height
+            Layout.fillWidth: true
+            Layout.fillHeight: true
 
             url: "qrc:/docs/ce_shapefunction.html"
         }
 
-    }
+        RowLayout {
 
+            spacing: 0
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            PrimaryButton {
+                buttonLabel: "Vista General"
+                buttonStatus: "primary"
+                buttonText.font.pixelSize: height / 2
+
+                onClicked : mainWindow.switchSection("CE_Overall")
+
+                Layout.fillWidth: true
+            }
+
+            PrimaryButton {
+                id: continueButton
+
+                buttonLabel: "Guardar y Continuar"
+                buttonStatus: "success"
+                buttonText.font.pixelSize: height / 2
+
+                Layout.preferredWidth: 0.6 * parent.width
+
+                onClicked: {
+                    mainWindow.switchSection(StudyCaseHandler.saveAndContinue(rowParent.objectName));
+                }
+            }
+        }
+    }
 }

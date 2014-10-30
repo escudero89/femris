@@ -59,10 +59,10 @@ RowLayout {
             }
 
             ChoiceBlock {
-                header.text: "PROPIEDADES"
+                header.text: "FUNC. DE FORMA"
 
-                button.buttonLabel: "Asignar"
-                button.onClicked : mainWindow.switchSection("tutorial")
+                button.buttonLabel: "Fijar"
+                button.onClicked : mainWindow.switchSection("CE_ShapeFunction")
 
                 blockStatus :
                     (stepOnStudyCase > 3) ? "used" :
@@ -70,23 +70,12 @@ RowLayout {
             }
 
             ChoiceBlock {
-                header.text: "FUNC. DE FORMA"
-
-                button.buttonLabel: "Fijar"
-                button.onClicked : mainWindow.switchSection("tutorial")
-
-                blockStatus :
-                    (stepOnStudyCase > 4) ? "used" :
-                    (stepOnStudyCase == 4) ? "default" : "disabled";
-            }
-
-            ChoiceBlock {
                 header.text: "RESULTADOS"
 
                 button.buttonLabel: "Ver"
-                button.onClicked : mainWindow.switchSection("tutorial")
+                button.onClicked : mainWindow.switchSection("CE_Results")
 
-                blockStatus : (stepOnStudyCase == 5) ? "default" : "disabled";
+                blockStatus : (stepOnStudyCase == 4) ? "default" : "disabled";
             }
 
         }

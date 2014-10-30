@@ -29,77 +29,117 @@ ColumnLayout {
         font.pointSize: Style.fontSize.h5
     }
 
-    Flickable {
-
-        id: flickable
-
-        clip: true
+    RowLayout {
 
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        contentWidth: flickable.width
-        contentHeight: 40 * repeater.model
+        spacing: 0
 
-        onMovementStarted: Style.color.complement
-        onMovementEnded: Style.color.background
+        GridView {
 
-        flickableDirection: Flickable.VerticalFlick
-        boundsBehavior: Flickable.StopAtBounds
+            id: repeater
 
-        ColumnLayout {
+            clip: true
 
-            height: flickable.contentHeight
-            width: flickable.contentWidth
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
-            spacing: 0
+            cellHeight: 40
+            cellWidth: width;
 
-            Repeater {
+            flickableDirection: Flickable.VerticalFlick
+            boundsBehavior: Flickable.StopAtBounds
 
-                id: repeater
+            // Only show the scrollbars when the view is moving.
+            states: State {
+                name: "ShowBars"
+                when: repeater.movingVertically
+                PropertyChanges { target: verticalScrollBar; opacity: 1 }
+            }
 
-                model: 0
+            transitions: Transition {
+                NumberAnimation { properties: "opacity"; duration: 400 }
+            }
 
-                delegate: Rectangle {
+            highlight: Rectangle { color: Style.color.primary; opacity: 0.1; radius: 1 }
 
-                    Layout.preferredHeight: 40
-                    Layout.preferredWidth: flickable.contentWidth
+            focus: true
 
-                    color: (index % 2 === 0) ? Style.color.background_highlight :  Style.color.background;
+            model: 0
 
-                    RowLayout {
+            delegate: Item {
 
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        height: parent.height
-                        width: parent.width * .95
+                id: cellContent
 
-                        spacing: 0
+                width: repeater.cellWidth
+                height: repeater.cellHeight
 
-                        Text {
-                            Layout.fillWidth: true
-                            text: qsTr(textRow + (index + 1))
+                //color: (index % 2 === 0) ? Style.color.background_highlight :  Style.color.background;
+
+                RowLayout {
+
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: parent.height
+                    width: parent.width * .95
+
+                    spacing: 0
+
+                    Text {
+                        Layout.fillWidth: true
+                        text: qsTr(textRow + (index + 1))
+                    }
+
+                    TextField {
+                        Layout.preferredWidth: parent.width / 3
+                        placeholderText: "x_" + ( index + 1 )
+
+                        onEditingFinished: {
+                            StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
                         }
 
-                        TextField {
-                            Layout.preferredWidth: parent.width / 3
-                            placeholderText: "x_" + ( index + 1 )
+                        onAccepted: {
+                            console.log("asd")
+                        }
 
-                            onEditingFinished: {
-                                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
+                        onFocusChanged: {
+                            if (focus === true && repeater.currentIndex !== index) {
+                                repeater.currentIndex = index;
+                                focus = true;
                             }
                         }
+                    }
 
-                        TextField {
-                            Layout.preferredWidth: parent.width / 3
-                            placeholderText: "y_" + ( index + 1 )
+                    TextField {
+                        Layout.preferredWidth: parent.width / 3
+                        placeholderText: "y_" + ( index + 1 )
 
-                            onEditingFinished: {
-                                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
+                        onEditingFinished: {
+                            StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
+                        }
+
+                        onFocusChanged: {
+                            if (focus === true && repeater.currentIndex !== index) {
+                                repeater.currentIndex = index;
+                                focus = true;
                             }
                         }
                     }
                 }
             }
         }
+
+        // Attach scrollbars to the right and bottom edges of the view.
+        ScrollBar {
+            id: verticalScrollBar
+            Layout.preferredWidth: 12
+            Layout.preferredHeight: repeater.height - 12
+
+            opacity: 0
+            orientation: Qt.Vertical
+            position: repeater.visibleArea.yPosition
+            pageSize: repeater.visibleArea.heightRatio
+        }
+
     }
 }

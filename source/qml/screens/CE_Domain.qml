@@ -202,14 +202,6 @@ RowLayout {
                     buttonText.font.pixelSize: height / 2
 
                     Layout.preferredWidth: 0.6 * parent.width
-                    /*
-                    Connections {
-                        target: StudyCaseHandler
-
-                        onNewStudyCaseChose: {
-                            continueButton.buttonStatus = "success";
-                        }
-                    }*/
 
                     onClicked: {
                         rowParent.saveCurrentLoads();

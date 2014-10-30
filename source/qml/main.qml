@@ -105,11 +105,30 @@ ApplicationWindow {
                 console.debug("Loaded: " + globalLoader.source)
             }
 
+            PrimaryButton {
+
+                id: buttonLoadUrlInBrowser
+
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                buttonStatus: "success"
+                buttonLabel: "BROWSER"
+
+                z: 1000
+
+                onClicked: {
+                    StudyCaseHandler.loadUrlInBrowser("docs/ce_results.html");
+                }
+            }
+
         }
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/Initial.qml");
+            globalLoader.setSource("screens/CE_Results.qml");
         }
 
     }
@@ -118,11 +137,16 @@ ApplicationWindow {
     function switchSection(section) {
         var redirection = null;
         switch (section) {
+            case "CE_Results":
+                buttonLoadUrlInBrowser.visible = true;
+                redirection = section;
+                break;
             case "tutorial" :
                 redirection = "BaseFrame";
                 break;
             default :
                 redirection = section;
+                buttonLoadUrlInBrowser.visible = false;
                 break;
         }
 

@@ -27,8 +27,6 @@
 #include <QObject>
 #include <QDebug>
 
-#include <QDesktopServices>
-
 #include "fileio.h"
 #include "studycasehandler.h"
 #include "processhandler.h"
@@ -51,6 +49,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);
     engine.rootContext()->setContextProperty("ProcessHandler", &processHandler);
     engine.rootContext()->setContextProperty("CurrentFileIO", &currentFileIO);
+    engine.rootContext()->setContextProperty("applicationDirPath", qApp->applicationDirPath());
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
