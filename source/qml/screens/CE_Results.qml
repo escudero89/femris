@@ -21,38 +21,43 @@ RowLayout {
         width: rowParent.width
         spacing: 0
 
-        Rectangle {
-            color: Style.color.comment
-            Layout.fillHeight: true
-            Layout.preferredWidth: parent.width - mainContentRectangle.width
+        LeftContentBox {
+            id: leftContentRectangle
 
-            Text {
-                text: currentWebView.loadProgress
+            color: Style.color.content_emphasized
+            Layout.fillHeight: true
+            Layout.preferredWidth: parent.width * 0.20
+
+            firstTimeOnly: true
+
+            onBlockHiding: {
+                if (isHiding) {
+                    leftContentRectangle.width = leftContentRectangle.parent.width * 0.05;
+                } else {
+                    leftContentRectangle.width = leftContentRectangle.parent.width * 0.20;
+                }
+                currentWebView.width  = rowParent.width - leftContentRectangle.width;
+                currentWebView.x = leftContentRectangle.width;
             }
         }
 
-        Rectangle {
-            id: mainContentRectangle
-            color: "blue"
+
+        WebView {
+            id: currentWebView
+
+            url: "file://" + applicationDirPath + "/docs/ce_results.html"
+
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
 
-            WebView {
-                id: currentWebView
+            experimental.preferences.developerExtrasEnabled: true
 
-                url: "file://" + applicationDirPath + "/docs/ce_results.html"
-                width: parent.width
-                height: parent.height
+            MouseArea {
+                anchors.fill: parent
 
-                experimental.preferences.developerExtrasEnabled: true
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked : {
-                        currentWebView.reload()
-                        console.log("file://" + applicationDirPath + "docs/ce_results.html")
-                    }
+                onClicked : {
+                    currentWebView.reload()
+                    console.log("file://" + applicationDirPath + "docs/ce_results.html")
                 }
             }
 

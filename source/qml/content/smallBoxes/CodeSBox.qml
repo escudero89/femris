@@ -95,7 +95,7 @@ Rectangle {
         PrimaryButton {
             buttonLabel: "Editar"
             buttonStatus: "white"
-            buttonText.font.pixelSize: height / 2
+            //buttonText.font.pixelSize: height / 2
 
             Layout.preferredWidth: parent.width / 2
 
@@ -105,7 +105,7 @@ Rectangle {
         PrimaryButton {
             buttonLabel: "Abrir"
             buttonStatus: "white"
-            buttonText.font.pixelSize: height / 2
+            //buttonText.font.pixelSize: height / 2
 
             Layout.preferredWidth: parent.width / 2
 

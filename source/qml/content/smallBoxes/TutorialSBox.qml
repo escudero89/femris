@@ -36,7 +36,7 @@ Rectangle {
         PrimaryButton {
             buttonLabel: "Ir hasta aqui"
             buttonStatus: "white"
-            buttonText.font.pixelSize: height / 2
+            //buttonText.font.pixelSize: height / 2
 
             Layout.fillWidth: parent.width
         }

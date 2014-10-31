@@ -24,6 +24,7 @@ RowLayout {
         Layout.fillHeight: true
         Layout.preferredWidth: parent.width * 0.20
 
+        firstTimeOnly: true
     }
 
     ColumnLayout {
@@ -56,7 +57,7 @@ RowLayout {
             PrimaryButton {
                 buttonLabel: "Vista General"
                 buttonStatus: "primary"
-                buttonText.font.pixelSize: height / 2
+                //buttonText.font.pixelSize: height / 2
 
                 onClicked : mainWindow.switchSection("CE_Overall")
 
@@ -68,7 +69,7 @@ RowLayout {
 
                 buttonLabel: "Guardar y Continuar"
                 buttonStatus: "success"
-                buttonText.font.pixelSize: height / 2
+                //buttonText.font.pixelSize: height / 2
 
                 Layout.preferredWidth: 0.6 * parent.width
 

@@ -30,7 +30,7 @@ Column {
         PrimaryButton {
             buttonLabel: "Vista General"
             buttonStatus: "primary"
-            buttonText.font.pixelSize: height / 2
+            //buttonText.font.pixelSize: height / 2
 
             onClicked : mainWindow.switchSection("CE_Overall")
 
@@ -42,7 +42,7 @@ Column {
 
             buttonLabel: "Guardar y Continuar"
             buttonStatus: "disabled"
-            buttonText.font.pixelSize: height / 2
+            //buttonText.font.pixelSize: height / 2
 
             Layout.preferredWidth: 0.6 * parent.width
 

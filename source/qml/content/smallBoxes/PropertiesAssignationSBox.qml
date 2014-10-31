@@ -171,7 +171,7 @@ Rectangle {
             id: buttonSaveVariables
             Layout.fillWidth: true
 
-            buttonText.font.pixelSize: height / 2
+            //buttonText.font.pixelSize: height / 2
             buttonLabel: qsTr('Cargar desde archivo')
 
             buttonStatus: 'white'

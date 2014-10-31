@@ -6,32 +6,20 @@ import "../"
 
 Button {
 
-    property alias buttonText : buttonText
-    property alias buttonLabel : buttonText.text
+    id: button
+
+    property alias buttonText : button
+    property alias buttonLabel : button.text
     property string buttonStatus : "default"
 
     enabled: (buttonStatus !== 'disabled')
 
-    implicitWidth: 100
-    implicitHeight: 25
-
-    Text {
-        id: buttonText
-
-        text: "text"
-
-        font.family: "Tahoma"
-        font.pixelSize: parent.height / 2.5
-        wrapMode: Text.WordWrap
-
-        color: Style.color.background_highlight
-
-        anchors.fill: parent
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-    }
+    implicitHeight: 30
+    implicitWidth: 140
 
     style: ButtonStyle {
+        label: Item{}
+
         background: Rectangle {
             id: rectangle
 
@@ -48,7 +36,7 @@ Button {
                     switch (buttonStatus) {
                         case "white":
                             finalColor = Style.color.background;
-                            buttonText.color = Style.color.complement;
+                            text.color = Style.color.complement;
                             break;
 
                         case "black":
@@ -96,9 +84,34 @@ Button {
 
                 opacity: 0.075
             }
+
+            Row {
+                id: row
+                anchors.centerIn: parent
+                spacing: 4
+                Image {
+                    visible: iconSource === "" ? false : true
+
+                    source: iconSource
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: button.height * .5
+                    fillMode: Image.PreserveAspectFit //mm Image should shrink if button is too small, depends on QTBUG-14957
+                }
+                Text {
+                    id:text
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: button.text
+                    horizontalAlignment: Text.Center
+
+                    font.family: "Tahoma"
+                    font.pixelSize: button.height * .4
+                    wrapMode: Text.WordWrap
+
+                    color: Style.color.background_highlight
+
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
         }
-
-
-
     }
 }

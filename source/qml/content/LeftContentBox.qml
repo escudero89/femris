@@ -13,9 +13,15 @@ import "smallBoxes"
 
 Rectangle {
 
+    id: leftContentBox
+
     property int stepOfProcess : parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
 
     property string parentStage : parent.objectName
+
+    property bool firstTimeOnly : false
+
+    signal blockHiding(bool isHiding)
 
     ColumnLayout {
 
@@ -46,7 +52,6 @@ Rectangle {
             id: rectanglePrimeraVezAqui
 
             Layout.preferredHeight: textPrimeraVezAqui.height * 1.5
-            //Layout.fillHeight: true
             Layout.fillWidth: true
 
             color: Style.color.complement
@@ -72,10 +77,10 @@ Rectangle {
 
             border.color: Style.color.complement
 
-            //Layout.preferredHeight: columnLayout1.height * 0.3
-            //Layout.preferredHeight: columnLayout1.height * 0.5
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            Layout.minimumHeight: textAreaFirstTime.height
 
             states: [
                 State {
@@ -91,6 +96,8 @@ Rectangle {
             ]
 
             TextArea {
+
+                id: textAreaFirstTime
 
                 text : "If height and width are not explicitly set, Text will attempt to determine how much room is needed and set it accordingly. Unless wrapMode is set, it will always prefer width to height (all text will be placed on a single line).
     The elide property can alternatively be used to fit a single line of plain text to a set width.
@@ -113,11 +120,15 @@ Rectangle {
 
             buttonLabel: "Ocultar"
             buttonStatus: "black"
-            buttonText.font.pixelSize: height / 2
+            //buttonText.font.pixelSize: height / 2
 
             Layout.fillWidth: parent.width
 
             onClicked: {
+                if (firstTimeOnly) {
+                    blockHiding(textAreaPrimeraVezAqui.state !== 'OCULTO');
+                }
+console.log(firstTimeOnly)
                 textAreaPrimeraVezAqui.state =
                         (textAreaPrimeraVezAqui.state !== 'OCULTO') ? 'OCULTO' : 'NORMAL';
             }

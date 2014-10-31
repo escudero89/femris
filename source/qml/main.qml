@@ -109,6 +109,9 @@ ApplicationWindow {
 
                 id: buttonLoadUrlInBrowser
 
+                property string loadUrlBase : "docs/ce_results.html"
+                tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.right: parent.right
@@ -120,8 +123,10 @@ ApplicationWindow {
                 z: 1000
 
                 onClicked: {
-                    StudyCaseHandler.loadUrlInBrowser("docs/ce_results.html");
+                    StudyCaseHandler.loadUrlInBrowser(loadUrlBase);
                 }
+
+                iconSource: "qrc:/resources/icons/external2.png"
             }
 
         }
@@ -136,17 +141,24 @@ ApplicationWindow {
     // Esta funcion contra el cambio entre secciones
     function switchSection(section) {
         var redirection = null;
+
+        buttonLoadUrlInBrowser.visible = false;
+        redirection = section;
+
         switch (section) {
-            case "CE_Results":
+            case "CE_ShapeFunction":
+                buttonLoadUrlInBrowser.loadUrlBase = "docs/ce_shapefunction.html";
                 buttonLoadUrlInBrowser.visible = true;
-                redirection = section;
+                break;
+            case "CE_Results":
+                buttonLoadUrlInBrowser.loadUrlBase = "docs/ce_results.html";
+                buttonLoadUrlInBrowser.visible = true;
                 break;
             case "tutorial" :
                 redirection = "BaseFrame";
                 break;
+
             default :
-                redirection = section;
-                buttonLoadUrlInBrowser.visible = false;
                 break;
         }
 

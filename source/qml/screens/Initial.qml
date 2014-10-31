@@ -39,6 +39,8 @@ RowLayout {
                 textArea.text : qsTr(Content.initial.tutorial);
 
                 button.buttonLabel: "Iniciar"
+                button.iconSource: "qrc:/resources/icons/book95.png"
+
                 button.onClicked : mainWindow.switchSection("tutorial")
             }
 
@@ -48,9 +50,9 @@ RowLayout {
                 textArea.text : qsTr(Content.initial.initiate);
 
                 button.buttonLabel: "Crear"
-                button.onClicked : {
-                    mainWindow.switchSection("CE_Overall");
-                }
+                button.iconSource: "qrc:/resources/icons/file27.png"
+
+                button.onClicked : mainWindow.switchSection("CE_Overall");
             }
 
             ChoiceBlock {
@@ -59,6 +61,8 @@ RowLayout {
                 textArea.text : qsTr(Content.initial.load);
 
                 button.buttonLabel: "Cargar"
+                button.iconSource: "qrc:/resources/icons/open96.png"
+
                 button.onClicked : {
                     femrisLoader.visible = true;
                     //

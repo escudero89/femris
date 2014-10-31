@@ -11,6 +11,7 @@ import "."
 TableView {
 
     Layout.fillWidth: true
+    Layout.fillHeight: true
 
     TableViewColumn {
         role: "title"
