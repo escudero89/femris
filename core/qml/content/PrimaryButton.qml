@@ -50,6 +50,8 @@ Button {
                         case "success":  finalColor = Style.color.success;             break;
                         case "disabled": finalColor = Style.color.comment_emphasized;  break;
                         case "used":     finalColor = Style.color.content;             break;
+
+                        case "femris":   finalColor = Style.color.femris;              break;
                     }
 
                     return finalColor;

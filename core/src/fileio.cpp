@@ -105,17 +105,12 @@ bool FileIO::readConfigurationFile(QString configurationTemplate, const QString 
     return true;
 }
 
-void FileIO::writeConfigurationFile(const QString &configurationTemplate,
-                                    const QString &configurationPath,
+void FileIO::writeConfigurationFile(const QString &pathConfigurationToLoad,
+                                    const QString &pathFileToSave,
                                     const QMap<QString, QString> &replacement) {
 
-    QString pathDir = qApp->applicationDirPath();
-    QString currentFile = pathDir + configurationPath;
-
-    QString pathFile = pathDir + "/scripts/" + configurationTemplate + ".femris";
-
     FileIO fileIO;
-    fileIO.setSource(pathFile);
+    fileIO.setSource(pathConfigurationToLoad);
 
     QString configurationFileContent = fileIO.read();
 
@@ -128,7 +123,7 @@ void FileIO::writeConfigurationFile(const QString &configurationTemplate,
         configurationFileContent.replace(replacementKey, iteratorMap.value());
     }
 
-    fileIO.setSource(currentFile);
+    fileIO.setSource(pathFileToSave);
     fileIO.write(configurationFileContent);
 
 }

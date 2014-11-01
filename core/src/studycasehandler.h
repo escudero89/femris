@@ -14,6 +14,9 @@ public:
     StudyCaseHandler();
     ~StudyCaseHandler();
 
+    Q_INVOKABLE void start();
+    Q_INVOKABLE bool exists();
+
     Q_INVOKABLE void selectNewTypeStudyCase(const QString&);
     Q_INVOKABLE void createNewStudyCase();
     Q_INVOKABLE void createDomainFromScriptFile();

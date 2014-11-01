@@ -119,14 +119,21 @@ RowLayout {
                 }
 
                 onUrlChanged: {
-                    io_view.setSource(rowParent.currentUrlForTutorial);
-                    var layout  = rowParent.layoutForTutorial;
-                    var view = io_view.read();
 
-                    layout = layout.replace("{{=include(view)}}", view);
-                    io_current.write(layout);
+                    if (rowParent.currentUrlForTutorial.search("http") === -1) {
 
-                    currentWebView.url = "file://" + applicationDirPath + "/docs/current.html";
+                        io_view.setSource(rowParent.currentUrlForTutorial);
+                        var layout  = rowParent.layoutForTutorial;
+                        var view = io_view.read();
+
+                        layout = layout.replace("{{=include(view)}}", view);
+                        io_current.write(layout);
+
+                        currentWebView.url = "file://" + applicationDirPath + "/docs/current.html";
+
+                    } else {
+                        currentWebView.url = rowParent.currentUrlForTutorial;
+                    }
                 }
             }
 

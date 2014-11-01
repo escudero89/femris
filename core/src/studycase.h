@@ -16,7 +16,8 @@ public:
     virtual ~StudyCase();
 
     void createNew();
-    void saveCurrentConfiguration();
+    void clear();
+    void saveCurrentConfiguration(const QString& = "");
     void setMapOfInformation();
 
     virtual void createLocalNew() {};

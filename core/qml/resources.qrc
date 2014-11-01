@@ -388,5 +388,10 @@
         <file>resources/icons/function.png</file>
         <file>resources/icons/keyboard50.png</file>
         <file>resources/icons/stats1.png</file>
+        <file>resources/images/femris_load.png</file>
+        <file>resources/images/femris_logo_big.png</file>
+        <file>resources/images/femris_new.png</file>
+        <file>resources/images/femris_tutorial.png</file>
+        <file>resources/images/femris_tutorial2.png</file>
     </qresource>
 </RCC>

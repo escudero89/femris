@@ -39,9 +39,12 @@ RowLayout {
                 textArea.text : qsTr(Content.initial.tutorial);
 
                 button.buttonLabel: "Iniciar"
+                button.buttonStatus: "info"
                 button.iconSource: "qrc:/resources/icons/book95.png"
 
                 button.onClicked : mainWindow.switchSection("tutorial")
+
+                image.source: "qrc:/resources/images/femris_tutorial2.png"
             }
 
             ChoiceBlock {
@@ -50,9 +53,12 @@ RowLayout {
                 textArea.text : qsTr(Content.initial.initiate);
 
                 button.buttonLabel: "Crear"
+                button.buttonStatus: "femris"
                 button.iconSource: "qrc:/resources/icons/file27.png"
 
                 button.onClicked : mainWindow.switchSection("CE_Overall");
+
+                image.source: "qrc:/resources/images/femris_new.png"
             }
 
             ChoiceBlock {
@@ -61,12 +67,12 @@ RowLayout {
                 textArea.text : qsTr(Content.initial.load);
 
                 button.buttonLabel: "Cargar"
+                button.buttonStatus: "primary"
                 button.iconSource: "qrc:/resources/icons/open96.png"
 
-                button.onClicked : {
-                    femrisLoader.visible = true;
-                    //
-                }
+                button.onClicked : femrisLoader.open();
+
+                image.source: "qrc:/resources/images/femris_load.png"
             }
         }
     }

@@ -9,6 +9,7 @@ ColumnLayout {
     property alias textArea : choiceBlockTextArea
     property alias header : headerText
     property alias button : primaryButton
+    property alias image : imageChoiceBlock
 
     property string blockStatus : "default";        // default, used, disabled
 
@@ -23,7 +24,7 @@ ColumnLayout {
         Layout.preferredHeight: width / 5
 
         color: {
-            var finalColor = Style.color.info;
+            var finalColor = (typeof(Style.color[primaryButton.buttonStatus]) !== "undefined") ? Style.color[primaryButton.buttonStatus] : Style.color.primary;
 
             if (blockStatus === "disabled") {
                 finalColor = Style.color.comment_emphasized;
@@ -73,6 +74,8 @@ ColumnLayout {
             spacing: 15
 
             Image {
+                id: imageChoiceBlock
+
                 Layout.preferredHeight: width
 
                 Layout.fillWidth: true
@@ -81,6 +84,10 @@ ColumnLayout {
                 Layout.alignment: Qt.AlignCenter
 
                 source: "qrc:/resources/images/square_shadow.gif"
+
+                smooth: true
+
+                fillMode: Image.PreserveAspectFit
             }
 
             TextArea {
@@ -96,6 +103,8 @@ ColumnLayout {
 
                 backgroundVisible: false
                 frameVisible: false
+
+                readOnly: true
 
                 textColor: {
                     var finalColor = Style.color.complement_highlight;

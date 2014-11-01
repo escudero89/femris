@@ -43,18 +43,6 @@ ApplicationWindow {
         }
     }
 
-    MessageDialog {
-        id: messageDialog
-        title: "May I have your attention please"
-        text: "It's so cool that you are using Qt Quick."
-        onAccepted: {
-            console.log("And of course you could only agree.")
-            Qt.quit()
-        }
-
-        visible: false
-    }
-
     // Para el fondo
     Rectangle {
         anchors.fill: parent
@@ -120,6 +108,7 @@ ApplicationWindow {
                 buttonStatus: "success"
                 buttonLabel: "BROWSER"
 
+                visible: false
                 z: 1000
 
                 onClicked: {
@@ -133,7 +122,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/BaseFrame.qml");
+            globalLoader.setSource("screens/Initial.qml");
         }
 
     }
@@ -156,6 +145,8 @@ ApplicationWindow {
                 break;
             case "tutorial" :
                 redirection = "BaseFrame";
+                buttonLoadUrlInBrowser.loadUrlBase = "docs/current.html";
+                buttonLoadUrlInBrowser.visible = true;
                 break;
 
             default :

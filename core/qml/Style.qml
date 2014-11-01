@@ -42,6 +42,7 @@ QtObject {
                         case "info"                  : colour = "#5bc0de"; break;
                         case "warning"               : colour = "#f0ad4e"; break;
                         case "danger"                : colour = "#d9534f"; break;
+                        case "femris"                : colour = "#ca428b"; break;
                     }
                     break;
                 //>>>>>>>>>>>>>>>>>>>>
@@ -60,6 +61,7 @@ QtObject {
                         case "info"                  : colour = "#2aa198"; break;
                         case "warning"               : colour = "#cb4b16"; break;
                         case "danger"                : colour = "#dc322f"; break;
+                        case "femris"                : colour = "#ca428b"; break;
                     }
                     break;
                 //>>>>>>>>>>>>>>>>>>>>
@@ -78,6 +80,7 @@ QtObject {
                         case "info"                  : colour = "#2aa198"; break;
                         case "warning"               : colour = "#cb4b16"; break;
                         case "danger"                : colour = "#dc322f"; break;
+                        case "femris"                : colour = "#ca428b"; break;
                     }
                     break;
             }
@@ -104,6 +107,8 @@ QtObject {
         property color info                  :  getColorByTheme(theme, "info")   // cyan
         property color warning               :  getColorByTheme(theme, "warning")   // naranja
         property color danger                :  getColorByTheme(theme, "danger")   // rojo
+
+        property color femris                :  getColorByTheme(theme, "femris")   // violeta
 
     }
 

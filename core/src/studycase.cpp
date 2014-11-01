@@ -1,9 +1,20 @@
 #include "studycase.h"
+
+#include <QApplication>
 #include <QDebug>
+
 #include "fileio.h"
 //@TODO repensar el caso de estudio, ya que realmente no manejamos nada de matrices al final aca
 // Todo se hace en MATFem
 void StudyCase::createNew() {
+
+    clear();
+    setMapOfInformation();
+    saveCurrentConfiguration();
+
+}
+
+StudyCase::clear() {
 
     m_fileTitle             = "";
 
@@ -22,8 +33,7 @@ void StudyCase::createNew() {
 
     m_source                = "/temp/" + m_created.toString("yyyyMMdd-hhmmss") + ".femris.old";
 
-    setMapOfInformation();
-    saveCurrentConfiguration();
+    m_mapOfInformation.clear();
 
 }
 
@@ -35,8 +45,18 @@ StudyCase::~StudyCase() {
     delete m_sideload;
 }
 
-void StudyCase::saveCurrentConfiguration() {
-    FileIO::writeConfigurationFile("base", m_source, m_mapOfInformation);
+void StudyCase::saveCurrentConfiguration(const QString& whereToSave) {
+
+    QString pathDir = qApp->applicationDirPath();
+
+    QString pathConfigurationToLoad = pathDir + "/scripts/base.femris";
+    QString pathFileToSave = pathDir + m_source;
+
+    if (whereToSave != "") {
+        pathFileToSave = whereToSave;
+    }
+
+    FileIO::writeConfigurationFile(pathConfigurationToLoad, pathFileToSave, m_mapOfInformation);
     saveLocalCurrentConfiguration();
 }
 
