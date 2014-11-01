@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<body>
+/******************************************************************************/
+
+<header>
+<item title="Índice General" page="docs/view/femris_inicio_tutorial.html" />
+<item title="Método de los Elementos Finitos" source="child00" />
+<item title="FEMRIS" source="child01" />
+<item title="Referencias" source="child01" />
+<item title="F.A.Q." source="child01" />
+</header>
+
+<child00>
+<item title="Introducción" page="docs/view/fem_inicio.html" />
+<item title="Problema de Ejemplo" page="docs/view/fem_problema_ejemplo.html" />
+<item title="Descripción General" page="docs/view/fem_descripcion_general.html" />
+<item title="Un Poco de Historia" page="docs/view/fem_historia.html" />
+</child00>
+
+<child01>
+<item title="My Child Item" source="child2" />
+<item title="My Child Second Item" page="http://www.reddit.com" />
+</child01>
+
+<child2>
+<item title="My GrandChild Item" page="/docs/index.xml" />
+</child2>
+
+
+/******************************************************************************/
+</body>

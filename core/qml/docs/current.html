@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>FEMRIS</title>
+    <meta name="author" content="Cristian Escudero">
+
+    <script type="text/x-mathjax-config">
+    MathJax.HTML.Cookie.Set("menu",{});
+
+    MathJax.Hub.Config({
+       TeX: {
+           extensions: ["color.js"]
+       },
+
+       asciimath2jax: {
+           delimiters: [['`','`']],
+           skipTags: ["script","noscript","style","textarea","pre","code"]
+       },
+
+       extensions: ["tex2jax.js", "asciimath2jax.js"],
+
+       jax: ["input/TeX","output/HTML-CSS", "input/AsciiMath"],
+
+       "HTML-CSS": {
+           availableFonts:[],
+           styles: {".MathJax_Preview": {visibility: "hidden"}}
+       }
+    });
+
+    </script>
+    <script type="text/javascript" src="js/third-party/MathJax.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    <style>
+    strong.tooltipped {
+        cursor: pointer;
+        text-decoration: underline;
+        color: #ca428b;
+    }
+    </style>
+</head>
+<body>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/third-party/jquery-1.11.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/third-party/bootstrap.min.js"></script>
+
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron">
+    <h2>Bienvenido <small>Primeros pasos en el tutorial</small></h2>
+
+    <p>Antes de comenzar, vamos a comprender un poco más las virtudes y limitaciones del presente tutorial. La idea del mismo es el de brindarte una cierta noción básica sobre el <strong class="tooltipped" data-toggle="tooltip" title="O también llamado &quot;FEM&quot; por Finite Element Method">Método de los Elementos Finitos</strong>, como así también aprender a utilizar correctamente <strong>FEMRIS</strong>.</p>
+</div>
+
+<div class="col-sm-12">
+
+<h3>Estilos de Texto</h3>
+
+<p>El texto de este tutorial presentará diversos <em>formatos</em>, cada uno de ellos indicando una interacción diferente con el usuario:</p>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong class="btn-default form-control tooltipped text-center" data-toggle="tooltip" title="Aquí aparecería un mensaje corto pero informativo :)">¿Ayuda?</strong>
+            </div>
+            <div class="panel-body">
+                Esta clase de texto indica información puntual sobre el objeto resaltado.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button class="btn btn-primary form-control" data-toggle="modal" data-target="#myModal">
+                ¡Ábrete!
+                </button>
+            </div>
+            <div class="panel-body">
+                Hace referencia a que, cuando le haga click con el puntero, abrirá una descripción más detallada sobre el elemento señalizado, además de incluir referencias a fuentes externas en el Internet.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button
+                type="button"
+                class="btn btn-success form-control"
+                data-toggle="popover"
+                data-trigger="focus"
+                data-html="true"
+                data-placement="left"
+                data-template='<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                title="Más sobre como funciona..."
+                data-content="Cuando veas un botón <strong>señalizado</strong> (<span class='glyphicon glyphicon-cog'></span>) podrás aprender más sobre cómo las cosas fueron hechas en <strong>FEMRIS</strong>. Por ejemplo, <em>¿sabías qué el contenido de éste tutorial es en su <strong>mayor</strong> parte <a href='http://www.w3.org/'>HTML</a> con <a href='http://getbootstrap.com/'>Bootstrap</a>? ¿Sorprendido? Yo sí</em>.">
+                <span class="glyphicon glyphicon-cog"> ¿Cómo?</span></button>
+            </div>
+            <div class="panel-body">
+                 Esto indica un popover, es decir, un cuadro de texto que aparecerá encima del mismo texto cuando el usuario coloque su puntero encima del texto señalizado.
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Algunos comentarios finales</h3>
+
+<p>Este tutorial fue hecho mediante una mezcla de diferentes lenguajes de programación y plugins, como <strong class="tooltipped" data-toggle="tooltip" title="¡Sí! Habrá &quot;LaTeX&quot; en el tutorial y en el mismo FEMRIS.">`MathJax`</strong>.</p>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+function getHeightRight() {
+    var panel = jQuery(".panel > .panel-body");
+    var max_height = 0;
+
+    jQuery.each(panel, function (idx, val) {
+        jQuery(val).css("height", "auto");
+    });
+
+    jQuery.each(panel, function (idx, val) {
+        var valHeight = jQuery(val).css("height");
+        if (max_height < parseInt(valHeight)) {
+            max_height = parseInt(valHeight);
+        }
+    });
+
+    jQuery.each(panel, function (idx, val) {
+        jQuery(val).css("height", max_height + "px");
+    });
+}
+
+// This is just for getting the same height in the three blocks
+getHeightRight();
+
+// If the window changes its size, we reload the heights
+jQuery(window).resize(function() {
+    getHeightRight();
+});
+
+</script>
+
+
+        </div>
+    </div>
+
+<script type="text/javascript">
+// http://stackoverflow.com/a/1404074/1104116
+var parseQueryString = function() {
+
+    var str = window.location.search;
+    var objURL = {};
+
+    str.replace(
+        new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+        function( $0, $1, $2, $3 ){
+            objURL[ $1 ] = $3;
+        }
+    );
+    return objURL;
+};
+
+var params = parseQueryString();
+
+$(document).ready(function() {
+    $("[data-toggle=popover]").popover();
+    $('[data-toggle=tooltip]').tooltip({html: true});
+});
+
+</script>
+</body>
+</html>
+

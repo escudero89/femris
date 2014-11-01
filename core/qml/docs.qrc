@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>docs/ce_domain.html</file>
+        <file>docs/ce_results.html</file>
+        <file>docs/layout.html</file>
+        <file>docs/about.html</file>
+        <file>docs/ce_shapefunction.html</file>
+    </qresource>
+</RCC>
