@@ -8,41 +8,29 @@
 // Todo se hace en MATFem
 void StudyCase::createNew() {
 
-    clear();
-    setMapOfInformation();
-    saveCurrentConfiguration();
-
-}
-
-StudyCase::clear() {
-
     m_fileTitle             = "";
 
     m_stepOfProcess         = 1 ;
 
     createLocalNew();
 
-    m_coordinates           = new arma::mat();
-    m_elements              = new arma::mat();
-    m_fixnodes              = new arma::mat();
-    m_pointload             = new arma::mat();
-    m_sideload              = new arma::mat();
+    m_coordinates           = "coordinates = [\r\n];" ;
+    m_elements              = "elements    = [\r\n];" ;
+    m_fixnodes              = "fixnodes    = [\r\n];" ;
+    m_pointload             = "pointload   = [\r\n];" ;
+    m_sideload              = "sideload    = [\r\n];" ;
 
     m_created               = QDateTime::currentDateTime();
     m_modified              = m_created;
 
     m_source                = "/temp/" + m_created.toString("yyyyMMdd-hhmmss") + ".femris.old";
 
-    m_mapOfInformation.clear();
+    setMapOfInformation();
+    saveCurrentConfiguration();
 
 }
 
 StudyCase::~StudyCase() {
-    delete m_coordinates;
-    delete m_elements;
-    delete m_fixnodes;
-    delete m_pointload;
-    delete m_sideload;
 }
 
 void StudyCase::saveCurrentConfiguration(const QString& whereToSave) {
@@ -73,47 +61,12 @@ void StudyCase::setMapOfInformation() {
 
     setLocalMapOfInformation();
 
-    m_mapOfInformation["coordinates"]           = matToQString(*m_coordinates, "coordinates");
-    m_mapOfInformation["elements"]              = matToQString(*m_elements, "elements");
-    m_mapOfInformation["fixnodes"]              = matToQString(*m_fixnodes, "fixnodes");
-    m_mapOfInformation["pointload"]             = matToQString(*m_pointload, "pointload");
-    m_mapOfInformation["sideload"]              = matToQString(*m_sideload, "sideload");
+    m_mapOfInformation["coordinates"]           = m_coordinates;
+    m_mapOfInformation["elements"]              = m_elements;
+    m_mapOfInformation["fixnodes"]              = m_fixnodes;
+    m_mapOfInformation["pointload"]             = m_pointload;
+    m_mapOfInformation["sideload"]              = m_sideload;
 
-}
-
-QString StudyCase::matToQString(arma::mat &matBase, const QString &name) {
-
-    QString matQString = name;
-
-    matQString += " = [\r\n";
-
-    if (matBase.n_rows > 0 && matBase.n_cols > 0) {
-
-        arma::mat::row_iterator firstRow = matBase.begin_row(1);
-        arma::mat::row_iterator lastRow = matBase.end_row(matBase.n_rows);
-
-        arma::mat::col_iterator firstColumn = matBase.begin_col(1);
-        arma::mat::col_iterator lastColumn = matBase.end_col(matBase.n_cols);
-
-        for (arma::mat::row_iterator i = firstRow ; i != lastRow ; i++ ) {
-            for (arma::mat::col_iterator j = firstColumn ; j != lastColumn ; j++ ) {
-
-                matQString += QString::number(*j);
-
-                if (j + 1 != lastColumn) {
-                     matQString += ", ";
-                }
-
-            }
-
-            matQString += " ;\r\n";
-        }
-
-    }
-
-    matQString += "];";
-
-    return matQString;
 }
 
 //----------------------------------------------------------------------------//

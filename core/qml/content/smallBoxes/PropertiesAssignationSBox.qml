@@ -14,13 +14,14 @@ Rectangle {
 
     id: propertiesAssignationSBox
 
+    Layout.minimumHeight: parent.height / 3
+
     Layout.fillHeight: true
     Layout.fillWidth: true
 
     border.color: Style.color.background_highlight
 
     ColumnLayout {
-
         height: parent.height
         width: parent.width
 
@@ -31,7 +32,7 @@ Rectangle {
             id: variablesRectangle
 
             Layout.preferredHeight: textCode.height * 1.5
-            Layout.preferredWidth: variablesList.width
+            Layout.fillWidth: true
 
             color: Style.color.background_highlight
 
@@ -56,10 +57,14 @@ Rectangle {
 
             boundsBehavior: Flickable.StopAtBounds
 
-            Layout.preferredHeight: parent.height - buttonSaveVariables.height - variablesRectangle.height
-            Layout.preferredWidth: parent.width
+            Layout.minimumHeight: 30 * listModelVariablesSBox.count
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
             delegate: Rectangle {
+
+                id: delegateVariableList
 
                 anchors.horizontalCenter: parent.horizontalCenter
 
@@ -145,39 +150,6 @@ Rectangle {
                     name: 'Espesor'
                     variable: 'thickOfDomain'
                 }
-            }
-/*
-            Connections {
-                target: CurrentFileIO
-
-                onPerformedRead: {
-                    var dynamicVariables = getArgsFromScriptFile(content);
-                    var dynamicVariablesKeys = Object.keys(dynamicVariables);
-                    var k;
-
-                    listModelVariablesSBox.clear();
-
-                    for ( k = 0 ; k < dynamicVariablesKeys.length ; k++ ) {
-                        listModelVariablesSBox.append({
-                            'title': dynamicVariablesKeys[k],
-                            'author' : dynamicVariables[dynamicVariablesKeys[k]]
-                        });
-                    }
-                }
-            }*/
-        }
-
-        PrimaryButton {
-            id: buttonSaveVariables
-            Layout.fillWidth: true
-
-            //buttonText.font.pixelSize: height / 2
-            buttonLabel: qsTr('Cargar desde archivo')
-
-            buttonStatus: 'white'
-
-            onClicked: {
-                //StudyCaseHandler.createDomainFromScriptFile(CurrentFileIO.read());
             }
         }
     }

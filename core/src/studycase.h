@@ -16,7 +16,6 @@ public:
     virtual ~StudyCase();
 
     void createNew();
-    void clear();
     void saveCurrentConfiguration(const QString& = "");
     void setMapOfInformation();
 
@@ -46,11 +45,11 @@ protected:
 
     int m_typeOfProblem;
 
-    arma::mat *m_coordinates;
-    arma::mat *m_elements;
-    arma::mat *m_fixnodes;
-    arma::mat *m_pointload;
-    arma::mat *m_sideload;
+    QString m_coordinates;
+    QString m_elements;
+    QString m_fixnodes;
+    QString m_pointload;
+    QString m_sideload;
 
     QDateTime m_created;
     QDateTime m_modified;

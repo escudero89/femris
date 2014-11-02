@@ -112,8 +112,17 @@ function transformCoordinates(xnode, factorOfDeformation) {
         //xnode[k][0] = alpha * xnode[k][0] + beta;
         //xnode[k][1] = alpha * ( y_max - xnode[k][1] ) + beta; // We need to flip de y-axis
         new_xnode[k] = [];
-        new_xnode[k][0] = alpha * ( xnode[k][0] + G_DISPLACEMENTS[k][0] * factorOfDeformation ) + beta;
-        new_xnode[k][1] = alpha * ( y_max - xnode[k][1] - G_DISPLACEMENTS[k][1] * factorOfDeformation) + beta; // We need to flip de y-axis
+        
+        if (G_DISPLACEMENTS.length > 0 && factorOfDeformation !== 0) {
+            new_xnode[k][0] = xnode[k][0] + G_DISPLACEMENTS[k][0] * factorOfDeformation;
+            new_xnode[k][1] = y_max - xnode[k][1] - G_DISPLACEMENTS[k][1] * factorOfDeformation; // We need to flip de y-axis
+        } else {
+            new_xnode[k][0] = xnode[k][0];
+            new_xnode[k][1] = y_max - xnode[k][1];
+        }
+
+        new_xnode[k][0] = new_xnode[k][0] * alpha + beta;
+        new_xnode[k][1] = new_xnode[k][1] * alpha + beta;
 
         new_xnode[k][1] += G_HEIGHT_NAVBAR;
     }
@@ -209,7 +218,6 @@ var domainObject = {
 
             // And we paint the element (by interpolation between the values of the nodes)
             if (this.currentValuesToColorise && this.options) {
-
                 twoElem.fill = getColorFromInterpolation(
                     currentValueInterpolated / elem.length, 
                     this.options.minValue, 

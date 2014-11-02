@@ -1,13 +1,5 @@
 TEMPLATE = app
 
-# Armadillo, LAPACK and BLAS is already installed. Just remember to link
-# to these. In Qt Creator, just add the following line to your .pro file:
-# In Windows, you need to define ARMADILL_ROOT as system's variable
-INCLUDEPATH += $(ARMADILLO_ROOT)/include
-INCLUDEPATH += $(ARMADILLO_ROOT)/examples/lib_win32
-
-LIBS += -llapack -lblas -larmadillo
-
 QT += qml quick widgets webkit webkit-private
 
 SOURCES += \

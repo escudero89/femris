@@ -12,6 +12,7 @@
  * @brief StudyCaseHandler::StudyCaseHandler
  */
 StudyCaseHandler::StudyCaseHandler() {
+    m_studyCase = NULL;
     start();
 }
 
@@ -26,10 +27,10 @@ StudyCaseHandler::~StudyCaseHandler() {
  */
 void StudyCaseHandler::start() {
     // Delete the previous (if there is one) study case
-    if (m_studyCase) {
-        //delete m_studyCase;
+    if (exists()) {
+        delete m_studyCase;
+        m_studyCase = NULL;
     }
-    qDebug() << m_studyCase;
 
     // We initialize the StudyCaseHandler with some information
     QMap<QString, QString> currentStudyCaseVariables;
@@ -42,7 +43,7 @@ void StudyCaseHandler::start() {
  * @brief StudyCaseHandler::exists
  */
 bool StudyCaseHandler::exists() {
-    return true;
+    return (m_studyCase != NULL);
 }
 
 /**
@@ -74,6 +75,8 @@ void StudyCaseHandler::createNewStudyCase() {
 
     m_studyCase->createNew();
     m_currentStudyCaseVariables = m_studyCase->getMapOfInformation();
+
+    emit newStudyCaseCreated();
 }
 
 /**

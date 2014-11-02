@@ -34,6 +34,7 @@ public Q_SLOTS:
 Q_SIGNALS:
 
     void newStudyCaseChose(const QString& studyCaseType);
+    void newStudyCaseCreated();
 
     void loadingStart();
     void loadingDone();

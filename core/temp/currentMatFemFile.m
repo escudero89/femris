@@ -22,21 +22,23 @@ coordinates = [
 % Elements
 %
 global elements
- elements = [
+ elements    = [
 ];
 %
 % Fixed Nodes
 %
-fixnodes = [
+fixnodes    = [
 ];
 %
 % Point loads
 %
-pointload = [
+pointload   = [
 ];
 %
 % Uniform Side loads
 %
-sideload = [
+sideload    = [
 ];
+
+
 

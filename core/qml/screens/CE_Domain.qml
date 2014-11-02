@@ -41,6 +41,8 @@ RowLayout {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
+                color: Style.color.comment
+
                 GridView {
 
                     id: gridViewDomain
@@ -52,7 +54,7 @@ RowLayout {
                     cellWidth: width / 2
 
                     highlight: Rectangle {
-                        color: "lightsteelblue";
+                        color: Style.color.background;
                         radius: 5;
                     }
 
@@ -72,12 +74,6 @@ RowLayout {
 
                                 height: parent.height
                                 width: parent.width
-
-                                Text {
-                                    id: contactInfo
-                                    text: name
-                                    color: GridView.isCurrentItem ? "red" : "black"
-                                }
 
                                 Image {
                                     source: portrait

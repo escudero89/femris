@@ -199,8 +199,7 @@ function getOptions(xnode, ielem, params) {
         params = {
             valuesToColorise : params.valuesToColorise,
             minValue : params.valuesToColorise[0],
-            maxValue : params.valuesToColorise[0],
-            localParamsTextSVG : localParamsTextSVG
+            maxValue : params.valuesToColorise[0]
         };
 
         for ( k = 0 ; k < params.valuesToColorise.length ; k++ ) {
@@ -216,27 +215,31 @@ function getOptions(xnode, ielem, params) {
         $("p#maxValue").html(params.maxValue);
     }
 
+    params["localParamsTextSVG"] = localParamsTextSVG;
+
     return params;
 }
 
 
 $(document).ready(function() {
 
-    var options = {
+    var params = {
         valuesToColorise : getSingleColFromCurrentDomain('displacements', 1)
     };
+
+    params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;
 
     // We transform the original coordinates so they can fit better in the SVG
     G_XNODE = transformCoordinates(G_XNODE);
     G_XNODE_ORIGINAL = G_CURRENT_DOMAIN.coordinates;
 
-    params = getOptions(G_XNODE, G_IELEM, options);
+    options = getOptions(G_XNODE, G_IELEM, params);
 
-    domainObject.makeElements(G_XNODE, G_IELEM, params);
+    domainObject.makeElements(G_XNODE, G_IELEM, options);
 
     //domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, 30000);
 
-    //domainObject.changeColorDueToValues(params);
+    //domainObject.changeColorDueToValues(options);
 
     $(".visualization li").on('click', function(e) {
         var $this = $(this);
@@ -251,12 +254,14 @@ $(document).ready(function() {
             indexColumn = indexColumn.split(',');
         }
 
-        options = {
+        params = {
             valuesToColorise : getSingleColFromCurrentDomain(whichVariable, indexColumn)
         };
 
-        params = getOptions(G_XNODE, G_IELEM, options);
-        domainObject.changeColorDueToValues(params);
+        params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;
+
+        options = getOptions(G_XNODE, G_IELEM, params);
+        domainObject.changeColorDueToValues(options);
     });
 
     drawCurrentMatrix(domainObject.two, domainObject.group);
@@ -335,3 +340,32 @@ function discolorDueToMouseHelper(currentElem, currentCell, clearAll) {
     }
 
 }
+
+(function(){
+
+    encode_as_link();
+ 
+  var button_id = "download";
+ 
+  // include this code in your page
+  // you must have jQuery installed
+  // you must have a link element with an id of "download"
+  // this is limited to only one chart on the page (the first)
+  function encode_as_link(){
+    // Add some critical information
+    $("svg").attr({ version: '1.1' , xmlns:"http://www.w3.org/2000/svg"});
+ 
+    var svg      = $("svg").parent().html(),
+        b64      = btoa(svg),
+        download = $("#" + button_id),
+        html     = download.html();
+ 
+    download.replaceWith(
+      $("<a id='"+button_id+"' href-lang='image/svg+xml' href='data:image/svg+xml;base64,\n"+b64+"' title='file.svg' download></a>").html(html));
+  }
+ 
+  $(function(){
+    $("div").delegate("#"+button_id, "mouseover", encode_as_link);
+  });
+ 
+})();

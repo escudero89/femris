@@ -43,9 +43,24 @@ MenuBar {
         }
         MenuSeparator { }
         MenuItem {
+            id: menuItemClose
+
             text: qsTr("Cerrar Caso de Estudio")
-            onTriggered: Qt.quit();
+            onTriggered: {
+                mainWindow.switchSection("Initial");
+                StudyCaseHandler.start();
+                menuItemClose.enabled = StudyCaseHandler.exists();
+            }
+
+            enabled: StudyCaseHandler.exists();
         }
+        Connections {
+            target: StudyCaseHandler
+            onNewStudyCaseCreated: {
+                menuItemClose.enabled = StudyCaseHandler.exists();
+            }
+        }
+
         MenuSeparator { }
         MenuItem {
             text: qsTr("Salir")
