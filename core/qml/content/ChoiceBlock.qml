@@ -83,7 +83,7 @@ ColumnLayout {
 
                 Layout.alignment: Qt.AlignCenter
 
-                source: "qrc:/resources/images/square_shadow.gif"
+                source: (blockStatus === "default") ? "qrc:/resources/images/square_shadow_disabled.png" : "qrc:/resources/images/square_shadow.png"
 
                 smooth: true
 
@@ -93,7 +93,7 @@ ColumnLayout {
             TextArea {
                 id: choiceBlockTextArea
 
-                text: qsTr("The source of the image is specified as a URL using the source property. Images can be supplied in any of the standard image formats supported by Qt, including bitmap formats such as PNG and JPEG, and vector graphics formats such as SVG. If you need to display animated images, use the AnimatedImage element.")
+                text: qsTr("<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>")
                 textFormat: TextEdit.RichText
 
                 font.pixelSize: Math.max(parent.width / 15, 12)

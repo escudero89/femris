@@ -93,8 +93,9 @@ background-color: #f3f3f3;
                                 <input id="changeFactorOfDeformation" type="number" min="0" max="1000000" step="5000" class="form-control" placeholder="Factor" value="1000"/>
                             </div>
                             <input type="button" class="btn btn-default navbar-btn" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, $('#changeFactorOfDeformation').val());" value="Visualizar Deformaci&oacute;n"/>
+                            <!--
                             <input type="button" class="btn btn-default navbar-btn" onclick="drawCurrentMatrix()" value="Visualizar Matriz"/>
-                            <a id="download" type="button" class="btn btn-default navbar-btn">Descargar</a>
+                            <a id="download" type="button" class="btn btn-default navbar-btn">Descargar</a>-->
                         </div>
                     </div>  
                 </nav>
@@ -128,7 +129,7 @@ background-color: #f3f3f3;
                     <g></g>
                 </svg>
 
-                <div class="btn-group" style="position:absolute; bottom:0">
+                <div class="btn-group hidden" style="position:absolute; bottom:0">
                   <button type="button" class="btn btn-default">Left</button>
                   <button type="button" class="btn btn-default">Middle</button>
                   <button type="button" class="btn btn-default">Right</button>
@@ -149,7 +150,7 @@ background-color: #f3f3f3;
 <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
  -->
 
-        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <nav class="navbar navbar-default navbar-fixed-bottom hidden" role="navigation">
             <div class="container">
                 <div class="navbar-form navbar-left">
                     <div class="form-group">

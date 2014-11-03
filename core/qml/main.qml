@@ -67,6 +67,8 @@ ApplicationWindow {
             color: "transparent"
 
             AnimatedImage {
+                id: loadingImage
+
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/resources/images/loader.gif"
@@ -91,6 +93,8 @@ ApplicationWindow {
                 visible = true;
                 globalInfoBox.setInfoBox(null, true);
                 console.debug("Loaded: " + globalLoader.source)
+
+                loadingImage.opacity = 0
             }
 
             PrimaryButton {
@@ -122,7 +126,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_Domain.qml");
+            globalLoader.setSource("screens/Initial.qml");
         }
 
     }
@@ -154,6 +158,7 @@ ApplicationWindow {
         }
 
         globalInfoBox.setInfoBox("Cargando...");
+        loadingImage.opacity = 0.8;
         globalLoader.visible = false;
         globalLoader.setSource("screens/" + redirection + ".qml");
     }

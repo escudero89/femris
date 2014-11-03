@@ -82,6 +82,8 @@ RowLayout {
                                     Layout.fillWidth: true
 
                                     fillMode: Image.PreserveAspectFit
+
+                                    opacity: (gridViewDomain.currentIndex === index) ? 1 : 0.3
                                 }
 
                             }

@@ -10,6 +10,8 @@ MenuBar {
         MenuItem {
             text: qsTr("Nuevo Caso de Estudio")
             shortcut: "Ctrl+N"
+            iconSource: "qrc:/resources/icons/black/file28.png"
+
             onTriggered: {
                 StudyCaseHandler.start();
                 mainWindow.switchSection("CE_Overall");
@@ -18,34 +20,46 @@ MenuBar {
         MenuItem {
             text: qsTr("Cargar Caso de Estudio")
             shortcut: "Ctrl+O"
-            onTriggered: {
-                StudyCaseHandler.start();
-                mainWindow.switchSection("CE_Overall");
-            }
+            iconSource: "qrc:/resources/icons/black/open96.png"
+            onTriggered: messageDialog.open();
         }
         MenuSeparator { }
         MenuItem {
-            text: qsTr("Continuar trabajando con Caso de Estudio")
+            id: menuItemContinue
+
+            text: qsTr("Continuar con Vista General")
             shortcut: "Ctrl+Shift+O"
-            onTriggered: {
-                mainWindow.switchSection("CE_Overall");
-            }
+            iconSource: "qrc:/resources/icons/black/file27.png"
+            onTriggered: mainWindow.switchSection("CE_Overall")
+
+            enabled: StudyCaseHandler.exists();
         }
         MenuItem {
+            id: menuItemSave
+
             text: qsTr("Guardar Caso de Estudio")
             shortcut: "Ctrl+S"
+            iconSource: "qrc:/resources/icons/black/save8.png"
             onTriggered: femrisSaver.open();
+
+            enabled: StudyCaseHandler.exists();
         }
         MenuItem {
+            id: menuItemSaveAs
+
             text: qsTr("Guardar Caso de Estudio como...")
+            iconSource: "qrc:/resources/icons/black/save8.png"
             shortcut: "Ctrl+Shift+S"
             onTriggered: femrisSaver.open();
+
+            enabled: StudyCaseHandler.exists();
         }
         MenuSeparator { }
         MenuItem {
             id: menuItemClose
 
             text: qsTr("Cerrar Caso de Estudio")
+            iconSource: "qrc:/resources/icons/black/cross41.png"
             onTriggered: {
                 mainWindow.switchSection("Initial");
                 StudyCaseHandler.start();
@@ -57,7 +71,12 @@ MenuBar {
         Connections {
             target: StudyCaseHandler
             onNewStudyCaseCreated: {
-                menuItemClose.enabled = StudyCaseHandler.exists();
+                var exists = StudyCaseHandler.exists();
+
+                menuItemContinue.enabled = exists;
+                menuItemClose.enabled = exists;
+                menuItemSave.enabled = exists;
+                menuItemSaveAs.enabled = exists;
             }
         }
 
@@ -65,6 +84,7 @@ MenuBar {
         MenuItem {
             text: qsTr("Salir")
             shortcut: "Ctrl+Q"
+            iconSource: "qrc:/resources/icons/black/remove11.png"
             onTriggered: Qt.quit();
         }
     }
@@ -73,7 +93,8 @@ MenuBar {
         MenuItem {
             text: qsTr("Preferencias")
             shortcut: "Ctrl+P"
-            onTriggered: Qt.quit();
+            iconSource: "qrc:/resources/icons/black/open95.png"
+            onTriggered: messageDialog.open();
         }
     }
     Menu {
@@ -81,16 +102,19 @@ MenuBar {
         MenuItem {
             text: qsTr("Menu Principal")
             shortcut: "Ctrl+Alt+M"
+            iconSource: "qrc:/resources/icons/black/eye50.png"
             onTriggered: mainWindow.switchSection("Initial");
         }
         MenuItem {
             text: qsTr("Selección de Etapa")
             shortcut: "Ctrl+Alt+E"
+            iconSource: "qrc:/resources/icons/black/four29.png"
             onTriggered: mainWindow.switchSection("CE_Overall");
         }
         MenuItem {
             text: qsTr("Tutorial")
             shortcut: "Ctrl+T"
+            iconSource: "qrc:/resources/icons/black/book95.png"
             onTriggered: mainWindow.switchSection("tutorial");
         }
     }
@@ -98,7 +122,8 @@ MenuBar {
         title: qsTr("Ayuda")
         MenuItem {
             text: qsTr("Acerca de...")
-            onTriggered: { messageDialog.visible = true }
+            iconSource: "qrc:/resources/icons/black/question23.png"
+            onTriggered: messageDialog.open();
         }
 
         MessageDialog {
@@ -125,9 +150,7 @@ MenuBar {
 
             onAccepted: {
                 console.log("You chose: " + femrisSaver.fileUrl);
-                //CurrentFileIO.setSource(femrisSaver.fileUrl);
-
-                //codeArea.text = CurrentFileIO.read();
+                StudyCaseHandler.saveCurrentStudyCase(femrisSaver.fileUrl);
             }
             onRejected: {
                 console.log("Canceled");

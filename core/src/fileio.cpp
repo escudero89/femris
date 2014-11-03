@@ -9,8 +9,6 @@
 
 #include <QDebug>
 
-#include <armadillo>
-
 FileIO::FileIO()
     : m_source(-1) {
 }

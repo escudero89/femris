@@ -5,10 +5,9 @@
 <header>
 <item title="Índice General" page="docs/view/femris_inicio_tutorial.html" />
 <item title="Método de los Elementos Finitos" source="child00" />
-<item title="FEMRIS" source="child01" />
-<item title="Referencias" source="child01" />
-<item title="F.A.Q." source="child01" />
-<item title="tests" page="http://www.tikku.com/jquery-youtube-tubeplayer-plugin" />
+<item title="FEMRIS" page="$docs/view/soon/index.html" />
+<item title="Referencias" page="$docs/view/soon/index.html" />
+<item title="F.A.Q." page="$docs/view/soon/index.html" />
 </header>
 
 <child00>

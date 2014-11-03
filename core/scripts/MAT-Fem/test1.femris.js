@@ -1,7 +1,7 @@
 var G_CURRENT_DOMAIN = {
   "_comment" : "This file was generated automatically usign ToJS.m for its use in FEMRIS",
   "_coordinates" : "The values are [ x-coord y-coord ]",
-  "coordinates" : [
+  "coordinates" :[
     [  0.00000e+00,   1.00000e+00],
     [  1.00000e-01,   1.00000e+00],
     [  0.00000e+00,   9.00000e-01],
@@ -125,7 +125,7 @@ var G_CURRENT_DOMAIN = {
     [  1.00000e+00,   0.00000e+00]
   ],
   "_elements" : "The values are [ indx-node1 ... indx-nodeN ]",
-  "elements" : [
+  "elements" :[
     [    31,     39,     32],
     [    39,     55,     48],
     [    55,     69,     63],
@@ -318,7 +318,7 @@ var G_CURRENT_DOMAIN = {
     [    14,      9,     18]
   ],
   "_displacements" : "The values are [ x-displacement y-displacement ]",
-  "displacements" : [
+  "displacements" :[
     [ -1.76128e-06,  -3.19674e-06],
     [ -1.76020e-06,  -2.84651e-06],
     [ -1.41356e-06,  -3.19634e-06],
@@ -442,7 +442,7 @@ var G_CURRENT_DOMAIN = {
     [  0.00000e+00,   0.00000e+00]
   ],
   "_reactions" : "The values are [ x-reaction y-reaction ]",
-  "reactions" : [
+  "reactions" :[
     [  0.00000e+00,   0.00000e+00],
     [  0.00000e+00,   0.00000e+00],
     [  0.00000e+00,   0.00000e+00],
@@ -566,7 +566,7 @@ var G_CURRENT_DOMAIN = {
     [ -2.66059e+04,   3.70500e+04]
   ],
   "_stresses" : "The values are [ Sx Sy Sz Sxy Syz Sxz ]",
-  "stresses" : [
+  "stresses" :[
     [ 2.19891e+03, -4.01086e+02,  0.0,  2.19891e+03,  0.0,  0.0],
     [ 6.32153e+03, -6.91818e+02,  0.0,  5.65671e+03,  0.0,  0.0],
     [ 1.88421e+03, -1.02258e+03,  0.0,  3.50478e+03,  0.0,  0.0],

@@ -20,6 +20,7 @@ public:
     Q_INVOKABLE void selectNewTypeStudyCase(const QString&);
     Q_INVOKABLE void createNewStudyCase();
     Q_INVOKABLE void createDomainFromScriptFile();
+    Q_INVOKABLE void saveCurrentStudyCase(const QString&);
 
     Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&, bool = false);
     Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString &, bool = false);

@@ -120,7 +120,10 @@ RowLayout {
 
                 onUrlChanged: {
 
-                    if (rowParent.currentUrlForTutorial.search("http") === -1) {
+                    if (rowParent.currentUrlForTutorial[0] === '$') {
+                        currentWebView.url = "file://" + applicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
+
+                    } else if (rowParent.currentUrlForTutorial.search("http") === -1) {
 
                         io_view.setSource(rowParent.currentUrlForTutorial);
                         var layout  = rowParent.layoutForTutorial;

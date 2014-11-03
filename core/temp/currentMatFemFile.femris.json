@@ -1,7 +1,7 @@
-var G_CURRENT_DOMAIN = {
-  "_comment" : "This file was generated automatically usign ToJS.m for its use in FEMRIS",
+{
+  "_comment" : "This file was generated automatically usign ToJSON.m for its use in FEMRIS",
   "_coordinates" : "The values are [ x-coord y-coord ]",
-  "coordinates" :[
+  "coordinates" : [
     [  0.00000e+00,   0.00000e+00],
     [  3.33333e-01,   0.00000e+00],
     [  6.66667e-01,   0.00000e+00],
@@ -20,7 +20,7 @@ var G_CURRENT_DOMAIN = {
     [  1.00000e+00,   1.00000e+00]
   ],
   "_elements" : "The values are [ indx-node1 ... indx-nodeN ]",
-  "elements" :[
+  "elements" : [
     [     1,      5,      6,      2],
     [     2,      6,      7,      3],
     [     3,      7,      8,      4],
@@ -30,7 +30,7 @@ var G_CURRENT_DOMAIN = {
     [    11,     15,     16,     12]
   ],
   "_displacements" : "The values are [ x-displacement y-displacement ]",
-  "displacements" :[
+  "displacements" : [
     [  0.00000e+00,   0.00000e+00],
     [  0.00000e+00,   0.00000e+00],
     [  0.00000e+00,   0.00000e+00],
@@ -49,7 +49,7 @@ var G_CURRENT_DOMAIN = {
     [ -4.21540e-02,  -9.97952e-03]
   ],
   "_reactions" : "The values are [ x-reaction y-reaction ]",
-  "reactions" :[
+  "reactions" : [
     [ -5.29178e+00,  -7.92377e+00],
     [ -1.47318e+01,   8.93602e+00],
     [ -7.89198e+00,   5.64885e+00],
@@ -68,7 +68,7 @@ var G_CURRENT_DOMAIN = {
     [  0.00000e+00,   0.00000e+00]
   ],
   "_stresses" : "The values are [ Sx Sy Sz Sxy Syz Sxz ]",
-  "stresses" :[
+  "stresses" : [
     [-7.10543e-15, -8.88178e-16,   7.99361e-16, -7.67094e+01,  0.0,  0.0],
     [ 1.17457e+00,  1.05711e+01,  -1.17457e+00, -3.79196e+01,  0.0,  0.0],
     [ 6.02139e-01,  5.41925e+00,  -6.02139e-01, -1.21053e+01,  0.0,  0.0],

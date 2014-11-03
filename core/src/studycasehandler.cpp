@@ -79,6 +79,12 @@ void StudyCaseHandler::createNewStudyCase() {
     emit newStudyCaseCreated();
 }
 
+void StudyCaseHandler::saveCurrentStudyCase(const QString& whereToSave) {
+    if (exists()) {
+        m_studyCase->saveCurrentConfiguration(whereToSave);
+    }
+}
+
 /**
  * @brief StudyCaseHandler::getSingleStudyCaseInformation
  * @param variable

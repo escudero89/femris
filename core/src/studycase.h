@@ -5,8 +5,6 @@
 #include <QDateTime>
 #include <QMap>
 
-#include <armadillo>
-
 class StudyCase
 {
 
@@ -22,8 +20,6 @@ public:
     virtual void createLocalNew() {};
     virtual void setLocalMapOfInformation() {};
     virtual void saveLocalCurrentConfiguration() {};
-
-    QString matToQString(arma::mat&, const QString &);
 
     // Getters and setters
     QMap<QString, QString> getMapOfInformation();
