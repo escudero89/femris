@@ -11,9 +11,6 @@ Versión
 ----
 + *0.5*
  + Fase alfa (actualización: **2 de Noviembre de 2014**).
-+ *0.1*
- + Fase pre-alfa (actualización: **20 de Octubre de 2014**).
-
 
 Licencia
 ----
