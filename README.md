@@ -4,14 +4,15 @@ FEMRIS
 Finite Element Method leaRnIng Software
 ---------------------------------------
 
-FEMRIS es un programa educativo diseñado para el aprendizaje del [Método de Elementos Finitos]. Trabaja en conjunto a [MATLAB] o [GNU Octave], y brindando de una buena compatibilidad con el software [GiD].
+FEMRIS es un programa educativo diseñado para el aprendizaje del [Método de Elementos Finitos]. Trabaja en conjunto con [MATLAB] o [GNU Octave], brindando de una buena compatibilidad con el software [GiD].
 
 
 Versión
 ----
-
++ *0.5*
+ + Fase alfa (actualización: **2 de Noviembre de 2014**).
 + *0.1*
- + Actualmente se encuentra en una fase pre-alfa (última actualización: **20 de Octubre de 2014**).
+ + Fase pre-alfa (actualización: **20 de Octubre de 2014**).
 
 
 Licencia
