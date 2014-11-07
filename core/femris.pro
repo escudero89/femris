@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets webkit webkit-private
+QT += qml quick widgets webkit webkit-private xml
 
 SOURCES += \
     src/main.cpp \
@@ -9,7 +9,9 @@ SOURCES += \
     src/studycase.cpp \
     src/studycasehandler.cpp \
     src/utils.cpp \
-    src/studycasestructural.cpp
+    src/studycasestructural.cpp \
+    src/configure.cpp \
+    src/femrisxmlcontenthandler.cpp
 
 RESOURCES += \
     qml/resources.qrc \
@@ -37,6 +39,7 @@ OTHER_FILES += \
 HEADERS += \
     src/fileio.h \
     src/processhandler.h \
-    src/studycasehandler.h
+    src/studycasehandler.h \
+    src/configure.h \
 
 RC_ICONS = rc/logo.ico

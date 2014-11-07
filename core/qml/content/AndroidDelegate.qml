@@ -47,6 +47,7 @@ Item {
     implicitHeight: 22
 
     property alias text: textItem.text
+    property bool isSelected: false
     property bool hasChild: false
 
     signal clicked
@@ -100,12 +101,12 @@ Item {
         anchors.rightMargin: 10
         anchors.verticalCenter: parent.verticalCenter
 
-        height: parent.height
+        height: parent.height * .7
         width: height
 
         visible: (hasChild) ? true : false
 
-        source: "qrc:/resources/icons/chevron18.png"
+        source: (isSelected) ? "qrc:/resources/icons/black/chevron18.png" : "qrc:/resources/icons/chevron18.png"
     }
 
     MouseArea {

@@ -40,7 +40,7 @@ RowLayout {
             Layout.fillWidth: true
 
             onLinkHovered: console.log(hoveredUrl)
-            url: "file://" + applicationDirPath + "/docs/view/soon/index.html"
+            url: fileApplicationDirPath + "/docs/view/soon/index.html"
         }
 
         RowLayout {

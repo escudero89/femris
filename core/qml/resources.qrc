@@ -767,5 +767,6 @@
         <file>resources/icons/black/zoom27.png</file>
         <file>resources/icons/black/zoom28.png</file>
         <file>resources/images/square_shadow_disabled.png</file>
+        <file>resources/config.xml</file>
     </qresource>
 </RCC>

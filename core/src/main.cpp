@@ -30,6 +30,7 @@
 #include "fileio.h"
 #include "studycasehandler.h"
 #include "processhandler.h"
+#include "configure.h"
 
 int main(int argc, char *argv[]) {
 
@@ -42,14 +43,29 @@ int main(int argc, char *argv[]) {
     ProcessHandler processHandler;
     FileIO currentFileIO;
 
+    // Configuration Class
+    Configure *configure;
+    configure = Configure::getInstance();
+    configure->loadConfiguration();
+
     QObject::connect(&studyCaseHandler, SIGNAL(callProcess()),
                      &processHandler, SLOT(callingMatlab()));
 
-    // We make the StudyCaseHandler instance accessible from QML
+    // We make sure those instance are accessible from QML
     engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);
     engine.rootContext()->setContextProperty("ProcessHandler", &processHandler);
     engine.rootContext()->setContextProperty("CurrentFileIO", &currentFileIO);
-    engine.rootContext()->setContextProperty("applicationDirPath", qApp->applicationDirPath());
+    //engine.rootContext()->setContextProperty("Configure", &configure);
+
+    // A little fix for windows (file should have /// in Windows)
+    QString applicationDirPath = qApp->applicationDirPath();
+    if (applicationDirPath[0] != '/') {
+        configure->write("OS", "windows");
+        applicationDirPath = "/" + applicationDirPath;
+    }
+
+    engine.rootContext()->setContextProperty("applicationDirPath", applicationDirPath);
+    engine.rootContext()->setContextProperty("fileApplicationDirPath", "file://" + applicationDirPath);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

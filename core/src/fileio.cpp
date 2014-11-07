@@ -1,4 +1,5 @@
 #include "fileio.h"
+#include "configure.h"
 
 #include <QApplication>
 #include <QFile>
@@ -7,6 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include <QDir>
 #include <QDebug>
 
 FileIO::FileIO()
@@ -41,7 +43,7 @@ QString FileIO::read() {
             file.close();
 
         } else {
-            emit error("FileIO::read(): Unable to open the file");
+            emit error("FileIO::read(): Unable to open the file: " + m_source);
         }
     }
 
@@ -77,8 +79,14 @@ QString FileIO::source() const {
 void FileIO::setSource(QString arg) {
     if (m_source != arg) {
         m_source = arg;
-        // We replace the prefix (if exists)
-        m_source.replace("file://", "");
+
+        // We replace the prefix (if exists), but it depends on the OS root system
+        if (Configure::check("OS", "windows")) {
+            m_source.replace("file:///", "");
+        } else {
+            m_source.replace("file://", "");
+        }
+
         emit sourceChanged();
     }
 }
@@ -98,11 +106,11 @@ QJsonObject FileIO::getVarFromJsonString(const QString& jsonFile) {
 //----------------------------------------------------------------------------//
 //--                           STATIC FUNCTIONS                             --//
 //----------------------------------------------------------------------------//
-
+/*
 bool FileIO::readConfigurationFile(QString configurationTemplate, const QString &data) {
     return true;
 }
-
+*/
 void FileIO::writeConfigurationFile(const QString &pathConfigurationToLoad,
                                     const QString &pathFileToSave,
                                     const QMap<QString, QString> &replacement) {

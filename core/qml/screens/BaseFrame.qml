@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 
 import QtWebKit 3.0
-import QtWebKit.experimental 1.0
+//import QtWebKit.experimental 1.0
 
 import FileIO 1.0
 
@@ -91,13 +91,13 @@ RowLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                experimental.preferences.webGLEnabled: true
-                experimental.preferences.developerExtrasEnabled: true
+                //experimental.preferences.webGLEnabled: true
+                //experimental.preferences.developerExtrasEnabled: true
 
                 // We load the layout and the view, and put the info in the WebView
                 FileIO {
                     id: io_layout
-                    source: "docs/layout.html"
+                    source: fileApplicationDirPath + "/docs/layout.html"
                     onError: console.log(msg)
                 }
 
@@ -108,32 +108,37 @@ RowLayout {
 
                 FileIO {
                     id: io_current
-                    source: "docs/current.html"
+                    source: fileApplicationDirPath + "/docs/current.html"
                     onError: console.log(msg)
                 }
 
                 Component.onCompleted: {
                     rowParent.layoutForTutorial = io_layout.read();
                     rowParent.currentUrlForTutorial = "docs/view/femris_inicio_tutorial.html";
-                    currentWebView.url = "file://" + applicationDirPath + "/docs/current.html";
+                    currentWebView.url = fileApplicationDirPath + "/docs/current.html";
                 }
 
                 onUrlChanged: {
 
+                    // These are for those that we don't to wrap with the layout
                     if (rowParent.currentUrlForTutorial[0] === '$') {
-                        currentWebView.url = "file://" + applicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
+                        currentWebView.url = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
 
+                    // Source that we want to wrap with the layout
                     } else if (rowParent.currentUrlForTutorial.search("http") === -1) {
 
-                        io_view.setSource(rowParent.currentUrlForTutorial);
+                        var viewPath = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial;
+
+                        io_view.setSource(viewPath);
                         var layout  = rowParent.layoutForTutorial;
                         var view = io_view.read();
 
                         layout = layout.replace("{{=include(view)}}", view);
                         io_current.write(layout);
 
-                        currentWebView.url = "file://" + applicationDirPath + "/docs/current.html";
+                        currentWebView.url = fileApplicationDirPath + "/docs/current.html";
 
+                    // Direct link to a website
                     } else {
                         currentWebView.url = rowParent.currentUrlForTutorial;
                     }

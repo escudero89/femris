@@ -59,6 +59,8 @@ StackView {
 
                 height: indexLayout.height * 0.04
                 text: title
+
+                isSelected: (xmlView.currentIndex === index)
                 hasChild: (source) ? true : false
 
                 onClicked: {
@@ -89,7 +91,7 @@ StackView {
     XmlListModel {
         id: xmlModel
 
-        source: "file://" + applicationDirPath + "/docs/index.xml"
+        source: fileApplicationDirPath + "/docs/index.xml"
         query: "/body/header/item"
 
         XmlRole { name: "title"; query: "@title/string()" }

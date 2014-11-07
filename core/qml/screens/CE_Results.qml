@@ -45,7 +45,7 @@ RowLayout {
         WebView {
             id: currentWebView
 
-            url: "file://" + applicationDirPath + "/docs/ce_results.html"
+            url: fileApplicationDirPath + "/docs/ce_results.html"
 
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -57,7 +57,7 @@ RowLayout {
 
                 onClicked : {
                     //currentWebView.reload()
-                    console.log("file://" + applicationDirPath + "docs/ce_results.html")
+                    console.log(fileApplicationDirPath + "docs/ce_results.html")
                 }
             }*/
 
