@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
     // Configuration Class
     Configure *configure;
     configure = Configure::getInstance();
-    configure->loadConfiguration();
+    configure->loadConfiguration(qApp->applicationDirPath() + "/settings.xml");
 
     QObject::connect(&studyCaseHandler, SIGNAL(callProcess()),
                      &processHandler, SLOT(callingMatlab()));

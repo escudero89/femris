@@ -1,4 +1,6 @@
 #include "processhandler.h"
+#include "configure.h"
+#include "utils.h"
 
 #include <QObject>
 #include <QDebug>
@@ -56,12 +58,18 @@ void ProcessHandler::cppSlot(const QString &msg, const QString &amplitud, float 
 }
 
 void ProcessHandler::callingProcess() {
-    callingOctave();
+    if (Configure::check("interpreter", "octave")) {
+        callingOctave();
+    } else if (Configure::check("interpreter", "matlab")) {
+        callingMatlab();
+    } else {
+        Utils::throwErrorAndExit("ProcessHandler::callingProcess(): Unknown interpreter");
+    }
 }
 
 void ProcessHandler::callingOctave() {
 
-    m_process.start("octave", QIODevice::ReadWrite);
+    m_process.start(Configure::read("octave"), QIODevice::ReadWrite);
 
     m_stepOfProcessManipulation = 0;
 
@@ -76,7 +84,7 @@ void ProcessHandler::callingMatlab() {
                 << " -nodisplay "      // Start the Oracle® JVM™ software, but do not start the MATLAB desktop
                 << " -nosplash ";      // does  not display the splash screen during startup
 
-    m_process.start("/media/Cristian/MatLabLinux/bin/matlab", processArgs, QIODevice::ReadWrite);
+    m_process.start(Configure::read("matlab"), processArgs, QIODevice::ReadWrite);
 
     m_stepOfProcessManipulation = 0;
 

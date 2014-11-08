@@ -6,8 +6,8 @@
 %
 %  Material Properties
 %
-  young = 1000 ;
-  poiss = 0.2 ;
+  young = 1 ;
+  poiss = 0.3 ;
   denss = 1 ;
   pstrs = 0 ;
   thick = 1 ;
@@ -44,8 +44,6 @@ global elements
     2,    6,    7,    3 ;
     3,    7,    8,    4 ;
     5,    9,    10,    6 ;
-    6,    10,    11,    7 ;
-    7,    11,    12,    8 ;
     9,    13,    14,    10 ;
     10,    14,    15,    11 ;
     11,    15,    16,    12 ;
@@ -55,20 +53,18 @@ global elements
 % Fixed Nodes
 %
 fixnodes = [
-    1,    1,    0 ;
-    1,    2,    0 ;
-    2,    1,    0 ;
-    2,    2,    0 ;
-    3,    1,    0 ;
-    3,    2,    0 ;
-    4,    1,    0 ;
-    4,    2,    0 ;
 ];
 
 %
 % Point loads
 %
 pointload = [
+    1,    1,    1 ;
+    1,    2,    1 ;
+    2,    1,    1 ;
+    2,    2,    1 ;
+    3,    1,    1 ;
+    3,    2,    1 ;
 ];
 
 %

@@ -19,10 +19,25 @@ Configure::Configure() {
 Configure::~Configure() {
 }
 
-void Configure::loadConfiguration() {
+void Configure::loadConfiguration(const QString& pathConfigurationXml) {
+
+    m_pathConfigurationXml = pathConfigurationXml;
+    m_pathUserConfigurationXml = pathConfigurationXml;
 
     FileIO fileIO;
-    fileIO.setSource(":/resources/config.xml");
+    fileIO.setSource(m_pathConfigurationXml);
+
+    if (fileIO.read().isEmpty()) {
+        m_pathConfigurationXml = ":/resources/config.xml";
+    }
+
+    loadConfigurationFromFile();
+}
+
+void Configure::loadConfigurationFromFile() {
+
+    FileIO fileIO;
+    fileIO.setSource(m_pathConfigurationXml);
     QString configuration = fileIO.read();
 
     QXmlSimpleReader xmlReader;
@@ -36,7 +51,9 @@ void Configure::loadConfiguration() {
         Utils::throwErrorAndExit("Configuration::loadConfiguration(): there was a problem loading the configuration file");
     }
 
-    qDebug() << source;
+    fileIO.setSource(m_pathUserConfigurationXml);
+    fileIO.write(configuration);
+
 }
 
 
@@ -47,9 +64,9 @@ QString Configure::read(const QString& setting) {
     return instance->m_configuration[setting];
 }
 
-void Configure::write(const QString& setting, const QString& value) {
+void Configure::write(const QString& setting, const QString& value, bool checkIfExists) {
 
-    if (!instance->m_configuration.contains(setting)) {
+    if (!instance->m_configuration.contains(setting) && checkIfExists) {
         Utils::throwErrorAndExit("Configuration::write(): unknown setting " + setting);
     }
 

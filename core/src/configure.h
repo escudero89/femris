@@ -13,10 +13,12 @@ public:
 
     Configure();
     ~Configure();
-    void loadConfiguration();
+
+    void loadConfiguration(const QString&);
+    void loadConfigurationFromFile();
 
     Q_INVOKABLE static QString read(const QString&);
-    Q_INVOKABLE static void write(const QString&, const QString&);
+    Q_INVOKABLE static void write(const QString&, const QString&, bool = false);
     Q_INVOKABLE static bool check(const QString&, const QString&);
 
     static Configure* getInstance();
@@ -32,6 +34,9 @@ private:
     static Configure *instance;
 
     QMap<QString, QString> m_configuration;
+
+    QString m_pathConfigurationXml;
+    QString m_pathUserConfigurationXml;
 
 };
 
