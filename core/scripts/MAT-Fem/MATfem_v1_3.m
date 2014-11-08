@@ -1,9 +1,7 @@
-%% MAT-femris (without clear nor load from input file)
-%
+%% MAT-fem
 
-  file_name = '../../temp/currentMatFemFile';
-  tic;                   % Start clock
-  ttim = 0;              % Initialize time counter
+% Clear memory and variables
+  clear
   
 % The variables are read as a MAT-fem subroutine
 % pstrs = 1 indicate Plane Stress; 0 indicate Plane Strain
@@ -23,8 +21,11 @@
 %               matrix with line definition and uniform load
 %               applied in x and y directions
 
+  file_name = input('Enter the file name: ','s');
+
   tic;                   % Start clock
   ttim = 0;              % Initialize time counter
+  eval(file_name);       % Read input file
 
 % Find basic dimensions
   npnod = size(coordinates,1);         % Number of nodes
@@ -130,10 +131,6 @@
   
 % Graphic representation
   ToGiD_v1_3(file_name,u,reaction,Strnod);
-  
-% JS and JSON Representation.
-  ToJS (file_name, u, reaction, Strnod);
-  ToJSON (file_name, u, reaction, Strnod);
 
   ttim = timing('Time  used to write  the  solution',ttim); %Reporting time
   itim = toc;                                               %Close last tic

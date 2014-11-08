@@ -53,20 +53,17 @@ global elements
 % Fixed Nodes
 %
 fixnodes = [
-    1,    1,    0 ;
-    1,    2,    0 ;
     3,    1,    0 ;
-    4,    2,    0 ;
 ];
 
 %
 % Point loads
 %
 pointload = [
-    2,    1,    2 ;
-    2,    2,    4 ;
-    3,    2,    5 ;
-    4,    1,    7 ;
+    1,    1,    1 ;
+    1,    2,    3 ;
+    2,    1,    4 ;
+    2,    2,    5 ;
 ];
 
 %

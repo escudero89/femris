@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);
     engine.rootContext()->setContextProperty("ProcessHandler", &processHandler);
     engine.rootContext()->setContextProperty("CurrentFileIO", &currentFileIO);
-    //engine.rootContext()->setContextProperty("Configure", &configure);
+    engine.rootContext()->setContextProperty("Configure", configure);
 
     // A little fix for windows (file should have /// in Windows)
     QString applicationDirPath = qApp->applicationDirPath();
