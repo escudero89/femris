@@ -118,7 +118,7 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
 
     if (isTemporal) {
         m_temporalStudyCaseVariables.insert(variable, newVariable);
-
+qDebug() << m_temporalStudyCaseVariables.value(variable);
     } else {
 
         if (!m_currentStudyCaseVariables.contains(variable)) {

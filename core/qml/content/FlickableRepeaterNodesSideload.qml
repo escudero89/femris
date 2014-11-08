@@ -91,14 +91,15 @@ ColumnLayout {
                     }
 
                     TextField {
-                        id: xTextField
-
-                        Layout.preferredWidth: parent.width / 4
+                        Layout.preferredWidth: parent.width / 3
                         placeholderText: "x_" + ( index + 1 )
 
-                        onTextChanged: {
-                            console.log("XonTextChanged", text);
+                        onEditingFinished: {
                             StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
+                        }
+
+                        onAccepted: {
+                            console.log("asd")
                         }
 
                         onFocusChanged: {
@@ -110,13 +111,10 @@ ColumnLayout {
                     }
 
                     TextField {
-                        id: yTextField
-
-                        Layout.preferredWidth: parent.width / 4
+                        Layout.preferredWidth: parent.width / 3
                         placeholderText: "y_" + ( index + 1 )
 
-                        onTextChanged: {
-                            console.log("YonTextChanged", text);
+                        onEditingFinished: {
                             StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
                         }
 
@@ -126,74 +124,6 @@ ColumnLayout {
                                 focus = true;
                             }
                         }
-                    }
-
-                    Button {
-                        id: buttonNodeController
-                        Layout.preferredWidth: parent.width / 5
-                        text: qsTr("libre")
-
-                        onClicked: {
-                            switch(buttonNodeController.state) {
-                                case "libre": buttonNodeController.state = "x-fijo"; break;
-                                case "x-fijo": buttonNodeController.state = "y-fijo"; break;
-                                case "y-fijo": buttonNodeController.state = "xy-fijo"; break;
-                                case "xy-fijo": buttonNodeController.state = "libre"; break;
-                            }
-                        }
-
-                        state: "libre"
-
-                        states: [
-                            State {
-                                name: "libre"
-                                PropertyChanges {
-                                    target: buttonNodeController
-                                    text: qsTr("libre")
-                                }
-                            },
-                            State {
-                                name: "x-fijo"
-                                PropertyChanges {
-                                    target: buttonNodeController
-                                    text: qsTr("x-fijo")
-                                }
-                                PropertyChanges {
-                                    target: xTextField
-                                    text: qsTr("fijado")
-                                    enabled: false
-                                }
-                            },
-                            State {
-                                name: "y-fijo"
-                                PropertyChanges {
-                                    target: buttonNodeController
-                                    text: qsTr("y-fijo")
-                                }
-                                PropertyChanges {
-                                    target: yTextField
-                                    text: qsTr("fijado")
-                                    enabled: false
-                                }
-                            },
-                            State {
-                                name: "xy-fijo"
-                                PropertyChanges {
-                                    target: buttonNodeController
-                                    text: qsTr("xy-fijo")
-                                }
-                                PropertyChanges {
-                                    target: xTextField
-                                    text: qsTr("fijado")
-                                    enabled: false
-                                }
-                                PropertyChanges {
-                                    target: yTextField
-                                    text: qsTr("fijado")
-                                    enabled: false
-                                }
-                            }
-                        ]
                     }
                 }
             }

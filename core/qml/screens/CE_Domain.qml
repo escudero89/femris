@@ -156,7 +156,7 @@ RowLayout {
                     columns : 2
                     rows : 2
 
-                    FlickableRepeaterNodes {
+                    FlickableRepeaterNodesSideload {
                         id: sideLoadContainer
 
                         objectHeader.text: qsTr("Condiciones de borde")
@@ -297,28 +297,25 @@ RowLayout {
         var pointload = [];
         var fixnodes = [];
 
-        // For comparing float with 0
-        var epsilon = 1e-10;
+        for ( k = 0 ; k < coordinates.length ; k++ ) {
+            temp_x = StudyCaseHandler.getSingleStudyCaseInformation('pointloadx' + ( k + 1 ), true);
+            temp_y = StudyCaseHandler.getSingleStudyCaseInformation('pointloady' + ( k + 1 ), true);
 
-        for ( var k = 0 ; k < coordinates.length ; k++ ) {
-            var temp_x = StudyCaseHandler.getSingleStudyCaseInformation('pointloadx' + ( k + 1 ), true);
-            var temp_y = StudyCaseHandler.getSingleStudyCaseInformation('pointloady' + ( k + 1 ), true);
+            if (temp_x !== '') {
+                if (temp_x !== qsTr('fijado')) {
+                    pointload.push([ k + 1, 1, parseFloat(temp_x) ]);
 
-            if (temp_x !== '' || temp_y !== '') {
-
-                temp_x = (temp_x === '') ? 0.0 : parseFloat(temp_x);
-                temp_y = (temp_y === '') ? 0.0 : parseFloat(temp_y);
-
-                if (Math.abs(temp_x) < epsilon) {
-                    fixnodes.push([ k + 1, 1, temp_x ]);
                 } else {
-                    pointload.push([ k + 1, 1, temp_x ]);
+                    fixnodes.push([ k + 1, 1, 0.0 ]);
                 }
+            }
 
-                if (Math.abs(temp_y) < epsilon) {
-                    fixnodes.push([ k + 1, 2, temp_y ]);
+            if (temp_y !== '') {
+                if (temp_y !== qsTr('fijado')) {
+                    pointload.push([ k + 1, 2, parseFloat(temp_y) ]);
+
                 } else {
-                    pointload.push([ k + 1, 2, temp_y ]);
+                    fixnodes.push([ k + 1, 2, 0.0 ]);
                 }
             }
         }

@@ -126,7 +126,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/BaseFrame.qml");
+            globalLoader.setSource("screens/CE_Domain.qml");
         }
 
     }
