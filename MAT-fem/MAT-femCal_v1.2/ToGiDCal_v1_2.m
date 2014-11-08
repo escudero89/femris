@@ -1,22 +1,22 @@
-function ToGiDCal (file_name,u,reaction,Strnod)
+function ToGiDCal_v1_2(file_name,u,reaction,Strnod)
 
-%% Stress Evaluates the stresses at the gauss point and smooth the values
-%         to the nodes.
+%% ToGiDCal Writes the postprocess files
 %
 %  Parameters:
 %
-%    Input,  u        : Nodal displacements
-%            reaction : Reactions on fixed nodes
-%            Strnod   : Nodal Stresses
+%    Input, file_name : GiD File name
+%           u         : Nodal temperatures
+%           reaction  : Nodal reactive fluxes
+%           Strnod    : Nodal fluxes
 %   
 %    Output, none
-%
+
   global coordinates;
   global elements;
  
-  nelem  = size(elements,1);           % Number of elements
-  nnode  = size(elements,2);           % Number of nodes per element
-  npnod  = size(coordinates,1);        % Number of nodes
+  nelem = size(elements,1);            % Number of elements
+  nnode = size(elements,2);            % Number of nodes per element
+  npnod = size(coordinates,1);         % Number of nodes
 
   if (nnode == 3)
     eletyp = 'Triangle';
@@ -27,9 +27,10 @@ function ToGiDCal (file_name,u,reaction,Strnod)
   msh_file = strcat(file_name,'.flavia.msh');
   res_file = strcat(file_name,'.flavia.res');
   
+% Mesh File
   fid = fopen(msh_file,'w');
   fprintf(fid,'### \n');
-  fprintf(fid,'# MAT_FEM  V.1.0 \n');
+  fprintf(fid,'# MAT-femCal v1.2 \n');
   fprintf(fid,'# \n');
   fprintf(fid,['MESH dimension %3.0f   Elemtype %s   Nnode %2.0f \n \n'],2,eletyp,nnode);
   fprintf(fid,['coordinates \n']);
@@ -54,12 +55,15 @@ function ToGiDCal (file_name,u,reaction,Strnod)
   u        = full(u);
   reaction = full(reaction);
   
+% Results File
   fid = fopen(res_file,'w');
   fprintf(fid,'Gid Post Results File 1.0 \n');
   fprintf(fid,'### \n');
-  fprintf(fid,'# MAT_FEM  V.1.0 \n');
+  fprintf(fid,'# MAT-femCal v1.2 \n');
   fprintf(fid,'# \n');
-  fprintf(fid,['Result "Temperatures" "Load Analysis"  1  Scalar OnNodes \n']);
+  
+% Temperature
+  fprintf(fid,['Result "Temperature" "Load Analysis"  1  Scalar OnNodes \n']);
   fprintf(fid,['ComponentNames "Temperature" \n']);
   fprintf(fid,['Values \n']);
   for i = 1 : npnod
@@ -67,7 +71,9 @@ function ToGiDCal (file_name,u,reaction,Strnod)
   end
   fprintf(fid,['End Values \n']);
   fprintf(fid,'# \n');
-  fprintf(fid,['Result "ReactiveFluxes" "Load Analysis"  1  Scalar OnNodes \n']);
+  
+% Reactive Flux
+  fprintf(fid,['Result "Reactive Flux" "Load Analysis"  1  Scalar OnNodes \n']);
   fprintf(fid,['ComponentNames "Fx" \n']);
   fprintf(fid,['Values \n']);
   for i = 1 : npnod
@@ -75,7 +81,9 @@ function ToGiDCal (file_name,u,reaction,Strnod)
   end
   fprintf(fid,['End Values \n']);
   fprintf(fid,'# \n');
-  fprintf(fid,['Result "Fluxes" "Load Analysis"  1  Vector OnNodes \n']);
+  
+% Flux
+  fprintf(fid,['Result "Flux" "Load Analysis"  1  Vector OnNodes \n']);
   fprintf(fid,['ComponentNames "Fx", "Fy", "Fz" \n']);
   fprintf(fid,['Values \n']);
   
@@ -85,8 +93,4 @@ function ToGiDCal (file_name,u,reaction,Strnod)
 
   fprintf(fid,['End Values \n']);
   status = fclose(fid);
-
-
-
-
 

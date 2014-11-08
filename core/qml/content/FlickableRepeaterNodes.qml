@@ -97,7 +97,6 @@ ColumnLayout {
                         placeholderText: "x_" + ( index + 1 )
 
                         onTextChanged: {
-                            console.log("XonTextChanged", text);
                             StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
                         }
 
@@ -116,7 +115,6 @@ ColumnLayout {
                         placeholderText: "y_" + ( index + 1 )
 
                         onTextChanged: {
-                            console.log("YonTextChanged", text);
                             StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
                         }
 
