@@ -69,7 +69,7 @@ Button {
 
                 color: Style.color.complement
 
-                opacity: control.hovered ? 0.3 : 0
+                opacity: !button.enabled ? 0.7 : ( control.hovered ? 0.3 : 0 )
             }
 
             Rectangle {
@@ -109,7 +109,7 @@ Button {
                     font.pixelSize: button.height * .4
                     wrapMode: Text.WordWrap
 
-                    color: Style.color.background_highlight
+                    color: button.enabled ? Style.color.background_highlight : Style.color.comment
 
                     verticalAlignment: Text.AlignVCenter
                 }

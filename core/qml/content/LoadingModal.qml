@@ -30,6 +30,7 @@ Item {
     }
 
     Rectangle {
+        id: rectangle1
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -52,14 +53,59 @@ Item {
             z: parent.z + 1
         }
 
-        RowLayout {
+        ColumnLayout {
+            anchors.rightMargin: 20
+            anchors.leftMargin: 20
+            anchors.bottomMargin: 20
+            anchors.top: parent.top
+            anchors.topMargin: 20
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
 
-            anchors.fill: parent
             z: parent.z + 2
+
+            TextArea {
+                id: textAreaLoadingModal
+                Layout.alignment: Qt.AlignCenter
+
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                backgroundVisible: false
+                textColor: Style.color.background
+
+                Connections {
+                    target: ProcessHandler
+                    onResultMessage: {
+                        textAreaLoadingModal.text += msg;
+                    }
+                }
+
+                Rectangle {
+                    anchors.fill: parent
+                    z: parent.z - 1
+
+                    color: Style.color.complement
+                    opacity: 0.6
+
+                    Image {
+                        anchors.bottomMargin: parent.height * 0.1
+                        anchors.topMargin: parent.height * 0.1
+                        anchors.fill: parent
+                        source: "qrc:/resources/images/square_shadow.png"
+
+                        fillMode: Image.PreserveAspectFit
+                        opacity: 0.5
+                    }
+                }
+            }
 
             ProgressBar {
                 id: progressBarModal
                 Layout.alignment: Qt.AlignCenter
+
+                Layout.fillWidth: true
 
                 value: 0
                 minimumValue: 0
@@ -84,6 +130,57 @@ Item {
                     NumberAnimation { duration: 500 }
                 }
             }
+
+            RowLayout {
+
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                Layout.alignment: Qt.AlignRight
+                Layout.maximumWidth: parent.width / 2
+
+                PrimaryButton {
+                    id: closeLoadingModal
+
+                    buttonLabel: "Cerrar"
+                    buttonStatus: "used"
+
+                    Layout.fillWidth: true
+
+                    enabled: false
+
+                    onClicked: {
+                        continueLoadingModal.enabled = false;
+                        closeLoadingModal.enabled = false;
+
+                        textAreaLoadingModal.text = "";
+                        loadingModal.visible = 0;
+                        progressBarModal.value = 0;
+                    }
+                }
+
+                PrimaryButton {
+                    id: continueLoadingModal
+
+                    buttonLabel: "Continuar"
+                    buttonStatus: "success"
+
+                    Layout.fillWidth: true
+
+                    enabled: false
+
+                    onClicked: {
+                        continueLoadingModal.enabled = false;
+                        closeLoadingModal.enabled = false;
+
+                        textAreaLoadingModal.text = "";
+                        loadingModal.visible = 0;
+                        progressBarModal.value = 0;
+                        mainWindow.switchSection(StudyCaseHandler.saveAndContinue("CE_Domain"));
+                    }
+                }
+
+            }
         }
 
     }
@@ -99,7 +196,7 @@ Item {
 
         onProcessWrote: {
             console.log("Wrote...");
-            progressBarModal.value = Math.floor(Math.random() * 100 % 20) + 60;
+            progressBarModal.value += Math.floor(Math.random() * 100 % 25) + 25;
         }
 
         onProcessRead: {
@@ -108,10 +205,9 @@ Item {
         }
 
         onProcessFinished: {
-            loadingModal.visible = 0;
             console.log("Finished...");
-            progressBarModal.value = 0;
+            closeLoadingModal.enabled = true
+            continueLoadingModal.enabled = true
         }
-
     }
 }

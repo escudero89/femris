@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="iso-8859-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <title>FEMRIS</title>
+    <meta name="author" content="Cristian Escudero">
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+<style>
+.output {
+background-color: #f3f3f3;
+  overflow: scroll;
+}
+</style>
+  </head>
+  <body>
+      <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-xs-6">
+                <div id="draw-shapes" style="background-color: #F8f8f8">
+                    <div class="two-container w100p" style="height: 99vh;"></div>
+                </div>
+
+                <div version="1.1" id="draw-shapes-dummy" class="hidden">
+                    <g></g>
+                </div>
+            </div>
+
+      
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/third-party/jquery-1.11.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/third-party/bootstrap.min.js"></script>
+
+    <script src="js/third-party/two.min.js"></script>
+
+    <script src="current.femris.js"></script>
+    <script src="js/femris-globals.js"></script>
+    <script src="js/femris-utils.js"></script>
+    <script src="js/fem-draw.js"></script>
+    <script src="js/fem.js"></script>
+
+    <script src="js/third-party/svg-pan-zoom.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("[data-toggle=popover]").popover();
+
+            var panZoomTiger = svgPanZoom('#draw-shapes svg', {
+                panEnabled: true,
+                controlIconsEnabled: true,
+                zoomEnabled: true,
+                dblClickZoomEnabled: false,
+                zoomScaleSensitivity: 0.2,
+                minZoom: 0.5,
+                maxZoom: 10,
+                fit: true,
+                center: true,
+                refreshRate: 'auto',
+                beforeZoom: function(){},
+                onZoom: function(){},
+                beforePan: function(){},
+                onPan: function(){}
+            });
+
+        
+
+            // This example was created using Protovis & jQuery
+            // Base64 provided by http://www.webtoolkit.info/javascript-base64.html
+            // Modern web browsers have a builtin function to this as well 'btoa'
+             // Add some critical information
+             $("svg").attr({ version: '1.1' , xmlns:"http://www.w3.org/2000/svg"});
+
+             var svg = $("#draw-shapes > div.two-container").html();
+             var b64 = btoa(svg); // or use btoa if supported
+
+             // Works in recent Webkit(Chrome)
+             $("body").append($("<img src='data:image/svg+xml;base64,\n"+b64+"' alt='file.svg'/>"));
+
+             // Works in Firefox 3.6 and Webit and possibly any browser which supports the data-uri
+             $("body").append($("<a href-lang='image/svg+xml' href='data:image/svg+xml;base64,\n"+b64+"' title='file.svg'>Download</a>"));
+
+         });
+    </script>
+</body>
+</html>

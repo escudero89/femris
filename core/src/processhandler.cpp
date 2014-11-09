@@ -113,6 +113,8 @@ void ProcessHandler::readingInProcess() {
 
         QByteArray result = m_process.readAll();
         qDebug() << "Result: "  << result;
+
+        emit resultMessage(result);
     }
 }
 

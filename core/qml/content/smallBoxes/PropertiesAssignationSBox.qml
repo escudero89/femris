@@ -91,6 +91,16 @@ Rectangle {
                         Layout.preferredWidth: parent.width / 1.5
                         placeholderText: name
 
+                        text: {
+                            if (StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess") > 2) {
+                                return (variable) ?
+                                            StudyCaseHandler.getSingleStudyCaseInformation(variable) :
+                                            StudyCaseHandler.getSingleStudyCaseInformation(variableTemp, true)
+                            }
+
+                            return '';
+                        }
+
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
 
                         validator: DoubleValidator { bottom: 0;}
@@ -134,13 +144,13 @@ Rectangle {
                 }
 
                 ListElement {
-                    math: '𝜈'
+                    math: "ν"
                     name: 'Coeficiente de Poisson'
                     variable: 'poissonCoefficient'
                 }
 
                 ListElement {
-                    math: 'ρ'
+                    math: "ρ"
                     name: 'Densidad'
                     variable: 'densityOfDomain'
                 }

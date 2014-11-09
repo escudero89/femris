@@ -18,5 +18,6 @@
         <file>content/FlickableRepeaterNodesSideload.qml</file>
         <file>content/FlickableRepeaterNodes.qml</file>
         <file>content/ScrollBar.qml</file>
+        <file>content/smallBoxes/MyToolTip.qml</file>
     </qresource>
 </RCC>

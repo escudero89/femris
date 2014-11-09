@@ -36,12 +36,19 @@ RowLayout {
             height: parent.height
             width: parent.width
 
-            Rectangle {
+            Flickable {
+                flickableDirection: Flickable.HorizontalFlick
 
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
-                color: Style.color.comment
+                contentWidth: gridViewDomain.height * gridViewDomain.count
+                clip: true
+
+                //color: Style.color.comment
+
+                //contentHeight: height
+                //contentWidth: GridView.currentItem.width
 
                 GridView {
 
@@ -51,7 +58,8 @@ RowLayout {
 
                     boundsBehavior: Flickable.StopAtBounds
 
-                    cellWidth: width / 2
+                    cellWidth: height / 1.1
+                    cellHeight: cellWidth
 
                     highlight: Rectangle {
                         color: Style.color.background;
@@ -78,8 +86,9 @@ RowLayout {
                                 Image {
                                     source: portrait
 
-                                    Layout.fillHeight: true
-                                    Layout.fillWidth: true
+                                    Layout.preferredHeight: parent.height * 0.95
+                                    Layout.preferredWidth: parent.width * 0.95
+                                    Layout.alignment: Qt.AlignCenter
 
                                     fillMode: Image.PreserveAspectFit
 
@@ -125,6 +134,16 @@ RowLayout {
                             portrait: "qrc:/resources/examples/example2.png"
                             exampleFile: "example2.json"
                         }
+                        ListElement {
+                            name: "Example 3"
+                            portrait: "qrc:/resources/examples/example3.png"
+                            exampleFile: "example3.json"
+                        }
+                        ListElement {
+                            name: "Example 4"
+                            portrait: "qrc:/resources/examples/example4.png"
+                            exampleFile: "example4.json"
+                        }
                     }
 
                     function fillSideLoadAndFixedNodes(index, exampleFile) {
@@ -137,6 +156,8 @@ RowLayout {
 
                         sideLoadContainer.objectRepeater.model = jsonDomain["sideloadNodes"].length
                         nodesContainer.objectRepeater.model = jsonDomain["coordinates"].length
+
+                        sideLoadContainer.jsonDomain = jsonDomain;
                     }
                 }
             }
@@ -206,14 +227,6 @@ RowLayout {
 
                         ProcessHandler.setCommand("clear; cd temp; currentMatFemFile; cd ../scripts/MAT-Fem; MATfemris");
                         ProcessHandler.callingProcess();
-                    }
-
-                    Connections {
-                        target: ProcessHandler
-
-                        onProcessFinished: {
-                            mainWindow.switchSection(StudyCaseHandler.saveAndContinue(rowParent.objectName));
-                        }
                     }
                 }
             }

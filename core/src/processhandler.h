@@ -37,6 +37,8 @@ Q_SIGNALS:
     void processRead();
     void processFinished();
 
+    void resultMessage(const QString &msg);
+
 private:
 
     QProcess m_process;

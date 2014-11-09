@@ -62,20 +62,31 @@ ColumnLayout {
                 NumberAnimation { properties: "opacity"; duration: 400 }
             }
 
-            highlight: Rectangle { color: Style.color.primary; opacity: 0.1; radius: 1 }
+            //highlight: Rectangle { color: Style.color.primary; opacity: 0.1; radius: 1; z: repeater.z }
 
             focus: true
 
             model: 0
 
-            delegate: Rectangle {
+            delegate: Item {
 
                 id: cellContent
 
                 width: repeater.cellWidth
                 height: repeater.cellHeight
 
-                color: (index % 2 === 0) ? Style.color.background_highlight :  Style.color.background;
+                Rectangle {
+                    anchors.fill: parent
+
+                    color: (index === repeater.currentIndex) ? Style.color.primary :
+                               ((index % 2 === 0) ? Style.color.background_highlight :  Style.color.background) ;
+
+                    opacity: 0.3
+
+                    Behavior on color {
+                        ColorAnimation {}
+                    }
+                }
 
                 RowLayout {
 
@@ -138,6 +149,8 @@ ColumnLayout {
                                 case "y-fijo": buttonNodeController.state = "xy-fijo"; break;
                                 case "xy-fijo": buttonNodeController.state = "libre"; break;
                             }
+
+                            repeater.currentIndex = index;
                         }
 
                         state: "libre"
