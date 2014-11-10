@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <Configuration>
+        <item setting="firstTime" value="false" />
         <item setting="os" value="linux" />
         <item setting="interpreter" value="octave" />
         <item setting="octave" value="octave" />

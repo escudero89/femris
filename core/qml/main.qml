@@ -23,7 +23,13 @@ ApplicationWindow {
 
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
-    menuBar: TopMenuBar {}
+    menuBar: TopMenuBar {
+        onWhichMenu: {
+            if (menuItem === "preferences") {
+                preferencesModal.visible = true;
+            }
+        }
+    }
 
     statusBar: StatusBar {
         Text {
@@ -126,7 +132,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_Model.qml");
+            globalLoader.setSource("screens/Initial.qml");
         }
 
     }
@@ -165,4 +171,12 @@ ApplicationWindow {
 
     LoadingModal {}
 
+    FirstTimeModal {
+        visible: !Configure.check("firstTime", "true");
+    }
+
+    FirstTimeModal {
+        id: preferencesModal
+        firstTime: false
+    }
 }

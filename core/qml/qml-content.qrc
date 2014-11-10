@@ -19,5 +19,6 @@
         <file>content/FlickableRepeaterNodes.qml</file>
         <file>content/ScrollBar.qml</file>
         <file>content/smallBoxes/MyToolTip.qml</file>
+        <file>content/FirstTimeModal.qml</file>
     </qresource>
 </RCC>

@@ -78,15 +78,7 @@ QString FileIO::source() const {
 
 void FileIO::setSource(QString arg) {
     if (m_source != arg) {
-        m_source = arg;
-
-        // We replace the prefix (if exists), but it depends on the OS root system
-        if (Configure::check("OS", "windows")) {
-            m_source.replace("file:///", "");
-        } else {
-            m_source.replace("file://", "");
-        }
-
+        m_source = Configure::getPathWithoutPrefix(arg);
         emit sourceChanged();
     }
 }

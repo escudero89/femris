@@ -5,6 +5,8 @@ import QtQuick.Dialogs 1.2
 import "."
 
 MenuBar {
+    signal whichMenu(string menuItem)
+
     Menu {
         title: qsTr("Archivo")
         MenuItem {
@@ -94,7 +96,9 @@ MenuBar {
             text: qsTr("Preferencias")
             shortcut: "Ctrl+P"
             iconSource: "qrc:/resources/icons/black/open95.png"
-            onTriggered: messageDialog.open();
+            onTriggered: {
+                whichMenu("preferences");
+            }
         }
     }
     Menu {

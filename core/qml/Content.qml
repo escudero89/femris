@@ -7,6 +7,13 @@ QtObject {
 
     property string femris : "<strong style='color:" + Style.color.femris + "'>FEMRIS</strong>";
 
+    property QtObject firstTime : QtObject {
+        property string welcome:
+        "<p>El Software Educativo destinado a ayudarte en tu aprendizaje sobre el <i>Método de los Elementos Finitos</i>.</p>" +
+        "<p>Al parecer, esta es la <b>primera vez</b> que inicias el programa. " +
+        "Si es así, ¿podrías configurar los siguientes parámetros del sistema?</p>"
+    }
+
     property QtObject initial : QtObject {
         property string tutorial :
         "<p>En éste bloque recorreremos juntos la base teórica que sostiene al <b>Método de los Elementos Finitos</b>.</p>" +

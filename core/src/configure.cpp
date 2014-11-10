@@ -7,6 +7,8 @@
 #include <QXmlDefaultHandler>
 
 #include <QFile>
+#include <QRegExp>
+#include <QStringList>
 #include <QDebug>
 
 Configure* Configure::instance = NULL;
@@ -17,6 +19,49 @@ Configure::Configure() {
 }
 
 Configure::~Configure() {
+    saveConfiguration();
+}
+
+void Configure::saveConfiguration() {
+    FileIO fileIO;
+    fileIO.setSource(m_pathConfigurationXml);
+    QString configuration = fileIO.read();
+
+    QStringList configurationSplitted = configuration.split("\n");
+    QStringList newConfiguration;
+
+    QRegExp rx(".*setting=\"(\\w*)\".*value=\"(.*)\".*/>");
+
+    for (int k = 0; k < configurationSplitted.length(); k++) {
+        int pos = 0;
+        bool addedSetting = false;
+
+        while ((pos = rx.indexIn(configurationSplitted.at(k), pos)) != -1) {
+            pos += rx.matchedLength();
+
+            QString setting = rx.cap(1);
+            QString value = rx.cap(2);
+
+            QString line = configurationSplitted.at(k);
+            QString replacement = instance->m_configuration[setting];
+
+            QString newValue = line.replace(
+                        line.indexOf("value=") + QString("value=").size() + 1,
+                        value.size(),
+                        replacement);
+
+            newConfiguration << newValue;
+
+            addedSetting = true;
+        }
+
+        if (!addedSetting && configurationSplitted.at(k).length() > 1) {
+            newConfiguration << configurationSplitted.at(k);
+        }
+    }
+
+    fileIO.setSource(m_pathUserConfigurationXml);
+    fileIO.write(newConfiguration.join("\n"));
 }
 
 void Configure::loadConfiguration(const QString& pathConfigurationXml) {
@@ -26,15 +71,17 @@ void Configure::loadConfiguration(const QString& pathConfigurationXml) {
 
     FileIO fileIO;
     fileIO.setSource(m_pathConfigurationXml);
+    bool firstTime = fileIO.read().isEmpty();
 
-    if (fileIO.read().isEmpty()) {
+    if (firstTime) {
         m_pathConfigurationXml = ":/resources/config.xml";
     }
 
-    loadConfigurationFromFile();
+    loadConfigurationFromFile(firstTime);
+    saveConfiguration();
 }
 
-void Configure::loadConfigurationFromFile() {
+void Configure::loadConfigurationFromFile(bool firstTime) {
 
     FileIO fileIO;
     fileIO.setSource(m_pathConfigurationXml);
@@ -51,9 +98,10 @@ void Configure::loadConfigurationFromFile() {
         Utils::throwErrorAndExit("Configuration::loadConfiguration(): there was a problem loading the configuration file");
     }
 
-    fileIO.setSource(m_pathUserConfigurationXml);
-    fileIO.write(configuration);
-
+    if (firstTime) {
+        fileIO.setSource(m_pathUserConfigurationXml);
+        fileIO.write(configuration);
+    }
 }
 
 
@@ -71,6 +119,8 @@ void Configure::write(const QString& setting, const QString& value, bool checkIf
     }
 
     instance->m_configuration[setting] = value;
+
+    instance->saveConfiguration();
 }
 
 bool Configure::check(const QString& setting, const QString& value) {
@@ -80,6 +130,18 @@ bool Configure::check(const QString& setting, const QString& value) {
     }
 
     return ( instance->m_configuration[setting] == value );
+}
+
+// We replace the prefix (if exists), but it depends on the OS root system
+QString Configure::getPathWithoutPrefix(QString path) {
+
+    if (instance->check("OS", "windows")) {
+        path.replace("file:///", "");
+    } else {
+        path.replace("file://", "");
+    }
+
+    return path;
 }
 
 // Singleton Pattern Design

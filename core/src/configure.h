@@ -15,11 +15,13 @@ public:
     ~Configure();
 
     void loadConfiguration(const QString&);
-    void loadConfigurationFromFile();
+    void loadConfigurationFromFile(bool = false);
+    void saveConfiguration();
 
     Q_INVOKABLE static QString read(const QString&);
     Q_INVOKABLE static void write(const QString&, const QString&, bool = false);
     Q_INVOKABLE static bool check(const QString&, const QString&);
+    Q_INVOKABLE static QString getPathWithoutPrefix(QString);
 
     static Configure* getInstance();
 
