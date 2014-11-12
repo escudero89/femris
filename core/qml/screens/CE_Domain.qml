@@ -220,7 +220,7 @@ RowLayout {
                     buttonStatus: "success"
                     //buttonText.font.pixelSize: height / 2
 
-                    Layout.preferredWidth: 0.6 * parent.width
+                    Layout.preferredWidth: 0.5 * parent.width
 
                     onClicked: {
                         rowParent.saveCurrentLoads();

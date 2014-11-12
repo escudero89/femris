@@ -13,6 +13,7 @@ ProcessHandler::ProcessHandler() {
     connect(&m_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readingInProcess()));
     connect(&m_process, SIGNAL(readChannelFinished()), this, SLOT(finishingProcess()));
     connect(&m_process, SIGNAL(finished(int)), this, SLOT(exitingProcess()));
+    connect(&m_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(errorInProcess()));
 
     m_command = "ls";
 }
@@ -135,6 +136,15 @@ void ProcessHandler::exitingProcess() {
         m_stepOfProcessManipulation = 0;
         emit processFinished();
     }
+}
+
+void ProcessHandler::errorInProcess() {
+    emit processWithError();
+}
+
+void ProcessHandler::kill() {
+    m_process.kill();
+    emit processWithError();
 }
 
 //----------------------------------------------------------------------------//

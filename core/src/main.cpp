@@ -59,10 +59,13 @@ int main(int argc, char *argv[]) {
 
     // A little fix for windows (file should have /// in Windows)
     QString applicationDirPath = qApp->applicationDirPath();
+
     if (applicationDirPath[0] != '/') {
         configure->write("OS", "windows");
         applicationDirPath = "/" + applicationDirPath;
     }
+
+    Configure::write("fileApplicationDirPath", "file://" + applicationDirPath + "/");
 
     engine.rootContext()->setContextProperty("applicationDirPath", applicationDirPath);
     engine.rootContext()->setContextProperty("fileApplicationDirPath", "file://" + applicationDirPath);

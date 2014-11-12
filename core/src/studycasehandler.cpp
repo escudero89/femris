@@ -1,7 +1,7 @@
 #include "studycasehandler.h"
 
+#include "configure.h"
 #include "processhandler.h"
-
 #include "utils.h"
 
 #include <QDesktopServices>
@@ -273,5 +273,5 @@ void StudyCaseHandler::createDomainFromScriptFile() {
 }
 
 void StudyCaseHandler::loadUrlInBrowser(QString link) {
-    QDesktopServices::openUrl(QUrl(link));
+    QDesktopServices::openUrl(QUrl(Configure::read("fileApplicationDirPath") + link));
 }

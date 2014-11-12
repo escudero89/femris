@@ -115,7 +115,7 @@ ApplicationWindow {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                buttonStatus: "success"
+                buttonStatus: "femris"
                 buttonLabel: "BROWSER"
 
                 visible: false
@@ -145,10 +145,6 @@ ApplicationWindow {
         redirection = section;
 
         switch (section) {
-            case "CE_ShapeFunction":
-                buttonLoadUrlInBrowser.loadUrlBase = "docs/ce_shapefunction.html";
-                buttonLoadUrlInBrowser.visible = true;
-                break;
             case "CE_Results":
                 buttonLoadUrlInBrowser.loadUrlBase = "docs/ce_results.html";
                 buttonLoadUrlInBrowser.visible = true;

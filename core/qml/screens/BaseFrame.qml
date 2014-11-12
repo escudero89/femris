@@ -5,12 +5,13 @@ import QtQuick.Controls 1.2
 import QtWebKit 3.0
 //import QtWebKit.experimental 1.0
 
+
 import FileIO 1.0
 
 import "../docs"
 import "../content"
 import "../"
-//text: currentWebView.loadProgress
+
 RowLayout {
 
     property string currentUrlForTutorial : "";
@@ -84,6 +85,22 @@ RowLayout {
             height: parent.height
             width: parent.width
             spacing: 0
+
+            ColumnLayout {
+                Text {
+                    text: currentWebView.loadProgress
+                }
+
+                Text {
+                    text: currentWebView.url
+                }
+                Text {
+                    text: currentWebView.loading
+                }
+                Text {
+                    text: currentWebView.title
+                }
+            }
 
             WebView {
                 id: currentWebView

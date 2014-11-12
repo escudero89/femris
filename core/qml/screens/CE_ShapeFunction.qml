@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 
 import QtWebKit 3.0
-import QtWebKit.experimental 1.0
 
 import "../docs"
 import "../content"
@@ -15,16 +14,33 @@ RowLayout {
     objectName: "CE_ShapeFunction"
 
     spacing: 0
-    anchors.fill: globalLoader
 
-    LeftContentBox {
-        id: leftContentRectangle
+    RowLayout {
 
-        color: Style.color.content_emphasized
-        Layout.fillHeight: true
-        Layout.preferredWidth: parent.width * 0.20
+        width: rowParent.width
+        spacing: 0
 
-        firstTimeOnly: true
+        LeftContentBox {
+            id: leftContentRectangle
+
+            color: Style.color.content_emphasized
+            Layout.fillHeight: true
+            Layout.preferredWidth: parent.width * 0.20
+
+            firstTimeOnly: true
+
+            onBlockHiding: {
+                if (isHiding) {
+                    leftContentRectangle.width = leftContentRectangle.parent.width * 0;
+                    leftContentRectangle.visible = false;
+                } else {
+                    leftContentRectangle.width = leftContentRectangle.parent.width * 0.20;
+                    leftContentRectangle.visible = true;
+                }
+                mainContentRectangle.width  = rowParent.width - leftContentRectangle.width;
+                mainContentRectangle.x = leftContentRectangle.width;
+            }
+        }
     }
 
     ColumnLayout {
@@ -39,9 +55,6 @@ RowLayout {
         WebView {
             id: currentWebView
 
-            experimental.preferences.webGLEnabled: true
-            experimental.preferences.developerExtrasEnabled: true
-
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -53,6 +66,23 @@ RowLayout {
             spacing: 0
             Layout.fillWidth: true
             Layout.fillHeight: true
+
+            PrimaryButton {
+
+                property string loadUrlBase : "docs/ce_shapefunction.html"
+                tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+
+                buttonStatus: "femris"
+                buttonLabel: ""
+
+                Layout.preferredWidth: 0.1 * parent.width
+
+                onClicked: {
+                    StudyCaseHandler.loadUrlInBrowser(loadUrlBase);
+                }
+
+                iconSource: "qrc:/resources/icons/external2.png"
+            }
 
             PrimaryButton {
                 buttonLabel: "Vista General"
@@ -71,7 +101,7 @@ RowLayout {
                 buttonStatus: "success"
                 //buttonText.font.pixelSize: height / 2
 
-                Layout.preferredWidth: 0.6 * parent.width
+                Layout.preferredWidth: 0.5 * parent.width
 
                 onClicked: {
                     mainWindow.switchSection(StudyCaseHandler.saveAndContinue(rowParent.objectName));

@@ -134,10 +134,29 @@ Item {
             RowLayout {
 
                 Layout.fillHeight: true
-                Layout.fillWidth: true
+                Layout.preferredWidth: parent.width
 
-                Layout.alignment: Qt.AlignRight
-                Layout.maximumWidth: parent.width / 2
+                //Layout.maximumWidth: parent.width / 2
+
+                PrimaryButton {
+                    id: forceCloseLoadingModal
+
+                    buttonLabel: "Matar"
+                    buttonStatus: "danger"
+
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignLeft
+                    Layout.maximumWidth: parent.width / 4
+
+                    enabled: false
+
+                    onClicked: {
+                        textAreaLoadingModal.text += "\n\nForzando cierre...";
+                        ProcessHandler.kill();
+                        textAreaLoadingModal.text += "\nEjecución finalizada (forzada).";
+                        forceCloseLoadingModal.enabled = false;
+                    }
+                }
 
                 PrimaryButton {
                     id: closeLoadingModal
@@ -146,6 +165,8 @@ Item {
                     buttonStatus: "used"
 
                     Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignRight
+                    Layout.maximumWidth: parent.width / 4
 
                     enabled: false
 
@@ -166,6 +187,8 @@ Item {
                     buttonStatus: "success"
 
                     Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignRight
+                    Layout.maximumWidth: parent.width / 4
 
                     enabled: false
 
@@ -192,6 +215,7 @@ Item {
             loadingModal.visible = 1;
             console.log("Called...");
             progressBarModal.value = Math.floor(Math.random() * 100 % 40) + 10;
+            forceCloseLoadingModal.enabled = true;
         }
 
         onProcessWrote: {
@@ -206,8 +230,14 @@ Item {
 
         onProcessFinished: {
             console.log("Finished...");
-            closeLoadingModal.enabled = true
-            continueLoadingModal.enabled = true
+            closeLoadingModal.enabled = true;
+            continueLoadingModal.enabled = true;
+        }
+        onProcessWithError: {
+            console.log("Error...");
+            textAreaLoadingModal.text += "\n\n\nHubo un ERROR al ejecutar el proceso. Revise sí el binario es correcto."
+            closeLoadingModal.enabled = true;
+            forceCloseLoadingModal.enabled = false;
         }
     }
 }

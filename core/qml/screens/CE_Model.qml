@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 
 import QtWebKit 3.0
-import QtWebKit.experimental 1.0
 
 import "../docs"
 import "../content"
@@ -33,9 +32,6 @@ RowLayout {
         WebView {
             id: currentWebView
 
-            experimental.preferences.webGLEnabled: true
-            experimental.preferences.developerExtrasEnabled: true
-
             Layout.fillHeight: true
             Layout.fillWidth: true
 
@@ -48,6 +44,23 @@ RowLayout {
             spacing: 0
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            PrimaryButton {
+
+                property string loadUrlBase : "docs/view/soon/index.html"
+                tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+
+                buttonStatus: "femris"
+                buttonLabel: ""
+
+                Layout.preferredWidth: 0.1 * parent.width
+
+                onClicked: {
+                    StudyCaseHandler.loadUrlInBrowser(loadUrlBase);
+                }
+
+                iconSource: "qrc:/resources/icons/external2.png"
+            }
 
             PrimaryButton {
                 buttonLabel: "Vista General"
@@ -66,7 +79,7 @@ RowLayout {
                 buttonStatus: "disabled"
                 //buttonText.font.pixelSize: height / 2
 
-                Layout.preferredWidth: 0.6 * parent.width
+                Layout.preferredWidth: 0.5 * parent.width
 
                 Connections {
                     target: StudyCaseHandler

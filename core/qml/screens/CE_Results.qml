@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.2
 
 import QtWebKit 3.0
-import QtWebKit.experimental 1.0
+//import QtWebKit.experimental 1.0
 
 import FileIO 1.0
 
@@ -14,6 +14,8 @@ import "../"
 RowLayout {
 
     id: rowParent
+    objectName: "CE_Results"
+
     spacing: 0
 
     RowLayout {
@@ -32,9 +34,11 @@ RowLayout {
 
             onBlockHiding: {
                 if (isHiding) {
-                    leftContentRectangle.width = leftContentRectangle.parent.width * 0.05;
+                    leftContentRectangle.width = leftContentRectangle.parent.width * 0;
+                    leftContentRectangle.visible = false;
                 } else {
                     leftContentRectangle.width = leftContentRectangle.parent.width * 0.20;
+                    leftContentRectangle.visible = true;
                 }
                 currentWebView.width  = rowParent.width - leftContentRectangle.width;
                 currentWebView.x = leftContentRectangle.width;
@@ -50,7 +54,7 @@ RowLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            experimental.preferences.developerExtrasEnabled: true
+            //experimental.preferences.developerExtrasEnabled: true
 
             /*MouseArea {
                 anchors.fill: parent

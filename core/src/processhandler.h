@@ -19,6 +19,8 @@ public:
 
     Q_INVOKABLE void setCommand(const QString &);
 
+    Q_INVOKABLE void kill();
+
 public Q_SLOTS:
 
     void callingProcess();
@@ -29,6 +31,7 @@ public Q_SLOTS:
     void readingInProcess();
     void finishingProcess();
     void exitingProcess();
+    void errorInProcess();
 
 Q_SIGNALS:
 
@@ -36,6 +39,7 @@ Q_SIGNALS:
     void processWrote();
     void processRead();
     void processFinished();
+    void processWithError();
 
     void resultMessage(const QString &msg);
 

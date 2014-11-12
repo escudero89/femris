@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets webkit webkit-private xml
+QT += qml quick widgets webkit xml webkitwidgets network
 
 SOURCES += \
     src/main.cpp \
@@ -20,8 +20,7 @@ RESOURCES += \
     qml/third-party.qrc \
     qml/docs-resources.qrc \
     qml/docs.qrc \
-    qml/qml-content.qrc \
-    qml/tutorial.qrc
+    qml/qml-content.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
