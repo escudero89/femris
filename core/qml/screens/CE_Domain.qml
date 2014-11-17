@@ -225,7 +225,7 @@ RowLayout {
                     onClicked: {
                         rowParent.saveCurrentLoads();
 
-                        ProcessHandler.setCommand("clear; cd temp; currentMatFemFile; cd ../scripts/MAT-Fem; MATfemris");
+                        ProcessHandler.setCommand("clear; cd temp; currentMatFemFile; cd ../scripts/MAT-fem; MATfemris");
                         ProcessHandler.callingProcess();
                     }
                 }

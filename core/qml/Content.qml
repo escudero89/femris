@@ -26,7 +26,7 @@ QtObject {
 
         property string load :
         "<p>Éste bloque está destinado a la carga de <b>Casos de Estudio</b> ya creados, con la extensión  <i>'.femris'</i>.</p>" +
-        "<p>"+ femris +" también permite la importación de archivos  <i>'.m'</i> creados con <b>MAT-Fem</b>.</p>" +
+        "<p>"+ femris +" también permite la importación de archivos  <i>'.m'</i> creados con <b>MAT-fem</b>.</p>" +
         "<p>La detección de un tipo de archivo u otro lo hace automáticamente "+ femris +". " +
         "Sin embargo, éste no valida su funcionamiento al cargarlo. Sí hay un error, éste aparecerá en el momento de procesar los resultados.</p>"
     }

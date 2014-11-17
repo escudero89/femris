@@ -36,7 +36,14 @@ RowLayout {
             Layout.fillWidth: true
 
             onLinkHovered: console.log(hoveredUrl)
-            url: fileApplicationDirPath + "/docs/view/soon/index.html"
+            url: fileApplicationDirPath + "/docs/ce_model.html"
+
+            /*onNavigationRequested: {
+                if (currentWebView.url !== request.url) {
+                    currentWebView.stop();
+                    StudyCaseHandler.loadUrlInBrowser(request.url);
+                }
+            }*/
         }
 
         RowLayout {
@@ -47,7 +54,7 @@ RowLayout {
 
             PrimaryButton {
 
-                property string loadUrlBase : "docs/view/soon/index.html"
+                property string loadUrlBase : "docs/ce_model.html"
                 tooltip: qsTr("Abrir esta página en tu navegador por defecto")
 
                 buttonStatus: "femris"
@@ -56,7 +63,7 @@ RowLayout {
                 Layout.preferredWidth: 0.1 * parent.width
 
                 onClicked: {
-                    StudyCaseHandler.loadUrlInBrowser(loadUrlBase);
+                    StudyCaseHandler.loadUrlInBrowser(loadUrlBase, true);
                 }
 
                 iconSource: "qrc:/resources/icons/external2.png"

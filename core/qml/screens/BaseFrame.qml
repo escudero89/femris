@@ -85,7 +85,7 @@ RowLayout {
             height: parent.height
             width: parent.width
             spacing: 0
-
+/*
             ColumnLayout {
                 Text {
                     text: currentWebView.loadProgress
@@ -100,7 +100,7 @@ RowLayout {
                 Text {
                     text: currentWebView.title
                 }
-            }
+            }*/
 
             WebView {
                 id: currentWebView

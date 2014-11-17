@@ -126,7 +126,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.columnSpan: 2
 
-                    text: qsTr("Ubicación del intérprete para la ejecución de MAT-Fem:")
+                    text: qsTr("Ubicación del intérprete para la ejecución de MAT-fem:")
                 }
                 //--------------------------------------------------------------
                 RowLayout {

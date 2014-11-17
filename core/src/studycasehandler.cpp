@@ -272,6 +272,10 @@ void StudyCaseHandler::createDomainFromScriptFile() {
     emit loadingDone();
 }
 
-void StudyCaseHandler::loadUrlInBrowser(QString link) {
-    QDesktopServices::openUrl(QUrl(Configure::read("fileApplicationDirPath") + link));
+void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
+    if (withoutFullPath) {
+        QDesktopServices::openUrl(QUrl(link));
+    } else {
+        QDesktopServices::openUrl(QUrl(Configure::read("fileApplicationDirPath") + link));
+    }
 }

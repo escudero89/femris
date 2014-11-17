@@ -28,7 +28,7 @@ public:
 
     Q_INVOKABLE QString saveAndContinue(const QString&);
 
-    Q_INVOKABLE void loadUrlInBrowser(QString);
+    Q_INVOKABLE void loadUrlInBrowser(QString, bool = false);
 
 public Q_SLOTS:
 
