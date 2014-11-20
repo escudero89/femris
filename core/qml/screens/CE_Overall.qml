@@ -14,6 +14,7 @@ RowLayout {
     objectName: "CE_Overall"
 
     property int stepOnStudyCase : {
+        console.log(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
         return parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
     }
 

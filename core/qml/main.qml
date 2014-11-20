@@ -175,4 +175,32 @@ ApplicationWindow {
         id: preferencesModal
         firstTime: false
     }
+
+    FileDialog {
+        id: femrisLoader
+        title: "Por favor seleccione un archivo de FEMRIS"
+
+        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
+
+        onAccepted: {
+            console.log("You chose: " + femrisLoader.fileUrl);
+            StudyCaseHandler.loadStudyCase(femrisLoader.fileUrl);
+            mainWindow.switchSection("CE_Overall");
+        }
+        onRejected: {
+            console.log("Canceled");
+        }
+
+    }
+
+    Connections {
+        target: Configure
+
+        onMainSignalEmitted: {
+            if (signalName === "femrisLoader.open()") {
+                femrisLoader.open();
+            }
+
+        }
+    }
 }

@@ -92,8 +92,27 @@ void StudyCaseHandler::saveCurrentStudyCase(const QString& whereToSave) {
     }
 }
 
+/**
+ * @brief StudyCaseHandler::loadStudyCase
+ * @param whereToLoad
+ * @return bool
+ */
 bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
-    m_studyCase->loadConfiguration(whereToLoad);
+    QMap<QString,QString> results = m_studyCase->loadConfiguration(whereToLoad);
+
+    if (results.empty()) {
+        return false;
+    }
+
+    start();
+
+    m_studyCaseType = results["typeOfStudyCase"];
+    createNewStudyCase();
+
+    m_currentStudyCaseVariables = results;
+    m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+
+    return true;
 }
 
 /**

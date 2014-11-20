@@ -73,30 +73,10 @@ RowLayout {
                 button.buttonStatus: "primary"
                 button.iconSource: "qrc:/resources/icons/open96.png"
 
-                button.onClicked : femrisLoader.open();
+                button.onClicked : Configure.emitMainSignal("femrisLoader.open()")
 
                 image.source: "qrc:/resources/images/femris_load.png"
             }
-        }
-    }
-
-    FileDialog {
-        id: femrisLoader
-        title: "Por favor seleccione un archivo de FEMRIS"
-
-        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
-
-        onAccepted: {
-            console.log("You chose: " + femrisLoader.fileUrl);
-            StudyCaseHandler.loadStudyCase(femrisLoader.fileUrl);
-            //mainWindow.switchSection("CE_Overall");
-
-            //CurrentFileIO.setSource(femrisLoader.fileUrl);
-
-            //codeArea.text = CurrentFileIO.read();
-        }
-        onRejected: {
-            console.log("Canceled");
         }
     }
 }

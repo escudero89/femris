@@ -9,7 +9,6 @@ public:
     StudyCaseStructural();
     ~StudyCaseStructural() {};
 
-    void createLocalNew();
     void setLocalMapOfInformation();
     void saveLocalCurrentConfiguration();
 };

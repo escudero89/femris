@@ -2,8 +2,10 @@
 
 #include <QDebug>
 
-Utils::Utils()
-{
+QString Utils::midSeparator = "___";
+QString Utils::endSeparator = "______";
+
+Utils::Utils() {
 }
 
 /**

@@ -23,7 +23,7 @@ MenuBar {
             text: qsTr("Cargar Caso de Estudio")
             shortcut: "Ctrl+O"
             iconSource: "qrc:/resources/icons/black/open96.png"
-            onTriggered: messageDialog.open();
+            onTriggered: Configure.emitMainSignal("femrisLoader.open()")
         }
         MenuSeparator { }
         MenuItem {

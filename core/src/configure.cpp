@@ -153,3 +153,7 @@ Configure* Configure::getInstance() {
 
     return instance;
 }
+
+void Configure::emitMainSignal(const QString &signalName) {
+    emit mainSignalEmitted(signalName);
+}

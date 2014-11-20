@@ -11,6 +11,9 @@ public:
 
     static QString base64_encode(const QString&);
     static QString base64_decode(const QString&);
+
+    static QString midSeparator;
+    static QString endSeparator;
 };
 
 #endif // UTILS_H
