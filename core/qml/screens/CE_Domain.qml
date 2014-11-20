@@ -68,6 +68,8 @@ RowLayout {
 
                     focus: true
 
+                    currentIndex: (StudyCaseHandler.getSingleStudyCaseInformation("example_index", true) !== "") ? StudyCaseHandler.getSingleStudyCaseInformation("example_index", true) : 0
+
                     delegate: Component {
 
                         Rectangle {
@@ -115,7 +117,7 @@ RowLayout {
 
                             Component.onCompleted: {
                                 // We just load the conditions for the first component
-                                if (index === 0) {
+                                if (index === gridViewDomain.currentIndex) {
                                     gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
                                 }
                             }
@@ -146,10 +148,10 @@ RowLayout {
                         }
                     }
 
-                    function fillSideLoadAndFixedNodes(index, exampleFile) {
+                    function fillSideLoadAndFixedNodes(newIndex, exampleFile) {
 
-                        gridViewDomain.currentIndex = index;
-                        console.log(index);
+                        gridViewDomain.currentIndex = newIndex;
+
                         CurrentFileIO.setSource(':/resources/examples/' + exampleFile);
 
                         jsonDomain = CurrentFileIO.getVarFromJsonString(CurrentFileIO.read());
@@ -158,6 +160,8 @@ RowLayout {
                         nodesContainer.objectRepeater.model = jsonDomain["coordinates"].length
 
                         sideLoadContainer.jsonDomain = jsonDomain;
+
+                        StudyCaseHandler.setSingleStudyCaseInformation("example_index", newIndex, true);
                     }
                 }
             }
@@ -246,8 +250,8 @@ RowLayout {
         }
 
         var scaleFactor = {
-            width  : StudyCaseHandler.getSingleStudyCaseInformation('width', true),
-            height : StudyCaseHandler.getSingleStudyCaseInformation('height', true)
+            width  : StudyCaseHandler.getSingleStudyCaseInformation('gridWidth'),
+            height : StudyCaseHandler.getSingleStudyCaseInformation('gridHeight')
         }
 
         scaleFactor.width = (scaleFactor.width !== '') ? parseFloat(scaleFactor.width) : 1;
@@ -262,10 +266,10 @@ RowLayout {
                 minCoord.x = jsonDomain['coordinates'][k][0];
             }
 
-            if (jsonDomain['coordinates'][k][0] > maxCoord.y) {
+            if (jsonDomain['coordinates'][k][1] > maxCoord.y) {
                 maxCoord.y = jsonDomain['coordinates'][k][1];
 
-            } else if (jsonDomain['coordinates'][k][0] < minCoord.y) {
+            } else if (jsonDomain['coordinates'][k][1] < minCoord.y) {
                 minCoord.y = jsonDomain['coordinates'][k][1];
             }
         }
@@ -295,8 +299,15 @@ RowLayout {
                 temp_x = (temp_x === '') ? 0.0 : parseFloat(temp_x);
                 temp_y = (temp_y === '') ? 0.0 : parseFloat(temp_y);
 
-                for ( var j = 0 ; j < sideloadNodes[k].length - 1 ; j++ ) {
-                    sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_x, temp_y ]);
+                var N = sideloadNodes[k].length;
+                for ( var j = 0 ; j < N - 1 ; j++ ) {
+                    // The nodes from the edges only take 1/2 of the sideload. Instead,
+                    // the nodes in between took the full sideload
+                    if (j === 0 || j === N - 2) {
+                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_x / 2.0, temp_y / 2.0 ]);
+                    } else {
+                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_x, temp_y ]);
+                    }
                 }
             }
         }

@@ -9,7 +9,6 @@ StudyCaseStructural::StudyCaseStructural()
 }
 
 void StudyCaseStructural::createLocalNew() {
-    m_typeOfStudyCase       = "structural" ;
 
     m_youngModulus          = 0 ;
     m_poissonCoefficient    = 0 ;

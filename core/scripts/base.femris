@@ -21,6 +21,8 @@
 %%                                                                    %%
 %%    This file is used by FEMRIS for the manipulation of Study       %%
 %%    Cases. Be careful and try NOT to EDIT this file directly.       %%
+%%    because, the information is actually saved as an encoding       %%
+%%    usign Base64 and that's load by FEMRIS. See the last block.     %%
 %%                                                                    %%
 %%====================================================================%%
 
@@ -28,6 +30,8 @@
 
 %    type_of_study_case = {{typeOfStudyCase}};
 %    step_of_process = {{stepOfProcess}} ;
+%    grid_height = {{gridHeight}}
+%    grid_width = {{gridWidth}}
 %    created = {{created}} ;
 %    modified = {{modified}} ;
 
@@ -83,3 +87,5 @@ global elements
 %
 {{sideload}}
 
+%%==============|| STUDY CASE Base64-encode ||==============>>>>>>>>>>>>
+{{encoded}}

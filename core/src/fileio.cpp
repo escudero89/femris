@@ -11,8 +11,10 @@
 #include <QDir>
 #include <QDebug>
 
-FileIO::FileIO()
-    : m_source(-1) {
+FileIO::FileIO(const QString& filename) {
+    if (filename != "") {
+        setSource(filename);
+    }
 }
 
 bool FileIO::isSourceEmpty() {
@@ -134,7 +136,13 @@ bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
     bool successInSplitingAndMerging = false;
 
     QString pathDir = qApp->applicationDirPath();
-    QString pathFile = pathDir + configurationPath;
+
+    QString pathFile;
+    if (configurationPath.indexOf("file") == -1) {
+        pathFile = pathDir + configurationPath;
+    } else {
+        pathFile = Configure::getPathWithoutPrefix(configurationPath);
+    }
 
     QString matlabFileContent = "";
 

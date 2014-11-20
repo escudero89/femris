@@ -14,8 +14,12 @@ public:
     virtual ~StudyCase();
 
     void createNew();
+
+    bool loadConfiguration(const QString&);
     void saveCurrentConfiguration(const QString& = "");
+
     void setMapOfInformation();
+    void compressMapOfInformation();
 
     virtual void createLocalNew() {};
     virtual void setLocalMapOfInformation() {};
@@ -34,6 +38,9 @@ protected:
 
     unsigned int m_stepOfProcess;
 
+    double m_grid_height;
+    double m_grid_width;
+
     double m_youngModulus;
     double m_poissonCoefficient;
     double m_densityOfDomain;
@@ -51,6 +58,8 @@ protected:
     QDateTime m_modified;
 
     QMap<QString, QString> m_mapOfInformation;
+
+    QString m_encoded;
 };
 
 #endif // STUDYCASE_H

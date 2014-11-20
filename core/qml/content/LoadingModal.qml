@@ -158,6 +158,12 @@ Item {
                     }
                 }
 
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: closeLoadingModal.height
+                    color: 'transparent'
+                }
+
                 PrimaryButton {
                     id: closeLoadingModal
 
@@ -216,6 +222,13 @@ Item {
             console.log("Called...");
             progressBarModal.value = Math.floor(Math.random() * 100 % 40) + 10;
             forceCloseLoadingModal.enabled = true;
+
+            var interpreter =
+                    Configure.read("interpreter") === 'octave' ?
+                   'GNU Octave' : Configure.read("interpreter") === 'matlab' ?
+                   'MATLAB' : 'undefined';
+
+            textAreaLoadingModal.text += "Comenzando la ejecución de MAT-fem. Llamando a " + interpreter + ".\n\n"
         }
 
         onProcessWrote: {

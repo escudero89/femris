@@ -76,6 +76,13 @@ void StudyCaseHandler::createNewStudyCase() {
     m_studyCase->createNew();
     m_currentStudyCaseVariables = m_studyCase->getMapOfInformation();
 
+    // Extra parameter for structural (1 for plain stress, 0 for plain strain)
+    if (m_studyCaseType == "plain-stress" || m_studyCaseType == "plain-strain") {
+        setSingleStudyCaseInformation("typeOfProblem", (m_studyCaseType == "plain-stress") ? "1" : "0");
+    }
+
+    setSingleStudyCaseInformation("typeOfStudyCase", m_studyCaseType);
+
     emit newStudyCaseCreated();
 }
 
@@ -83,6 +90,19 @@ void StudyCaseHandler::saveCurrentStudyCase(const QString& whereToSave) {
     if (exists()) {
         m_studyCase->saveCurrentConfiguration(whereToSave);
     }
+}
+
+bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
+    m_studyCase->loadConfiguration(whereToLoad);
+}
+
+/**
+ * @brief StudyCaseHandler::checkSingleStudyCaseInformation
+ * @param variable
+ * @return
+ */
+bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable) {
+    return m_currentStudyCaseVariables.contains(variable);
 }
 
 /**
@@ -126,6 +146,7 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
         }
 
         m_currentStudyCaseVariables[variable] = newVariable;
+        m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
 
         m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
         m_studyCase->saveCurrentConfiguration();

@@ -109,7 +109,6 @@ Rectangle {
                         onEditingFinished: {
                             if (variable) {
                                 StudyCaseHandler.setSingleStudyCaseInformation(variable, text);
-                                console.log(variable);
                             } else {
                                 StudyCaseHandler.setSingleStudyCaseInformation(variableTemp, text, true);
                             }
@@ -128,13 +127,13 @@ Rectangle {
                 ListElement {
                     math: 'Ancho'
                     name: 'Ancho del dominio'
-                    variableTemp: 'width'
+                    variable: 'gridWidth'
                 }
 
                 ListElement {
                     math: 'Alto'
                     name: 'Alto del dominio'
-                    variableTemp: 'height'
+                    variable: 'gridHeight'
                 }
 
                 ListElement {

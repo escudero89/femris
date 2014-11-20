@@ -8,6 +8,9 @@ public:
     Utils();
 
     static void throwErrorAndExit(const QString&, unsigned int = 1);
+
+    static QString base64_encode(const QString&);
+    static QString base64_decode(const QString&);
 };
 
 #endif // UTILS_H

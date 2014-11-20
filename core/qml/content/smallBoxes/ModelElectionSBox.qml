@@ -10,8 +10,12 @@ import "."
 
 TableView {
 
+    id: tableViewModel
+
     Layout.fillWidth: true
     Layout.fillHeight: true
+
+    visible: false
 
     TableViewColumn {
         role: "title"
@@ -22,8 +26,24 @@ TableView {
     model: ListModel {
         id: listModelProblem
       //  ListElement{ title: "Transporte de calor" ; soCalled: "heat" }
-        ListElement{ title: "Tensión plana"   ; soCalled: "plain-stress" }
+        ListElement{ title: "Tensión plana"        ; soCalled: "plain-stress" }
         ListElement{ title: "Deformación plana"    ; soCalled: "plain-strain" }
+    }
+
+    onVisibleChanged: {
+        if (visible) {
+            var currentSelection =
+                    StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase") ?
+                        StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase") : false;
+
+            if (currentSelection) {
+                for ( var k = 0; k < listModelProblem.count; k++ ) {
+                    if (listModelProblem.get(k).soCalled === currentSelection) {
+                        tableViewModel.selection.select(k);
+                    }
+                }
+            }
+        }
     }
 
     onClicked: {

@@ -10,7 +10,7 @@ class FileIO : public QObject {
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
 
 public:
-    FileIO();
+    FileIO(const QString& = "");
 
     Q_INVOKABLE QString read();
     Q_INVOKABLE bool write(const QString&);

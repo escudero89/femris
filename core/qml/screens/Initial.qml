@@ -56,7 +56,10 @@ RowLayout {
                 button.buttonStatus: "femris"
                 button.iconSource: "qrc:/resources/icons/file27.png"
 
-                button.onClicked : mainWindow.switchSection("CE_Overall");
+                button.onClicked : {
+                    StudyCaseHandler.start();
+                    mainWindow.switchSection("CE_Overall");
+                }
 
                 image.source: "qrc:/resources/images/femris_new.png"
             }
@@ -85,7 +88,9 @@ RowLayout {
 
         onAccepted: {
             console.log("You chose: " + femrisLoader.fileUrl);
-            mainWindow.switchSection("CE_Overall");
+            StudyCaseHandler.loadStudyCase(femrisLoader.fileUrl);
+            //mainWindow.switchSection("CE_Overall");
+
             //CurrentFileIO.setSource(femrisLoader.fileUrl);
 
             //codeArea.text = CurrentFileIO.read();
