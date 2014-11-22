@@ -20,5 +20,6 @@
         <file>content/ScrollBar.qml</file>
         <file>content/smallBoxes/MyToolTip.qml</file>
         <file>content/FirstTimeModal.qml</file>
+        <file>content/AlertModal.qml</file>
     </qresource>
 </RCC>

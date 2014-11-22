@@ -1,4 +1,4 @@
-var G_HEIGHT_NAVBAR = parseInt($("#navbar-top").css("height")) * .5;
+var G_HEIGHT_NAVBAR = 40;
 
 var G_XNODE = G_CURRENT_DOMAIN.coordinates;
 var G_IELEM = G_CURRENT_DOMAIN.elements;

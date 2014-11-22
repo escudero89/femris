@@ -165,6 +165,10 @@ ApplicationWindow {
         globalLoader.setSource("screens/" + redirection + ".qml");
     }
 
+    AlertModal {
+        visible: true
+    }
+
     LoadingModal {}
 
     FirstTimeModal {

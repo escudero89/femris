@@ -30,4 +30,9 @@ QtObject {
         "<p>La detección de un tipo de archivo u otro lo hace automáticamente "+ femris +". " +
         "Sin embargo, éste no valida su funcionamiento al cargarlo. Sí hay un error, éste aparecerá en el momento de procesar los resultados.</p>"
     }
+
+    property QtObject alert : QtObject {
+        property string byDefault :
+        "<p>By Default</p>";
+    }
 }
