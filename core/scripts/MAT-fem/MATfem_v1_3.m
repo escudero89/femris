@@ -2,6 +2,8 @@
 
 % Clear memory and variables
   clear
+  global femris_elemental_matrix
+  femris_elemental_matrix = cell;
   
 % The variables are read as a MAT-fem subroutine
 % pstrs = 1 indicate Plane Stress; 0 indicate Plane Strain
@@ -63,7 +65,7 @@
     else              % 4 Nds. Quadrilateral
       [ElemMat,ElemFor] = QdStif_v1_3(coord,dmat ,thick,denss);
     end
-    
+
 % Find the equation number list for the i-th element
     eqnum = [];                                        % Clear the list
     for i = 1 : nnode                                  % Node cycle

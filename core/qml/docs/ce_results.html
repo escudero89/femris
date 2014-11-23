@@ -154,6 +154,29 @@
                 <p>d</p>
                 <p>d</p>
                 <p>d</p>
+                <div class="output">
+                    $${
+                    \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
+                    
+                    \;\; \rightarrow \;\;
+
+                    \mathbf{K}_{ij}^e = \int_{-1}^1\int_{-1}^1 \mathbf{B}_i^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}_j^e \cdot t \; d\xi \; d\eta
+                    }$$
+
+                    $${
+                    \mathbf{D}^e = \begin{bmatrix}d_{11}&d_{12}&0\\d_{21}&d_{22}&0\\0&0&d_{33}\\ \end{bmatrix}
+                    }$$
+
+                    $${
+                    \mathbf{B}_i^e = 
+                        \begin{bmatrix}
+                            \frac{\partial N_i}{\partial x}&0\\
+                            0&\frac{\partial N_i}{\partial y}\\
+                            \frac{\partial N_i}{\partial y}&\frac{\partial N_i}{\partial x}\\ 
+                        \end{bmatrix}
+                    }$$
+                </div>
+
                 <div id="MathOutput" class="output">
                     $${
                     \begin{bmatrix}

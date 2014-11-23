@@ -35,13 +35,28 @@ function [M,F] = QdStif_v1_3(nodes,dmat,thick,denss)
                                      0 ,ctder(2,inode);
                          ctder(2,inode),ctder(1,inode)] ];
       end
-      
+
+      % FEMRIS ADDITION >>>>>>>
+      global femris_elemental_matrix;
+      femris_elemental_matrix{12}(:,:,end + 1) = lcffm;
+      femris_elemental_matrix{13}(:,:,end + 1) = lcder;
+      femris_elemental_matrix{14}(:,:,end + 1) = xjacm;
+      femris_elemental_matrix{15}(:,:,end + 1) = ctder;
+      femris_elemental_matrix{16}(:,:,end + 1) = darea;
+      femris_elemental_matrix{17}(:,:,end + 1) = bmat;
+      % <<< END FEMRIS ADDITION
+
       M = M + (transpose(bmat)*dmat*bmat)*darea;
       
       fy = fy + lcffm*denss*darea;
       
     end
   end
-   
+  
   F = [ 0,-fy(1), 0,-fy(2), 0,-fy(3), 0,-fy(4)];
 
+  % FEMRIS ADDITION >>>>>>>
+  global femris_elemental_matrix;
+  femris_elemental_matrix{10}(:,:,end + 1) = M;
+  femris_elemental_matrix{11}(:,:,end + 1) = F;
+  % <<< END FEMRIS ADDITION

@@ -1,3 +1,4 @@
+
 var globalElementalMatrixObject = {
 
     setMathJax : function(latexCode) {

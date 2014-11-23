@@ -20,11 +20,31 @@
 %%  ----------------------------------------------------------------  %%
 %%====================================================================%%
 
-function parsed = jsonParser(key, value, avoidBreakline)
+function [jsonfy] = femris_MatrixToJson(matrix, label, comment)
 
-    parsed = strcat('  "', key, '" : "', value, '",\r\n');
+    jsonfy = jsonParser(["_" label], comment);
+    jsonfy = strcat(jsonfy, jsonParser(label, '[\r\n', true));
 
-    if ( nargin > 2 )
-        parsed = strcat('  "', key, '" : ', value);
+    nRows = size(matrix, 1);
+    nColumns = size(matrix, 2);
+
+    formatForRow = '%12.5e';
+    for i = 2 : nColumns
+        formatForRow = strcat(formatForRow, ', %12.5e');
     end
 
+    for i = 1 : nRows
+
+        jsonfy = strcat(jsonfy, '    [');
+
+        jsonfy = strcat(jsonfy, sprintf(formatForRow, matrix(i, :)));
+
+        if ( i ~= nColumns )
+            jsonfy = strcat(jsonfy, '],\r\n');
+        else
+            jsonfy = strcat(jsonfy, ']\r\n');
+        end
+
+    end
+
+    jsonfy = strcat(jsonfy, '  ],\r\n');
