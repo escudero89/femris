@@ -11,6 +11,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/ce_results.css">
 
     <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
@@ -36,31 +37,7 @@
      });
 
  </script>
-    <!--    <script type="text/javascript" src="js/third-party/MathJax.js"></script>
--->
-<style>
-    .output { background-color: #f3f3f3; overflow: scroll; }
-
-    /* navbar */
-    .navbar-primary .navbar { background:#333; border-bottom:none; }
-    .navbar-primary .navbar .nav > li > a {color: #eee;}
-    .navbar-primary .navbar .nav > li > a:hover {color: #fff; background-color: #555;}
-    .navbar-primary .navbar .nav .active > a,.navbar .nav .active > a:hover {color: #fff; background-color: #555;}
-    .navbar-primary .navbar .nav li > a .caret, .tnav .navbar .nav li > a:hover .caret {border-top-color: #fff;border-bottom-color: #fff;}
-    .navbar-primary .navbar .nav > li.dropdown.open.active > a:hover {}
-    .navbar-primary .navbar .nav > li.dropdown.open > a {color: #fff;background-color: #111;border-color: #fff;}
-    .navbar-primary .navbar .nav > li.dropdown.open.active > a:hover .caret, .tnav .navbar .nav > li.dropdown.open > a .caret {border-top-color: #fff;}
-    .navbar-primary .navbar .navbar-brand {color:#fff;}
-    .navbar-primary .navbar .nav.pull-right {margin-left: 10px; margin-right: 0;}
-
-    .navbar-xs .navbar-primary .navbar { min-height:28px; height: 28px; }
-    .navbar-xs .navbar-primary .navbar .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 28px; }
-    .navbar-xs .navbar-primary .navbar .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 28px; }
-
-    .navbar-sm .navbar-primary .navbar { min-height:40px; height: 40px; }
-    .navbar-sm .navbar-primary .navbar .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 40px; }
-    .navbar-sm .navbar-primary .navbar .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 40px; }
-</style>
+<script type="text/javascript" src="js/third-party/MathJax.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -165,21 +142,33 @@
 
         <div class="col-xs-6">
 
-            <div id="draw-matrix" style="background-color: #f8f8f8">
+            <div id="draw-matrix" class="hidden" style="background-color: #f8f8f8">
                 <div class="two-container w100p" style="height: 93vh;"></div>
             </div>
-
-            <div id="draw-elemental-matrix" class="hidden" style="background-color: #f8f8f8; ">
-                <div class="two-container w100p" style="height: 93vh;"></div>
-            </div>
-
-            <svg version="1.1" id="draw-elemental-matrix-dummy" class="hidden">
-                <g></g>
-            </svg>
 
             <svg version="1.1" id="draw-matrix-dummy" class="hidden">
                 <g></g>
             </svg>
+
+            <div class="box w100p" id="box">
+                <p>d</p>
+                <p>d</p>
+                <p>d</p>
+                <div id="MathOutput" class="output">
+                    $${
+                    \begin{bmatrix}
+                     &  &  &  &  &  &  & \\ 
+                     &  &  &  &  &  &  & \\ 
+                     &  &  &  &  &  &  & \\ 
+                     &  &  &  &  &  &  & \\ 
+                     &  &  &  &  &  &  & \\ 
+                     &  &  &  &  &  &  & \\ 
+                     &  &  &  &  &  &  & \\ 
+                     &  &  &  &  &  &  & 
+                    \end{bmatrix}
+                    }$$
+                </div>
+            </div>
         </div>
 
         <div class="navbar-sm">
@@ -187,7 +176,10 @@
                 <nav class="navbar navbar-fixed-bottom navbar-inverse" role="navigation">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a>Valor actual:</a>
+                            <a>
+                                Valor actual:
+                                <span id="currentValue">0.00000e+0</span>
+                            </a>
                         </li>
                         <li>
                             <a>
@@ -210,7 +202,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalCurrentCell" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -234,6 +226,7 @@
 <script src="js/third-party/bootstrap.min.js"></script>
 
 <script src="js/third-party/two.min.js"></script>
+<script src="js/third-party/svg-pan-zoom.min.js"></script>
 
 <!-- Now we include all the javascript that we use in this project -->
 <script src="../temp/currentMatFemFile.femris.js"></script>
@@ -244,47 +237,13 @@
 <script src="js/femris-utils.js"></script>
 <script src="js/fem-draw.js"></script>
 <script src="js/fem-matrix.js"></script>
+<script src="js/fem-elemental-matrix.js"></script>
 <script src="js/fem.js"></script>
 
-<script src="js/third-party/svg-pan-zoom.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
         $("[data-toggle=popover]").popover();
-
-        var panZoomTiger = svgPanZoom('#draw-shapes svg', {
-            panEnabled: true,
-            controlIconsEnabled: true,
-            zoomEnabled: true,
-            dblClickZoomEnabled: false,
-            zoomScaleSensitivity: 0.2,
-            minZoom: 0.5,
-            maxZoom: 10,
-            fit: true,
-            center: true,
-            refreshRate: 'auto',
-            beforeZoom: function(){},
-            onZoom: function(){},
-            beforePan: function(){},
-            onPan: function(){}
-        });
-
-        var panZoomTiger = svgPanZoom('#draw-matrix svg', {
-            panEnabled: true,
-            controlIconsEnabled: true,
-            zoomEnabled: true,
-            dblClickZoomEnabled: false,
-            zoomScaleSensitivity: 0.2,
-            minZoom: 0.5,
-            maxZoom: 10,
-            fit: true,
-            center: true,
-            refreshRate: 'auto',
-            beforeZoom: function(){},
-            onZoom: function(){},
-            beforePan: function(){},
-            onPan: function(){}
-        });
     });
 </script>
 </body>

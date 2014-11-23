@@ -2,6 +2,18 @@
 var G_COLOR_NODE_HIGH = "#d9534f";
 var G_COLOR_ELEM_HIGH = "#d9534f";
 
+var Utils = {
+    parseNumber : function (number) {
+        return parseFloat(number).toExponential(5);
+    },
+
+    $currentValue : $("#currentValue"),
+    setCurrentValue : function (value) {
+        this.$currentValue.html(this.parseNumber(value));
+    }
+};
+
+
 function drawCurrentMatrix(two, group) {
 
     //@TODO Optimizar el index de elementos. Podria crear un vector que mapee el id de Two con el ielem
@@ -21,6 +33,8 @@ function drawCurrentMatrix(two, group) {
                     globalMatrixObject.TwoMatrix.update();
                     two.update();
 
+                    Utils.setCurrentValue(currentElem.currentValue);
+
                 }).on('mouseleave', function(e) {
 
                     currentElem.fill = currentElem.fill_original;
@@ -30,6 +44,7 @@ function drawCurrentMatrix(two, group) {
 
                     globalMatrixObject.TwoMatrix.update();
                     two.update();
+
                 }).on('click', function (e){
                     
                     if (currentElem.type === 'elem') {
@@ -47,15 +62,12 @@ function drawCurrentMatrix(two, group) {
                             currentElem.ielem[kNode] = kNode + 1;
                         }
 
-                        var $drawElementalMatrix = $('#draw-elemental-matrix');
-                        var $drawMatrix = $("#draw-matrix");
-
-                        $drawElementalMatrix.css('width', $drawMatrix.css('width'));
-                        $drawElementalMatrix.css('height', $drawMatrix.css('height'));
+                        /*var $drawElementalMatrix = $('#draw-elemental-matrix');
+                        var $drawMatrix = $("#draw-matrix");*/
 
                         $drawMatrix.fadeOut(400, function () {
-                            $drawElementalMatrix.removeClass('hidden');
-                            
+                            //$drawElementalMatrix.removeClass('hidden');
+                            /*
                             elementalMatrixObject.setMatrixDrawing(
                                 'draw-elemental-matrix', 
                                 'draw-elemental-matrix-dummy', 
@@ -63,7 +75,7 @@ function drawCurrentMatrix(two, group) {
                                 [currentElem.ielem]
                             );
 
-                            $drawElementalMatrix.fadeIn();
+                            $drawElementalMatrix.fadeIn();*/
                         });
                     }
                 });
@@ -211,8 +223,8 @@ function getOptions(xnode, ielem, params) {
             }
         }
 
-        $("p#minValue").html(params.minValue);
-        $("p#maxValue").html(params.maxValue);
+        $("#minValue").html(Utils.parseNumber(params.minValue));
+        $("#maxValue").html(Utils.parseNumber(params.maxValue));
     }
 
     params["localParamsTextSVG"] = localParamsTextSVG;

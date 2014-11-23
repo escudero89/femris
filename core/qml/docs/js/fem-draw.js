@@ -170,6 +170,12 @@ var domainObject = {
         twoElem.k_ielem = k + 1;
         twoElem.ielem = elem;
 
+        twoElem.currentValue = 0;
+        for ( var kNode = 0 ; kNode < elem.length ; kNode++ ) {
+            twoElem.currentValue += this.options.valuesToColorise[elem[kNode] - 1];
+        }
+        twoElem.currentValue /= elem.length;
+
         return twoElem;
     },
 
@@ -265,6 +271,8 @@ var domainObject = {
             twoNode.type = 'node';
             twoNode.k_ielem = j + 1;
             twoNode.ielem = j;
+
+            twoNode.currentValue = this.options.valuesToColorise[j];
 
             groupNode.add(twoNode);
 
@@ -388,7 +396,24 @@ var domainObject = {
         this.two.update();
 
         // Adds the text
-        $("#draw-shapes svg").append(parseSVG($G_DRAW_SHAPES_DUMMY.html()));
-    }
+        var drawShapes = "#draw-shapes svg";
+        $(drawShapes).append(parseSVG($G_DRAW_SHAPES_DUMMY.html()));
 
+        svgPanZoom(drawShapes, {
+            panEnabled: true,
+            controlIconsEnabled: true,
+            zoomEnabled: true,
+            dblClickZoomEnabled: false,
+            zoomScaleSensitivity: 0.2,
+            minZoom: 0.5,
+            maxZoom: 10,
+            fit: true,
+            center: true,
+            refreshRate: 'auto',
+            beforeZoom: function(){},
+            onZoom: function(){},
+            beforePan: function(){},
+            onPan: function(){}
+        });
+    }
 };

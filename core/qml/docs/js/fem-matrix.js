@@ -23,6 +23,8 @@ var globalMatrixObject = {
     groupVectorPhi : false,
     groupVectorF : false,
 
+    group: false,
+
     /**
      * Get an object that indicates which node connects with whom
      *
@@ -265,6 +267,12 @@ var globalMatrixObject = {
         this.groupVectorPhi = this.drawVector(this.cellDataVectorPhi);
         this.groupVectorF   = this.drawVector(this.cellDataVectorF);
 
+        this.group = {
+            'groupMatrix'    : this.groupMatrix,
+            'groupVectorPhi' : this.groupVectorPhi,
+            'groupVectorF'   : this.groupVectorF,
+        };
+
         this.TwoMatrix.add(this.drawBackground(this.cellDataMatrix, this.groupMatrix.getBoundingClientRect(true)));
 
         this.TwoMatrix.add(this.groupMatrix);
@@ -274,12 +282,67 @@ var globalMatrixObject = {
 
         this.TwoMatrix.update();
 
-        return {
-            'groupMatrix'    : this.groupMatrix,
-            'groupVectorPhi' : this.groupVectorPhi,
-            'groupVectorF'   : this.groupVectorF,
-        };
-    }
+        this.updatePan();
+        this.setModals();
+
+        return this.group;
+    },
+
+    updatePan : function() {
+        svgPanZoom('#draw-matrix svg', {
+            panEnabled: true,
+            controlIconsEnabled: true,
+            zoomEnabled: true,
+            dblClickZoomEnabled: false,
+            zoomScaleSensitivity: 0.2,
+            minZoom: 0.5,
+            maxZoom: 10,
+            fit: true,
+            center: true,
+            refreshRate: 'auto',
+            beforeZoom: function(){},
+            onZoom: function(){},
+            beforePan: function(){},
+            onPan: function(){}
+        });
+    },
+
+    setModals : function() { return true; }
+
+};
+/*
+var elementalMatrixObject = $.extend({}, true, globalMatrixObject);
+
+elementalMatrixObject.updatePan = function() {
+    svgPanZoom('#draw-elemental-matrix svg', {
+        panEnabled: true,
+        controlIconsEnabled: true,
+        zoomEnabled: true,
+        dblClickZoomEnabled: false,
+        zoomScaleSensitivity: 0.2,
+        minZoom: 0.5,
+        maxZoom: 10,
+        fit: true,
+        center: true,
+        refreshRate: 'auto',
+        beforeZoom: function(){},
+        onZoom: function(){},
+        beforePan: function(){},
+        onPan: function(){}
+    });
 };
 
-var elementalMatrixObject = $.extend({}, true, globalMatrixObject);
+elementalMatrixObject.setModals = function() {
+    var self = this;
+    
+    $.each(self.group, function(index, value) {
+        $.each(self.group[index].children, function(idx, currentElem) {
+            $(currentElem._renderer.elem)
+                .css('cursor', 'pointer')
+                .on('click', function(e) {
+                    $('#modalCurrentCell').modal();
+                });
+        });
+    });
+
+};*/
