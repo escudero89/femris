@@ -36,6 +36,10 @@ function [M,F] = QdStif_v1_3(nodes,dmat,thick,denss)
                          ctder(2,inode),ctder(1,inode)] ];
       end
 
+      M = M + (transpose(bmat)*dmat*bmat)*darea;
+      
+      fy = fy + lcffm*denss*darea;
+      
       % FEMRIS ADDITION >>>>>>>
       global femris_elemental_matrix;
       femris_elemental_matrix{12}(:,:,end + 1) = lcffm;
@@ -46,10 +50,6 @@ function [M,F] = QdStif_v1_3(nodes,dmat,thick,denss)
       femris_elemental_matrix{17}(:,:,end + 1) = bmat;
       % <<< END FEMRIS ADDITION
 
-      M = M + (transpose(bmat)*dmat*bmat)*darea;
-      
-      fy = fy + lcffm*denss*darea;
-      
     end
   end
   
