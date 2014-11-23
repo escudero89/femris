@@ -58,5 +58,5 @@ function [M,F] = QdStif_v1_3(nodes,dmat,thick,denss)
   % FEMRIS ADDITION >>>>>>>
   global femris_elemental_matrix;
   femris_elemental_matrix{10}(:,:,end + 1) = M;
-  femris_elemental_matrix{11}(:,:,end + 1) = F;
+  femris_elemental_matrix{11}(:,:,end + 1) = transpose(F);
   % <<< END FEMRIS ADDITION

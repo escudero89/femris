@@ -17,6 +17,9 @@ function ToElementalJS(file_name)
 
     fprintf(fid, MatrixToJSON(femris_elemental_matrix{1}, 'stiffness_matrix', 'This is the matrix of the global stiffness matrix'));
 
+    fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{10}, 'M', 'This is the matrix of the global stiffness matrix'));
+    fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{11}, 'f', 'This is the matrix of the global stiffness matrix'));
+
     if (numberOfNodesPerElement == 4)
 
         fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{12}, 'lcffm', 'This is the matrix of the global stiffness matrix'));

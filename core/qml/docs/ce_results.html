@@ -23,20 +23,28 @@
     <![endif]-->
 
     <script type="text/x-mathjax-config">
-        MathJax.HTML.Cookie.Set("menu",{});
-        MathJax.Hub.Config({
-         TeX: {
-             extensions: ["color.js"]
-         },
-         extensions: ["tex2jax.js"],
-         jax: ["input/TeX","output/HTML-CSS"],
-         "HTML-CSS": {
-             availableFonts:[],
-             styles: {".MathJax_Preview": {visibility: "hidden"}}
-         }
-     });
+    MathJax.HTML.Cookie.Set("menu",{});
 
- </script>
+    MathJax.Hub.Config({
+       TeX: {
+           extensions: ["color.js"]
+       },
+
+       asciimath2jax: {
+           delimiters: [['`','`']],
+           skipTags: ["script","noscript","style","textarea","pre","code"]
+       },
+
+       extensions: ["tex2jax.js", "asciimath2jax.js"],
+
+       jax: ["input/TeX","output/HTML-CSS", "input/AsciiMath"],
+
+       "HTML-CSS": {
+           availableFonts:[],
+           styles: {".MathJax_Preview": {visibility: "hidden"}}
+       }
+    });
+    </script>
 <script type="text/javascript" src="js/third-party/MathJax.js"></script>
 </head>
 <body>
@@ -122,15 +130,18 @@
                         <div class="form-group">
                             <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
                         </div>
-                        <button class="btn btn-info" title="Visualizar deformación" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, $('#changeFactorOfDeformation').val());">
+                        <button class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, $('#changeFactorOfDeformation').val());">
                             <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                        <button class="btn btn-primary" title="Ver matriz de r&iacute;gidez global" onclick="$('#modalStiffnessMatrix').find('.modal-body').html('$${' + globalElementalMatrixObject.latexfyMatrix(G_CURRENT_ELEMENTAL_DATA.stiffness_matrix) + '}$$'); $('#modalStiffnessMatrix').modal(); globalElementalMatrixObject.loadMathJax('#modalStiffnessMatrix')">
+                            <span class="glyphicon glyphicon-th"></span>
                         </button>
                     </form>
                 </nav>
             </div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-6 hidden">
             <div id="draw-shapes" style="background-color: #F8f8f8">
                 <div class="two-container w100p" style="height: 93vh;"></div>
             </div>
@@ -140,7 +151,7 @@
             </div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-12">
 
             <div id="draw-matrix" class="hidden" style="background-color: #f8f8f8">
                 <div class="two-container w100p" style="height: 93vh;"></div>
@@ -151,46 +162,72 @@
             </svg>
 
             <div class="box w100p" id="box">
-                <p>d</p>
-                <p>d</p>
-                <p>d</p>
-                <div class="output">
-                    $${
-                    \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
-                    
-                    \;\; \rightarrow \;\;
 
-                    \mathbf{K}_{ij}^e = \int_{-1}^1\int_{-1}^1 \mathbf{B}_i^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}_j^e \cdot t \; d\xi \; d\eta
-                    }$$
+                <div role="tabpanel">
 
-                    $${
-                    \mathbf{D}^e = \begin{bmatrix}d_{11}&d_{12}&0\\d_{21}&d_{22}&0\\0&0&d_{33}\\ \end{bmatrix}
-                    }$$
+                    <!-- Nav tabs -->            
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
+                        </li>
+                    </ul>
 
-                    $${
-                    \mathbf{B}_i^e = 
-                        \begin{bmatrix}
-                            \frac{\partial N_i}{\partial x}&0\\
-                            0&\frac{\partial N_i}{\partial y}\\
-                            \frac{\partial N_i}{\partial y}&\frac{\partial N_i}{\partial x}\\ 
-                        \end{bmatrix}
-                    }$$
+                    <!-- Tab panes -->            
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="output">
+                                $${
+                                \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
+                                
+                                \;\; \rightarrow \;\;
+
+                                \mathbf{K}_{ij}^e = \int_{-1}^1\int_{-1}^1 \mathbf{B}_i^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}_j^e \cdot t \; d\xi \; d\eta
+                                }$$
+
+                                $${
+                                \mathbf{D}^e = \begin{bmatrix}d_{11}&d_{12}&0\\d_{21}&d_{22}&0\\0&0&d_{33}\\ \end{bmatrix}
+                                }$$
+
+                                $${
+                                \mathbf{B}_i^e = 
+                                    \begin{bmatrix}
+                                        \frac{\partial N_i}{\partial x}&0\\
+                                        0&\frac{\partial N_i}{\partial y}\\
+                                        \frac{\partial N_i}{\partial y}&\frac{\partial N_i}{\partial x}\\ 
+                                    \end{bmatrix}
+                                }$$
+                            </div>
+
+                            <div id="MathOutput" class="output">
+                                $${
+                                \begin{bmatrix}
+                                 &  &  &  &  &  &  & \\ 
+                                 &  &  &  &  &  &  & \\ 
+                                 &  &  &  &  &  &  & \\ 
+                                 &  &  &  &  &  &  & \\ 
+                                 &  &  &  &  &  &  & \\ 
+                                 &  &  &  &  &  &  & \\ 
+                                 &  &  &  &  &  &  & \\ 
+                                 &  &  &  &  &  &  & 
+                                \end{bmatrix}
+                                }$$
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">.dsadadasd..</div>
+                        <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                      <div role="tabpanel" class="tab-pane" id="settings">...</div>
+                  </div>
                 </div>
 
-                <div id="MathOutput" class="output">
-                    $${
-                    \begin{bmatrix}
-                     &  &  &  &  &  &  & \\ 
-                     &  &  &  &  &  &  & \\ 
-                     &  &  &  &  &  &  & \\ 
-                     &  &  &  &  &  &  & \\ 
-                     &  &  &  &  &  &  & \\ 
-                     &  &  &  &  &  &  & \\ 
-                     &  &  &  &  &  &  & \\ 
-                     &  &  &  &  &  &  & 
-                    \end{bmatrix}
-                    }$$
-                </div>
             </div>
         </div>
 
@@ -225,20 +262,19 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalCurrentCell" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="modalStiffnessMatrix" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:90%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel">Matriz de Rigidez Global <small>Los elementos `-` indican valores nulos (`0`).</small></h4>
             </div>
-            <div class="modal-body">...</div>
+            <div class="modal-body output">...</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -253,8 +289,10 @@
 
 <!-- Now we include all the javascript that we use in this project -->
 <script src="../temp/currentMatFemFile.femris.js"></script>
+<script src="../temp/currentMatFemFile_elemental.femris.js"></script>
 <!-- This is necessary for the web version -->
 <script src="../../temp/currentMatFemFile.femris.js"></script>
+<script src="../../temp/currentMatFemFile_elemental.femris.js"></script>
 
 <script src="js/femris-globals.js"></script>
 <script src="js/femris-utils.js"></script>

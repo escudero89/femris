@@ -1,5 +1,9 @@
 .output { background-color: #f3f3f3; overflow: scroll; }
 
+body {
+    margin-top: 50px;
+}
+
 /* navbar */
 .navbar-primary .navbar { background:#333; border-bottom:none; }
 .navbar-primary .navbar .nav > li > a {color: #eee;}

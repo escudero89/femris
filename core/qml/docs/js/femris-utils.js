@@ -65,3 +65,15 @@ function getColorFromInterpolation(current, min, max, alpha) {
 
     return typeSchema + '(' + huePos + ', 100%, 50%' + alphaValue + ')';
 }
+
+
+var Utils = {
+    parseNumber : function (number) {
+        return parseFloat(number).toExponential(4);
+    },
+
+    $currentValue : $("#currentValue"),
+    setCurrentValue : function (value) {
+        this.$currentValue.html(this.parseNumber(value));
+    }
+};

@@ -2,18 +2,6 @@
 var G_COLOR_NODE_HIGH = "#d9534f";
 var G_COLOR_ELEM_HIGH = "#d9534f";
 
-var Utils = {
-    parseNumber : function (number) {
-        return parseFloat(number).toExponential(5);
-    },
-
-    $currentValue : $("#currentValue"),
-    setCurrentValue : function (value) {
-        this.$currentValue.html(this.parseNumber(value));
-    }
-};
-
-
 function drawCurrentMatrix(two, group) {
 
     //@TODO Optimizar el index de elementos. Podria crear un vector que mapee el id de Two con el ielem
@@ -280,10 +268,12 @@ $(document).ready(function() {
 
     // If the window changes its size, we reload the page
     $(window).resize(function() {
-        document.location.reload();
+        //document.location.reload();
     });
 
-    
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+    globalElementalMatrixObject.setWorkspace(G_CURRENT_ELEMENTAL_DATA, 3);
 });
 
 
