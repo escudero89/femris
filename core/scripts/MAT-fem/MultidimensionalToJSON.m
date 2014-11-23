@@ -1,4 +1,4 @@
-%%====================================================================%%
+        %%====================================================================%%
 %%  ----------------------------------------------------------------  %%
 %%  |   ~ FEMRIS 1.0 ~ Finite Element Method leaRnIng Software ~   |  %%
 %%  |                                                              |  %%
@@ -20,31 +20,28 @@
 %%  ----------------------------------------------------------------  %%
 %%====================================================================%%
 
-function [jsonfy] = femris_MatrixToJson(matrix, label, comment)
+function [jsonfy] = MultidimensionalToJSON(multidimensional, label, comment, isLastBlock)
+
+    numberOfDimensions = size(multidimensional, 3);
 
     jsonfy = jsonParser(["_" label], comment);
     jsonfy = strcat(jsonfy, jsonParser(label, '[\r\n', true));
 
-    nRows = size(matrix, 1);
-    nColumns = size(matrix, 2);
+    % We jump up the first value (that's zeros for how it is implemented)
+    for k = 2 : numberOfDimensions
 
-    formatForRow = '%12.5e';
-    for i = 2 : nColumns
-        formatForRow = strcat(formatForRow, ', %12.5e');
-    end
-
-    for i = 1 : nRows
-
-        jsonfy = strcat(jsonfy, '    [');
-
-        jsonfy = strcat(jsonfy, sprintf(formatForRow, matrix(i, :)));
-
-        if ( i ~= nColumns )
-            jsonfy = strcat(jsonfy, '],\r\n');
+        if ( k ~= numberOfDimensions )
+            jsonfy = strcat(jsonfy, jsonfyMatrixAsArray(multidimensional(:,:,k)));
         else
-            jsonfy = strcat(jsonfy, ']\r\n');
+            jsonfy = strcat(jsonfy, jsonfyMatrixAsArray(multidimensional(:,:,k), true));
         end
 
     end
 
-    jsonfy = strcat(jsonfy, '  ],\r\n');
+    if ( nargin > 3 )
+        jsonfy = strcat(jsonfy, '  ]\r\n');
+    else
+        jsonfy = strcat(jsonfy, '  ],\r\n');
+    end
+
+end

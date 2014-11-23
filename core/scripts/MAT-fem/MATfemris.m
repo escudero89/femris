@@ -1,7 +1,14 @@
 %% MAT-femris (without clear nor load from input file)
 %
 
-  file_name = '../../temp/currentMatFemFile';
+  % FEMRIS ADDITION >>>>>>>
+  global femris_elemental_matrix
+  femris_elemental_matrix = cell;
+
+  file_name = '__1_trash'; %'../../temp/currentMatFemFile';
+  eval(file_name);
+  % <<< END FEMRIS ADDITION
+
   tic;                   % Start clock
   ttim = 0;              % Initialize time counter
   
@@ -80,6 +87,12 @@
 
   end  % End element cycle
 
+  % FEMRIS ADDITION >>>>>>>
+  global femris_elemental_matrix;
+  femris_elemental_matrix{01} = full(StifMat);
+  femris_elemental_matrix{21} = full(force);
+  % <<< END FEMRIS ADDITION
+
   ttim = timing('Time to assemble the global system',ttim); %Reporting time
 
 % Add side forces to the force vector
@@ -129,13 +142,20 @@
   ttim = timing('Time to  solve the  nodal stresses',ttim); %Reporting time
   
 % Graphic representation
+
   ToGiD_v1_3(file_name,u,reaction,Strnod);
-  
+  ttim = timing('Time  used to write  the  solution',ttim); %Reporting time
+
+% FEMRIS ADDITION >>>>>>>  
 % JS and JSON Representation.
   ToJS (file_name, u, reaction, Strnod);
   ToJSON (file_name, u, reaction, Strnod);
 
-  ttim = timing('Time  used to write  the  solution',ttim); %Reporting time
+  ToElementalJS(file_name);
+
+  ttim = timing('Time  to  write  files for femris',ttim); %Reporting time
+% <<< END FEMRIS ADDITION
+
   itim = toc;                                               %Close last tic
   fprintf(1,'\nTotal running time %12.6f \n\n',ttim); %Reporting final time
 

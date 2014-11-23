@@ -158,7 +158,7 @@ function ToJS (file_name, nodalDisplacements, reactions, nodalStresses)
 
     fprintf(fid, '  ]\r\n');
 
-    fprintf(fid, '}');
+    fprintf(fid, '};');
 
     status = fclose(fid);
 

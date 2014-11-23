@@ -2,8 +2,6 @@
 
 % Clear memory and variables
   clear
-  global femris_elemental_matrix
-  femris_elemental_matrix = cell;
   
 % The variables are read as a MAT-fem subroutine
 % pstrs = 1 indicate Plane Stress; 0 indicate Plane Strain
