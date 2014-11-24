@@ -35,3 +35,11 @@ function [M,F] = TrStif_v1_3(nodes,dmat,thick,denss)
 
   F = [ 0,-force, 0,-force, 0,-force];
 
+  % FEMRIS ADDITION >>>>>>>
+  global femris_elemental_matrix;
+  femris_elemental_matrix{10}(:,:,end + 1) = M;
+  femris_elemental_matrix{11}(:,:,end + 1) = transpose(F);
+
+  femris_elemental_matrix{16}(:,:,end + 1) = area;
+  femris_elemental_matrix{17}(:,:,end + 1) = bmat;
+  % <<< END FEMRIS ADDITION

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="iso-8859-1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <!--<meta name="viewport" content="width=device-width, initial-scale=1">
     -->
@@ -12,6 +11,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/ce_results.css">
+
+    <link href="css/matlab-highlighter-1.55.css" rel="stylesheet" type="text/css">
 
     <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
@@ -131,19 +132,25 @@
                             <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
                         </div>
                         <button class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, $('#changeFactorOfDeformation').val());">
-                            <span class="glyphicon glyphicon-ok"></span>
+                            <span class="glyphicon glyphicon-eye-open"></span>
                         </button>
-                        <button class="btn btn-primary" title="Ver matriz de r&iacute;gidez global" onclick="$('#modalStiffnessMatrix').find('.modal-body').html('$${' + globalElementalMatrixObject.latexfyMatrix(G_CURRENT_ELEMENTAL_DATA.stiffness_matrix) + '}$$'); $('#modalStiffnessMatrix').modal(); globalElementalMatrixObject.loadMathJax('#modalStiffnessMatrix')">
+                    </form>
+
+                    <form class="navbar-form navbar-right" role="search" style="margin:3px">
+                        <button class="btn btn-primary" title="Ver matriz de r&iacute;gidez global" onclick="viewGlobalStiffnessMatrix()">
                             <span class="glyphicon glyphicon-th"></span>
+                        </button>
+                        <button class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
+                            <span class="glyphicon glyphicon-eye-close"></span>
                         </button>
                     </form>
                 </nav>
             </div>
         </div>
 
-        <div class="col-xs-6 hidden">
+        <div id="leftColumnResults" class="col-xs-6">
             <div id="draw-shapes" style="background-color: #F8f8f8">
-                <div class="two-container w100p" style="height: 93vh;"></div>
+                <div class="two-container w100p" style="height: 89vh;"></div>
             </div>
 
             <div version="1.1" id="draw-shapes-dummy" class="hidden">
@@ -151,30 +158,34 @@
             </div>
         </div>
 
-        <div class="col-xs-12">
+        <div id="rightColumnResults" class="col-xs-6">
 
-            <div id="draw-matrix" class="hidden" style="background-color: #f8f8f8">
-                <div class="two-container w100p" style="height: 93vh;"></div>
+            <div id="matrixSVG">
+
+                <div id="draw-matrix" style="background-color: #f8f8f8">
+                    <div class="two-container w100p" style="height: 89vh;"></div>
+                </div>
+
+                <svg version="1.1" id="draw-matrix-dummy" class="hidden">
+                    <g></g>
+                </svg>
+
             </div>
 
-            <svg version="1.1" id="draw-matrix-dummy" class="hidden">
-                <g></g>
-            </svg>
-
-            <div class="box w100p" id="box">
+            <div id="box" class="box w100p hidden">
 
                 <div role="tabpanel">
 
                     <!-- Nav tabs -->            
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+                            <a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Sumario</a>
                         </li>
                         <li role="presentation">
-                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a>
+                            <a href="#extra" aria-controls="extra" role="tab" data-toggle="tab">Información extra</a>
                         </li>
                         <li role="presentation">
-                            <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a>
+                            <a href="#matfem" aria-controls="matfem" role="tab" data-toggle="tab">MATfem</a>
                         </li>
                         <li role="presentation">
                             <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
@@ -183,8 +194,32 @@
 
                     <!-- Tab panes -->            
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="home">
+                        <div role="tabpanel" class="tab-pane active" id="summary">
+                        <h3>Matriz de Rigidez Elemental <small>Los elementos `-` indican valores nulos (0).</small></h3>
+                        <p>A continuación se presenta la matriz de rigidez elemental del elemento <label class="label label-primary">{{self.element_idx+1}}</label>, que incluye los nodos <label class="label label-info">{{self.element_nodes_idx[0]}}</label>, <label class="label label-info">{{self.element_nodes_idx[1]}}</label>, <label class="label label-info">{{self.element_nodes_idx[2]}}</label> en ese respectivo orden.</p>
+                            
+                            <div id="MathOutput" class="output"></div>
+
+                            <p>La anterior matriz se obtuvo mediante la siguiente expresión:</p>
+
                             <div class="output">
+                            $${
+                            \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
+                            }$$
+                            </div>
+
+                            <div class="output">
+                            $${
+                            \begin{bmatrix}
+
+                            \end{bmatrix}
+
+                            }$$ 
+                            </div>
+                        </div>
+                        
+                        <div role="tabpanel" class="tab-pane" id="extra">
+                        <div class="output">
                                 $${
                                 \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
                                 
@@ -207,23 +242,39 @@
                                 }$$
                             </div>
 
-                            <div id="MathOutput" class="output">
-                                $${
-                                \begin{bmatrix}
-                                 &  &  &  &  &  &  & \\ 
-                                 &  &  &  &  &  &  & \\ 
-                                 &  &  &  &  &  &  & \\ 
-                                 &  &  &  &  &  &  & \\ 
-                                 &  &  &  &  &  &  & \\ 
-                                 &  &  &  &  &  &  & \\ 
-                                 &  &  &  &  &  &  & \\ 
-                                 &  &  &  &  &  &  & 
-                                \end{bmatrix}
-                                }$$
-                            </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="profile">.dsadadasd..</div>
-                        <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                        <div role="tabpanel" class="tab-pane" id="matfem">
+                        <pre class="matlab-code">
+% Esta la función propiamente programada en MATfem, que es llamada una vez por
+% cada elemento de la malla, y que obtiene la matriz de rigidez elemental.
+
+function [M,F] = TrStif_v1_3(nodes,dmat,thick,denss)
+
+    b(1) = nodes(2,2) - nodes(3,2);
+    b(2) = nodes(3,2) - nodes(1,2);  
+    b(3) = nodes(1,2) - nodes(2,2);
+
+    c(1) = nodes(3,1) - nodes(2,1);
+    c(2) = nodes(1,1) - nodes(3,1);
+    c(3) = nodes(2,1) - nodes(1,1);
+
+    area2 = abs(b(1)*c(2) - b(2)*c(1));
+    area  = area2 / 2;
+
+    bmat = [b(1),  0 ,b(2),  0 ,b(3),  0 ;
+            0 ,c(1),  0 ,c(2),  0 ,c(3);
+          c(1),b(1),c(2),b(2),c(3),b(3)];
+
+    bmat = bmat / area2;
+
+    M = (transpose(bmat)*dmat*bmat)*area*thick;
+
+    force = area*denss*thick/3;
+
+    F = [ 0,-force, 0,-force, 0,-force];
+                            </pre>
+                            
+                        </div>
                       <div role="tabpanel" class="tab-pane" id="settings">...</div>
                   </div>
                 </div>
@@ -268,13 +319,13 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">Cerrar</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Matriz de Rigidez Global <small>Los elementos `-` indican valores nulos (`0`).</small></h4>
+                <h4 class="modal-title" id="myModalLabel">Matriz de Rigidez Global <small>Los elementos `-` indican valores nulos (0).</small></h4>
             </div>
             <div class="modal-body output">...</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -286,6 +337,8 @@
 
 <script src="js/third-party/two.min.js"></script>
 <script src="js/third-party/svg-pan-zoom.min.js"></script>
+
+<script src="js/third-party/matlab-highlighter-1.55.min.js"></script>
 
 <!-- Now we include all the javascript that we use in this project -->
 <script src="../temp/currentMatFemFile.femris.js"></script>
@@ -305,6 +358,8 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("[data-toggle=popover]").popover();
+
+        highlightMATLABCode({tagCode: false, tagPre: true, className: 'matlab-code'});
     });
 </script>
 </body>

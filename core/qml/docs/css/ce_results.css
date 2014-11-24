@@ -1,4 +1,9 @@
-.output { background-color: #f3f3f3; overflow: scroll; }
+.output { 
+    background-color: #f5f5f5; 
+    border: 1px solid #e3e3e3;
+    overflow: auto; 
+    margin: 1em; 
+}
 
 body {
     margin-top: 50px;

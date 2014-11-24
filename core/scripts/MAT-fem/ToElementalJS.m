@@ -22,14 +22,19 @@ function ToElementalJS(file_name)
 
     if (numberOfNodesPerElement == 4)
 
-        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{12}, 'lcffm', 'This is the matrix of the global stiffness matrix'));
-        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{13}, 'lcder', 'This is the matrix of the global stiffness matrix'));
-        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{14}, 'xjacm', 'This is the matrix of the global stiffness matrix'));
-        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{15}, 'ctder', 'This is the matrix of the global stiffness matrix'));
+        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{12}, 'lcffm', 'SF at Gauss point'));
+        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{13}, 'lcder', 'SF Local derivatives'));
+        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{14}, 'xjacm', 'Jacobian matrix'));
+        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{15}, 'ctder', 'SF Cartesian derivates'));
         fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{16}, 'darea', 'This is the matrix of the global stiffness matrix'));
-        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{17}, 'bmat', 'This is the matrix of the global stiffness matrix'));
+
+    else
+
+        fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{16}, 'area', 'This is the matrix of the global stiffness matrix'));
 
     end
+
+    fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{17}, 'bmat', 'This is the matrix of the global stiffness matrix'));
 
     fprintf(fid, '};');
 

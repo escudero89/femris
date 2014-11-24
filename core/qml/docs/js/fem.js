@@ -2,6 +2,49 @@
 var G_COLOR_NODE_HIGH = "#d9534f";
 var G_COLOR_ELEM_HIGH = "#d9534f";
 
+function toggleColumns() {
+    var $left = $('#leftColumnResults');
+    var $right = $('#rightColumnResults');
+
+    // Is NOT being shown the grid
+    if ($left.hasClass('hidden')) {
+        $left.removeClass('hidden');
+        $right.removeClass('col-xs-12');
+        $right.addClass('col-xs-6');
+
+    } else {
+        $left.addClass('hidden');
+        $right.removeClass('col-xs-6');
+        $right.addClass('col-xs-12');
+    }
+}
+
+function toggleViews(setElementalView) {
+
+    setElementalView = assignIfNecessary(setElementalView, false);
+
+    var $matrixSVG = $('#matrixSVG');
+    var $box = $('#box');
+
+    if ($box.hasClass('hidden') || setElementalView) {
+        $matrixSVG.addClass('hidden');
+        $box.removeClass('hidden');
+
+    } else {
+        $matrixSVG.removeClass('hidden');
+        $box.addClass('hidden');
+    }
+
+}
+
+function viewGlobalStiffnessMatrix() {
+    var modalBody = $('#modalStiffnessMatrix').find('.modal-body');
+    modalBody.html('$${' + globalElementalMatrixObject.latexfyMatrixWithLabel(G_CURRENT_ELEMENTAL_DATA.stiffness_matrix, 'K') + '}$$'); 
+
+    $('#modalStiffnessMatrix').modal(); 
+    globalElementalMatrixObject.loadMathJax('#modalStiffnessMatrix');
+}
+
 function drawCurrentMatrix(two, group) {
 
     //@TODO Optimizar el index de elementos. Podria crear un vector que mapee el id de Two con el ielem
@@ -34,37 +77,10 @@ function drawCurrentMatrix(two, group) {
                     two.update();
 
                 }).on('click', function (e){
-                    
+
                     if (currentElem.type === 'elem') {
-
-                        var currentXnode = [];
-
-                        for ( var kNode = 0 ; kNode < currentElem.ielem.length ; kNode++ ) {
-                            currentXnode.push(
-                                [
-                                    G_XNODE[currentElem.ielem[kNode] - 1][0],
-                                    G_XNODE[currentElem.ielem[kNode] - 1][1]
-                                ]
-                            );
-
-                            currentElem.ielem[kNode] = kNode + 1;
-                        }
-
-                        /*var $drawElementalMatrix = $('#draw-elemental-matrix');
-                        var $drawMatrix = $("#draw-matrix");*/
-
-                        $drawMatrix.fadeOut(400, function () {
-                            //$drawElementalMatrix.removeClass('hidden');
-                            /*
-                            elementalMatrixObject.setMatrixDrawing(
-                                'draw-elemental-matrix', 
-                                'draw-elemental-matrix-dummy', 
-                                currentXnode,
-                                [currentElem.ielem]
-                            );
-
-                            $drawElementalMatrix.fadeIn();*/
-                        });
+                        toggleViews(true);
+                        globalElementalMatrixObject.setWorkspace(G_CURRENT_ELEMENTAL_DATA, currentElem.k_ielem - 1);
                     }
                 });
         });

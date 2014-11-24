@@ -23,28 +23,6 @@ RowLayout {
         width: rowParent.width
         spacing: 0
 
-        LeftContentBox {
-            id: leftContentRectangle
-
-            color: Style.color.content_emphasized
-            Layout.fillHeight: true
-            Layout.preferredWidth: parent.width * 0.20
-
-            firstTimeOnly: true
-
-            onBlockHiding: {
-                if (isHiding) {
-                    leftContentRectangle.width = leftContentRectangle.parent.width * 0;
-                    leftContentRectangle.visible = false;
-                } else {
-                    leftContentRectangle.width = leftContentRectangle.parent.width * 0.20;
-                    leftContentRectangle.visible = true;
-                }
-                currentWebView.width  = rowParent.width - leftContentRectangle.width;
-                currentWebView.x = leftContentRectangle.width;
-            }
-        }
-
 
         WebView {
             id: currentWebView
