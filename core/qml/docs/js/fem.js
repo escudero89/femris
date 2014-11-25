@@ -253,10 +253,6 @@ $(document).ready(function() {
 
     domainObject.makeElements(G_XNODE, G_IELEM, options);
 
-    //domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, 30000);
-
-    //domainObject.changeColorDueToValues(options);
-
     $(".visualization li").on('click', function(e) {
         var $this = $(this);
 
@@ -289,7 +285,7 @@ $(document).ready(function() {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
 
-    globalElementalMatrixObject.setWorkspace(G_CURRENT_ELEMENTAL_DATA, 3);
+    //globalElementalMatrixObject.setWorkspace(G_CURRENT_ELEMENTAL_DATA, 3);
 });
 
 

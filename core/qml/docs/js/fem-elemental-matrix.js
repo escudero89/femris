@@ -108,12 +108,14 @@ var globalElementalMatrixObject = {
         this.current.K_e = this.elemental_data.M[selectedElementIdx];
         this.current.f_e = this.elemental_data.f[selectedElementIdx];
 
-        var K_e_latexfied = this.latexfyMatrixWithLabel(this.current.K_e, 'K', '^{' + this.element_idx + '}');
-        var f_e_latexfied = this.latexfyMatrixWithLabel(this.current.f_e, 'f', '^{' + this.element_idx + '}');
+        var K_e_latexfied = this.latexfyMatrixWithLabel(this.current.K_e, 'K', '^{' + ( this.element_idx + 1 ) + '}');
+        var f_e_latexfied = this.latexfyMatrixWithLabel(this.current.f_e, 'f', '^{' + ( this.element_idx + 1 ) + '}');
 
         this.setMathJax(K_e_latexfied + "\\; \\; \\;" + f_e_latexfied);
 
         this.setAllKeywordsInParagraphsOnTabs();
+
+        $("#buttonToggleViews").removeAttr('disabled');
     }
 
 };

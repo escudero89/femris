@@ -300,7 +300,7 @@ var domainObject = {
         
         this.makeElements(this.xnode, this.ielem, this.options);
 
-        this.two.update();
+        drawCurrentMatrix(this.two, this.group);
     },
 
     /**

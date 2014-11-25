@@ -227,6 +227,10 @@ var globalMatrixObject = {
      * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
      */
     setMatrixDrawing : function (baseSVG, baseSVGdummy, xnode, ielem) {
+        
+        if (this.TwoMatrix) {
+            return this.group;
+        }
 
         this.$drawMatrix = $('#' + baseSVG);
         this.$drawMatrixDummy = $('#' + baseSVGdummy);
@@ -238,6 +242,7 @@ var globalMatrixObject = {
                 width: "100%",
                 height: "100%"
             }).appendTo(document.getElementById(baseSVG).children[0]);
+
 
         this.matrixWidth = parseInt(this.$drawMatrix.css("width"));
 
@@ -310,39 +315,3 @@ var globalMatrixObject = {
     setModals : function() { return true; }
 
 };
-/*
-var elementalMatrixObject = $.extend({}, true, globalMatrixObject);
-
-elementalMatrixObject.updatePan = function() {
-    svgPanZoom('#draw-elemental-matrix svg', {
-        panEnabled: true,
-        controlIconsEnabled: true,
-        zoomEnabled: true,
-        dblClickZoomEnabled: false,
-        zoomScaleSensitivity: 0.2,
-        minZoom: 0.5,
-        maxZoom: 10,
-        fit: true,
-        center: true,
-        refreshRate: 'auto',
-        beforeZoom: function(){},
-        onZoom: function(){},
-        beforePan: function(){},
-        onPan: function(){}
-    });
-};
-
-elementalMatrixObject.setModals = function() {
-    var self = this;
-    
-    $.each(self.group, function(index, value) {
-        $.each(self.group[index].children, function(idx, currentElem) {
-            $(currentElem._renderer.elem)
-                .css('cursor', 'pointer')
-                .on('click', function(e) {
-                    $('#modalCurrentCell').modal();
-                });
-        });
-    });
-
-};*/
