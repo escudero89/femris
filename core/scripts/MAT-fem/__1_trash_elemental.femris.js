@@ -12,6 +12,24 @@ var G_CURRENT_ELEMENTAL_DATA = {
     [-2.81250e+07,  0.00000e+00,  0.00000e+00,  2.81250e+06,  0.00000e+00,  0.00000e+00,  0.00000e+00, -2.81250e+06,  2.81250e+07,  0.00000e+00],
     [ 0.00000e+00, -1.12500e+07,  5.62500e+06,  0.00000e+00,  0.00000e+00,  0.00000e+00, -5.62500e+06,  0.00000e+00,  0.00000e+00,  1.12500e+07]
   ],
+  "_dmat" : "This is the constitutive matrix",
+  "dmat" :[
+    [ 2.81250e+07,  5.62500e+06,  0.00000e+00],
+    [ 5.62500e+06,  2.81250e+07,  0.00000e+00],
+    [ 0.00000e+00,  0.00000e+00,  1.12500e+07]
+  ],
+  "_young" : "Young Modulus",
+  "young" :[
+    [ 2.70000e+07]
+  ],
+  "_poiss" : "Poission Ratio",
+  "poiss" :[
+    [ 2.00000e-01]
+  ],
+  "_pstrs" : "1 indicate Plane Stress; 0 indicate Plane Strain",
+  "pstrs" :[
+    [ 1.00000e+00]
+  ],
   "_M" : "This is the matrix of the global stiffness matrix",
   "M" :[
   [

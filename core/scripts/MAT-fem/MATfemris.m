@@ -90,6 +90,10 @@
   % FEMRIS ADDITION >>>>>>>
   global femris_elemental_matrix;
   femris_elemental_matrix{01} = full(StifMat);
+  femris_elemental_matrix{02} = dmat;
+  femris_elemental_matrix{03} = young;
+  femris_elemental_matrix{04} = poiss;
+  femris_elemental_matrix{05} = pstrs;
   femris_elemental_matrix{21} = full(force);
   % <<< END FEMRIS ADDITION
 
