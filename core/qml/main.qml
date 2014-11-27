@@ -19,14 +19,28 @@ ApplicationWindow {
     minimumWidth: 800
     minimumHeight: 600
 
-   // visibility: "Maximized"
+    // visibility: "Maximized"
 
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
     menuBar: TopMenuBar {
         onWhichMenu: {
-            if (menuItem === "preferences") {
+
+            switch (menuItem) {
+            case "preferences":
                 preferencesModal.visible = true;
+                break;
+
+            case "about":
+                alertModal.visible = true;
+
+                alertModal.contentTitle = "Acerca de...";
+                alertModal.contentName = "about";
+                break;
+
+            case "close":
+                mainWindow.doOnClose();
+                break;
             }
         }
     }
@@ -132,67 +146,69 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_Results.qml");
+            globalLoader.setSource("screens/Initial.qml");
         }
 
     }
 
-    // Esta funcion contra el cambio entre secciones
-    function switchSection(section) {
-        var redirection = null;
-
-        buttonLoadUrlInBrowser.visible = false;
-        redirection = section;
-
-        switch (section) {
-            case "CE_Results":
-                buttonLoadUrlInBrowser.loadUrlBase = "docs/ce_results.html";
-                buttonLoadUrlInBrowser.visible = true;
-                break;
-            case "tutorial" :
-                redirection = "BaseFrame";
-                buttonLoadUrlInBrowser.loadUrlBase = "docs/current.html";
-                buttonLoadUrlInBrowser.visible = true;
-                break;
-
-            default :
-                break;
-        }
-
-        globalInfoBox.setInfoBox("Cargando...");
-        loadingImage.opacity = 0.8;
-        globalLoader.visible = false;
-        globalLoader.setSource("screens/" + redirection + ".qml");
-    }
-
-    AlertModal {
-        visible: true
-    }
-
+    AlertModal { id: alertModal }
     LoadingModal {}
+    FirstTimeModal { visible: !Configure.check("firstTime", "true") }
+    FirstTimeModal { id: preferencesModal; firstTime: false }
 
-    FirstTimeModal {
-        visible: !Configure.check("firstTime", "true");
+    MessageDialog {
+        id: crashedDialog
+        visible: false
+
+        title: qsTr("Al parecer FEMRIS sufrió un fallo")
+        text: {
+            var msg =
+                "Al parecer, la última vez que iniciaste FEMRIS éste no se cerró correctamente." +
+                "\n\nSin embargo, puedes intentar recuperar tu Caso de Estudio revisando los archivos temporales.";
+
+            return qsTr(msg);
+        }
+
+        detailedText: "La última vez que iniciaste FEMRIS, según nuestros registros, fue el "  + Configure.read("lastAccessDate") + ".";
+
+        icon: StandardIcon.Warning
+
+        standardButtons: StandardButton.Open | StandardButton.Cancel
+
+        onAccepted: {
+            femrisLoader.folder = fileApplicationDirPath + "/temp/";
+            femrisLoader.open();
+        }
+
+        Component.onCompleted: {
+            if (Configure.check("crashed", "true")) {
+                crashedDialog.open();
+            }
+            Configure.initApp();
+        }
     }
 
-    FirstTimeModal {
-        id: preferencesModal
-        firstTime: false
+    MessageDialog {
+        id: beforeClosingDialog
+        title: "May I have your attention please"
+        text: "It's so cool that you are using Qt Quick."
+        onAccepted: {
+            console.log("And of course you could only agree.")
+            Qt.quit()
+        }
+
+        visible: false
     }
 
     FileDialog {
         id: femrisLoader
         title: "Por favor seleccione un archivo de FEMRIS"
 
-        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
+        nameFilters: [ "Archivos de FEMRIS (*.femris *.femris.old)", "Todos los archivos (*)" ]
 
         onAccepted: {
-            console.log("You chose: " + femrisLoader.fileUrl);
             StudyCaseHandler.loadStudyCase(femrisLoader.fileUrl);
             mainWindow.switchSection("CE_Overall");
-        }
-        onRejected: {
-            console.log("Canceled");
         }
 
     }
@@ -202,9 +218,53 @@ ApplicationWindow {
 
         onMainSignalEmitted: {
             if (signalName === "femrisLoader.open()") {
+                femrisLoader.folder = '';
                 femrisLoader.open();
             }
-
         }
+    }
+
+    onClosing: {
+        close.accepted = false;
+        doOnClose();
+    }
+
+
+    function doOnClose() {
+        Configure.exitApp();
+
+        if (!StudyCaseHandler.savedStatus()) {
+            beforeClosingDialog.open();
+        } else {
+            Qt.quit();
+        }
+    }
+
+    // This function manages the switch between screens
+    function switchSection(section) {
+        var redirection = null;
+
+        buttonLoadUrlInBrowser.visible = false;
+        redirection = section;
+
+        switch (section) {
+        case "CE_Results":
+            buttonLoadUrlInBrowser.loadUrlBase = "docs/ce_results.html";
+            buttonLoadUrlInBrowser.visible = true;
+            break;
+        case "tutorial" :
+            redirection = "BaseFrame";
+            buttonLoadUrlInBrowser.loadUrlBase = "docs/current.html";
+            buttonLoadUrlInBrowser.visible = true;
+            break;
+
+        default :
+            break;
+        }
+
+        globalInfoBox.setInfoBox("Cargando...");
+        loadingImage.opacity = 0.8;
+        globalLoader.visible = false;
+        globalLoader.setSource("screens/" + redirection + ".qml");
     }
 }

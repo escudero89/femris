@@ -26,8 +26,8 @@ TableView {
     model: ListModel {
         id: listModelProblem
       //  ListElement{ title: "Transporte de calor" ; soCalled: "heat" }
-        ListElement{ title: "Tensión plana"        ; soCalled: "plain-stress" }
-        ListElement{ title: "Deformación plana"    ; soCalled: "plain-strain" }
+        ListElement{ title: "Tensión plana"        ; soCalled: "plane-stress" }
+        ListElement{ title: "Deformación plana"    ; soCalled: "plane-strain" }
     }
 
     onVisibleChanged: {

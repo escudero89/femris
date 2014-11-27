@@ -184,3 +184,19 @@ bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
 
     return successInSplitingAndMerging;
 }
+
+void FileIO::removeTemporaryFiles() {
+
+    QDir dir("temp");
+
+    QStringList filters;
+    filters << "*.femris.old" << "*.base64";
+
+    QStringList temporaryFiles;
+    temporaryFiles = dir.entryList(filters, QDir::Files);
+
+    for ( int k = 0 ; k < temporaryFiles.length() ; k++ ) {
+        qDebug() << "Deleting... " << temporaryFiles[k];
+        dir.remove(temporaryFiles[k]);
+    }
+}

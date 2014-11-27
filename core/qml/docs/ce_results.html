@@ -120,10 +120,6 @@
                                 <li name="5">
                                     <a href="#">Szx</a>
                                 </li>
-                                <li class="divider"></li>
-                                <li onclick="alert('Not done')">
-                                    <a href="#">Totales</a>
-                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -151,9 +147,9 @@
             </div>
         </div>
 
-        <div id="leftColumnResults" class="col-xs-6">
-            <div id="draw-shapes" style="background-color: #F8f8f8">
-                <div class="two-container w100p" style="height: 89vh;"></div>
+        <div id="leftColumnResults" class="col-xs-6" style="background-color: #F8f8f8">
+            <div id="draw-shapes" >
+                <div class="two-container w100p" style="height: 90vh;"></div>
             </div>
 
             <div version="1.1" id="draw-shapes-dummy" class="hidden">
@@ -161,12 +157,12 @@
             </div>
         </div>
 
-        <div id="rightColumnResults" class="col-xs-6">
+        <div id="rightColumnResults" class="col-xs-6" >
 
-            <div id="matrixSVG">
+            <div id="matrixSVG" style="background-color: #f8f8f8">
 
-                <div id="draw-matrix" style="background-color: #f8f8f8">
-                    <div class="two-container w100p" style="height: 89vh;"></div>
+                <div id="draw-matrix">
+                    <div class="two-container w100p" style="height: 90vh;"></div>
                 </div>
 
                 <svg version="1.1" id="draw-matrix-dummy" class="hidden">
@@ -180,7 +176,7 @@
                 <div role="tabpanel">
 
                     <!-- Nav tabs -->            
-                    <ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs nav-tabs nav-justified" role="tablist" id="elementalTabs">
                         <li role="presentation" class="active">
                             <a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Sumario</a>
                         </li>
@@ -190,13 +186,10 @@
                         <li role="presentation">
                             <a href="#matfem" aria-controls="matfem" role="tab" data-toggle="tab">MATfem</a>
                         </li>
-                        <li role="presentation">
-                            <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
-                        </li>
                     </ul>
 
-                    <!-- Tab panes -->            
-                    <div class="tab-content">
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="max-height:84vh; overflow-y: auto">
                         <div role="tabpanel" class="tab-pane active" id="summary">
                         <h3>Matriz de Rigidez Elemental <small>Los elementos `-` indican valores nulos (0).</small></h3>
                         <p>A continuación se presenta la matriz de rigidez elemental del elemento <label class="label label-primary">{{self.element_idx+1}}</label>, que incluye los nodos <label class="label label-info">{{self.element_nodes_idx[0]}}</label>, <label class="label label-info">{{self.element_nodes_idx[1]}}</label>, <label class="label label-info">{{self.element_nodes_idx[2]}}</label> en ese respectivo orden.</p>
@@ -211,47 +204,74 @@
                             }$$
                             </div>
 
-                            <div class="output">
-                            $${
-                            \begin{bmatrix}
-
-                            \end{bmatrix}
-
-                            }$$ 
-                            </div>
+                            <p>En la pestaña de <a class="femris" onclick="$('#elementalTabs li:eq(2) a').tab('show')" href="#">MATfem</a> puedes ver cómo se ha implementado el código para calcular dicha expresión.</p>
                         </div>
                         
                         <div role="tabpanel" class="tab-pane" id="extra">
-                        <div class="output">
-                                $${
-                                \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
-                                
-                                \;\; \rightarrow \;\;
 
-                                \mathbf{K}_{ij}^e = \int_{-1}^1\int_{-1}^1 \mathbf{B}_i^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}_j^e \cdot t \; d\xi \; d\eta
-                                }$$
+                            <h3>Matriz Constitutiva <small>Elasticity matrix</small></h3>
 
-                                $${
-                                \mathbf{D}^e = \begin{bmatrix}d_{11}&d_{12}&0\\d_{21}&d_{22}&0\\0&0&d_{33}\\ \end{bmatrix}
-                                }$$
+                            <p>La matriz constitutiva obtenida para este problema de es la siguiente:</p>
 
+                            <div id="constitutiveMatrix" class="output"></div>
+
+                            <hr>
+
+                            <p>La matriz constitutiva `\mathbf{D}` de la relación:</p>
+
+                            <div class="output">
                                 $${
-                                \mathbf{B}_i^e = 
-                                    \begin{bmatrix}
-                                        \frac{\partial N_i}{\partial x}&0\\
-                                        0&\frac{\partial N_i}{\partial y}\\
-                                        \frac{\partial N_i}{\partial y}&\frac{\partial N_i}{\partial x}\\ 
-                                    \end{bmatrix}
+                                \boldsymbol\sigma = 
+                                    \left\{\begin{matrix}
+                                        \sigma_x \\ 
+                                        \sigma_y \\ 
+                                        \tau_{xy}
+                                    \end{matrix}\right\} 
+                                = \mathbf{D} \left( 
+                                    \left\{\begin{matrix}
+                                        \sigma_x \\ 
+                                        \sigma_y \\ 
+                                        \tau_{xy}
+                                    \end{matrix}\right\} - {\boldsymbol\epsilon}_0
+                                 \right )
                                 }$$
+                                <small class="pull-right" style="color:#555"><u>Nota:</u> `\mathbf{\epsilon}_0` representa la <em>deformación inicial</em>, que suele considerarse nula.</small>
                             </div>
+
+                            <p>se puede establecer explícitamente para cualquier material.</p>
+
+                            <p>En este caso de <strong>{{self.current.problem_type_text.toLowerCase()}}</strong>, la matriz es obtenida de la siguiente forma:</p>
+
+                            <div id="constitutiveMatrixBase" class="output"></div>
+
+                            <p>con los valores del <strong>Módulo de Young</strong> y <strong>Coeficiente de Poisson</strong> respectivos de:</p>
+
+                            <div id="constitutiveMatrixBaseVariables" class="output"></div>
+                            
+
+
+                            
 
                         </div>
                         <div role="tabpanel" class="tab-pane" id="matfem">
-                        <pre class="matlab-code">
-% Esta la función propiamente programada en MATfem, que es llamada una vez por
-% cada elemento de la malla, y que obtiene la matriz de rigidez elemental.
 
-function [M,F] = TrStif_v1_3(nodes,dmat,thick,denss)
+                            <div role="tabpanel">
+                                <ul class="nav nav-pills">
+                                    <li role="presentation" class="active">
+                                        <a href="#stiffness" aria-controls="stiffness" role="tab" data-toggle="tab">TrStif.m</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#constitutive" aria-controls="constitutive" role="tab" data-toggle="tab">constt.m</a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="stiffness">
+                                        <pre class="matlab-code">
+% Esta función es llamada una vez por cada elemento de la malla,
+% y obtiene la matriz de rigidez elemental.
+
+function [M,F] = TrStif(nodes,dmat,thick,denss)
 
     b(1) = nodes(2,2) - nodes(3,2);
     b(2) = nodes(3,2) - nodes(1,2);  
@@ -275,8 +295,40 @@ function [M,F] = TrStif_v1_3(nodes,dmat,thick,denss)
     force = area*denss*thick/3;
 
     F = [ 0,-force, 0,-force, 0,-force];
-                            </pre>
-                            
+                                        </pre>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="constitutive">
+                                        <pre class="matlab-code">
+% Ésta función es utilizada para obtener la matriz constitutiva.
+
+function D = constt(young,poiss,pstrs)
+
+    %    Input, young : Módulo de Young
+    %           poiss : Coeficiente de Poisson
+    %           pstrs : Bandera para tensión/deformación plana
+    %   
+    %    Output, D (la matriz constitutiva)
+
+    % Tensión plana
+    if (pstrs==1)
+        aux1 = young/(1-poiss^2);
+        aux2 = poiss*aux1;
+        aux3 = young/2/(1+poiss);
+
+    % Deformación plana
+    else
+        aux1 = young*(1-poiss)/(1+poiss)/(1-2*poiss);
+        aux2 = aux1*poiss/(1-poiss);
+        aux3 = young/2/(1+poiss);
+        thick = 1.0;
+    end
+
+    D = [aux1,aux2,0;aux2,aux1,0;0,0,aux3];
+                                      </pre>
+                                  </div>
+                              </div>
+                           </div>
                         </div>
                       <div role="tabpanel" class="tab-pane" id="settings">...</div>
                   </div>
@@ -292,7 +344,7 @@ function [M,F] = TrStif_v1_3(nodes,dmat,thick,denss)
                         <li>
                             <a>
                                 Valor actual:
-                                <span id="currentValue">0.00000e+0</span>
+                                <span id="currentValue">0.0000e+0</span>
                             </a>
                         </li>
                         <li>
@@ -363,7 +415,33 @@ function [M,F] = TrStif_v1_3(nodes,dmat,thick,denss)
         $("[data-toggle=popover]").popover();
 
         highlightMATLABCode({tagCode: false, tagPre: true, className: 'matlab-code'});
+
     });
 </script>
+
+<!--
+<div class="output">
+    $${
+    \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
+    
+    \;\; \rightarrow \;\;
+
+    \mathbf{K}_{ij}^e = \int_{-1}^1\int_{-1}^1 \mathbf{B}_i^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}_j^e \cdot t \; d\xi \; d\eta
+    }$$
+
+    $${
+    \mathbf{D} = \begin{bmatrix}d_{11}&d_{12}&0\\d_{21}&d_{22}&0\\0&0&d_{33}\\ \end{bmatrix}
+    }$$
+
+    $${
+    \mathbf{B}_i^e = 
+        \begin{bmatrix}
+            \frac{\partial N_i}{\partial x}&0\\
+            0&\frac{\partial N_i}{\partial y}\\
+            \frac{\partial N_i}{\partial y}&\frac{\partial N_i}{\partial x}\\ 
+        \end{bmatrix}
+    }$$
+</div>
+-->
 </body>
 </html>

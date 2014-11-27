@@ -91,13 +91,14 @@ Button {
                 id: row
                 anchors.centerIn: parent
                 spacing: 4
+
                 Image {
                     visible: iconSource === "" ? false : true
 
                     source: iconSource
                     anchors.verticalCenter: parent.verticalCenter
                     height: button.height * .5
-                    fillMode: Image.PreserveAspectFit //mm Image should shrink if button is too small, depends on QTBUG-14957
+                    fillMode: Image.PreserveAspectFit // Image should shrink if button is too small, depends on QTBUG-14957
                 }
                 Text {
                     id:text

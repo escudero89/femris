@@ -80,7 +80,7 @@ function drawCurrentMatrix(two, group) {
 
                     if (currentElem.type === 'elem') {
                         toggleViews(true);
-                        globalElementalMatrixObject.setWorkspace(G_CURRENT_ELEMENTAL_DATA, currentElem.k_ielem - 1);
+                        globalElementalMatrixObject.setWorkspace(currentElem.k_ielem - 1);
                     }
                 });
         });
@@ -285,7 +285,7 @@ $(document).ready(function() {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
 
-    //globalElementalMatrixObject.setWorkspace(G_CURRENT_ELEMENTAL_DATA, 3);
+    globalElementalMatrixObject.initialize(G_CURRENT_ELEMENTAL_DATA);
 });
 
 

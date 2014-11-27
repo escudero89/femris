@@ -13,6 +13,7 @@
  */
 StudyCaseHandler::StudyCaseHandler() {
     m_studyCase = NULL;
+    markAsSaved();
     start();
 }
 
@@ -37,6 +38,8 @@ void StudyCaseHandler::start() {
     currentStudyCaseVariables["stepOfProcess"] = "1";
 
     m_currentStudyCaseVariables = currentStudyCaseVariables;
+
+    markAsSaved();
 }
 
 /**
@@ -63,10 +66,10 @@ void StudyCaseHandler::createNewStudyCase() {
     if (m_studyCaseType == "heat") {
         //m_studyCase = new StudyCaseHeat();
 
-    } else if (m_studyCaseType == "plain-stress") {
+    } else if (m_studyCaseType == "plane-stress") {
         m_studyCase = new StudyCaseStructural();
 
-    } else if (m_studyCaseType == "plain-strain") {
+    } else if (m_studyCaseType == "plane-strain") {
         m_studyCase = new StudyCaseStructural();
 
     } else {
@@ -76,9 +79,9 @@ void StudyCaseHandler::createNewStudyCase() {
     m_studyCase->createNew();
     m_currentStudyCaseVariables = m_studyCase->getMapOfInformation();
 
-    // Extra parameter for structural (1 for plain stress, 0 for plain strain)
-    if (m_studyCaseType == "plain-stress" || m_studyCaseType == "plain-strain") {
-        setSingleStudyCaseInformation("typeOfProblem", (m_studyCaseType == "plain-stress") ? "1" : "0");
+    // Extra parameter for structural (1 for plane stress, 0 for plane strain)
+    if (m_studyCaseType == "plane-stress" || m_studyCaseType == "plane-strain") {
+        setSingleStudyCaseInformation("typeOfProblem", (m_studyCaseType == "plane-stress") ? "1" : "0");
     }
 
     setSingleStudyCaseInformation("typeOfStudyCase", m_studyCaseType);
@@ -89,6 +92,7 @@ void StudyCaseHandler::createNewStudyCase() {
 void StudyCaseHandler::saveCurrentStudyCase(const QString& whereToSave) {
     if (exists()) {
         m_studyCase->saveCurrentConfiguration(whereToSave);
+        markAsSaved();
     }
 }
 
@@ -112,6 +116,7 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
     m_currentStudyCaseVariables = results;
     m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
 
+    markAsSaved();
     return true;
 }
 
@@ -170,6 +175,7 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
         m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
         m_studyCase->saveCurrentConfiguration();
 
+        markAsNotSaved();
     }
 }
 
@@ -196,6 +202,7 @@ void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
         m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
         m_studyCase->saveCurrentConfiguration();
 
+        markAsNotSaved();
     }
 }
 
@@ -318,4 +325,20 @@ void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
     } else {
         QDesktopServices::openUrl(QUrl(Configure::read("fileApplicationDirPath") + link));
     }
+}
+
+//----------------------------------------------------------------------------//
+//--                          GETTER AND SETTERS                            --//
+//----------------------------------------------------------------------------//
+
+bool StudyCaseHandler::savedStatus() {
+    return m_isSaved;
+}
+
+void StudyCaseHandler::markAsSaved() {
+    m_isSaved = true;
+}
+
+void StudyCaseHandler::markAsNotSaved() {
+    m_isSaved = false;
 }

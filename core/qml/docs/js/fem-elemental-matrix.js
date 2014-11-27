@@ -2,15 +2,25 @@
 var globalElementalMatrixObject = {
 
     original_html_content : {},
+    
+    wasInitialized : false,
 
-    elemental_data : false,
+    data : false,
     element_idx : false,
 
     element_nodes_idx : false,
 
     current : {
         K_e : false,
-        f_e : false
+        f_e : false,
+
+        problem_type : false,
+        problem_type_text : false,
+    },
+
+    wrapInTag : function (text, tag) {
+        return "\\begin{" + tag + "}" + text + "\\end{" + tag + "}";
+
     },
 
     latexfyNumber : function(number) {
@@ -27,9 +37,11 @@ var globalElementalMatrixObject = {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById(elementId)]);
     },
 
-    setMathJax : function(latexCode) {
-        $('#MathOutput').html('$${' + latexCode + '}$$');
-        this.loadMathJax("MathOutput");
+    setMathJax : function(latexCode, elementId) {
+        elementId = assignIfNecessary(elementId, 'MathOutput')
+        
+        $('#' + elementId).html('$${' + latexCode + '}$$');
+        this.loadMathJax(elementId);
     },
 
     latexfyMatrix : function(setOfValues) {
@@ -39,7 +51,7 @@ var globalElementalMatrixObject = {
         var numberOfColumns = setOfValues[0].length;
         var notAMatrix = false;
 
-        var matrixInLatex = "\\begin{bmatrix}";
+        var matrixInLatex = "";
 
         $.each(setOfValues, function (rowIdx, rowValue) {
 
@@ -56,7 +68,7 @@ var globalElementalMatrixObject = {
             });
         });
 
-        matrixInLatex += "\\end{bmatrix}";
+        matrixInLatex = this.wrapInTag(matrixInLatex, 'bmatrix');
 
         if (notAMatrix) {
             return false;
@@ -79,7 +91,7 @@ var globalElementalMatrixObject = {
 
         $.each($("[role='tabpanel'] p"), function (idx, value) {
             var content = $(value).html();
-            var regex = /{{[\w\.\+\[\]]+}}/;
+            var regex = /{{[\w\.\+\[\]\(\)]+}}/;
 
             var encoded_idx = btoa(content.substr(0, 14));
 
@@ -99,14 +111,40 @@ var globalElementalMatrixObject = {
         });
     },
 
-    setWorkspace : function (elemental_data, selectedElementIdx) {
+    printConstitutiveMatrix : function () {
 
-        this.elemental_data = elemental_data;
+        var latexfiedConstitutiveMatrix = 
+            "\\mathbf{D} = " /*+ this.wrapInTag("d_{11}&d_{12}&0\\\\d_{21}&d_{22}&0\\\\0&0&d_{33}", 'bmatrix') + "="*/;
+
+        this.setMathJax(latexfiedConstitutiveMatrix + this.latexfyMatrix(this.data.dmat), 'constitutiveMatrix');
+
+        var latexfiedConstitutiveMatrixBase = "\\mathbf{D}=";
+
+        if (this.current.problem_type == 'plane-stress') {
+            latexfiedConstitutiveMatrixBase += "\\frac{E}{1-\\nu^2}" +
+                this.wrapInTag("1&\\nu&0\\\\ \\nu&1&0 \\\\ 0&0&(1-\\nu)/2", 'bmatrix');
+        } else {
+            latexfiedConstitutiveMatrixBase += "\\frac{E}{(1+\\nu)(1-2\\nu)}" +
+                this.wrapInTag("1-\\nu&\\nu&0\\\\ \\nu&1-\\nu&0 \\\\ 0&0&(1-2\\nu)/2", 'bmatrix');
+        }
+
+        this.setMathJax(latexfiedConstitutiveMatrixBase, 'constitutiveMatrixBase');
+
+        var latexfiedVariables =
+            this.wrapInTag(
+                "E=" + this.latexfyNumber(this.data.young) + "&&" + "\\nu=" + this.latexfyNumber(this.data.poiss),
+                'align*');
+
+        this.setMathJax(latexfiedVariables, 'constitutiveMatrixBaseVariables');
+    },
+
+    setWorkspace : function (selectedElementIdx) {
+
         this.element_idx = selectedElementIdx;
         this.element_nodes_idx = G_IELEM[selectedElementIdx];
 
-        this.current.K_e = this.elemental_data.M[selectedElementIdx];
-        this.current.f_e = this.elemental_data.f[selectedElementIdx];
+        this.current.K_e = this.data.M[selectedElementIdx];
+        this.current.f_e = this.data.f[selectedElementIdx];
 
         var K_e_latexfied = this.latexfyMatrixWithLabel(this.current.K_e, 'K', '^{' + ( this.element_idx + 1 ) + '}');
         var f_e_latexfied = this.latexfyMatrixWithLabel(this.current.f_e, 'f', '^{' + ( this.element_idx + 1 ) + '}');
@@ -114,8 +152,27 @@ var globalElementalMatrixObject = {
         this.setMathJax(K_e_latexfied + "\\; \\; \\;" + f_e_latexfied);
 
         this.setAllKeywordsInParagraphsOnTabs();
+        
+    },
+
+    initialize : function (elemental_data) {
+
+        if (this.wasInitialized) {
+            return false;
+        }
+
+        this.data = $.extend(true, {}, elemental_data);
+        this.wasInitialized = true;
+
+        this.current.problem_type = parseInt(this.data._pstrs) ? 'plane-stress' : 'plain-strain';
+        this.current.problem_type_text = parseInt(this.data._pstrs) ? 'Tensión Plana' : 'Deformación Plana';
+
+        this.printConstitutiveMatrix();
 
         $("#buttonToggleViews").removeAttr('disabled');
+
+        return true;
+
     }
 
 };

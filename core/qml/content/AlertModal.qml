@@ -26,6 +26,14 @@ Item {
 
     z: 1000
 
+    function open() {
+        alertModal.visible = true;
+    }
+
+    function close() {
+        alertModal.visible = false;
+    }
+
     Rectangle {
         anchors.fill: parent
         color: Style.color.complement
@@ -34,6 +42,8 @@ Item {
 
         MouseArea {
             anchors.fill: parent
+            onClicked: alertModal.close()
+
         }
     }
 
@@ -42,7 +52,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
 
-        height: 400
+        height: textAreaModal.height * 2
         width: 600
 
         color: Style.color.comment
@@ -50,11 +60,16 @@ Item {
         border.width: 3
         border.color: Style.color.background_highlight
 
+        MouseArea {
+            // This prevent the previous mouse area to exit the modal
+            anchors.fill: parent
+        }
+
         Rectangle {
             anchors.fill: parent
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "white" }
-                GradientStop { position: 1.0; color: "black" }
+                GradientStop { position: 0.0; color: Style.color.background_highlight }
+                GradientStop { position: 1.0; color: Style.color.comment }
             }
 
             opacity: 0.25
@@ -95,11 +110,27 @@ Item {
             anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.top: headerAlertModal.bottom - textAlertModal.height
-            anchors.topMargin: 0
+            anchors.top: headerAlertModal.top
+            anchors.topMargin: textAlertModal.height
 
             height: textAlertModal.height
             opacity: 0.1
+        }
+
+        PrimaryButton {
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            buttonLabel: ""
+            iconSource: "qrc:/resources/icons/black/cross41.png"
+
+            buttonStatus: "white"
+
+            height: width
+            width: headerAlertModal.height - 15
+
+            onClicked: alertModal.close()
         }
 
         ColumnLayout {
@@ -107,12 +138,12 @@ Item {
             anchors.leftMargin: 20
             anchors.bottomMargin: 20
             anchors.top: parent.top
-            anchors.topMargin: 20
+            anchors.topMargin: 15
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.left: parent.left
 
-            z: parent.z + 3
+            spacing: 20
 
             Rectangle {
 
@@ -138,9 +169,10 @@ Item {
             }
 
             TextArea {
-                text: qsTr(Content.alert[contentName])
 
-                font.pointSize: Style.fontSize.h5
+                id: textAreaModal
+
+                text: qsTr(Content.alert[contentName])
 
                 Layout.maximumHeight: 120
                 Layout.fillWidth: true
@@ -151,31 +183,14 @@ Item {
                 readOnly: true
 
                 textFormat: TextEdit.RichText
+                textColor: Style.color.complement_highlight
+
             }
 
             Rectangle {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 color: "transparent"
-            }
-
-            RowLayout {
-
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-
-                Layout.alignment: Qt.AlignRight
-
-                PrimaryButton {
-                    buttonLabel: "Cerrar"
-                    iconSource: "qrc:/resources/icons/black/cross41.png"
-
-                    buttonStatus: "white"
-
-                    onClicked: {
-                        alertModal.visible = false;
-                    }
-                }
             }
         }
     }

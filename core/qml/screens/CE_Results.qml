@@ -27,7 +27,7 @@ RowLayout {
         WebView {
             id: currentWebView
 
-            url: fileApplicationDirPath + "/docs/ce_results.html"
+            url: fileApplicationDirPath + "/docs/ce_results.html?#"
 
             Layout.fillHeight: true
             Layout.fillWidth: true

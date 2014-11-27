@@ -34,6 +34,10 @@ public:
 
     Q_INVOKABLE void loadUrlInBrowser(QString, bool = false);
 
+    Q_INVOKABLE bool savedStatus();
+    void markAsSaved();
+    void markAsNotSaved();
+
 public Q_SLOTS:
 
 Q_SIGNALS:
@@ -47,6 +51,8 @@ Q_SIGNALS:
     void callProcess();
 
 private:
+
+    bool m_isSaved;
 
     QString setSingleStudyCaseJsonHelper(const QString&, const QJsonArray&);
     bool saveAndContinueHelper(const QString&, const QString&, const unsigned int&, const unsigned int&);

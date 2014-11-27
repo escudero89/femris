@@ -5,6 +5,8 @@
 QString Utils::midSeparator = "___";
 QString Utils::endSeparator = "______";
 
+QString Utils::dateFormat = "dd/MM/yyyy hh:mm:ss";
+
 Utils::Utils() {
 }
 

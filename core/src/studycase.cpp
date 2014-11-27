@@ -26,6 +26,7 @@ StudyCase::~StudyCase() {
  * @return
  */
 QMap<QString, QString> StudyCase::loadConfiguration(const QString& whereToLoad) {
+
     QStringList configurationFilter;
     configurationFilter << "Base64-encode";
     if (!FileIO::splitConfigurationFile("currentEnconding.base64", whereToLoad, configurationFilter, true)) {

@@ -34,5 +34,8 @@ QtObject {
     property QtObject alert : QtObject {
         property string byDefault :
         "<p>By Default</p>";
+
+        property string about :
+        "<p>" + femris + " fue creado por Cristian Escudero como parte de su Proyecto Final de Carrera de la Carrera de Ingeniería en Informática en la Facultad de Ingeniería y Ciencias Hídricas anexa a la Universidad Nacional del Litoral</p>";
     }
 }

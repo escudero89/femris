@@ -5,4 +5,8 @@
         <item setting="interpreter" value="octave" />
         <item setting="octave" value="octave" />
         <item setting="matlab" value="/media/Cristian/MatLabLinux/bin/matlab" />
+
+        <item setting="lastAccessDate" value="datetime" />
+        <item setting="lastExitDate" value="datetime" />
+        <item setting="crashed" value="false" />
     </Configuration>

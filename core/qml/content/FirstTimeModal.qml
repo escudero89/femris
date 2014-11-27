@@ -25,6 +25,14 @@ Item {
 
     z: 1000
 
+    function open() {
+        firstTimeModal.visible = true;
+    }
+
+    function close() {
+        firstTimeModal.visible = false;
+    }
+
     Rectangle {
         anchors.fill: parent
         color: Style.color.complement
@@ -33,6 +41,7 @@ Item {
 
         MouseArea {
             anchors.fill: parent
+            onClicked: firstTimeModal.close()
         }
     }
 
@@ -49,15 +58,19 @@ Item {
         border.width: 3
         border.color: Style.color.background_highlight
 
+        MouseArea {
+            // This prevent the previous mouse area to exit the modal
+            anchors.fill: parent
+        }
+
         Rectangle {
             anchors.fill: parent
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "white" }
-                GradientStop { position: 1.0; color: "black" }
+                GradientStop { position: 0.0; color: Style.color.background_highlight }
+                GradientStop { position: 1.0; color: Style.color.comment }
             }
 
             opacity: 0.25
-            z: parent.z + 1
         }
 
         Rectangle {
@@ -71,8 +84,35 @@ Item {
             anchors.left: parent.left
 
             opacity: 0.2
+        }
 
-            z: parent.z + 2
+        Rectangle {
+            id: headerAlertModal
+
+            anchors.right: parent.right
+            anchors.rightMargin: 3
+            anchors.left: parent.left
+            anchors.leftMargin: 3
+            anchors.top: parent.top
+            anchors.topMargin: 3
+
+            height: textAlertModal.height * 2
+
+            color: Style.color.femris
+
+            opacity: 0.8
+        }
+
+        Rectangle {
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.top: headerAlertModal.top
+            anchors.topMargin: textAlertModal.height
+
+            height: textAlertModal.height
+            opacity: 0.1
         }
 
         ColumnLayout {
@@ -80,22 +120,41 @@ Item {
             anchors.leftMargin: 20
             anchors.bottomMargin: 20
             anchors.top: parent.top
-            anchors.topMargin: 20
+            anchors.topMargin: 15
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.left: parent.left
 
-            z: parent.z + 3
+            spacing: 20
 
-            Text {
-                text: qsTr("¡Bienvenido a ") + Content.femris + "!"
-                font.pointSize: Style.fontSize.h3
+            Rectangle {
 
-                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+                Layout.preferredHeight: headerAlertModal.height - 20
+                Layout.alignment: Qt.AlignCenter
+                color: "transparent"
 
-                textFormat: Text.RichText
+                Text {
+                    id: textAlertModal
 
-                visible: firstTime
+                    text: {
+                        if (firstTime) {
+                            return qsTr("¡Bienvenido a <strong>FEMRIS</strong>!");
+                        } else {
+                            return qsTr("Preferencias");
+                        }
+                    }
+
+                    font.pointSize: Style.fontSize.h4
+
+                    textFormat: Text.RichText
+                    horizontalAlignment: Text.AlignHCenter
+
+                    width: parent.width
+
+                    color: Style.color.background
+                }
+
             }
 
             TextArea {

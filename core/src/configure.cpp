@@ -6,6 +6,7 @@
 #include <QXmlSimpleReader>
 #include <QXmlDefaultHandler>
 
+#include <QDateTime>
 #include <QFile>
 #include <QRegExp>
 #include <QStringList>
@@ -20,6 +21,23 @@ Configure::Configure() {
 
 Configure::~Configure() {
     saveConfiguration();
+}
+
+void Configure::initApp() {
+    // We mark this flag as true. It'll be false if the user exits correctly
+    write("crashed", "true");
+    write("lastAccessDate", QDateTime::currentDateTime().toString(Utils::dateFormat));
+    instance->saveConfiguration();
+
+}
+
+void Configure::exitApp() {
+    instance->write("crashed", "false");
+    instance->write("lastExitDate", QDateTime::currentDateTime().toString(Utils::dateFormat));
+    instance->saveConfiguration();
+
+    // As this function is called at the correct exit, we delete the temporal files
+    FileIO::removeTemporaryFiles();
 }
 
 void Configure::saveConfiguration() {

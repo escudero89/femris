@@ -3,6 +3,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Dialogs 1.2
 
 import "."
+import "../"
 
 MenuBar {
     signal whichMenu(string menuItem)
@@ -87,7 +88,7 @@ MenuBar {
             text: qsTr("Salir")
             shortcut: "Ctrl+Q"
             iconSource: "qrc:/resources/icons/black/remove11.png"
-            onTriggered: Qt.quit();
+            onTriggered: whichMenu("close")
         }
     }
     Menu {
@@ -96,9 +97,7 @@ MenuBar {
             text: qsTr("Preferencias")
             shortcut: "Ctrl+P"
             iconSource: "qrc:/resources/icons/black/open95.png"
-            onTriggered: {
-                whichMenu("preferences");
-            }
+            onTriggered: whichMenu("preferences")
         }
     }
     Menu {
@@ -107,19 +106,19 @@ MenuBar {
             text: qsTr("Menu Principal")
             shortcut: "Ctrl+Alt+M"
             iconSource: "qrc:/resources/icons/black/eye50.png"
-            onTriggered: mainWindow.switchSection("Initial");
+            onTriggered: mainWindow.switchSection("Initial")
         }
         MenuItem {
             text: qsTr("Selección de Etapa")
             shortcut: "Ctrl+Alt+E"
             iconSource: "qrc:/resources/icons/black/four29.png"
-            onTriggered: mainWindow.switchSection("CE_Overall");
+            onTriggered: mainWindow.switchSection("CE_Overall")
         }
         MenuItem {
             text: qsTr("Tutorial")
             shortcut: "Ctrl+T"
             iconSource: "qrc:/resources/icons/black/book95.png"
-            onTriggered: mainWindow.switchSection("tutorial");
+            onTriggered: mainWindow.switchSection("tutorial")
         }
     }
     Menu {
@@ -127,9 +126,11 @@ MenuBar {
         MenuItem {
             text: qsTr("Acerca de...")
             iconSource: "qrc:/resources/icons/black/question23.png"
-            onTriggered: messageDialog.open();
+            onTriggered: whichMenu("about");
         }
+    }
 
+    Menu {
         MessageDialog {
             id: messageDialog
             title: "En Construcción"

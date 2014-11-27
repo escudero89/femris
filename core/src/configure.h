@@ -18,6 +18,9 @@ public:
     void loadConfigurationFromFile(bool = false);
     void saveConfiguration();
 
+    Q_INVOKABLE static void initApp();
+    Q_INVOKABLE static void exitApp();
+
     Q_INVOKABLE static QString read(const QString&);
     Q_INVOKABLE static void write(const QString&, const QString&, bool = false);
     Q_INVOKABLE static bool check(const QString&, const QString&);

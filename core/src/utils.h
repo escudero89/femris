@@ -14,6 +14,8 @@ public:
 
     static QString midSeparator;
     static QString endSeparator;
+
+    static QString dateFormat;
 };
 
 #endif // UTILS_H
