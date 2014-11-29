@@ -4,8 +4,8 @@
  * @param {Object} thing - The element that we are checking if it's undefined or not
  * @return {bool} - True if it is different from undefined, false otherwise
  */
-function exists(thing) {
-    return (typeof thing !== 'undefined');
+ function exists(thing) {
+    return (typeof thing !== 'undefined' && thing);
 }
 
 /**
@@ -16,7 +16,7 @@ function exists(thing) {
  * @param {Object} thing - What are we going to put as default for the element
  * @return {Object} - The thing checked, or false if it doesn't exist nor has a default value
  */
-function assignIfNecessary(thing, thingByDefault) {
+ function assignIfNecessary(thing, thingByDefault) {
 
     thingByDefault = (exists(thingByDefault)) ? thingByDefault : false;
 
@@ -31,7 +31,7 @@ function assignIfNecessary(thing, thingByDefault) {
  * @param {number} alpha - For transparency
  * @return {string} - The color in format HSL ("hsl(120, 100%, 50%, alpha)")
  */
-function getColorFromIdx(idx, alpha) {
+ function getColorFromIdx(idx, alpha) {
 
     // We get the color in jumps of 13º
     var huePos = ( idx * 43 ) % 360;
@@ -52,7 +52,7 @@ function getColorFromIdx(idx, alpha) {
  * @param {number} alpha - For transparency
  * @return {string} - The color in format HSL ("hsl(120, 100%, 50%, alpha)")
  */
-function getColorFromInterpolation(current, min, max, alpha) {
+ function getColorFromInterpolation(current, min, max, alpha) {
 
     var huePos = 240;
 
@@ -77,3 +77,48 @@ var Utils = {
         this.$currentValue.html(this.parseNumber(value));
     }
 };
+
+
+var Queue = (function(){
+
+    function Queue() {};
+
+    Queue.prototype.running = false;
+
+    Queue.prototype.queue = [];
+
+    Queue.prototype.add_function = function(callback) { 
+        var _this = this;
+        //add callback to the queue
+        this.queue.push(function(){
+            var finished = callback();
+            if(typeof finished === "undefined" || finished) {
+               //  if callback returns `false`, then you have to 
+               //  call `next` somewhere in the callback
+               _this.next();
+            }
+        });
+
+        if(!this.running) {
+            // if nothing is running, then start the engines!
+            this.next();
+        }
+
+        return this; // for chaining fun!
+    };
+
+    Queue.prototype.next = function(){
+        this.running = false;
+        //get the first element off the queue
+        var shift = this.queue.shift(); 
+
+        if(shift) { 
+            this.running = true;
+            console.log('#', shift);
+            setTimeout(shift(), 5); 
+        }
+    };
+
+    return Queue;
+
+})();
