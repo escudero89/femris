@@ -87,16 +87,6 @@
 
   end  % End element cycle
 
-  % FEMRIS ADDITION >>>>>>>
-  global femris_elemental_matrix;
-  femris_elemental_matrix{01} = full(StifMat);
-  femris_elemental_matrix{02} = dmat;
-  femris_elemental_matrix{03} = young;
-  femris_elemental_matrix{04} = poiss;
-  femris_elemental_matrix{05} = pstrs;
-  femris_elemental_matrix{21} = full(force);
-  % <<< END FEMRIS ADDITION
-
   ttim = timing('Time to assemble the global system',ttim); %Reporting time
 
 % Add side forces to the force vector
@@ -128,6 +118,16 @@
   end
   
   force1 = force - StifMat * u;      % Adjust the rhs with the known values
+
+  % FEMRIS ADDITION >>>>>>>
+  global femris_elemental_matrix;
+  femris_elemental_matrix{01} = full(StifMat);
+  femris_elemental_matrix{02} = dmat;
+  femris_elemental_matrix{03} = young;
+  femris_elemental_matrix{04} = poiss;
+  femris_elemental_matrix{05} = pstrs;
+  femris_elemental_matrix{21} = full(force1);
+  % <<< END FEMRIS ADDITION
 
 % Compute the solution by solving StifMat * u = force for the remaining
 % unknown values of u
