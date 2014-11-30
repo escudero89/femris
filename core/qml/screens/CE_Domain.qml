@@ -16,7 +16,6 @@ RowLayout {
     objectName: "CE_Domain"
 
     spacing: 0
-    anchors.fill: globalLoader
 
     LeftContentBox {
         id: leftContentRectangle
@@ -204,19 +203,14 @@ RowLayout {
                     FlickableRepeaterNodesSideload {
                         id: sideLoadContainer
 
-                        objectHeader.text: qsTr("Condiciones de borde")
-                        textRow: "Lado #"
-
-                        textInformation: "sideload"
+                        width: parent.width * 0.45
                     }
 
                     FlickableRepeaterNodes {
                         id: nodesContainer
+                        jsonDomain: rowParent.jsonDomain
 
-                        objectHeader.text: qsTr("Cargas puntuales y condiciones nodales")
-                        textRow: "Nodo #"
-
-                        textInformation: "pointload"
+                        width: parent.width * 0.55
                     }
                 }
             }
@@ -230,7 +224,6 @@ RowLayout {
                 PrimaryButton {
                     buttonLabel: "Vista General"
                     buttonStatus: "primary"
-                    //buttonText.font.pixelSize: height / 2
 
                     onClicked : mainWindow.switchSection("CE_Overall")
 
@@ -242,7 +235,6 @@ RowLayout {
 
                     buttonLabel: "Guardar y Continuar"
                     buttonStatus: "success"
-                    //buttonText.font.pixelSize: height / 2
 
                     Layout.preferredWidth: 0.5 * parent.width
 

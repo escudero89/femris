@@ -19,17 +19,24 @@ ColumnLayout {
 
     property string textInformation : "sideload"
 
-    property variant jsonDomain : false
+    property variant jsonDomain : null
 
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    Text {
-        id: textHeader
+    Rectangle {
 
-        text: qsTr("Condiciones de borde")
+        Layout.preferredHeight: textHeader.height
+        Layout.preferredWidth: parent.width
 
-        font.pointSize: Style.fontSize.h5
+        Text {
+            id: textHeader
+
+            text: qsTr("Condiciones de borde") + "<br /><small style='color:" + Style.color.content + "'><em>" + qsTr("Número de lados: ") + repeater.count + "</em></small>"
+            textFormat: Text.RichText
+            font.pointSize: Style.fontSize.h5
+        }
+
     }
 
     RowLayout {

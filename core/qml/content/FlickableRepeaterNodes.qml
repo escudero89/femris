@@ -14,19 +14,28 @@ ColumnLayout {
     property alias objectRepeater: repeater
     property alias objectHeader: textHeader
 
-    property string textRow : "Lado #"
+    property string textRow : "Nodo #"
 
-    property string textInformation : "sideload"
+    property string textInformation : "pointload"
+
+    property variant jsonDomain : null
 
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    Text {
-        id: textHeader
+    Rectangle {
 
-        text: qsTr("Condiciones de borde")
+        Layout.preferredHeight: textHeader.height
+        Layout.preferredWidth: parent.width
 
-        font.pointSize: Style.fontSize.h5
+        Text {
+            id: textHeader
+
+            text: qsTr("Cargas puntuales y condiciones nodales") + "<br /><small style='color:" + Style.color.content + "'><em>" + qsTr("Número de nodos: ") + repeater.count + "</em></small>"
+            textFormat: Text.RichText
+            font.pointSize: Style.fontSize.h5
+        }
+
     }
 
     RowLayout {
@@ -101,53 +110,25 @@ ColumnLayout {
                         text: qsTr(textRow + (index + 1))
                     }
 
-                    TextField {
-                        id: xTextField
-
-                        Layout.preferredWidth: parent.width / 4
-                        placeholderText: "x_" + ( index + 1 )
-
-                        onTextChanged: {
-                            StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
-                        }
-
-                        onFocusChanged: {
-                            if (focus === true && repeater.currentIndex !== index) {
-                                repeater.currentIndex = index;
-                                focus = true;
-                            }
-                        }
-                    }
-
-                    TextField {
-                        id: yTextField
-
-                        Layout.preferredWidth: parent.width / 4
-                        placeholderText: "y_" + ( index + 1 )
-
-                        onTextChanged: {
-                            StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
-                        }
-
-                        onFocusChanged: {
-                            if (focus === true && repeater.currentIndex !== index) {
-                                repeater.currentIndex = index;
-                                focus = true;
-                            }
-                        }
-                    }
 
                     Button {
+                        property bool isEnabled : ( jsonDomain.sideloadNodes.join().search(index) !== -1) ? true : false
+                        property string fixnodeIcon : "open94"
+
                         id: buttonNodeController
-                        Layout.preferredWidth: parent.width / 5
+                        Layout.preferredWidth: parent.width * 0.18
                         text: qsTr("libre")
+
+                        iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
+
+                        enabled: isEnabled
 
                         onClicked: {
                             switch(buttonNodeController.state) {
-                                case "libre": buttonNodeController.state = "x-fijo"; break;
-                                case "x-fijo": buttonNodeController.state = "y-fijo"; break;
-                                case "y-fijo": buttonNodeController.state = "xy-fijo"; break;
-                                case "xy-fijo": buttonNodeController.state = "libre"; break;
+                                case "libre"  : buttonNodeController.state = "x-fijo" ; buttonNodeController.fixnodeIcon = "lock24"; break;
+                                case "x-fijo" : buttonNodeController.state = "y-fijo" ; buttonNodeController.fixnodeIcon = "lock24"; break;
+                                case "y-fijo" : buttonNodeController.state = "xy-fijo"; buttonNodeController.fixnodeIcon = "lock24"; break;
+                                case "xy-fijo": buttonNodeController.state = "libre"  ; buttonNodeController.fixnodeIcon = "open94"; break;
                             }
 
                             repeater.currentIndex = index;
@@ -205,6 +186,42 @@ ColumnLayout {
                                 }
                             }
                         ]
+                    }
+
+                    TextField {
+                        id: xTextField
+
+                        Layout.preferredWidth: parent.width / 4
+                        placeholderText: "x_" + ( index + 1 )
+
+                        onTextChanged: {
+                            StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
+                        }
+
+                        onFocusChanged: {
+                            if (focus === true && repeater.currentIndex !== index) {
+                                repeater.currentIndex = index;
+                                focus = true;
+                            }
+                        }
+                    }
+
+                    TextField {
+                        id: yTextField
+
+                        Layout.preferredWidth: parent.width / 4
+                        placeholderText: "y_" + ( index + 1 )
+
+                        onTextChanged: {
+                            StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
+                        }
+
+                        onFocusChanged: {
+                            if (focus === true && repeater.currentIndex !== index) {
+                                repeater.currentIndex = index;
+                                focus = true;
+                            }
+                        }
                     }
                 }
             }
