@@ -55,126 +55,89 @@
 
     <div class="container">
         <div class="row">
-            <div class="jumbotron">
-    <h2>Bienvenido <small>Primeros pasos en el tutorial</small></h2>
+            <div class="col-sm-12">
 
-    <p>Antes de comenzar, vamos a comprender un poco más las virtudes y limitaciones del presente tutorial. La idea del mismo es el de brindarte una cierta noción básica sobre el <strong class="tooltipped" data-toggle="tooltip" title="Que abreviaremos como &quot;FEM&quot; por Finite Element Method">Método de los Elementos Finitos</strong>, como así también aprender a utilizar correctamente <strong>FEMRIS</strong>.</p>
+<h3>Problema de Ejemplo</h3>
+
+<h4>Introducción</h4>
+
+<p>Un ingeniero desea construir un puente sobre un río y que una dos ciudades muy transitadas. Para ello, necesita conocer cómo la estructura que él propone se comportará bajo una determinada carga. Las ecuaciones que describen la distribución de tensiones estructurales son conocidas, pero no pueden ser resueltas de forma directa para formas complicadas como las de un puente.</p>
+
+<p>Sin embargo, las ecuaciones sí pueden ser resueltas para figuras simples, como triángulos y rectángulos. El FEM toma ventaja de este hecho.</p>
+
+<p>Reemplazamos entonces la forma única y complicada del puente con una estructura aproximadamente similar conformada por elementos simples1. Esta nueva composición de elementos se le hace referencia por el nombre de “malla de elementos finitos2”.</p>
+
+<hr><h4>Diseñando la Malla</h4>
+
+<p>El primer paso es entonces el de diseñar la malla. Para ello, debemos decidir qué tipo de elemento vamos a utilizar. Por ejemplo, podemos optar por elegir:</p>
+
+<ul>
+    <li>Elementos 1D.</li>
+    <li>Elementos 2D.</li>
+    <li>Elementos 3D.</li>
+</ul>
+
+<p>La exactitud del resultado va a depender del número de elementos que elijamos para componer la malla. Mientras más elementos haya, más pequeños van a ser, y más precisos serán los resultados obtenidos. Desafortunadamente, elementos más pequeños también significan más cálculos a llevar adelante. Por lo que lo que se busca es encontrar un balance entre una precisión tolerable del resultado y una razonable rapidez de cálculo.</p>
+
+<hr><h4>De nuevo al problema del puente</h4>
+
+<p>Para la malla del puente, hemos decidido optar por elementos 2D con forma de rectángulos de ocho puntos. Estos puntos son referidos como “nodos”. En general, consideramos a cada nodo como capaces de desplazarse tanto vertical como horizontalmente. La excepción sería que estos nodos no pueden ir más allá que los límites del borde que les hemos establecido: estas son, las condiciones de borde del problema. Éstas deben estar incluidas en el modelo físico para que de esa manera la solución obtenida sea ÚNICA.</p>
+
+<blockquote>Una vez establecida la malla y los elementos que la componen, como así también las propiedades materiales del objeto, establecemos que tipos de carga se desean aplicar a la estructura.</blockquote>
+
+<p>Supongamos que tenemos una sola carga en nuestra estructura, en el centro del puente. El objetivo sería arribar a una expresión matemática que describa el comportamiento de todo el sistema.</p>
+
+<hr><h4>Estableciendo los desplazamientos en los nodos</h4>
+
+<p>Comenzaremos con una descripción simple de las relaciones básicas de desplazamiento de cada nodo como funciones en las coordenadas `(x,y)`.</p>
+
+<p>Supongamos en primer lugar que el desplazamiento `u(x,y)` se exprese como forma polinómica de `x` e `y`. Para asegurar la continuidad del desplazamiento dentro del elemento a lo largo del eje de coordenadas, la variación debe ser cuadrática.</p>
+
+<p>Sí tenemos dos elementos rectangulares que comparten un mismo lado, a su vez éstos tienen en común tres nodos, y puesto que tres valores determinan una función cuadrática de forma única1, aseguramos de esta forma que a lo largo de dicho lado las funciones correspondientes a los desplazamientos serán iguales. Lo anterior ocurre en ambos lados del elemento rectangular. Por consiguiente, escribimos:</p>
+
+<p>`u(x,y)=(a+bx+cx^2) \cdot (d+ey+fy^2)`</p>
+
+<p>`
+u(x,y)=
+\alpha_1 +
+\alpha_2 x +
+\alpha_3 y+
+\alpha_4 x y+
+\alpha_5 x^2 +
+\alpha_6 y^2 +
+\alpha_7 x^2 y+
+\alpha_8 x y^2+
+\alpha_9 x^2 y^2
+`</p>
+
+<blockquote>Puesto que la variación de la función de desplazamiento ha de venir determinada unívocamente por la cantidad X de nodos del elemento, sólo pueden retenerse X coeficientes de desarrollo.</blockquote>
+
+<hr><h4>Obtención de la Matriz de Rigidez de cada elemento</h4>
+
+<p>En nuestro ejemplo, cada elemento posee 8 nodos, y por cada uno de estos describimos el desplazamiento de estos como funciones de sus coordenadas:</p>
+
+<p>Del conjunto de ecuaciones anterior, obtenemos de forma abreviada el sistema de ecuaciones algebraicas1 siguiente:</p>
+
+<blockquote>El superíndice  indicará siempre que el vector o matriz con dicha notación pertenecerá a un elemento en particular, más que al sistema de ecuaciones global.</blockquote>
+
+<p>Hemos alcanzado de esta forma el punto inicial de una serie de pasos que van a estar basados en las leyes fundamentales de la mecánica.
+El primer paso relaciona los desplazamientos con las tensiones, y mediante la utilización del Principio de los Trabajos Virtuales1, llegamos a obtener una relación entre los desplazamientos y las fuerzas externas aplicadas al elemento:</p>
+
+<p>Obtuvimos entonces una matriz de rigidez  por cada elemento  de la malla.</p>
+
+<hr><h4>Obtención de la Matriz de Rigidez global</h4>
+
+<p>El siguiente paso es combinar todas estas matrices individuales de rigidez  que obtuvimos por cada elemento en una única y gran matriz  que represente la rigidez de todo el sistema.</p>
+
+<p>Es en este momento en que podemos empezar a hacer simplificaciones. Por ejemplo, las ecuaciones asociadas a nodos en común entre elementos aparecerán en varias matrices. De esta forma, se pueden realizar simplificaciones al obtener la matriz global.</p>
+
+<p>Una vez ensamblada la nueva matriz global, podemos obtener los valores de los desplazamientos tras determinar las fuerzas externas aplicadas, al resolver:</p>
+
+<p>El vector  contendrá a lo sumo1 una fila por cada nodo de la malla. De esta manera, una forma simple de obtener los desplazamientos en el interior de los elementos es la de interpolar2 estos valores conocidos en los nodos.</p>
+
+<blockquote>Dado a que el tamaño de la matriz obtenida  puede ser muy grande para ser resuelta mediante calculaciones manuales, se procede a utilizar el poder de cómputo para resolverla. Una ventaja que existe aquí es que la matriz de rigidez global no ha de tener que volverse a recalcular sí cambiamos las fuerzas externas actuantes.</blockquote>
+
 </div>
-
-<div class="col-sm-12">
-
-<h3>Estilos de Texto</h3>
-
-<p>El texto de este tutorial presentará diversos <em>formatos</em>, cada uno de ellos indicando una interacción diferente con el usuario:</p>
-
-<div class="row">
-    <div class="col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <strong class="btn-default form-control tooltipped text-center" data-toggle="tooltip" title="Aquí aparecería un mensaje corto pero informativo :)">¿Ayuda?</strong>
-            </div>
-            <div class="panel-body">
-                Esta clase de texto indica información puntual sobre el objeto resaltado.
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <button class="btn btn-primary form-control" data-toggle="modal" data-target="#myModal">
-                ¡Ábrete!
-                </button>
-            </div>
-            <div class="panel-body">
-                Hace referencia a que, cuando le haga click con el puntero, abrirá una descripción más detallada sobre el elemento señalizado, además de incluir referencias a fuentes externas en el Internet.
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <button
-                type="button"
-                class="btn btn-success form-control"
-                data-toggle="popover"
-                data-trigger="focus"
-                data-html="true"
-                data-placement="left"
-                data-template='<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-                title="Más sobre como funciona..."
-                data-content="Cuando veas un botón <strong>señalizado</strong> (<span class='glyphicon glyphicon-cog'></span>) podrás aprender más sobre cómo las cosas fueron hechas en <strong>FEMRIS</strong>. Por ejemplo, <em>¿sabías qué el contenido de éste tutorial es en su <strong>mayor</strong> parte <a href='http://www.w3.org/'>HTML</a> con <a href='http://getbootstrap.com/'>Bootstrap</a>? ¿Sorprendido? Yo sí</em>.">
-                <span class="glyphicon glyphicon-cog"> ¿Cómo?</span></button>
-            </div>
-            <div class="panel-body">
-                 Esto indica un popover, es decir, un cuadro de texto que aparecerá encima del mismo texto cuando el usuario coloque su puntero encima del texto señalizado.
-            </div>
-        </div>
-    </div>
-</div>
-
-<h3>Algunos comentarios finales</h3>
-
-<p>Este tutorial fue hecho mediante una mezcla de diferentes lenguajes de programación y plugins, como <strong class="tooltipped" data-toggle="tooltip" title="¡Sí! Habrá &quot;LaTeX&quot; en el tutorial y en el mismo FEMRIS.">`MathJax`</strong>.</p>
-
-<!--
-<div class="embed-responsive embed-responsive-16by9">
-    <video class="embed-responsive-item" controls>
-        <source src="view/movie.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-</div>-->
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript">
-function getHeightRight() {
-    var panel = jQuery(".panel > .panel-body");
-    var max_height = 0;
-
-    jQuery.each(panel, function (idx, val) {
-        jQuery(val).css("height", "auto");
-    });
-
-    jQuery.each(panel, function (idx, val) {
-        var valHeight = jQuery(val).css("height");
-        if (max_height < parseInt(valHeight)) {
-            max_height = parseInt(valHeight);
-        }
-    });
-
-    jQuery.each(panel, function (idx, val) {
-        jQuery(val).css("height", max_height + "px");
-    });
-}
-
-// This is just for getting the same height in the three blocks
-getHeightRight();
-
-// If the window changes its size, we reload the heights
-jQuery(window).resize(function() {
-    getHeightRight();
-});
-
-</script>
 
 
         </div>

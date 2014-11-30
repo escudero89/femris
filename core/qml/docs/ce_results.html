@@ -27,23 +27,25 @@
     MathJax.HTML.Cookie.Set("menu",{});
 
     MathJax.Hub.Config({
-       TeX: {
-           extensions: ["color.js"]
-       },
+        imageFont:null,
 
-       asciimath2jax: {
-           delimiters: [['`','`']],
-           skipTags: ["script","noscript","style","textarea","pre","code"]
-       },
+        TeX: {
+            extensions: ["color.js"]
+        },
 
-       extensions: ["tex2jax.js", "asciimath2jax.js"],
+         asciimath2jax: {
+             delimiters: [['`','`']],
+             skipTags: ["script","noscript","style","textarea","pre","code"]
+         },
 
-       jax: ["input/TeX","output/HTML-CSS", "input/AsciiMath"],
+         extensions: ["tex2jax.js", "asciimath2jax.js"],
 
-       "HTML-CSS": {
-           availableFonts:[],
-           styles: {".MathJax_Preview": {visibility: "hidden"}}
-       }
+         jax: ["input/TeX","output/HTML-CSS", "input/AsciiMath"],
+
+         "HTML-CSS": {
+             availableFonts:[],
+             styles: {".MathJax_Preview": {visibility: "hidden"}}
+        }
     });
     </script>
     <script type="text/javascript" src="js/third-party/MathJax.js"></script>
