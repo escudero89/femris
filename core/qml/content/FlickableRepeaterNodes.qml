@@ -24,9 +24,12 @@ ColumnLayout {
     Layout.fillWidth: true
 
     Rectangle {
+        id: rectangle1
 
-        Layout.preferredHeight: textHeader.height
+        Layout.preferredHeight: textHeader.height * 1.1
         Layout.preferredWidth: parent.width
+
+        color: Style.color.background_highlight
 
         Text {
             id: textHeader
@@ -34,8 +37,19 @@ ColumnLayout {
             text: qsTr("Cargas puntuales y condiciones nodales") + "<br /><small style='color:" + Style.color.content + "'><em>" + qsTr("Número de nodos: ") + repeater.count + "</em></small>"
             textFormat: Text.RichText
             font.pointSize: Style.fontSize.h5
+
+            anchors.left: parent.left
+            anchors.leftMargin: 12
         }
 
+    }
+
+    Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 3
+
+        color: Style.color.complement
+        opacity: 0.3
     }
 
     RowLayout {
@@ -87,7 +101,7 @@ ColumnLayout {
                 Rectangle {
                     anchors.fill: parent
 
-                    color: (index === repeater.currentIndex) ? Style.color.primary :
+                    color: (index === repeater.currentIndex) ? Style.color.femris :
                                ((index % 2 === 0) ? Style.color.background_highlight :  Style.color.background) ;
 
                     opacity: 0.3
@@ -112,7 +126,7 @@ ColumnLayout {
 
 
                     Button {
-                        property bool isEnabled : ( jsonDomain.sideloadNodes.join().search(index) !== -1) ? true : false
+                        property bool isEnabled : ( jsonDomain.sideloadNodes.join().search(index + 1) !== -1) ? true : false
                         property string fixnodeIcon : "open94"
 
                         id: buttonNodeController

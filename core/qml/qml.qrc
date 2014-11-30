@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>qmldir</file>
         <file>screens/Initial.qml</file>
-        <file>screens/BaseFrame.qml</file>
+        <file>screens/Tutorial.qml</file>
         <file>screens/CE_Results.qml</file>
         <file>screens/CE_Overall.qml</file>
         <file>screens/CE_Model.qml</file>

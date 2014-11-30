@@ -13,28 +13,21 @@ import "../"
 
 RowLayout {
 
-    id: rowParent
     objectName: "CE_Results"
 
     spacing: 0
 
-    RowLayout {
+    WebView {
+        id: currentWebView
 
-        width: rowParent.width
-        spacing: 0
+        url: fileApplicationDirPath + "/docs/ce_results.html?#"
 
+        Layout.fillHeight: true
+        Layout.fillWidth: true
 
-        WebView {
-            id: currentWebView
+        //experimental.preferences.developerExtrasEnabled: true
 
-            url: fileApplicationDirPath + "/docs/ce_results.html?#"
-
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-
-            //experimental.preferences.developerExtrasEnabled: true
-
-            /*MouseArea {
+        /*MouseArea {
                 anchors.fill: parent
 
                 onClicked : {
@@ -42,9 +35,5 @@ RowLayout {
                     console.log(fileApplicationDirPath + "docs/ce_results.html")
                 }
             }*/
-
-        }
-
     }
-
 }

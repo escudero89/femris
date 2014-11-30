@@ -205,6 +205,7 @@ Item {
                         textAreaLoadingModal.text = "";
                         loadingModal.visible = 0;
                         progressBarModal.value = 0;
+
                         mainWindow.switchSection(StudyCaseHandler.saveAndContinue("CE_Domain"));
                     }
                 }

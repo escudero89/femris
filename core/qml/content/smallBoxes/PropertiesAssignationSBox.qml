@@ -83,6 +83,15 @@ Rectangle {
                     Text {
                         Layout.fillWidth: true
                         text: math
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+
+                            onEntered: {
+                                Configure.emitMainSignal("setInfoBox " + "<em>Info:</em> " + mathInfo);
+                            }
+                        }
                     }
 
                     TextField {
@@ -126,36 +135,42 @@ Rectangle {
 
                 ListElement {
                     math: 'Ancho'
+                    mathInfo: 'El dominio será escalado a este ancho'
                     name: 'Ancho del dominio'
                     variable: 'gridWidth'
                 }
 
                 ListElement {
                     math: 'Alto'
+                    mathInfo: 'El dominio será escalado a este alto'
                     name: 'Alto del dominio'
                     variable: 'gridHeight'
                 }
 
                 ListElement {
                     math: 'E'
+                    mathInfo: 'Caracteriza el comportamiento elástico del material'
                     name: 'Módulo de Young'
                     variable: 'youngModulus'
                 }
 
                 ListElement {
                     math: "ν"
+                    mathInfo: 'El valor del Coeficiente de Poisson debe ser mayor o igual que 0, pero menor a 0.5'
                     name: 'Coeficiente de Poisson'
                     variable: 'poissonCoefficient'
                 }
 
                 ListElement {
                     math: "ρ"
+                    mathInfo: "Densidad del dominio"
                     name: 'Densidad'
                     variable: 'densityOfDomain'
                 }
 
                 ListElement {
                     math: 't'
+                    mathInfo: "Espesor del dominio"
                     name: 'Espesor'
                     variable: 'thickOfDomain'
                 }

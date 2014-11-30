@@ -10,12 +10,12 @@ import "../"
 
 RowLayout {
 
-    id: rowParent
-    objectName: "CE_Model"
     property string parentStage : objectName
 
+    id: rowParent
+    objectName: "CE_Model"
+
     spacing: 0
-    anchors.fill: globalLoader
 
     LeftContentBox {
         id: leftContentRectangle
@@ -25,81 +25,71 @@ RowLayout {
         Layout.preferredWidth: parent.width * 0.20
     }
 
-    ColumnLayout {
+    GridLayout {
 
-        spacing: 0
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+
+        columnSpacing: 0
+        rowSpacing: 0
+
+        rows: 2
+        columns: 3
 
         WebView {
-            id: currentWebView
-
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            onLinkHovered: console.log(hoveredUrl)
-            url: fileApplicationDirPath + "/docs/ce_model.html"
+            Layout.columnSpan: 3
 
-            /*onNavigationRequested: {
-                if (currentWebView.url !== request.url) {
-                    currentWebView.stop();
-                    StudyCaseHandler.loadUrlInBrowser(request.url);
-                }
-            }*/
+            url: fileApplicationDirPath + "/docs/ce_model.html"
         }
 
-        RowLayout {
+        PrimaryButton {
 
-            spacing: 0
-            Layout.fillHeight: true
+            property string loadUrlBase : "docs/ce_model.html"
+            tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+
+            buttonStatus: "femris"
+            buttonLabel: ""
+            iconSource: "qrc:/resources/icons/external2.png"
+
+            onClicked: {
+                StudyCaseHandler.loadUrlInBrowser(loadUrlBase, true);
+            }
+
+        }
+
+        PrimaryButton {
+            buttonLabel: "Vista General"
+            buttonStatus: "primary"
+            iconSource: "qrc:/resources/icons/four29.png"
+
+            onClicked : mainWindow.switchSection("CE_Overall")
+
+            Layout.fillWidth: true
+        }
+
+        PrimaryButton {
+            id: continueButton
+
+            buttonLabel: "Guardar y Continuar"
+            buttonStatus: "disabled"
+            iconSource: "qrc:/resources/icons/save8.png"
+
             Layout.fillWidth: true
 
-            PrimaryButton {
+            Connections {
+                target: StudyCaseHandler
 
-                property string loadUrlBase : "docs/ce_model.html"
-                tooltip: qsTr("Abrir esta página en tu navegador por defecto")
-
-                buttonStatus: "femris"
-                buttonLabel: ""
-
-                Layout.preferredWidth: 0.1 * parent.width
-
-                onClicked: {
-                    StudyCaseHandler.loadUrlInBrowser(loadUrlBase, true);
+                onNewStudyCaseChose: {
+                    continueButton.buttonStatus = "success";
                 }
-
-                iconSource: "qrc:/resources/icons/external2.png"
             }
 
-            PrimaryButton {
-                buttonLabel: "Vista General"
-                buttonStatus: "primary"
-                //buttonText.font.pixelSize: height / 2
-
-                onClicked : mainWindow.switchSection("CE_Overall")
-
-                Layout.fillWidth: true
-            }
-
-            PrimaryButton {
-                id: continueButton
-
-                buttonLabel: "Guardar y Continuar"
-                buttonStatus: "disabled"
-                //buttonText.font.pixelSize: height / 2
-
-                Layout.preferredWidth: 0.5 * parent.width
-
-                Connections {
-                    target: StudyCaseHandler
-
-                    onNewStudyCaseChose: {
-                        continueButton.buttonStatus = "success";
-                    }
-                }
-
-                onClicked: {
-                    StudyCaseHandler.createNewStudyCase();
-                    mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
-                }
+            onClicked: {
+                StudyCaseHandler.createNewStudyCase();
+                mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
             }
         }
     }

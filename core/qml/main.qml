@@ -47,11 +47,13 @@ ApplicationWindow {
 
     statusBar: StatusBar {
         Text {
+            property string baseValue : qsTr("InfoBox")
+
             id: globalInfoBox
             horizontalAlignment: Text.AlignRight
 
-            property string baseValue : qsTr("InfoBox")
             text: baseValue
+            textFormat: Text.RichText
 
             function setInfoBox (msg, reset) {
                 if (reset) {
@@ -146,7 +148,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_Domain.qml");
+            globalLoader.setSource("screens/Initial.qml");
         }
 
     }
@@ -228,6 +230,9 @@ ApplicationWindow {
             if (signalName === "femrisLoader.open()") {
                 femrisLoader.folder = '';
                 femrisLoader.open();
+            } else if (signalName.search('setInfoBox') !== -1) {
+                var message = signalName.substring(("setInfoBox ").length);
+                globalInfoBox.setInfoBox(message);
             }
         }
     }
@@ -256,13 +261,12 @@ ApplicationWindow {
         redirection = section;
 
         switch (section) {
+        case "Tutorial":
+            StudyCaseHandler.setSingleStudyCaseInformation("tutorialReturnTo", "Initial", true);
+            break;
+
         case "CE_Results":
             buttonLoadUrlInBrowser.loadUrlBase = "docs/ce_results.html";
-            buttonLoadUrlInBrowser.visible = true;
-            break;
-        case "tutorial" :
-            redirection = "BaseFrame";
-            buttonLoadUrlInBrowser.loadUrlBase = "docs/current.html";
             buttonLoadUrlInBrowser.visible = true;
             break;
 

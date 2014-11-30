@@ -112,6 +112,15 @@ QStringList FileIO::getFilteredFilesFromDirectory(const QStringList& filters, co
     return searchedFilesPath;
 }
 
+QString FileIO::readFromSource(const QString& file) {
+    QString previous_m_source = m_source;
+    setSource(file);
+
+    QString data = read();
+    setSource(previous_m_source);
+
+    return data;
+}
 
 //----------------------------------------------------------------------------//
 //--                           STATIC FUNCTIONS                             --//

@@ -15,98 +15,63 @@ RowLayout {
 
     spacing: 0
 
-    RowLayout {
-
-        width: rowParent.width
-        spacing: 0
-
-        LeftContentBox {
-            id: leftContentRectangle
-
-            color: Style.color.content_emphasized
-            Layout.fillHeight: true
-            Layout.preferredWidth: parent.width * 0.20
-
-            firstTimeOnly: true
-
-            onBlockHiding: {
-                if (isHiding) {
-                    leftContentRectangle.width = leftContentRectangle.parent.width * 0;
-                    leftContentRectangle.visible = false;
-                } else {
-                    leftContentRectangle.width = leftContentRectangle.parent.width * 0.20;
-                    leftContentRectangle.visible = true;
-                }
-                mainContentRectangle.width  = rowParent.width - leftContentRectangle.width;
-                mainContentRectangle.x = leftContentRectangle.width;
-            }
-        }
-    }
-
-    ColumnLayout {
-
-        id: mainContentRectangle
+    GridLayout {
 
         Layout.fillHeight: true
-        Layout.preferredWidth: parent.width - leftContentRectangle.width
+        Layout.fillWidth: true
 
-        spacing: 0
+        columnSpacing: 0
+        rowSpacing: 0
+
+        rows: 2
+        columns: 3
 
         WebView {
-            id: currentWebView
-
-            Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.fillWidth: true
 
-            url: "qrc:/docs/ce_shapefunction.html"
+            Layout.columnSpan: 3
+
+            url: fileApplicationDirPath + "/docs/ce_shapefunction.html"
         }
 
-        RowLayout {
+        PrimaryButton {
 
-            spacing: 0
+            property string loadUrlBase : "docs/ce_shapefunction.html"
+            tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+
+            buttonStatus: "femris"
+            buttonLabel: ""
+            iconSource: "qrc:/resources/icons/external2.png"
+
+            onClicked: {
+                StudyCaseHandler.loadUrlInBrowser(loadUrlBase, true);
+            }
+        }
+
+        PrimaryButton {
+            buttonLabel: "Vista General"
+            buttonStatus: "primary"
+            iconSource: "qrc:/resources/icons/four29.png"
+
+            onClicked : mainWindow.switchSection("CE_Overall")
+
             Layout.fillWidth: true
-            Layout.fillHeight: true
+        }
 
-            PrimaryButton {
+        PrimaryButton {
+            id: continueButton
 
-                property string loadUrlBase : "docs/ce_shapefunction.html"
-                tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+            buttonLabel: "Guardar y Continuar"
+            buttonStatus: "success"
+            iconSource: "qrc:/resources/icons/save8.png"
 
-                buttonStatus: "femris"
-                buttonLabel: ""
+            Layout.fillWidth: true
 
-                Layout.preferredWidth: 0.1 * parent.width
-
-                onClicked: {
-                    StudyCaseHandler.loadUrlInBrowser(loadUrlBase);
-                }
-
-                iconSource: "qrc:/resources/icons/external2.png"
-            }
-
-            PrimaryButton {
-                buttonLabel: "Vista General"
-                buttonStatus: "primary"
-                //buttonText.font.pixelSize: height / 2
-
-                onClicked : mainWindow.switchSection("CE_Overall")
-
-                Layout.fillWidth: true
-            }
-
-            PrimaryButton {
-                id: continueButton
-
-                buttonLabel: "Guardar y Continuar"
-                buttonStatus: "success"
-                //buttonText.font.pixelSize: height / 2
-
-                Layout.preferredWidth: 0.5 * parent.width
-
-                onClicked: {
-                    mainWindow.switchSection(StudyCaseHandler.saveAndContinue(rowParent.objectName));
-                }
+            onClicked: {
+                mainWindow.switchSection(StudyCaseHandler.saveAndContinue(rowParent.objectName));
             }
         }
     }
 }
+

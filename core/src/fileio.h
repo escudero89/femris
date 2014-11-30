@@ -19,6 +19,8 @@ public:
 
     Q_INVOKABLE QStringList getFilteredFilesFromDirectory(const QStringList&, const QString& = "");
 
+    Q_INVOKABLE QString readFromSource(const QString&);
+
     QString source() const;
     bool isSourceEmpty();
 

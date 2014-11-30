@@ -26,8 +26,10 @@ ColumnLayout {
 
     Rectangle {
 
-        Layout.preferredHeight: textHeader.height
+        Layout.preferredHeight: textHeader.height * 1.1
         Layout.preferredWidth: parent.width
+
+        color: Style.color.background_highlight
 
         Text {
             id: textHeader
@@ -35,8 +37,19 @@ ColumnLayout {
             text: qsTr("Condiciones de borde") + "<br /><small style='color:" + Style.color.content + "'><em>" + qsTr("Número de lados: ") + repeater.count + "</em></small>"
             textFormat: Text.RichText
             font.pointSize: Style.fontSize.h5
+
+            anchors.left: parent.left
+            anchors.leftMargin: 12
         }
 
+    }
+
+    Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 3
+
+        color: Style.color.complement
+        opacity: 0.3
     }
 
     RowLayout {
@@ -88,7 +101,7 @@ ColumnLayout {
                 Rectangle {
                     anchors.fill: parent
 
-                    color: (index === repeater.currentIndex) ? Style.color.primary :
+                    color: (index === repeater.currentIndex) ? Style.color.femris :
                                ((index % 2 === 0) ? Style.color.background_highlight :  Style.color.background) ;
 
                     opacity: 0.3

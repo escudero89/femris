@@ -30,6 +30,8 @@ RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
+        color: "white"
+
         ColumnLayout {
 
             height: parent.height
@@ -60,8 +62,11 @@ RowLayout {
                     cellHeight: cellWidth
 
                     highlight: Rectangle {
-                        color: "white"//Style.color.background;
+                        color: Style.color.femris;
                         radius: 5
+                        opacity: 0.03
+
+                        z: 1000
                     }
 
                     focus: true
@@ -186,11 +191,19 @@ RowLayout {
             }
 
             Rectangle {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 3
+
+                color: Style.color.complement
+                opacity: 0.3
+            }
+
+            Rectangle {
 
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
-                color: Style.color.background_highlight
+                color: "transparent"
 
                 GridLayout {
 
@@ -199,6 +212,8 @@ RowLayout {
 
                     columns : 2
                     rows : 2
+
+                    columnSpacing: 0
 
                     FlickableRepeaterNodesSideload {
                         id: sideLoadContainer

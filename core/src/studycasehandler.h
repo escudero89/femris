@@ -55,7 +55,6 @@ private:
     bool m_isSaved;
 
     QString setSingleStudyCaseJsonHelper(const QString&, const QJsonArray&);
-    bool saveAndContinueHelper(const QString&, const QString&, const unsigned int&, const unsigned int&);
 
     QString m_studyCaseType;
     StudyCase *m_studyCase;

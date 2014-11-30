@@ -256,11 +256,6 @@ QString StudyCaseHandler::setSingleStudyCaseJsonHelper(const QString& nameVariab
  */
 QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
 
-    unsigned int stepOfProcess = getSingleStudyCaseInformation("stepOfProcess").toUInt();
-    unsigned int newStepOfProcess = 0;
-
-    int currentStepOfProcess = 1;
-
     QStringList stagesList;
     stagesList << "CE_Model"
                << "CE_Domain"
@@ -268,44 +263,11 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
                << "CE_Results"
                << "CE_Overall";
 
-    while (newStepOfProcess == 0) {
+    unsigned int nextStepOfProcess = stagesList.indexOf(parentStage) + 1;
 
-        if (currentStepOfProcess > stagesList.size() - 1) {
-            Utils::throwErrorAndExit("StudyCaseHandler::saveAndContinue(): parentStage doesn't exist - " +
-                                     parentStage + " [ step: " + QString::number(currentStepOfProcess) + " ] ");
-        }
+    setSingleStudyCaseInformation("stepOfProcess", QString::number(nextStepOfProcess));
 
-        if (saveAndContinueHelper(parentStage,
-                                  stagesList.at(currentStepOfProcess - 1),
-                                  stepOfProcess,
-                                  currentStepOfProcess)) {
-
-            newStepOfProcess = currentStepOfProcess + 1;
-        }
-
-        currentStepOfProcess++;
-
-    }
-
-    setSingleStudyCaseInformation("stepOfProcess", QString::number(newStepOfProcess));
-
-    return stagesList.at(newStepOfProcess - 1);
-}
-
-/**
- * @brief StudyCaseHandler::saveAndContinueHelper
- * @param parentStage
- * @param comparisonStage
- * @param stepOfProcess
- * @param stepOfProcessForComparison
- * @return
- */
-bool StudyCaseHandler::saveAndContinueHelper(const QString &parentStage,
-                                             const QString &comparisonStage,
-                                             const unsigned int &stepOfProcess,
-                                             const unsigned int &stepOfProcessForComparison) {
-
-    return (parentStage == comparisonStage && stepOfProcess == stepOfProcessForComparison);
+    return stagesList.at(nextStepOfProcess);
 }
 
 /**

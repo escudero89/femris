@@ -17,26 +17,44 @@
 %
 global coordinates
 coordinates = [
+    0,    0 ;
+    0.5,    0 ;
+    1,    0 ;
+    0,    0.5 ;
+    0.5,    0.5 ;
+    1,    0.5 ;
+    0,    1 ;
+    0.5,    1 ;
+    1,    1 ;
 ];
+
 %
 % Elements
 %
 global elements
- elements    = [
+ elements = [
+    1,    4,    5,    2 ;
+    2,    5,    6,    3 ;
+    4,    7,    8,    5 ;
+    5,    8,    9,    6 ;
 ];
+
 %
 % Fixed Nodes
 %
-fixnodes    = [
+fixnodes = [
 ];
+
 %
 % Point loads
 %
-pointload   = [
+pointload = [
 ];
+
 %
 % Uniform Side loads
 %
-sideload    = [
+sideload = [
 ];
+
 

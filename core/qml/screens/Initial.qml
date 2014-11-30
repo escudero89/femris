@@ -42,7 +42,7 @@ RowLayout {
                 button.buttonStatus: "info"
                 button.iconSource: "qrc:/resources/icons/book95.png"
 
-                button.onClicked : mainWindow.switchSection("tutorial")
+                button.onClicked : mainWindow.switchSection("Tutorial")
 
                 image.source: "qrc:/resources/images/femris_tutorial2.png"
             }

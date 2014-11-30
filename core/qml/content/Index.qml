@@ -11,10 +11,9 @@ ColumnLayout {
 
     id: indexLayout
 
-    // Recarga el loader central usando el StackView
+    // Reloads the central loader usign the StackView
     signal loader(string url)
 
-    // Relleno de fondo
     Rectangle {
         color: Style.color.complement_highlight
         anchors.fill: parent
@@ -80,4 +79,33 @@ ColumnLayout {
         id: stackView
     }
 
+    // BottomBar
+    RowLayout {
+
+        Layout.alignment: Qt.AlignBottom
+
+        Layout.preferredHeight: indexLayout.height * 0.05
+        Layout.fillWidth: true
+        spacing: 0
+
+        PrimaryButton {
+            buttonStatus: "black"
+            buttonLabel: "Regresar"
+            iconSource: "qrc:/resources/icons/reply8.png"
+
+            Layout.fillWidth: true
+
+            onClicked: mainWindow.switchSection(StudyCaseHandler.getSingleStudyCaseInformation("tutorialReturnTo", true));
+        }
+
+        PrimaryButton {
+            buttonStatus: "femris"
+            buttonLabel: "BROWSER"
+            iconSource: "qrc:/resources/icons/external2.png"
+
+            Layout.fillWidth: true
+
+            onClicked: StudyCaseHandler.loadUrlInBrowser("docs/current.html");
+        }
+    }
 }
