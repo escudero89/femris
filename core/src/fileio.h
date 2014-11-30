@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJsonObject>
+#include <QStringList>
 
 class FileIO : public QObject {
     Q_OBJECT
@@ -15,6 +16,8 @@ public:
     Q_INVOKABLE QString read();
     Q_INVOKABLE bool write(const QString&);
     Q_INVOKABLE QJsonObject getVarFromJsonString(const QString&);
+
+    Q_INVOKABLE QStringList getFilteredFilesFromDirectory(const QStringList&, const QString& = "");
 
     QString source() const;
     bool isSourceEmpty();

@@ -37,18 +37,17 @@ RowLayout {
             width: parent.width
 
             Flickable {
+
+                id: flickableExamples
+
+                Layout.preferredHeight: parent.height * 0.6
+
                 flickableDirection: Flickable.HorizontalFlick
 
-                Layout.fillHeight: true
                 Layout.fillWidth: true
 
                 contentWidth: gridViewDomain.height * gridViewDomain.count
                 clip: true
-
-                //color: Style.color.comment
-
-                //contentHeight: height
-                //contentWidth: GridView.currentItem.width
 
                 GridView {
 
@@ -62,8 +61,8 @@ RowLayout {
                     cellHeight: cellWidth
 
                     highlight: Rectangle {
-                        color: Style.color.background;
-                        radius: 5;
+                        color: "white"//Style.color.background;
+                        radius: 5
                     }
 
                     focus: true
@@ -86,7 +85,7 @@ RowLayout {
                                 width: parent.width
 
                                 Image {
-                                    source: portrait
+                                    source: (name !== "empty") ? portrait : "qrc:/resources/images/square_shadow.png"
 
                                     Layout.preferredHeight: parent.height * 0.95
                                     Layout.preferredWidth: parent.width * 0.95
@@ -106,6 +105,21 @@ RowLayout {
                                     gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
                                 }
 
+                                onDoubleClicked: {
+
+                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
+
+                                    if (flickableExamples.Layout.preferredHeight !== flickableExamples.parent.height) {
+                                        flickableExamples.contentX = gridViewDomain.currentIndex * gridViewDomain.cellWidth * (flickableExamples.parent.height / flickableExamples.Layout.preferredHeight);
+                                        flickableExamples.Layout.preferredHeight = flickableExamples.parent.height;
+
+                                    } else {
+                                        flickableExamples.contentX = gridViewDomain.currentIndex * gridViewDomain.cellWidth * 0.6;
+                                        flickableExamples.Layout.preferredHeight = flickableExamples.parent.height * 0.6;
+                                    }
+
+                                }
+
                                 Connections {
                                     target: CurrentFileIO
 
@@ -116,6 +130,10 @@ RowLayout {
                             }
 
                             Component.onCompleted: {
+                                if (listModelExamples.count === 1) {
+                                    gridViewDomain.fillExamples();
+                                }
+
                                 // We just load the conditions for the first component
                                 if (index === gridViewDomain.currentIndex) {
                                     gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
@@ -125,34 +143,36 @@ RowLayout {
                     }
 
                     model: ListModel {
+                        id: listModelExamples
 
                         ListElement {
-                            name: "Example 1"
-                            portrait: "qrc:/resources/examples/example1.png"
-                            exampleFile: "example1.json"
+                            name: 'empty'
+                            portrait: 'empty'
+                            exampleFile: 'empty'
                         }
-                        ListElement {
-                            name: "Example 2"
-                            portrait: "qrc:/resources/examples/example2.png"
-                            exampleFile: "example2.json"
+                    }
+
+                    function fillExamples() {
+
+                        listModelExamples.clear();
+                        var examples = CurrentFileIO.getFilteredFilesFromDirectory(["example*.json"], 'docs/examples');
+
+                        for ( var k = 1 ; k <= examples.length ; k++ ) {
+                            var ex = examples[k - 1];
+                            listModelExamples.append({
+                                "name": "Example " + k,
+                                "portrait": fileApplicationDirPath + "/" + ex.substr(0, ex.search(".json")) + ".png",
+                                "exampleFile": ex.substring(ex.search(/example\d/))
+                            });
                         }
-                        ListElement {
-                            name: "Example 3"
-                            portrait: "qrc:/resources/examples/example3.png"
-                            exampleFile: "example3.json"
-                        }
-                        ListElement {
-                            name: "Example 4"
-                            portrait: "qrc:/resources/examples/example4.png"
-                            exampleFile: "example4.json"
-                        }
+
                     }
 
                     function fillSideLoadAndFixedNodes(newIndex, exampleFile) {
 
                         gridViewDomain.currentIndex = newIndex;
 
-                        CurrentFileIO.setSource(':/resources/examples/' + exampleFile);
+                        CurrentFileIO.setSource(fileApplicationDirPath + '/docs/examples/' + exampleFile);
 
                         jsonDomain = CurrentFileIO.getVarFromJsonString(CurrentFileIO.read());
 
@@ -193,7 +213,7 @@ RowLayout {
                     FlickableRepeaterNodes {
                         id: nodesContainer
 
-                        objectHeader.text: qsTr("Cargas puntuales y fijas")
+                        objectHeader.text: qsTr("Cargas puntuales y condiciones nodales")
                         textRow: "Nodo #"
 
                         textInformation: "pointload"
@@ -235,6 +255,10 @@ RowLayout {
                 }
             }
         }
+    }
+
+    AlertModal {
+        id: imageModal
     }
 
     function saveCurrentLoads() {

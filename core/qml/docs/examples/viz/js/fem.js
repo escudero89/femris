@@ -1,6 +1,4 @@
 // We define some variables for the colors
-var G_COLOR_NODE_HIGH = "#d9534f";
-var G_COLOR_ELEM_HIGH = "#d9534f";
 
 function getOptions(xnode, ielem, params) {
 
@@ -12,7 +10,7 @@ function getOptions(xnode, ielem, params) {
         'pointer-events' : 'none',
         'style'          : 'cursor:pointer',
         'text-anchor'    : 'middle',
-        'font-size'      : 0.05 * Math.abs( xnode[ ielem[0][2] - 1 ][1] - xnode[ ielem[0][0] - 1 ][1] )
+        'font-size'      : 0.10 * Math.abs( xnode[ ielem[0][2] - 1 ][1] - xnode[ ielem[0][0] - 1 ][1] )
     };
 
     if (localParamsTextSVG['font-size'] === 0) {

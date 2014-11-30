@@ -1,7 +1,7 @@
 // DRAW >>>>>>>>>
 
-var G_COLOR_NODE = "#428bca";
-var G_COLOR_ELEM = "#428bca";
+var G_COLOR_NODE = "#ccc";
+var G_COLOR_ELEM = "#eee";
 
 // We set the SVG as a global variable, and also the dummy (efficiency)
 var $G_DRAW_SHAPES = $("#draw-shapes");
@@ -211,7 +211,7 @@ var domainObject = {
                 paramsTextSVG.x = xy_gravity_center.x / elem.length;
                 paramsTextSVG.y = xy_gravity_center.y / elem.length;
 
-                addElementToSVG(getTextSVG("e" + twoElem.k_ielem, paramsTextSVG));
+                addElementToSVG(getTextSVG("elemento " + twoElem.k_ielem, paramsTextSVG));
 
                 paramsTextSVG['font-size'] = fontSize;
             }
@@ -226,7 +226,7 @@ var domainObject = {
             } else {
                 twoElem.fill = G_COLOR_ELEM;
             }
-
+            twoElem.linewidth = 3;
             twoElem.fill_original = twoElem.fill;
 
             groupElem.add(twoElem);
@@ -256,9 +256,10 @@ var domainObject = {
                     this.options.maxValue);
 
             } else {
-                twoNode.fill = G_COLOR_ELEM;
+                twoNode.fill = G_COLOR_NODE;
             }
 
+            twoNode.linewidth = 3;
             twoNode.fill_original = twoNode.fill;
 
             twoNode.type = 'node';
@@ -277,7 +278,7 @@ var domainObject = {
             }
         }
 
-        groupNode.opacity = 0.95;
+        groupNode.opacity = 0.98;
 
         return groupNode;
     },

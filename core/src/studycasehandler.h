@@ -36,7 +36,7 @@ public:
 
     Q_INVOKABLE bool savedStatus();
     void markAsSaved();
-    void markAsNotSaved();
+    Q_INVOKABLE void markAsNotSaved();
 
 public Q_SLOTS:
 

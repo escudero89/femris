@@ -17,6 +17,7 @@ Item {
 
     property string contentTitle : "Alert Box!"
     property string contentName : "byDefault"
+    property string hasImage : "false"
 
     anchors.fill: parent
     anchors.rightMargin: 0
@@ -191,6 +192,16 @@ Item {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 color: "transparent"
+            }
+
+            Image {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                fillMode: Image.PreserveAspectFit
+
+                source:  (alertModal.hasImage !== "false") ? alertModal.hasImage : "qrc:/resources/images/square_shadow.png"
+
+                visible: (alertModal.hasImage !== "false") ? true : false
             }
         }
     }

@@ -9,7 +9,7 @@
   young = 0 ;
   poiss = 0 ;
   denss = 0 ;
-  pstrs = 0 ;
+  pstrs = 1 ;
   thick = 0 ;
 
 %

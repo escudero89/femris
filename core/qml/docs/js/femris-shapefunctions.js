@@ -1,10 +1,13 @@
 function equationParser(equation, val) {
     
+    var PI;
+
     var expr = Parser.parse(equation);
-    var value = { 'x' : val };
+    var value = { 'x' : val, 'PI' :  PI };
 
     if (typeof(val) === 'object') {
         value = val;
+        value['PI'] = PI;
     }
 
     return expr.evaluate(value);
@@ -172,7 +175,7 @@ function updateShapeFunction(firstTime) {
 function updateShapeFunctionHelper() {
 
     // We get the information from the inputs
-    input = getInputsFromUpdate();
+    var input = getInputsFromUpdate();
 
     var board = JXG.JSXGraph.initBoard('singleShapeFunction', {
         boundingbox: [-0.1, 1.5, 1.1, -0.5],
@@ -200,7 +203,7 @@ function updateShapeFunctionHelper() {
     var stepForNodesLocation = 1 / ( input.quantityOfNodes - 1 );
 
     updateInputs(input.quantityOfNodes);
-    N = getShapeFunctionFromInputUpdated();
+    var N = getShapeFunctionFromInputUpdated();
 
     // The outer loop is for each equation, and the inner loop is for each node
     for ( var kFunction = 0 ; kFunction < input.quantityOfNodes ; kFunction++ ) {
@@ -425,7 +428,8 @@ function updateGraphHelper() {
 
     Y_MAX = BASE_FUNCTION.max_y;
     Y_MIN = BASE_FUNCTION.min_y;
-    board.setBoundingBox([X_MIN, Y_MAX * 1.2, X_MAX, Y_MIN * 1.2]);
+    Y_DELTA = Math.abs(Y_MAX - Y_MIN) * .2;
+    board.setBoundingBox([X_MIN, Y_MAX + Y_DELTA, X_MAX, Y_MIN - Y_DELTA]);
 
     var pointsForElement = getPointsFromQuantityOfElements();
     var valuesForPoints = getValuesForInterpolation(pointsForElement);

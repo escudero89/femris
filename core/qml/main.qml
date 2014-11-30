@@ -146,7 +146,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/Initial.qml");
+            globalLoader.setSource("screens/CE_Domain.qml");
         }
 
     }
@@ -177,6 +177,7 @@ ApplicationWindow {
 
         onAccepted: {
             femrisLoader.folder = fileApplicationDirPath + "/temp/";
+            femrisLoader.markAsSaved = false;
             femrisLoader.open();
         }
 
@@ -204,11 +205,18 @@ ApplicationWindow {
         id: femrisLoader
         title: "Por favor seleccione un archivo de FEMRIS"
 
+        property bool markAsSaved : true;
+
         nameFilters: [ "Archivos de FEMRIS (*.femris *.femris.old)", "Todos los archivos (*)" ]
 
         onAccepted: {
             StudyCaseHandler.loadStudyCase(femrisLoader.fileUrl);
             mainWindow.switchSection("CE_Overall");
+
+            if (!markAsSaved) {
+                StudyCaseHandler.markAsNotSaved();
+                femrisLoader.markAsSaved = true;
+            }
         }
 
     }

@@ -46,181 +46,205 @@
        }
     });
     </script>
-<script type="text/javascript" src="js/third-party/MathJax.js"></script>
+    <script type="text/javascript" src="js/third-party/MathJax.js"></script>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
+    <div class="container-fluid">
+        <div class="row">
 
-        <div class="navbar-sm">
-            <div class="navbar-primary">
-                <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Desplazamientos
-                                <span class="caret"></span>
-                            </a>
-                            <ul name="displacements" class="dropdown-menu visualization" role="menu">
-                                <li name="0">
-                                    <a href="#">Eje X</a>
-                                </li>
-                                <li name="1">
-                                    <a href="#">Eje Y</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li name="0,1">
-                                    <a href="#">Totales</a>
-                                </li>
-                            </ul>
-                        </li>
+            <div class="navbar-sm">
+                <div class="navbar-primary">
+                    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Desplazamientos
+                                    <span class="caret"></span>
+                                </a>
+                                <ul name="displacements" class="dropdown-menu visualization" role="menu">
+                                    <li name="0">
+                                        <a href="#">Eje X</a>
+                                    </li>
+                                    <li name="1">
+                                        <a href="#">Eje Y</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li name="0,1">
+                                        <a href="#">Totales</a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Reacciones
-                                <span class="caret"></span>
-                            </a>
-                            <ul name="reactions" class="dropdown-menu visualization" role="menu">
-                                <li name="0">
-                                    <a href="#">Rx</a>
-                                </li>
-                                <li name="1">
-                                    <a href="#">Ry</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li name="0,1">
-                                    <a href="#">[Reacci&oacute;n]</a>
-                                </li>
-                            </ul>
-                        </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reacciones
+                                    <span class="caret"></span>
+                                </a>
+                                <ul name="reactions" class="dropdown-menu visualization" role="menu">
+                                    <li name="0">
+                                        <a href="#">Rx</a>
+                                    </li>
+                                    <li name="1">
+                                        <a href="#">Ry</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li name="0,1">
+                                        <a href="#">[Reacci&oacute;n]</a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Tensiones
-                                <span class="caret"></span>
-                            </a>
-                            <ul name="stresses" class="dropdown-menu visualization" role="menu">
-                                <li name="0">
-                                    <a href="#">Sx</a>
-                                </li>
-                                <li name="1">
-                                    <a href="#">Sy</a>
-                                </li>
-                                <li name="2">
-                                    <a href="#">Sz</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li name="3">
-                                    <a href="#">Sxy</a>
-                                </li>
-                                <li name="4">
-                                    <a href="#">Syz</a>
-                                </li>
-                                <li name="5">
-                                    <a href="#">Szx</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="navbar-form navbar-left" role="search" style="margin:3px">
-                        <div class="form-group">
-                            <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
-                        </div>
-                        <button class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, $('#changeFactorOfDeformation').val());">
-                            <span class="glyphicon glyphicon-eye-open"></span>
-                        </button>
-                    </form>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Tensiones
+                                    <span class="caret"></span>
+                                </a>
+                                <ul name="stresses" class="dropdown-menu visualization" role="menu">
+                                    <li name="0">
+                                        <a href="#">Sx</a>
+                                    </li>
+                                    <li name="1">
+                                        <a href="#">Sy</a>
+                                    </li>
+                                    <li name="2">
+                                        <a href="#">Sz</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li name="3">
+                                        <a href="#">Sxy</a>
+                                    </li>
+                                    <li name="4">
+                                        <a href="#">Syz</a>
+                                    </li>
+                                    <li name="5">
+                                        <a href="#">Szx</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="navbar-form navbar-left" role="search" style="margin:3px">
+                            <div class="form-group">
+                                <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
+                            </div>
+                            <button class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, $('#changeFactorOfDeformation').val());">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                        </form>
 
-                    <form class="navbar-form navbar-right" role="search" style="margin:3px">
-                        <button class="btn btn-primary" title="Ver matriz de r&iacute;gidez global" onclick="viewGlobalStiffnessMatrix()">
-                            <span class="glyphicon glyphicon-th"></span>
-                        </button>
-                        <button id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
-                            <span class="glyphicon glyphicon-th-large"></span>
-                        </button>
-                        <button class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
-                            <span class="glyphicon glyphicon-eye-close"></span>
-                        </button>
-                    </form>
-                </nav>
-            </div>
-        </div>
-
-        <div id="leftColumnResults" class="col-xs-6" style="background-color: #F8f8f8">
-            <div id="draw-shapes" >
-                <div class="two-container w100p" style="height: 90vh;"></div>
+                        <form class="navbar-form navbar-right" role="search" style="margin:3px">
+                            <button class="btn btn-primary" title="Ver matriz de r&iacute;gidez global" onclick="viewGlobalStiffnessMatrix()">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </button>
+                            <button id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
+                                <span class="glyphicon glyphicon-th-large"></span>
+                            </button>
+                            <button class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
+                                <span class="glyphicon glyphicon-eye-close"></span>
+                            </button>
+                        </form>
+                    </nav>
+                </div>
             </div>
 
-            <div version="1.1" id="draw-shapes-dummy" class="hidden">
-                <g></g>
-            </div>
-        </div>
-
-        <div id="rightColumnResults" class="col-xs-6" >
-
-            <div id="matrixSVG" style="background-color: #f8f8f8">
-
-                <div id="draw-matrix">
+            <div id="leftColumnResults" class="col-xs-6" style="background-color: #F8f8f8">
+                <div id="draw-shapes" >
                     <div class="two-container w100p" style="height: 90vh;"></div>
                 </div>
 
-                <svg version="1.1" id="draw-matrix-dummy" class="hidden">
+                <div version="1.1" id="draw-shapes-dummy" class="hidden">
                     <g></g>
-                </svg>
-
+                </div>
             </div>
 
-            <div id="box" class="box w100p hidden">
+            <div id="rightColumnResults" class="col-xs-6" >
 
-                <div role="tabpanel">
+                <div id="matrixSVG" style="background-color: #f8f8f8">
 
-                    <!-- Nav tabs -->            
-                    <ul class="nav nav-tabs nav-tabs nav-justified" role="tablist" id="elementalTabs">
-                        <li role="presentation" class="active">
-                            <a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Sumario</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#extra" aria-controls="extra" role="tab" data-toggle="tab">Información extra</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#matfem" aria-controls="matfem" role="tab" data-toggle="tab">MATfem</a>
-                        </li>
-                    </ul>
+                    <div id="draw-matrix">
+                        <div class="two-container w100p" style="height: 90vh;"></div>
+                    </div>
 
-                    <!-- Tab panes -->
-                    <div class="tab-content" style="max-height:84vh; overflow-y: auto">
-                        <div role="tabpanel" class="tab-pane active" id="summary">
-                        <h3>Matriz de Rigidez Elemental <small>Los elementos `-` indican valores nulos (0).</small></h3>
-                        <p>A continuación se presenta la matriz de rigidez elemental del elemento <label class="label label-primary">{{self.element_idx+1}}</label>, que incluye los nodos <label class="label label-info">{{self.element_nodes_idx[0]}}</label>, <label class="label label-info">{{self.element_nodes_idx[1]}}</label>, <label class="label label-info">{{self.element_nodes_idx[2]}}</label> en ese respectivo orden.</p>
-                            
-                            <div id="MathOutput" class="output"></div>
+                    <svg version="1.1" id="draw-matrix-dummy" class="hidden">
+                        <g></g>
+                    </svg>
 
-                            <p>La anterior matriz se obtuvo mediante la siguiente expresión:</p>
+                </div>
 
-                            <div class="output">
-                            $${
+                <div id="box" class="box w100p hidden">
+
+                    <div role="tabpanel">
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs nav-tabs nav-justified" role="tablist" id="elementalTabs">
+                            <li role="presentation" class="active">
+                                <a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Sumario</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#extra" aria-controls="extra" role="tab" data-toggle="tab">Información extra</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#matfem" aria-controls="matfem" role="tab" data-toggle="tab">MATfem</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content" style="max-height:84vh; overflow-y: auto">
+                            <div role="tabpanel" class="tab-pane active" id="summary">
+                                <h3>
+                                    Matriz de Rigidez Elemental
+                                    <small>Los elementos `-` indican valores nulos (0).</small>
+                                </h3>
+                                <p>
+                                    A continuación se presenta la matriz de rigidez elemental del elemento
+                                    <label class="label label-primary">{{self.element_idx+1}}</label>
+                                    , que incluye los nodos
+                                    <label class="label label-info">{{self.element_nodes_idx[0]}}</label>
+                                    ,
+                                    <label class="label label-info">{{self.element_nodes_idx[1]}}</label>
+                                    ,
+                                    <label class="label label-info">{{self.element_nodes_idx[2]}}</label>
+                                    en ese respectivo orden.
+                                </p>
+
+                                <div id="MathOutput" class="output"></div>
+
+                                <p>
+                                    La anterior matriz se obtuvo mediante la siguiente expresión:
+                                </p>
+
+                                <div class="output">
+                                    $${
                             \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
                             }$$
+                                </div>
+
+                                <p>
+                                    En la pestaña de
+                                    <a class="femris" onclick="$('#elementalTabs li:eq(2) a').tab('show')" href="#">MATfem</a>
+                                    puedes ver cómo se ha implementado el código para calcular dicha expresión.
+                                </p>
                             </div>
 
-                            <p>En la pestaña de <a class="femris" onclick="$('#elementalTabs li:eq(2) a').tab('show')" href="#">MATfem</a> puedes ver cómo se ha implementado el código para calcular dicha expresión.</p>
-                        </div>
-                        
-                        <div role="tabpanel" class="tab-pane" id="extra">
+                            <div role="tabpanel" class="tab-pane" id="extra">
 
-                            <h3>Matriz Constitutiva <small>Elasticity matrix</small></h3>
+                                <h3>
+                                    Matriz Constitutiva
+                                    <small>Elasticity matrix</small>
+                                </h3>
 
-                            <p>La matriz constitutiva obtenida para este problema de es la siguiente:</p>
+                                <p>
+                                    La matriz constitutiva obtenida para este problema de es la siguiente:
+                                </p>
 
-                            <div id="constitutiveMatrix" class="output"></div>
+                                <div id="constitutiveMatrix" class="output"></div>
 
-                            <hr>
+                                <hr>
 
-                            <p>La matriz constitutiva `\mathbf{D}` de la relación:</p>
+                                <p>La matriz constitutiva `\mathbf{D}` de la relación:</p>
 
-                            <div class="output">
-                                $${
+                                <div class="output">
+                                    $${
                                 \boldsymbol\sigma = 
                                     \left\{\begin{matrix}
                                         \sigma_x \\ 
@@ -235,39 +259,116 @@
                                     \end{matrix}\right\} - {\boldsymbol\epsilon}_0
                                  \right )
                                 }$$
-                                <small class="pull-right" style="color:#555"><u>Nota:</u> `\mathbf{\epsilon}_0` representa la <em>deformación inicial</em>, que suele considerarse nula.</small>
+                                    <small class="pull-right" style="color:#555"> <u>Nota:</u>
+                                        `\mathbf{\epsilon}_0` representa la <em>deformación inicial</em>
+                                        , que suele considerarse nula.
+                                    </small>
+                                </div>
+
+                                <p>se puede establecer explícitamente para cualquier material.</p>
+
+                                <p>
+                                    En este caso de <strong>{{self.current.problem_type_text.toLowerCase()}}</strong>
+                                    , la matriz es obtenida de la siguiente forma:
+                                </p>
+
+                                <div id="constitutiveMatrixBase" class="output"></div>
+
+                                <p>
+                                    con los valores del <strong>Módulo de Young</strong>
+                                    y
+                                    <strong>Coeficiente de Poisson</strong>
+                                    respectivos de:
+                                </p>
+
+                                <div id="constitutiveMatrixBaseVariables" class="output"></div>
+
                             </div>
+                            <div role="tabpanel" class="tab-pane" id="matfem">
 
-                            <p>se puede establecer explícitamente para cualquier material.</p>
+                                <div role="tabpanel">
+                                    <ul class="nav nav-pills">
+                                        <li role="presentation" class="active">
+                                            <a href="#mainTab" aria-controls="mainTab" role="tab" data-toggle="tab">MATfemris.m</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#stiffness" aria-controls="stiffness" role="tab" data-toggle="tab">TrStif.m</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#constitutive" aria-controls="constitutive" role="tab" data-toggle="tab">constt.m</a>
+                                        </li>
+                                    </ul>
 
-                            <p>En este caso de <strong>{{self.current.problem_type_text.toLowerCase()}}</strong>, la matriz es obtenida de la siguiente forma:</p>
+                                    <br />
 
-                            <div id="constitutiveMatrixBase" class="output"></div>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="mainTab">
+                                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="headingOne">
+                                                        <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">SUBRUTINA <strong>DATOS</strong> <small>Entrada de datos geométricos y del material</small></a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                        <div class="panel-body">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                                        <h4 class="panel-title">
+                                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">SUBRUTINA <strong>RIGIDEZ</strong> <small>Cálculo de la matriz de rigidez de cada elemento</small></a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                        <div class="panel-body">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="headingThree">
+                                                        <h4 class="panel-title">
+                                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">SUBRUTINA <strong>CARGAS</strong> <small>Cálculo del vector de fuerzas nodales de cada elemento</small></a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                        <div class="panel-body">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="headingFour">
+                                                        <h4 class="panel-title">
+                                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">SUBRUTINA <strong>SOLUCIÓN</strong> <small>Ensamblaje y solución del sistema `\mathbf{K a} = \mathbf{f}`</small></a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                                        <div class="panel-body">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="headingFive">
+                                                        <h4 class="panel-title">
+                                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">SUBRUTINA <strong>TENSIÓN</strong> <small>Cálculo de deformaciones y tensiones en cada elemento</small></a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                                        <div class="panel-body">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                            <p>con los valores del <strong>Módulo de Young</strong> y <strong>Coeficiente de Poisson</strong> respectivos de:</p>
-
-                            <div id="constitutiveMatrixBaseVariables" class="output"></div>
-                            
-
-
-                            
-
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="matfem">
-
-                            <div role="tabpanel">
-                                <ul class="nav nav-pills">
-                                    <li role="presentation" class="active">
-                                        <a href="#stiffness" aria-controls="stiffness" role="tab" data-toggle="tab">TrStif.m</a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a href="#constitutive" aria-controls="constitutive" role="tab" data-toggle="tab">constt.m</a>
-                                    </li>
-                                </ul>
-
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="stiffness">
-                                        <pre class="matlab-code">
+                                        <div role="tabpanel" class="tab-pane" id="stiffness">
+                                            <pre class="matlab-code">
 % Esta función es llamada una vez por cada elemento de la malla,
 % y obtiene la matriz de rigidez elemental.
 
@@ -296,10 +397,10 @@ function [M,F] = TrStif(nodes,dmat,thick,denss)
 
     F = [ 0,-force, 0,-force, 0,-force];
                                         </pre>
-                                    </div>
+                                        </div>
 
-                                    <div role="tabpanel" class="tab-pane" id="constitutive">
-                                        <pre class="matlab-code">
+                                        <div role="tabpanel" class="tab-pane" id="constitutive">
+                                            <pre class="matlab-code">
 % Ésta función es utilizada para obtener la matriz constitutiva.
 
 function D = constt(young,poiss,pstrs)
@@ -326,91 +427,93 @@ function D = constt(young,poiss,pstrs)
 
     D = [aux1,aux2,0;aux2,aux1,0;0,0,aux3];
                                       </pre>
-                                  </div>
-                              </div>
-                           </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="settings">...</div>
                         </div>
-                      <div role="tabpanel" class="tab-pane" id="settings">...</div>
-                  </div>
+                    </div>
+
                 </div>
+            </div>
 
+            <div class="navbar-sm">
+                <div class="navbar-primary">
+                    <nav class="navbar navbar-fixed-bottom navbar-inverse" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a>
+                                    Valor actual:
+                                    <span id="currentValue">0.0000e+0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    M&iacute;n:
+                                    <span id="minValue"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    Max:
+                                    <span id="maxValue"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-        </div>
 
-        <div class="navbar-sm">
-            <div class="navbar-primary">
-                <nav class="navbar navbar-fixed-bottom navbar-inverse" role="navigation">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a>
-                                Valor actual:
-                                <span id="currentValue">0.0000e+0</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                M&iacute;n:
-                                <span id="minValue"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                Max:
-                                <span id="maxValue"></span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalStiffnessMatrix" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:90%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Cerrar</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Matriz de Rigidez Global <small>Los elementos `-` indican valores nulos (0).</small></h4>
-            </div>
-            <div class="modal-body output">...</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
         </div>
     </div>
-</div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/third-party/jquery-1.11.1.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/third-party/bootstrap.min.js"></script>
 
-<script src="js/third-party/two.min.js"></script>
-<script src="js/third-party/svg-pan-zoom.min.js"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="modalStiffnessMatrix" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:90%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Cerrar</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Matriz de Rigidez Global
+                        <small>Los elementos `-` indican valores nulos (0).</small>
+                    </h4>
+                </div>
+                <div class="modal-body output">...</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/third-party/jquery-1.11.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/third-party/bootstrap.min.js"></script>
 
-<script src="js/third-party/matlab-highlighter-1.55.min.js"></script>
+    <script src="js/third-party/two.min.js"></script>
+    <script src="js/third-party/svg-pan-zoom.min.js"></script>
 
-<!-- Now we include all the javascript that we use in this project -->
-<script src="../temp/currentMatFemFile.femris.js"></script>
-<script src="../temp/currentMatFemFile_elemental.femris.js"></script>
-<!-- This is necessary for the web version -->
-<script src="../../temp/currentMatFemFile.femris.js"></script>
-<script src="../../temp/currentMatFemFile_elemental.femris.js"></script>
+    <script src="js/third-party/matlab-highlighter-1.55.min.js"></script>
 
-<script src="js/femris-globals.js"></script>
-<script src="js/femris-utils.js"></script>
-<script src="js/fem-draw.js"></script>
-<script src="js/fem-matrix.js"></script>
-<script src="js/fem-elemental-matrix.js"></script>
-<script src="js/fem.js"></script>
+    <!-- Now we include all the javascript that we use in this project -->
+    <script src="../temp/currentMatFemFile.femris.js"></script>
+    <script src="../temp/currentMatFemFile_elemental.femris.js"></script>
+    <!-- This is necessary for the web version -->
+    <script src="../../temp/currentMatFemFile.femris.js"></script>
+    <script src="../../temp/currentMatFemFile_elemental.femris.js"></script>
 
+    <script src="js/femris-globals.js"></script>
+    <script src="js/femris-utils.js"></script>
+    <script src="js/fem-draw.js"></script>
+    <script src="js/fem-matrix.js"></script>
+    <script src="js/fem-elemental-matrix.js"></script>
+    <script src="js/fem.js"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function() {
         $("[data-toggle=popover]").popover();
 
@@ -419,7 +522,7 @@ function D = constt(young,poiss,pstrs)
     });
 </script>
 
-<!--
+    <!--
 <div class="output">
     $${
     \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e

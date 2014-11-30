@@ -126,7 +126,7 @@ Rectangle {
                 if (firstTimeOnly) {
                     blockHiding(textAreaPrimeraVezAqui.state !== 'OCULTO');
                 }
-console.log(firstTimeOnly)
+
                 textAreaPrimeraVezAqui.state =
                         (textAreaPrimeraVezAqui.state !== 'OCULTO') ? 'OCULTO' : 'NORMAL';
             }

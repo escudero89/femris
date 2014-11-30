@@ -96,6 +96,22 @@ QJsonObject FileIO::getVarFromJsonString(const QString& jsonFile) {
     return jsonResponse.object();
 }
 
+QStringList FileIO::getFilteredFilesFromDirectory(const QStringList& filters, const QString& directory) {
+
+    QDir dir(directory);
+
+    QStringList searchedFiles;
+    searchedFiles = dir.entryList(filters, QDir::Files);
+
+    QStringList searchedFilesPath;
+
+    for ( int k = 0 ; k < searchedFiles.length() ; k++ ) {
+        searchedFilesPath << dir.filePath(searchedFiles[k]);
+    }
+
+    return searchedFilesPath;
+}
+
 
 //----------------------------------------------------------------------------//
 //--                           STATIC FUNCTIONS                             --//
