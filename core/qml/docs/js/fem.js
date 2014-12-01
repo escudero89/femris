@@ -38,8 +38,13 @@ function toggleViews(setElementalView) {
 }
 
 function viewGlobalStiffnessMatrix() {
-    var modalBody = $('#modalStiffnessMatrix').find('.modal-body');
-    modalBody.html('$${' + globalElementalMatrixObject.latexfyMatrixWithLabel(G_CURRENT_ELEMENTAL_DATA.stiffness_matrix, 'K') + '}$$'); 
+    var modalBody = $('#modalStiffnessMatrix').find('.output');
+    
+    var globalK = globalElementalMatrixObject.latexfyMatrixWithLabel(G_CURRENT_ELEMENTAL_DATA.stiffness_matrix, 'K\\cdot \\phi');
+    var globalPhi = globalElementalMatrixObject.latexfyMatrix(G_CURRENT_ELEMENTAL_DATA.u);
+    var globalF = globalElementalMatrixObject.latexfyMatrixWithLabel(G_CURRENT_ELEMENTAL_DATA.f, 'f');
+
+    modalBody.html('$${\\begin{align*}' +  globalK + globalPhi + "&&" + globalF + '\\end{align*}}$$'); 
 
     $('#modalStiffnessMatrix').modal(); 
     globalElementalMatrixObject.loadMathJax('#modalStiffnessMatrix');

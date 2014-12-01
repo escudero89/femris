@@ -26,6 +26,10 @@
     <script type="text/x-mathjax-config">
     MathJax.HTML.Cookie.Set("menu",{});
 
+    MathJax.Hub.Register.StartupHook("MathMenu Ready",function () {
+        MathJax.Menu.BGSTYLE["z-index"] = 1100;
+    });
+
     MathJax.Hub.Config({
         imageFont:null,
 
@@ -135,7 +139,7 @@
                         </form>
 
                         <form class="navbar-form navbar-right" role="search" style="margin:3px">
-                            <button class="btn btn-primary" title="Ver matriz de r&iacute;gidez global" onclick="viewGlobalStiffnessMatrix()">
+                            <button class="btn btn-primary" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
                                 <span class="glyphicon glyphicon-th"></span>
                             </button>
                             <button id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
@@ -484,7 +488,9 @@ function D = constt(young,poiss,pstrs)
                         <small>Los elementos `-` indican valores nulos (0).</small>
                     </h4>
                 </div>
-                <div class="modal-body output">...</div>
+                <div class="modal-body">
+                    <div class="output">...</div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>

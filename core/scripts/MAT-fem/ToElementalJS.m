@@ -23,7 +23,8 @@ function ToElementalJS(file_name)
     fprintf(fid, MatrixToJSON(femris_elemental_matrix{5}, 'pstrs', '1 indicate Plane Stress; 0 indicate Plane Strain'));
 
     fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{10}, 'M', 'This is the matrix of the global stiffness matrix'));
-    fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{11}, 'f', 'This is the matrix of the global stiffness matrix'));
+    fprintf(fid, MatrixToJSON(femris_elemental_matrix{21}, 'f', 'This is the vector of forces'));
+    fprintf(fid, MatrixToJSON(femris_elemental_matrix{22}, 'u', 'This is the vector of the displacements'));
 
     if (numberOfNodesPerElement == 4)
 

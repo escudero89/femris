@@ -79,10 +79,9 @@ var globalElementalMatrixObject = {
     },
 
     latexfyMatrixWithLabel : function(matrix, label, extra_label) {
-        extra_label = assignIfNecessary(extra_label, '');
-        label = '\\mathbf{' + label + '}' + extra_label + '=';
+        extra_label = assignIfNecessary(extra_label, ' ');
 
-        return label + this.latexfyMatrix(matrix);
+        return '\\mathbf{' + label + '}' + extra_label + '=' + this.latexfyMatrix(matrix);
     },
 
     setAllKeywordsInParagraphsOnTabs : function() {
@@ -152,6 +151,8 @@ var globalElementalMatrixObject = {
         this.setMathJax(K_e_latexfied + "\\; \\; \\;" + f_e_latexfied);
 
         this.setAllKeywordsInParagraphsOnTabs();
+
+        $("#buttonToggleViews").removeAttr('disabled');
         
     },
 
@@ -168,8 +169,6 @@ var globalElementalMatrixObject = {
         this.current.problem_type_text = parseInt(this.data._pstrs) ? 'Tensión Plana' : 'Deformación Plana';
 
         this.printConstitutiveMatrix();
-
-        $("#buttonToggleViews").removeAttr('disabled');
 
         return true;
 

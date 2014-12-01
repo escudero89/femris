@@ -119,16 +119,6 @@
   
   force1 = force - StifMat * u;      % Adjust the rhs with the known values
 
-  % FEMRIS ADDITION >>>>>>>
-  global femris_elemental_matrix;
-  femris_elemental_matrix{01} = full(StifMat);
-  femris_elemental_matrix{02} = dmat;
-  femris_elemental_matrix{03} = young;
-  femris_elemental_matrix{04} = poiss;
-  femris_elemental_matrix{05} = pstrs;
-  femris_elemental_matrix{21} = full(force1);
-  % <<< END FEMRIS ADDITION
-
 % Compute the solution by solving StifMat * u = force for the remaining
 % unknown values of u
   FreeNodes = setdiff( 1:nndof , fix );           % Find the free node list
@@ -139,6 +129,17 @@
   reaction(fix) = StifMat(fix,1:nndof) * u(1:nndof) - force(fix);
   
   ttim = timing('Time to solve the stiffness matrix',ttim); %Reporting time
+
+  % FEMRIS ADDITION >>>>>>>
+  global femris_elemental_matrix;
+  femris_elemental_matrix{01} = full(StifMat);
+  femris_elemental_matrix{02} = dmat;
+  femris_elemental_matrix{03} = young;
+  femris_elemental_matrix{04} = poiss;
+  femris_elemental_matrix{05} = pstrs;
+  femris_elemental_matrix{21} = full(force1);
+  femris_elemental_matrix{22} = u;
+  % <<< END FEMRIS ADDITION
 
 % Compute the stresses
   Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);

@@ -63,7 +63,7 @@
     var typeSchema = exists(alpha) ? 'hsla' : 'hsl';
     var alphaValue = exists(alpha) ? (', ' + alpha) : '';
 
-    return typeSchema + '(' + huePos + ', 100%, 50%' + alphaValue + ')';
+    return typeSchema + '(' + huePos + ', 100%, 65%' + alphaValue + ')';
 }
 
 
