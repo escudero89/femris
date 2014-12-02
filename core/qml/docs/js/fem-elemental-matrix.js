@@ -2,7 +2,7 @@
 var globalElementalMatrixObject = {
 
     original_html_content : {},
-    
+
     wasInitialized : false,
 
     data : false,
@@ -39,7 +39,7 @@ var globalElementalMatrixObject = {
 
     setMathJax : function(latexCode, elementId) {
         elementId = assignIfNecessary(elementId, 'MathOutput')
-        
+
         $('#' + elementId).html('$${' + latexCode + '}$$');
         this.loadMathJax(elementId);
     },
@@ -88,32 +88,17 @@ var globalElementalMatrixObject = {
 
         var self = this;
 
-        $.each($("[role='tabpanel'] p"), function (idx, value) {
-            var content = $(value).html();
-            var regex = /{{[\w\.\+\[\]\(\)]+}}/;
+        $.each($("[data-eval]"), function (idx, val) {
+            var $this = $(this);
+            var keyword = $this.attr('data-eval');
 
-            var encoded_idx = btoa(content.substr(0, 14));
-
-            if (typeof(self.original_html_content[encoded_idx]) === 'undefined') {
-                self.original_html_content[encoded_idx] = content;
-            } else {
-                content = self.original_html_content[encoded_idx];
-            }
-
-            while (content.search(regex) !== -1) {
-                var keyword = content.match(regex)[0];
-                keyword = keyword.substring(2, keyword.search("}}"));
-
-                content = content.replace(regex, eval(keyword));
-                $(value).html(content);
-            }
+            $this.html(eval(keyword.substring(2, keyword.search("}}"))));
         });
     },
 
     printConstitutiveMatrix : function () {
 
-        var latexfiedConstitutiveMatrix = 
-            "\\mathbf{D} = " /*+ this.wrapInTag("d_{11}&d_{12}&0\\\\d_{21}&d_{22}&0\\\\0&0&d_{33}", 'bmatrix') + "="*/;
+        var latexfiedConstitutiveMatrix = "\\mathbf{D} =";
 
         this.setMathJax(latexfiedConstitutiveMatrix + this.latexfyMatrix(this.data.dmat), 'constitutiveMatrix');
 
@@ -137,6 +122,46 @@ var globalElementalMatrixObject = {
         this.setMathJax(latexfiedVariables, 'constitutiveMatrixBaseVariables');
     },
 
+    printBMatrix : function () {
+
+        var latexfiedAllBMatrices = "";
+
+        for ( var kBmat = 0 ; kBmat < this.data.bmat.length ; kBmat++ ) {
+            var latexfiedBMatrix = "\\mathbf{B}_{"+ ( kBmat + 1) + "} &=";
+            latexfiedAllBMatrices += latexfiedBMatrix + this.latexfyMatrix(this.data.bmat[kBmat]);
+
+            if ( kBmat + 1 !== this.data.bmat.length ) {
+                latexfiedAllBMatrices += " \\\\ \\\\ ";
+            }
+        }
+
+        this.setMathJax(this.wrapInTag(latexfiedAllBMatrices, "align*"), 'bmat');
+
+        var latexfiedBMatrixBase = "\\mathbf{B}_i=";
+        var latexfiedBMatrixPattern = ["", "", ""];
+
+        for ( var kBmatCol = 0 ; kBmatCol < this.data.bmat[0].length ; kBmatCol++ ) {
+            var Ncol = "N_{" + ( kBmatCol + 1 );
+            var Ncol_x = Ncol + ", \\,x}";
+            var Ncol_y = Ncol + ", \\,y}";
+
+            latexfiedBMatrixPattern[0] += Ncol_x + " & " + 0;
+            latexfiedBMatrixPattern[1] += 0      + " & " + Ncol_y;
+            latexfiedBMatrixPattern[2] += Ncol_y + " & " + Ncol_x;
+
+            if ( kBmatCol + 1 !== this.data.bmat[0].length ) {
+                latexfiedBMatrixPattern[0] += " & ";
+                latexfiedBMatrixPattern[1] += " & ";
+                latexfiedBMatrixPattern[2] += " & ";
+            }
+        }
+
+        latexfiedBMatrixBase += this.wrapInTag(latexfiedBMatrixPattern.join("\\\\"), 'bmatrix');
+
+        this.setMathJax(latexfiedBMatrixBase, 'bmatBase');
+
+    },
+
     setWorkspace : function (selectedElementIdx) {
 
         this.element_idx = selectedElementIdx;
@@ -153,7 +178,7 @@ var globalElementalMatrixObject = {
         this.setAllKeywordsInParagraphsOnTabs();
 
         $("#buttonToggleViews").removeAttr('disabled');
-        
+
     },
 
     initialize : function (elemental_data) {
@@ -169,6 +194,7 @@ var globalElementalMatrixObject = {
         this.current.problem_type_text = parseInt(this.data._pstrs) ? 'Tensión Plana' : 'Deformación Plana';
 
         this.printConstitutiveMatrix();
+        this.printBMatrix();
 
         return true;
 

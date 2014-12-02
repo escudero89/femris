@@ -257,7 +257,8 @@ QString StudyCaseHandler::setSingleStudyCaseJsonHelper(const QString& nameVariab
 QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
 
     QStringList stagesList;
-    stagesList << "CE_Model"
+    stagesList << "________"
+               << "CE_Model"
                << "CE_Domain"
                << "CE_ShapeFunction"
                << "CE_Results"
@@ -266,7 +267,7 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
     unsigned int nextStepOfProcess = stagesList.indexOf(parentStage) + 1;
 
     setSingleStudyCaseInformation("stepOfProcess", QString::number(nextStepOfProcess));
-
+qDebug() << nextStepOfProcess;
     return stagesList.at(nextStepOfProcess);
 }
 

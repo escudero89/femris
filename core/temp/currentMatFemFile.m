@@ -9,7 +9,7 @@
   young = 0 ;
   poiss = 0 ;
   denss = 0 ;
-  pstrs = 1 ;
+  pstrs = 0 ;
   thick = 0 ;
 
 %
@@ -43,8 +43,6 @@ global elements
 % Fixed Nodes
 %
 fixnodes = [
-    4,    1,    0 ;
-    4,    2,    0 ;
 ];
 
 %

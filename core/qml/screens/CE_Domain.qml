@@ -239,6 +239,7 @@ RowLayout {
                 PrimaryButton {
                     buttonLabel: "Vista General"
                     buttonStatus: "primary"
+                    iconSource: "qrc:/resources/icons/four29.png"
 
                     onClicked : mainWindow.switchSection("CE_Overall")
 
@@ -250,6 +251,7 @@ RowLayout {
 
                     buttonLabel: "Guardar y Continuar"
                     buttonStatus: "success"
+                    iconSource: "qrc:/resources/icons/save8.png"
 
                     Layout.preferredWidth: 0.5 * parent.width
 

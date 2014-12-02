@@ -39,14 +39,14 @@ function toggleViews(setElementalView) {
 
 function viewGlobalStiffnessMatrix() {
     var modalBody = $('#modalStiffnessMatrix').find('.output');
-    
+
     var globalK = globalElementalMatrixObject.latexfyMatrixWithLabel(G_CURRENT_ELEMENTAL_DATA.stiffness_matrix, 'K\\cdot \\phi');
     var globalPhi = globalElementalMatrixObject.latexfyMatrix(G_CURRENT_ELEMENTAL_DATA.u);
     var globalF = globalElementalMatrixObject.latexfyMatrixWithLabel(G_CURRENT_ELEMENTAL_DATA.f, 'f');
 
-    modalBody.html('$${\\begin{align*}' +  globalK + globalPhi + "&&" + globalF + '\\end{align*}}$$'); 
+    modalBody.html('$${\\begin{align*}' +  globalK + globalPhi + "&&" + globalF + '\\end{align*}}$$');
 
-    $('#modalStiffnessMatrix').modal(); 
+    $('#modalStiffnessMatrix').modal();
     globalElementalMatrixObject.loadMathJax('#modalStiffnessMatrix');
 }
 
@@ -244,6 +244,9 @@ function getOptions(xnode, ielem, params) {
 
 $(document).ready(function() {
 
+    var $body = $("body");
+    $body.html($body.html().replace(/{{femris}}/g, "<span class='femris'><tt>FEMRIS</tt></span>"));
+
     var params = {
         valuesToColorise : getSingleColFromCurrentDomain('displacements', 1)
     };
@@ -363,9 +366,9 @@ function discolorDueToMouseHelper(currentElem, currentCell, clearAll) {
 (function(){
 
     encode_as_link();
- 
+
   var button_id = "download";
- 
+
   // include this code in your page
   // you must have jQuery installed
   // you must have a link element with an id of "download"
@@ -373,18 +376,18 @@ function discolorDueToMouseHelper(currentElem, currentCell, clearAll) {
   function encode_as_link(){
     // Add some critical information
     $("svg").attr({ version: '1.1' , xmlns:"http://www.w3.org/2000/svg"});
- 
+
     var svg      = $("svg").parent().html(),
         b64      = btoa(svg),
         download = $("#" + button_id),
         html     = download.html();
- 
+
     download.replaceWith(
       $("<a id='"+button_id+"' href-lang='image/svg+xml' href='data:image/svg+xml;base64,\n"+b64+"' title='file.svg' download></a>").html(html));
   }
- 
+
   $(function(){
     $("div").delegate("#"+button_id, "mouseover", encode_as_link);
   });
- 
+
 })();

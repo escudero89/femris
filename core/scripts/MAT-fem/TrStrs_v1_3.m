@@ -13,7 +13,6 @@ function S = TrStrs_v1_3(nodes,dmat,displ,poiss,thick,pstrs)
 %   
 %    Output, S the element constant stress vector
 
-
   b(1) = nodes(2,2) - nodes(3,2);
   b(2) = nodes(3,2) - nodes(1,2);  
   b(3) = nodes(1,2) - nodes(2,2);
