@@ -223,7 +223,7 @@ function getOptions(xnode, ielem, params) {
             maxValue : params.valuesToColorise[0]
         };
 
-        for ( k = 0 ; k < params.valuesToColorise.length ; k++ ) {
+        for ( var k = 0 ; k < params.valuesToColorise.length ; k++ ) {
             if (params.valuesToColorise[k] > params.maxValue) {
                 params.maxValue = params.valuesToColorise[k];
             }
@@ -243,9 +243,9 @@ function getOptions(xnode, ielem, params) {
 
 
 $(document).ready(function() {
-
-    var $body = $("body");
+    var $body = $(".row");
     $body.html($body.html().replace(/{{femris}}/g, "<span class='femris'><tt>FEMRIS</tt></span>"));
+
 
     var params = {
         valuesToColorise : getSingleColFromCurrentDomain('displacements', 1)

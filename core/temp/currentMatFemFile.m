@@ -6,11 +6,11 @@
 %
 %  Material Properties
 %
-  young = 0 ;
-  poiss = 0 ;
-  denss = 0 ;
+  young = 2700000 ;
+  poiss = 0.2 ;
+  denss = 1 ;
   pstrs = 0 ;
-  thick = 0 ;
+  thick = 1 ;
 
 %
 % Coordinates
@@ -43,6 +43,11 @@ global elements
 % Fixed Nodes
 %
 fixnodes = [
+    7,    1,    0 ;
+    7,    2,    0 ;
+    8,    2,    0 ;
+    9,    1,    0 ;
+    9,    2,    0 ;
 ];
 
 %
@@ -55,6 +60,8 @@ pointload = [
 % Uniform Side loads
 %
 sideload = [
+    1,    2,    0,    -15 ;
+    2,    3,    0,    -15 ;
 ];
 
 

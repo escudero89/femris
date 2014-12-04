@@ -72,8 +72,8 @@ var Utils = {
         return parseFloat(number).toExponential(4);
     },
 
-    $currentValue : $("#currentValue"),
     setCurrentValue : function (value) {
+        this.$currentValue = $("span#currentValue");
         this.$currentValue.html(this.parseNumber(value));
     }
 };
@@ -87,13 +87,13 @@ var Queue = (function(){
 
     Queue.prototype.queue = [];
 
-    Queue.prototype.add_function = function(callback) { 
+    Queue.prototype.add_function = function(callback) {
         var _this = this;
         //add callback to the queue
         this.queue.push(function(){
             var finished = callback();
             if(typeof finished === "undefined" || finished) {
-               //  if callback returns `false`, then you have to 
+               //  if callback returns `false`, then you have to
                //  call `next` somewhere in the callback
                _this.next();
             }
@@ -110,12 +110,12 @@ var Queue = (function(){
     Queue.prototype.next = function(){
         this.running = false;
         //get the first element off the queue
-        var shift = this.queue.shift(); 
+        var shift = this.queue.shift();
 
-        if(shift) { 
+        if(shift) {
             this.running = true;
             console.log('#', shift);
-            setTimeout(shift(), 5); 
+            setTimeout(shift(), 5);
         }
     };
 

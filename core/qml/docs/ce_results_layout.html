@@ -83,10 +83,17 @@
     <script src="js/fem.js"></script>
 
     <script type="text/javascript">
-    $(document).ready(function() {
-        $("[data-toggle=popover]").popover();
-        highlightMATLABCode({tagCode: false, tagPre: true, className: 'matlab-code'});
+     MathJax.Hub.Queue(function () {
+
+        $(document).ready(function() {
+            $("[data-toggle=popover]").popover();
+            highlightMATLABCode({tagCode: false, tagPre: true, className: 'matlab-code'});
+
+            $("#loader").fadeOut(function() {
+                $("#mainShapeFunction").css({'opacity':0}).animate({'opacity':1});
+            });
+        });
     });
-</script>
+    </script>
 </body>
 </html>

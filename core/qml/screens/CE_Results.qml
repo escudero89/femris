@@ -58,7 +58,8 @@ RowLayout {
             layout = layout.replace("{{=include(view)}}", view);
             io_current.write(layout);
 
-            currentWebView.url = fileApplicationDirPath + "/docs/ce_results.html?#";
+            currentWebView.url = fileApplicationDirPath + "/docs/ce_results.html";
+            currentWebView.reload();
         }
 
 

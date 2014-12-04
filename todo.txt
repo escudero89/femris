@@ -1,1 +1,0 @@
-* Ver example3 coordenadas cuando cambias de tamaño no se haga Inf in NaN

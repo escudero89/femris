@@ -126,8 +126,21 @@ var globalElementalMatrixObject = {
 
         var latexfiedAllBMatrices = "";
 
-        for ( var kBmat = 0 ; kBmat < this.data.bmat.length ; kBmat++ ) {
-            var latexfiedBMatrix = "\\mathbf{B}_{"+ ( kBmat + 1) + "} &=";
+        var printMoreBmatrices = false;
+
+        var quantityOfBmats = 1;
+        var appendLatexfiedBmatrix = "} &=";
+
+        if ( this.element_nodes_idx.length === 4 ) {
+            quantityOfBmats = 4;
+            printMoreBmatrices = true;
+        }
+
+        for ( var kBmat = 0 ; kBmat < quantityOfBmats ; kBmat++ ) {
+
+            appendLatexfiedBmatrix = (printMoreBmatrices) ? "}^{" + this.element_nodes_idx[kBmat] + "} &=" : appendLatexfiedBmatrix;
+
+            var latexfiedBMatrix = "\\mathbf{B}_{"+ ( this.element_idx + 1) + appendLatexfiedBmatrix;
             latexfiedAllBMatrices += latexfiedBMatrix + this.latexfyMatrix(this.data.bmat[kBmat]);
 
             if ( kBmat + 1 !== this.data.bmat.length ) {
@@ -171,11 +184,13 @@ var globalElementalMatrixObject = {
         this.current.f_e = this.data.f[selectedElementIdx];
 
         var K_e_latexfied = this.latexfyMatrixWithLabel(this.current.K_e, 'K', '^{' + ( this.element_idx + 1 ) + '}');
-        var f_e_latexfied = this.latexfyMatrixWithLabel(this.current.f_e, 'f', '^{' + ( this.element_idx + 1 ) + '}');
 
-        this.setMathJax(K_e_latexfied + "\\; \\; \\;" + f_e_latexfied);
+        this.setMathJax(K_e_latexfied);
 
         this.setAllKeywordsInParagraphsOnTabs();
+
+        this.printConstitutiveMatrix();
+        this.printBMatrix();
 
         $("#buttonToggleViews").removeAttr('disabled');
 
@@ -192,9 +207,6 @@ var globalElementalMatrixObject = {
 
         this.current.problem_type = parseInt(this.data._pstrs) ? 'plane-stress' : 'plain-strain';
         this.current.problem_type_text = parseInt(this.data._pstrs) ? 'Tensión Plana' : 'Deformación Plana';
-
-        this.printConstitutiveMatrix();
-        this.printBMatrix();
 
         return true;
 

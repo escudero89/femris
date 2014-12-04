@@ -1,4 +1,9 @@
-<div class="container-fluid">
+<div id="loader">
+    <img class="img-responsive img-center" src="img/loader-inverse.gif"/>
+    <span style="top:10px; left:10px; position:absolute;">Cargando...</span>
+</div>
+
+<div class="container-fluid" id="mainShapeFunction" style="opacity:0">
     <div class="row">
 
         <div class="navbar-sm">
@@ -76,19 +81,19 @@
                         <div class="form-group">
                             <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
                         </div>
-                        <button class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, $('#changeFactorOfDeformation').val());">
+                        <button type="button" class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
                             <span class="glyphicon glyphicon-eye-open"></span>
                         </button>
                     </form>
 
                     <form class="navbar-form navbar-right" role="search" style="margin:3px">
-                        <button class="btn btn-primary" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
+                        <button type="button" class="btn btn-primary" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
                             <span class="glyphicon glyphicon-th"></span>
                         </button>
-                        <button id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
+                        <button type="button" id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
                             <span class="glyphicon glyphicon-th-large"></span>
                         </button>
-                        <button class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
+                        <button type="button" class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
                             <span class="glyphicon glyphicon-eye-close"></span>
                         </button>
                     </form>
@@ -170,7 +175,7 @@
 
                             <p>
                                 En la pestaña de
-                                <a class="femris" onclick="$('#elementalTabs li:eq(2) a').tab('show')" href="#">MATfem</a>
+                                <a class="femris" onclick="jQuery('#elementalTabs li:eq(2) a').tab('show')" href="#">MATfem</a>
                                 puedes ver cómo se ha implementado el código para calcular dicha expresión.
                             </p>
                         </div>
@@ -455,7 +460,7 @@
                                             <small>
                                                 Éste es el archivo completo de
                                                 <tt>MATfemris.m</tt>
-                                                , el cual se utiliza directamente en {{femris}} para resolver los problemas. Sí ésta a sido modificada, puede que los cambios no se reflejen en la versión presentada en la pestaña principal
+                                                , el cual se utiliza directamente en {{femris}} para resolver los problemas. Sí ésta ha sido modificada, puede que los cambios no se reflejen en la versión presentada en la pestaña principal
                                                 <tt>currentMatFemFile.m</tt>
                                                 .
                                             </small>
