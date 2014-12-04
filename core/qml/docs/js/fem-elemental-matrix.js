@@ -153,7 +153,9 @@ var globalElementalMatrixObject = {
         var latexfiedBMatrixBase = "\\mathbf{B}_i=";
         var latexfiedBMatrixPattern = ["", "", ""];
 
-        for ( var kBmatCol = 0 ; kBmatCol < this.data.bmat[0].length ; kBmatCol++ ) {
+        var kBmatColMax = this.data.bmat[0][0].length / 2;
+
+        for ( var kBmatCol = 0 ; kBmatCol <  kBmatColMax; kBmatCol++ ) {
             var Ncol = "N_{" + ( kBmatCol + 1 );
             var Ncol_x = Ncol + ", \\,x}";
             var Ncol_y = Ncol + ", \\,y}";
@@ -162,7 +164,7 @@ var globalElementalMatrixObject = {
             latexfiedBMatrixPattern[1] += 0      + " & " + Ncol_y;
             latexfiedBMatrixPattern[2] += Ncol_y + " & " + Ncol_x;
 
-            if ( kBmatCol + 1 !== this.data.bmat[0].length ) {
+            if ( kBmatCol + 1 !== kBmatColMax ) {
                 latexfiedBMatrixPattern[0] += " & ";
                 latexfiedBMatrixPattern[1] += " & ";
                 latexfiedBMatrixPattern[2] += " & ";
