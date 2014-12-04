@@ -1,5 +1,5 @@
 function equationParser(equation, val) {
-    
+
     var PI;
 
     var expr = Parser.parse(equation);
@@ -23,7 +23,7 @@ function miniLoader(callback) {
 function getLagrangeInterpolationString(quantityOfNodes, idx_position) {
 
     var lagrangeString = "";
-    var isTheFirst = true;    
+    var isTheFirst = true;
 
     for ( var i = 1 ; i <= quantityOfNodes ; i ++ ) {
         var xi = "x" + i;
@@ -31,7 +31,7 @@ function getLagrangeInterpolationString(quantityOfNodes, idx_position) {
 
         if (i !== idx_position ) {
             var lagrangeTerm = "((x - " + xi + ") / (" + xj + " - " + xi + "))";
-            
+
             if (isTheFirst) {
                 lagrangeString += lagrangeTerm;
                 isTheFirst = false;
@@ -62,21 +62,21 @@ function drawShapeFunction(board, N, positionsForPolynomial, kFunction, elementC
 
     var x_ini = x_vector[0];
     var x_fin = x_vector[ x_vector.length - 1 ];
-    
+
     board.create(
-        'functiongraph', 
-        function(x) { 
+        'functiongraph',
+        function(x) {
             return equationParser(N[kFunction + 1], {
-                x: x, 
-                x1: x1, 
-                x2: x2, 
-                x3: x3, 
-                x4: x4, 
-                x5: x5, 
-                x_ini: x_ini, 
+                x: x,
+                x1: x1,
+                x2: x2,
+                x3: x3,
+                x4: x4,
+                x5: x5,
+                x_ini: x_ini,
                 x_fin: x_fin
             });
-        }, 
+        },
         {
             strokeColor: elementColor
     });
@@ -85,7 +85,7 @@ function drawShapeFunction(board, N, positionsForPolynomial, kFunction, elementC
 function updateInputs(quantityOfNodes) {
 
     var stepForNodesLocation = 1 / ( quantityOfNodes - 1 );
-    
+
     $("#innerNodes input").attr("placeholder", function (idx, val) {
 
         var returnedPlaceholder = '0.0';
@@ -185,7 +185,7 @@ function updateShapeFunctionHelper() {
     });
 
     var positionsForPolynomial = [];
-    var currentPointPosition = { 
+    var currentPointPosition = {
         'x' : 0,
         'y' : 0
     };
@@ -232,24 +232,24 @@ function updateShapeFunctionHelper() {
 
             // And we draw points for the polynomial
             board.create(
-                'point', 
-                [currentPointPosition.x, currentPointPosition.y], 
+                'point',
+                [currentPointPosition.x, currentPointPosition.y],
                 nodeOptions
             );
         }
 
         /// Code for the label
         var nodeLabelXPosition = kFunction * stepForNodesLocation;
-        if ( kFunction > 0 && 
-             kFunction < input.quantityOfNodes - 1 && 
+        if ( kFunction > 0 &&
+             kFunction < input.quantityOfNodes - 1 &&
              input.innerNodesValues[kFunction - 1] !== '') {
 
             nodeLabelXPosition = input.innerNodesValues[kFunction - 1];
         }
 
         board.create(
-            'point', 
-            [ nodeLabelXPosition, 0], 
+            'point',
+            [ nodeLabelXPosition, 0],
             { name: 'X<sub>' + (kFunction+1) + '</sub>', fixed: true, size: 0});
 
         // And finally we draw the function
@@ -263,7 +263,9 @@ function updateGraph(firstTime) {
     if (firstTime) {
         updateGraphHelper();
     } else {
-        miniLoader(updateGraphHelper);
+        if ($("#baseFunction").val()) {
+            miniLoader(updateGraphHelper);
+        }
     }
 }
 
@@ -347,7 +349,7 @@ function updateGraphHelper() {
         var lengthElement = (X_MAX - X_MIN) / QUANTITY_OF_ELEMENTS;
 
         var newStepsArray = getStepsFromArray(getNodesInLocation());
-        
+
         var loopStepsValue = [];
         var kLoop = 1;
 
@@ -375,7 +377,7 @@ function updateGraphHelper() {
     }
 
     function getValuesForInterpolation(pointsForElement) {
-        
+
         var phi_m = [];
 
         $.each(pointsForElement, function(idx, val) {
@@ -405,18 +407,18 @@ function updateGraphHelper() {
     };
 
     var board = JXG.JSXGraph.initBoard(
-        'box', 
+        'box',
         {
-            boundingbox: [X_MIN, 1.5, X_MAX, -0.9], 
-            axis: true, 
+            boundingbox: [X_MIN, 1.5, X_MAX, -0.9],
+            axis: true,
             grid: true
         }
     );
-    
+
     var boardShapeFunctions = JXG.JSXGraph.initBoard(
-        'boxShapeFunctions', 
+        'boxShapeFunctions',
         {
-            boundingbox: [X_MIN, 1.5, X_MAX, -0.9], 
+            boundingbox: [X_MIN, 1.5, X_MAX, -0.9],
             axis: true,
             grid: true,
             showCopyright: false,
@@ -439,7 +441,7 @@ function updateGraphHelper() {
     var kElem = 0;
 
     var N = [];
-    
+
     N[1] = $("#N1").val();
     N[2] = $("#N2").val();
     N[3] = $("#N3").val();
@@ -454,7 +456,7 @@ function updateGraphHelper() {
 
     var errorRMS = 0;
     var nErrorRms = 0;
-    
+
     while (kElem < QUANTITY_OF_ELEMENTS) {
 
         var counterOfSidesDone = QUANTITY_OF_NODES;
@@ -481,25 +483,25 @@ function updateGraphHelper() {
         for ( ; counterOfSidesDone > 0 ; counterOfSidesDone-- ) {
 
             boardShapeFunctions.create('functiongraph', [
-                function(x) { 
+                function(x) {
 
                     var value = 0;
 
                     if (x >= x_ini && x <= x_fin) {
                         value = equationParser(N[counterOfSidesDone], {
-                            x: x, 
-                            x1: x1, 
-                            x2: x2, 
-                            x3: x3, 
-                            x4: x4, 
-                            x5: x5, 
-                            x_ini: x_ini, 
+                            x: x,
+                            x1: x1,
+                            x2: x2,
+                            x3: x3,
+                            x4: x4,
+                            x5: x5,
+                            x_ini: x_ini,
                             x_fin: x_fin
                         });
                     }
 
                     return value;
-                }, x_ini, x_fin], 
+                }, x_ini, x_fin],
                 {strokeColor: getColorFromIdx(kElem)}
 
             );
@@ -510,13 +512,13 @@ function updateGraphHelper() {
                 var value = 0;
 
                 value = equationParser(phi, {
-                    x: x, 
-                    x1: x1, 
-                    x2: x2, 
-                    x3: x3, 
-                    x4: x4, 
-                    x5: x5, 
-                    x_ini: x_ini, 
+                    x: x,
+                    x1: x1,
+                    x2: x2,
+                    x3: x3,
+                    x4: x4,
+                    x5: x5,
+                    x_ini: x_ini,
                     x_fin: x_fin,
                     phi_0: phi_vector[0],
                     phi_1: phi_vector[1],
@@ -546,8 +548,8 @@ function updateGraphHelper() {
         var cPoint = pointsForElement[kPoint];
 
         board.create(
-            'point', 
-            [cPoint, baseFunction(cPoint)], 
+            'point',
+            [cPoint, baseFunction(cPoint)],
             { color: getColorFromIdx(Math.floor(kPoint / ( QUANTITY_OF_NODES - 1 ))), name: '', fixed: true}
         );
     }

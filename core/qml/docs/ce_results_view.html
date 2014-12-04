@@ -474,7 +474,8 @@
                                                 Esta función es llamada una vez por cada elemento de la malla, y obtiene la matriz de rigidez elemental.
                                             </small>
                                         </p>
-                                        <pre class="matlab-code">{{=include(TrStif_v1_3.m)}}</pre>
+                                        <pre class="matlab-code hidden triangular-hidden">{{=include(TrStif_v1_3.m)}}</pre>
+                                        <pre class="matlab-code hidden quadrangular-hidden">{{=include(QdStif_v1_3.m)}}</pre>
                                     </div>
 
                                     <div role="tabpanel" class="tab-pane" id="constitutive">
@@ -492,7 +493,8 @@
                                                 Ésta función es utilizada para obtener la matriz de tensiones.
                                             </small>
                                         </p>
-                                        <pre class="matlab-code">{{=include(TrStrs_v1_3.m)}}</pre>
+                                        <pre class="matlab-code hidden triangular-hidden">{{=include(TrStrs_v1_3.m)}}</pre>
+                                        <pre class="matlab-code hidden quadrangular-hidden">{{=include(QdStrs_v1_3.m)}}</pre>
                                     </div>
                                 </div>
                             </div>
@@ -507,9 +509,9 @@
         <div class="navbar-sm">
             <div class="navbar-primary">
                 <nav class="navbar navbar-fixed-bottom navbar-inverse" role="navigation">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" style="cursor:default">
                         <li>
-                            <a>
+                            <a data-toggle="tooltip" title="El valor actual resaltado en los elementos se obtiene de promediar los valores de cada uno de los nodos que lo conforman.">
                                 Valor actual:
                                 <span id="currentValue">0.0000e+0</span>
                             </a>

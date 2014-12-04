@@ -354,9 +354,7 @@ $(document).ready(function() {
     }, 5);
 
     $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').popover();
-
-    $('[data-toggle="popover"]').on('shown.bs.popover', function () {
+    $('[data-toggle="popover"]').popover().on('shown.bs.popover', function () {
 
             var $baseFunction = $("#baseFunction");
             $('.list-unstyled > li > a').on('click', function() {

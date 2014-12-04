@@ -55,207 +55,208 @@
     <script type="text/javascript" src="js/third-party/MathJax.js"></script>
 </head>
 <body>
+
     <div id="loader">
-        <img class="img-responsive img-center" src="img/loader-inverse.gif"/>
-        <span style="top:10px; left:10px; position:absolute;">Cargando...</span>
-    </div>
+    <img class="img-responsive img-center" src="img/loader-inverse.gif"/>
+    <span style="top:10px; left:10px; position:absolute;">Cargando...</span>
+</div>
 
-    <div class="container-fluid" id="mainShapeFunction" style="opacity:0">
-        <div class="row">
+<div class="container-fluid" id="mainShapeFunction" style="opacity:0">
+    <div class="row">
 
-            <div class="navbar-sm">
-                <div class="navbar-primary">
-                    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Desplazamientos
-                                    <span class="caret"></span>
-                                </a>
-                                <ul name="displacements" class="dropdown-menu visualization" role="menu">
-                                    <li name="0">
-                                        <a href="#">Eje X</a>
-                                    </li>
-                                    <li name="1">
-                                        <a href="#">Eje Y</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li name="0,1">
-                                        <a href="#">Totales</a>
-                                    </li>
-                                </ul>
-                            </li>
+        <div class="navbar-sm">
+            <div class="navbar-primary">
+                <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Desplazamientos
+                                <span class="caret"></span>
+                            </a>
+                            <ul name="displacements" class="dropdown-menu visualization" role="menu">
+                                <li name="0">
+                                    <a href="#">Eje X</a>
+                                </li>
+                                <li name="1">
+                                    <a href="#">Eje Y</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li name="0,1">
+                                    <a href="#">Totales</a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Reacciones
-                                    <span class="caret"></span>
-                                </a>
-                                <ul name="reactions" class="dropdown-menu visualization" role="menu">
-                                    <li name="0">
-                                        <a href="#">Rx</a>
-                                    </li>
-                                    <li name="1">
-                                        <a href="#">Ry</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li name="0,1">
-                                        <a href="#">[Reacci&oacute;n]</a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Reacciones
+                                <span class="caret"></span>
+                            </a>
+                            <ul name="reactions" class="dropdown-menu visualization" role="menu">
+                                <li name="0">
+                                    <a href="#">Rx</a>
+                                </li>
+                                <li name="1">
+                                    <a href="#">Ry</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li name="0,1">
+                                    <a href="#">[Reacci&oacute;n]</a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Tensiones
-                                    <span class="caret"></span>
-                                </a>
-                                <ul name="stresses" class="dropdown-menu visualization" role="menu">
-                                    <li name="0">
-                                        <a href="#">Sx</a>
-                                    </li>
-                                    <li name="1">
-                                        <a href="#">Sy</a>
-                                    </li>
-                                    <li name="2">
-                                        <a href="#">Sz</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li name="3">
-                                        <a href="#">Sxy</a>
-                                    </li>
-                                    <li name="4">
-                                        <a href="#">Syz</a>
-                                    </li>
-                                    <li name="5">
-                                        <a href="#">Szx</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <form class="navbar-form navbar-left" role="search" style="margin:3px">
-                            <div class="form-group">
-                                <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
-                            </div>
-                            <button type="button" class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                            </button>
-                        </form>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Tensiones
+                                <span class="caret"></span>
+                            </a>
+                            <ul name="stresses" class="dropdown-menu visualization" role="menu">
+                                <li name="0">
+                                    <a href="#">Sx</a>
+                                </li>
+                                <li name="1">
+                                    <a href="#">Sy</a>
+                                </li>
+                                <li name="2">
+                                    <a href="#">Sz</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li name="3">
+                                    <a href="#">Sxy</a>
+                                </li>
+                                <li name="4">
+                                    <a href="#">Syz</a>
+                                </li>
+                                <li name="5">
+                                    <a href="#">Szx</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left" role="search" style="margin:3px">
+                        <div class="form-group">
+                            <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
+                        </div>
+                        <button type="button" class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                    </form>
 
-                        <form class="navbar-form navbar-right" role="search" style="margin:3px">
-                            <button type="button" class="btn btn-primary" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </button>
-                            <button type="button" id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
-                                <span class="glyphicon glyphicon-th-large"></span>
-                            </button>
-                            <button type="button" class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
-                                <span class="glyphicon glyphicon-eye-close"></span>
-                            </button>
-                        </form>
-                    </nav>
-                </div>
+                    <form class="navbar-form navbar-right" role="search" style="margin:3px">
+                        <button type="button" class="btn btn-primary" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </button>
+                        <button type="button" id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
+                            <span class="glyphicon glyphicon-th-large"></span>
+                        </button>
+                        <button type="button" class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
+                            <span class="glyphicon glyphicon-eye-close"></span>
+                        </button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+
+        <div id="leftColumnResults" class="col-xs-6" style="background-color: #F8f8f8">
+            <div id="draw-shapes" >
+                <div class="two-container w100p" style="height: 90vh;"></div>
             </div>
 
-            <div id="leftColumnResults" class="col-xs-6" style="background-color: #F8f8f8">
-                <div id="draw-shapes" >
+            <div version="1.1" id="draw-shapes-dummy" class="hidden">
+                <g></g>
+            </div>
+        </div>
+
+        <div id="rightColumnResults" class="col-xs-6" >
+
+            <div id="matrixSVG" style="background-color: #f8f8f8">
+
+                <div id="draw-matrix">
                     <div class="two-container w100p" style="height: 90vh;"></div>
                 </div>
 
-                <div version="1.1" id="draw-shapes-dummy" class="hidden">
+                <svg version="1.1" id="draw-matrix-dummy" class="hidden">
                     <g></g>
-                </div>
+                </svg>
+
             </div>
 
-            <div id="rightColumnResults" class="col-xs-6" >
+            <div id="box" class="box w100p hidden">
 
-                <div id="matrixSVG" style="background-color: #f8f8f8">
+                <div role="tabpanel">
 
-                    <div id="draw-matrix">
-                        <div class="two-container w100p" style="height: 90vh;"></div>
-                    </div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-tabs nav-justified" role="tablist" id="elementalTabs">
+                        <li role="presentation" class="active">
+                            <a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Sumario</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#extra" aria-controls="extra" role="tab" data-toggle="tab">Información extra</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#matfem" aria-controls="matfem" role="tab" data-toggle="tab">MATfem</a>
+                        </li>
+                    </ul>
 
-                    <svg version="1.1" id="draw-matrix-dummy" class="hidden">
-                        <g></g>
-                    </svg>
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="max-height:84vh; overflow-y: auto">
+                        <div role="tabpanel" class="tab-pane active" id="summary">
+                            <h3>
+                                Matriz de Rigidez Elemental
+                                <small>Los elementos `-` indican valores nulos (0).</small>
+                            </h3>
+                            <p>
+                                A continuación se presenta la matriz de rigidez elemental del elemento
+                                <label class="label label-primary" data-eval="{{self.element_idx+1}}">...</label>
+                                , que incluye los nodos
+                                <label class="label label-info" data-eval="{{self.element_nodes_idx[0]}}">...</label>
+                                ,
+                                <label class="label label-info" data-eval="{{self.element_nodes_idx[1]}}">...</label>
+                                ,
+                                <label class="label label-info" data-eval="{{self.element_nodes_idx[2]}}">...</label>
+                                en ese respectivo orden.
+                            </p>
 
-                </div>
+                            <div id="MathOutput" class="output"></div>
 
-                <div id="box" class="box w100p hidden">
+                            <p>
+                                La anterior matriz se obtuvo mediante la siguiente expresión:
+                            </p>
 
-                    <div role="tabpanel">
-
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs nav-tabs nav-justified" role="tablist" id="elementalTabs">
-                            <li role="presentation" class="active">
-                                <a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Sumario</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#extra" aria-controls="extra" role="tab" data-toggle="tab">Información extra</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#matfem" aria-controls="matfem" role="tab" data-toggle="tab">MATfem</a>
-                            </li>
-                        </ul>
-
-                        <!-- Tab panes -->
-                        <div class="tab-content" style="max-height:84vh; overflow-y: auto">
-                            <div role="tabpanel" class="tab-pane active" id="summary">
-                                <h3>
-                                    Matriz de Rigidez Elemental
-                                    <small>Los elementos `-` indican valores nulos (0).</small>
-                                </h3>
-                                <p>
-                                    A continuación se presenta la matriz de rigidez elemental del elemento
-                                    <label class="label label-primary" data-eval="{{self.element_idx+1}}">...</label>
-                                    , que incluye los nodos
-                                    <label class="label label-info" data-eval="{{self.element_nodes_idx[0]}}">...</label>
-                                    ,
-                                    <label class="label label-info" data-eval="{{self.element_nodes_idx[1]}}">...</label>
-                                    ,
-                                    <label class="label label-info" data-eval="{{self.element_nodes_idx[2]}}">...</label>
-                                    en ese respectivo orden.
-                                </p>
-
-                                <div id="MathOutput" class="output"></div>
-
-                                <p>
-                                    La anterior matriz se obtuvo mediante la siguiente expresión:
-                                </p>
-
-                                <div class="output">
-                                    \[
+                            <div class="output">
+                                \[
                             \mathbf{K}^e = \int_{A^e} \mathbf{B}^{e^T} \cdot \mathbf{D} \cdot \mathbf{B}^e \cdot t \; dA^e
                             \]
-                                </div>
-
-                                <p>
-                                    En la pestaña de
-                                    <a class="femris" onclick="jQuery('#elementalTabs li:eq(2) a').tab('show')" href="#">MATfem</a>
-                                    puedes ver cómo se ha implementado el código para calcular dicha expresión.
-                                </p>
                             </div>
 
-                            <div role="tabpanel" class="tab-pane" id="extra">
+                            <p>
+                                En la pestaña de
+                                <a class="femris" onclick="jQuery('#elementalTabs li:eq(2) a').tab('show')" href="#">MATfem</a>
+                                puedes ver cómo se ha implementado el código para calcular dicha expresión.
+                            </p>
+                        </div>
 
-                                <h3>
-                                    Matriz Constitutiva
-                                    <small>Elasticity matrix</small>
-                                </h3>
+                        <div role="tabpanel" class="tab-pane" id="extra">
 
-                                <p>
-                                    La matriz constitutiva obtenida para este problema de es la siguiente:
-                                </p>
+                            <h3>
+                                Matriz Constitutiva
+                                <small>Elasticity matrix</small>
+                            </h3>
 
-                                <div id="constitutiveMatrix" class="output"></div>
+                            <p>
+                                La matriz constitutiva obtenida para este problema de es la siguiente:
+                            </p>
 
-                                <hr>
+                            <div id="constitutiveMatrix" class="output"></div>
 
-                                <p>La matriz constitutiva `\mathbf{D}` de la relación:</p>
+                            <hr>
 
-                                <div class="output">
-                                    \[
+                            <p>La matriz constitutiva `\mathbf{D}` de la relación:</p>
+
+                            <div class="output">
+                                \[
                             \boldsymbol\sigma =
                                 \left\{\begin{matrix}
                                     \sigma_x \\
@@ -270,86 +271,87 @@
                                 \end{matrix}\right\} - {\boldsymbol\epsilon}_0
                              \right )
                                 \]
-                                    <small class="pull-right" style="color:#555"> <u>Nota:</u>
-                                        `\mathbf{\epsilon}_0` representa la <em>deformación inicial</em>
-                                        , que suele considerarse nula.
-                                    </small>
-                                </div>
-
-                                <p>se puede establecer explícitamente para cualquier material.</p>
-
-                                <p>
-                                    En este caso de <strong data-eval="{{self.current.problem_type_text.toLowerCase()}}">...</strong>
-                                    , la matriz es obtenida de la siguiente forma:
-                                </p>
-
-                                <div id="constitutiveMatrixBase" class="output"></div>
-
-                                <p>
-                                    con los valores del <strong>Módulo de Young</strong>
-                                    y
-                                    <strong>Coeficiente de Poisson</strong>
-                                    respectivos de:
-                                </p>
-
-                                <div id="constitutiveMatrixBaseVariables" class="output"></div>
-
-                                <hr>
-
-                                <h3>
-                                    Matriz de Deformación
-                                    <small>Deformation matrix</small>
-                                </h3>
-
-                                <p>La matriz de deformación `\mathbf{B}` calculada es:</p>
-
-                                <div id="bmat" class="output"></div>
-
-                                <p>la cuál está conformada de la siguiente manera:</p>
-
-                                <div id="bmatBase" class="output"></div>
-
+                                <small class="pull-right" style="color:#555"> <u>Nota:</u>
+                                    `\mathbf{\epsilon}_0` representa la <em>deformación inicial</em>
+                                    , que suele considerarse nula.
+                                </small>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="matfem">
 
-                                <div role="tabpanel">
-                                    <ul class="nav nav-pills">
-                                        <li role="presentation" class="active">
-                                            <a href="#mainTab" aria-controls="mainTab" role="tab" data-toggle="tab">currentMatFemFile.m</a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a href="#matfemris" aria-controls="matfemris" role="tab" data-toggle="tab">MATfemris.m</a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a href="#stiffness" aria-controls="stiffness" role="tab" data-toggle="tab">TrStif.m</a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a href="#constitutive" aria-controls="constitutive" role="tab" data-toggle="tab">constt.m</a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a href="#stresses" aria-controls="stresses" role="tab" data-toggle="tab">TrStrs.m</a>
-                                        </li>
-                                    </ul>
+                            <p>se puede establecer explícitamente para cualquier material.</p>
 
-                                    <br />
+                            <p>
+                                En este caso de <strong data-eval="{{self.current.problem_type_text.toLowerCase()}}">...</strong>, la matriz es obtenida de la siguiente forma:
+                            </p>
 
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active" id="mainTab">
-                                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" role="tab" id="headingOne">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                                SUBRUTINA
-                                                                <strong>DATOS</strong>
-                                                                <small>Entrada de datos geométricos y del material</small>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                                        <div class="panel-body">
-                                                            <pre class="matlab-code">%=======================================================================
-% MAT-fem 1.0  - MAT-fem is a learning tool for undestanding
+                            <div id="constitutiveMatrixBase" class="output"></div>
+
+                            <p>
+                                con los valores del <strong>Módulo de Young</strong>
+                                y
+                                <strong>Coeficiente de Poisson</strong>
+                                respectivos de:
+                            </p>
+
+                            <div id="constitutiveMatrixBaseVariables" class="output"></div>
+
+                            <hr>
+
+                            <h3>
+                                Matriz de Deformación
+                                <small>Deformation matrix</small>
+                            </h3>
+
+                            <p>
+                                La matriz de deformación `\mathbf{B}` calculada es:
+                            </p>
+
+                            <div id="bmat" class="output"></div>
+
+                            <p>la cuál está conformada de la siguiente manera:</p>
+
+                            <div id="bmatBase" class="output"></div>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="matfem">
+
+                            <div role="tabpanel">
+                                <ul class="nav nav-pills">
+                                    <li role="presentation" class="active">
+                                        <a href="#mainTab" aria-controls="mainTab" role="tab" data-toggle="tab">currentMatFemFile.m</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#matfemris" aria-controls="matfemris" role="tab" data-toggle="tab">MATfemris.m</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#stiffness" aria-controls="stiffness" role="tab" data-toggle="tab">TrStif.m</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#constitutive" aria-controls="constitutive" role="tab" data-toggle="tab">constt.m</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#stresses" aria-controls="stresses" role="tab" data-toggle="tab">TrStrs.m</a>
+                                    </li>
+                                </ul>
+
+                                <br />
+
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="mainTab">
+                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingOne">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                            SUBRUTINA
+                                                            <strong>DATOS</strong>
+                                                            <small>Entrada de datos geométricos y del material</small>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="panel-body">
+                                                        <pre class="matlab-code">%=======================================================================
+% MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
 %                the Finite Element Method with MATLAB and GiD
 %=======================================================================
 % PROBLEM TITLE = undefined
@@ -414,22 +416,22 @@ sideload = [
     2,    3,    0,    -15 ;
 ];
 </pre>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                                        <h4 class="panel-title">
-                                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                                SUBRUTINA
-                                                                <strong>RIGIDEZ</strong>
-                                                                <small>Cálculo de la matriz de rigidez de cada elemento</small>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                        <div class="panel-body">
-                                                            <pre class="matlab-code">
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingTwo">
+                                                    <h4 class="panel-title">
+                                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                            SUBRUTINA
+                                                            <strong>RIGIDEZ</strong>
+                                                            <small>Cálculo de la matriz de rigidez de cada elemento</small>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <div class="panel-body">
+                                                        <pre class="matlab-code">
 % Find basic dimensions
   npnod = size(coordinates,1);         % Number of nodes
   nndof = 2*npnod;                     % Number of total DOF
@@ -463,22 +465,22 @@ sideload = [
       [ElemMat,ElemFor] = QdStif_v1_3(coord,dmat ,thick,denss);
     end
                                                         </pre>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" role="tab" id="headingThree">
-                                                        <h4 class="panel-title">
-                                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                                SUBRUTINA
-                                                                <strong>CARGAS</strong>
-                                                                <small>Cálculo del vector de fuerzas nodales de cada elemento</small>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                        <div class="panel-body">
-                                                            <pre class="matlab-code">
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingThree">
+                                                    <h4 class="panel-title">
+                                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                            SUBRUTINA
+                                                            <strong>CARGAS</strong>
+                                                            <small>Cálculo del vector de fuerzas nodales de cada elemento</small>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                    <div class="panel-body">
+                                                        <pre class="matlab-code">
 % Find the equation number list for the i-th element
     eqnum = [];                                        % Clear the list
     for i = 1 : nnode                                  % Node cycle
@@ -524,24 +526,24 @@ sideload = [
 
   force1 = force - StifMat * u;      % Adjust the rhs with the known values
                                                         </pre>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" role="tab" id="headingFour">
-                                                        <h4 class="panel-title">
-                                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
-                                                                SUBRUTINA
-                                                                <strong>SOLUCIÓN</strong>
-                                                                <small>
-                                                                    Ensamblaje y solución del sistema `\mathbf{K a} = \mathbf{f}`
-                                                                </small>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                                                        <div class="panel-body">
-                                                            <pre class="matlab-code">
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingFour">
+                                                    <h4 class="panel-title">
+                                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                                            SUBRUTINA
+                                                            <strong>SOLUCIÓN</strong>
+                                                            <small>
+                                                                Ensamblaje y solución del sistema `\mathbf{K a} = \mathbf{f}`
+                                                            </small>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                                    <div class="panel-body">
+                                                        <pre class="matlab-code">
 % Compute the solution by solving StifMat * u = force for the remaining
 % unknown values of u
   FreeNodes = setdiff( 1:nndof , fix );           % Find the free node list
@@ -551,42 +553,42 @@ sideload = [
 % Compute the reactions on the fixed nodes as R = StifMat * u - F
   reaction(fix) = StifMat(fix,1:nndof) * u(1:nndof) - force(fix);
                                                         </pre>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" role="tab" id="headingFive">
-                                                        <h4 class="panel-title">
-                                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
-                                                                SUBRUTINA
-                                                                <strong>TENSIÓN</strong>
-                                                                <small>Cálculo de deformaciones y tensiones en cada elemento</small>
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
-                                                        <div class="panel-body">
-                                                            <pre class="matlab-code">
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingFive">
+                                                    <h4 class="panel-title">
+                                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+                                                            SUBRUTINA
+                                                            <strong>TENSIÓN</strong>
+                                                            <small>Cálculo de deformaciones y tensiones en cada elemento</small>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                                    <div class="panel-body">
+                                                        <pre class="matlab-code">
 % Compute the stresses
   Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);
                                                         </pre>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div role="tabpanel" class="tab-pane" id="matfemris">
-                                            <p class="help-block">
-                                                <small>
-                                                    Éste es el archivo completo de
-                                                    <tt>MATfemris.m</tt>
-                                                    , el cual se utiliza directamente en {{femris}} para resolver los problemas. Sí ésta ha sido modificada, puede que los cambios no se reflejen en la versión presentada en la pestaña principal
-                                                    <tt>currentMatFemFile.m</tt>
-                                                    .
-                                                </small>
-                                            </p>
-                                            <pre class="matlab-code">%% MAT-femris (without clear nor load from input file)
+                                    <div role="tabpanel" class="tab-pane" id="matfemris">
+                                        <p class="help-block">
+                                            <small>
+                                                Éste es el archivo completo de
+                                                <tt>MATfemris.m</tt>
+                                                , el cual se utiliza directamente en {{femris}} para resolver los problemas. Sí ésta ha sido modificada, puede que los cambios no se reflejen en la versión presentada en la pestaña principal
+                                                <tt>currentMatFemFile.m</tt>
+                                                .
+                                            </small>
+                                        </p>
+                                        <pre class="matlab-code">%% MAT-femris (without clear nor load from input file)
 %
   tic;                   % Start clock
   ttim = 0;              % Initialize time counter
@@ -720,15 +722,15 @@ sideload = [
   itim = toc;                                               %Close last tic
   fprintf(1,'\nTotal running time %12.6f \n\n',ttim); %Reporting final time
 </pre>
-                                        </div>
+                                    </div>
 
-                                        <div role="tabpanel" class="tab-pane" id="stiffness">
-                                            <p class="help-block">
-                                                <small>
-                                                    Esta función es llamada una vez por cada elemento de la malla, y obtiene la matriz de rigidez elemental.
-                                                </small>
-                                            </p>
-                                            <pre class="matlab-code">function [M,F] = TrStif_v1_3(nodes,dmat,thick,denss)
+                                    <div role="tabpanel" class="tab-pane" id="stiffness">
+                                        <p class="help-block">
+                                            <small>
+                                                Esta función es llamada una vez por cada elemento de la malla, y obtiene la matriz de rigidez elemental.
+                                            </small>
+                                        </p>
+                                        <pre class="matlab-code hidden triangular-hidden">function [M,F] = TrStif_v1_3(nodes,dmat,thick,denss)
 
 %% TrStif Evaluates the stiffness matrix for a triangular element
 %
@@ -738,12 +740,12 @@ sideload = [
 %           dmat  : Constitutive matrix
 %           thick : Thickness
 %           denss : Density
-%
+%   
 %    Output, M the element local stiffness matrix
 %            F the element local force vector
 
   b(1) = nodes(2,2) - nodes(3,2);
-  b(2) = nodes(3,2) - nodes(1,2);
+  b(2) = nodes(3,2) - nodes(1,2);  
   b(3) = nodes(1,2) - nodes(2,2);
 
   c(1) = nodes(3,1) - nodes(2,1);
@@ -765,15 +767,61 @@ sideload = [
 
   F = [ 0,-force, 0,-force, 0,-force];
 </pre>
-                                        </div>
+                                        <pre class="matlab-code hidden quadrangular-hidden">function [M,F] = QdStif_v1_3(nodes,dmat,thick,denss)
 
-                                        <div role="tabpanel" class="tab-pane" id="constitutive">
-                                            <p class="help-block">
-                                                <small>
-                                                    Ésta función es utilizada para obtener la matriz constitutiva.
-                                                </small>
-                                            </p>
-                                            <pre class="matlab-code">function D = constt(young,poiss,pstrs)
+%% QdStif Evaluates the stiffness matrix for a quadrilateral element
+%
+%  Parameters:
+%
+%    Input, nodes : Contains the 2D coordinates of the element nodes
+%           dmat  : Constitutive matrix
+%           thick : Thickness
+%           denss : Density
+%    
+%    Output, M the element local stiffness matrix
+%            F the element local force vector
+
+  fform = @(s,t)[(1-s-t+s*t)/4,(1+s-t-s*t)/4,(1+s+t+s*t)/4,(1-s+t-s*t)/4];
+  deriv = @(s,t)[(-1+t)/4,( 1-t)/4,( 1+t)/4,(-1-t)/4;
+                 (-1+s)/4,(-1-s)/4,( 1+s)/4,( 1-s)/4];
+
+  pospg = [ -0.577350269189626E+00 ,  0.577350269189626E+00 ];
+  pespg = [  1.0E+00 ,  1.0E+00 ];
+  M = zeros(8,8);
+  fy = zeros(1,4);
+  
+  for i = 1 : 2
+    for j = 1 : 2
+      lcffm = fform(pospg(i),pospg(j));            % SF at Gauss point
+      lcder = deriv(pospg(i),pospg(j));            % SF Local derivatives
+      xjacm = lcder*nodes;                         % Jacobian matrix
+      ctder = xjacm\lcder;                         % SF Cartesian derivates
+      darea = det(xjacm)*pespg(i)*pespg(j)*thick;
+      
+      bmat = [];
+      for inode = 1 : 4
+        bmat = [ bmat , [ctder(1,inode),            0 ;
+                                     0 ,ctder(2,inode);
+                         ctder(2,inode),ctder(1,inode)] ];
+      end
+
+      M = M + (transpose(bmat)*dmat*bmat)*darea;
+      
+      fy = fy + lcffm*denss*darea;
+    end
+  end
+  
+  F = [ 0,-fy(1), 0,-fy(2), 0,-fy(3), 0,-fy(4)];
+</pre>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="constitutive">
+                                        <p class="help-block">
+                                            <small>
+                                                Ésta función es utilizada para obtener la matriz constitutiva.
+                                            </small>
+                                        </p>
+                                        <pre class="matlab-code">function D = constt(young,poiss,pstrs)
 
 %% constt Evaluates the constitutive matrix
 %
@@ -782,7 +830,7 @@ sideload = [
 %    Input, young : Young modulus
 %           poiss : Poisson ratio
 %           pstrs : flag for Plane Stress
-%
+%   
 %    Output, D the element constitutive matrix
 
 % Plane Sress
@@ -797,18 +845,18 @@ sideload = [
     aux3 = young/2/(1+poiss);
     thick = 1.0;
   end
-
+   
    D = [aux1,aux2,0;aux2,aux1,0;0,0,aux3];
 </pre>
-                                        </div>
+                                    </div>
 
-                                        <div role="tabpanel" class="tab-pane" id="stresses">
-                                            <p class="help-block">
-                                                <small>
-                                                    Ésta función es utilizada para obtener la matriz de tensiones.
-                                                </small>
-                                            </p>
-                                            <pre class="matlab-code">function S = TrStrs_v1_3(nodes,dmat,displ,poiss,thick,pstrs)
+                                    <div role="tabpanel" class="tab-pane" id="stresses">
+                                        <p class="help-block">
+                                            <small>
+                                                Ésta función es utilizada para obtener la matriz de tensiones.
+                                            </small>
+                                        </p>
+                                        <pre class="matlab-code hidden triangular-hidden">function S = TrStrs_v1_3(nodes,dmat,displ,poiss,thick,pstrs)
 
 %% TrStrs Evaluates the stresses for a triangular element
 %
@@ -820,11 +868,11 @@ sideload = [
 %           poiss : Poisson ratio
 %           thick : Thickness
 %           pstrs : Flag for Plane Stress
-%
+%   
 %    Output, S the element constant stress vector
 
   b(1) = nodes(2,2) - nodes(3,2);
-  b(2) = nodes(3,2) - nodes(1,2);
+  b(2) = nodes(3,2) - nodes(1,2);  
   b(3) = nodes(1,2) - nodes(2,2);
 
   c(1) = nodes(3,1) - nodes(2,1);
@@ -844,74 +892,134 @@ sideload = [
   if (pstrs == 1)
     S = se ;
 % Plane Strain
-  else
+  else                
     S = [se(1),se(2),-poiss*(se(1)+se(2)),se(3)];
   end
 </pre>
-                                        </div>
+                                        <pre class="matlab-code hidden quadrangular-hidden">function S = QdStrs_v1_3(nodes,dmat,displ,poiss,thick,pstrs)
+
+%% QdStrs Evaluates the stresses for a quadrilateral element
+%
+%  Parameters:
+%
+%    Input, nodes : Contains the 2D coordinates of the element nodes
+%           dmat  : Constitutive matrix
+%           displ : Nodal displacement
+%           poiss : Poisson ratio
+%           thick : Thickness 
+%           pstrs : Flag for Plane Stress
+%   
+%    Output, S the element constant stress vector
+
+  fform = @(s,t)[(1-s-t+s*t)/4,(1+s-t-s*t)/4,(1+s+t+s*t)/4,(1-s+t-s*t)/4];
+  deriv = @(s,t)[(-1+t)/4,( 1-t)/4,( 1+t)/4,(-1-t)/4;
+                 (-1+s)/4,(-1-s)/4,( 1+s)/4,( 1-s)/4];
+
+  pospg = [ -0.577350269189626E+00 , 0.577350269189626E+00 ];
+  pespg = [  1.0E+00 ,  1.0E+00 ];
+
+  strsg = [];
+  extrap = [];
+  order = [ 1 , 4 ; 2 , 3 ];    % Align the G-pts. with the element corners
+
+  for i = 1 : 2
+    for j = 1 : 2
+      lcder = deriv(pospg(i),pospg(j));            % SF Local derivatives
+      xjacm = lcder*nodes;                         % Jacobian matrix
+      ctder = xjacm\lcder;                         % SF Cartesian derivates
+      
+      bmat = [];
+      for inode = 1 : 4
+        bmat = [ bmat , [ctder(1,inode),            0 ;
+                                     0 ,ctder(2,inode);
+                         ctder(2,inode),ctder(1,inode)] ];
+      end
+      
+      strsg(:,order(i,j)) = (dmat*bmat*displ);
+      
+      a = 1/pospg(i);
+      b = 1/pospg(j);
+
+      extrap(order(i,j),:) = fform(a,b) ;
+    end
+  end
+
+  se = transpose(extrap*transpose(strsg));
+
+% Plane Stress
+  if (pstrs == 1)
+    S = se;
+% Plane Strain
+  else                
+    S = [ se(1,:); se(2,:);-poiss*(se(1,:)+se(2,:)); se(3,:)];
+  end
+</pre>
                                     </div>
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="settings">...</div>
                         </div>
+                        <div role="tabpanel" class="tab-pane" id="settings">...</div>
                     </div>
+                </div>
 
-                </div>
-            </div>
-
-            <div class="navbar-sm">
-                <div class="navbar-primary">
-                    <nav class="navbar navbar-fixed-bottom navbar-inverse" role="navigation">
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <a>
-                                    Valor actual:
-                                    <span id="currentValue">0.0000e+0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a>
-                                    M&iacute;n:
-                                    <span id="minValue"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a>
-                                    Max:
-                                    <span id="maxValue"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalStiffnessMatrix" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="width:90%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Cerrar</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        Matriz de Rigidez Global
-                        <small>Los elementos `-` indican valores nulos (0).</small>
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="output">...</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
             </div>
         </div>
+
+        <div class="navbar-sm">
+            <div class="navbar-primary">
+                <nav class="navbar navbar-fixed-bottom navbar-inverse" role="navigation">
+                    <ul class="nav navbar-nav" style="cursor:default">
+                        <li>
+                            <a data-toggle="tooltip" title="El valor actual resaltado en los elementos se obtiene de promediar los valores de cada uno de los nodos que lo conforman.">
+                                Valor actual:
+                                <span id="currentValue">0.0000e+0</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                M&iacute;n:
+                                <span id="minValue"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Max:
+                                <span id="maxValue"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalStiffnessMatrix" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Cerrar</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Matriz de Rigidez Global
+                    <small>Los elementos `-` indican valores nulos (0).</small>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="output">...</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/third-party/jquery-1.11.1.min.js"></script>
@@ -938,18 +1046,19 @@ sideload = [
     <script src="js/fem.js"></script>
 
     <script type="text/javascript">
-    MathJax.Hub.Queue(function () {
+     MathJax.Hub.Queue(function () {
 
-    $(document).ready(function() {
-        $("[data-toggle=popover]").popover();
-        highlightMATLABCode({tagCode: false, tagPre: true, className: 'matlab-code'});
+        $(document).ready(function() {
+            $("[data-toggle=popover]").popover();
+            $("[data-toggle=tooltip]").tooltip();
+            highlightMATLABCode({tagCode: false, tagPre: true, className: 'matlab-code'});
 
-        $("#loader").fadeOut(function() {
-            $("#mainShapeFunction").css({'opacity':0}).animate({'opacity':1});
+            $("#loader").fadeOut(function() {
+                $("#mainShapeFunction").css({'opacity':0}).animate({'opacity':1});
+            });
         });
     });
-});
-
-</script>
+    </script>
 </body>
 </html>
+

@@ -87,6 +87,7 @@
 
         $(document).ready(function() {
             $("[data-toggle=popover]").popover();
+            $("[data-toggle=tooltip]").tooltip();
             highlightMATLABCode({tagCode: false, tagPre: true, className: 'matlab-code'});
 
             $("#loader").fadeOut(function() {

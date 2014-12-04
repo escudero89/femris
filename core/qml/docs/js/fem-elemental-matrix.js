@@ -194,6 +194,15 @@ var globalElementalMatrixObject = {
         this.printConstitutiveMatrix();
         this.printBMatrix();
 
+
+        if (this.element_nodes_idx.length === 3) {
+            $(".triangular-hidden").removeClass("hidden");
+        } else {
+            $(".quadrangular-hidden").removeClass("hidden");
+             $("a[aria-controls='stiffness']").html($("a[aria-controls='stiffness']").html().replace(/Tr/g, "Qd"));
+             $("a[aria-controls='stresses']").html($("a[aria-controls='stresses']").html().replace(/Tr/g, "Qd"));
+        }
+
         $("#buttonToggleViews").removeAttr('disabled');
 
     },
