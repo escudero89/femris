@@ -41,6 +41,7 @@ RowLayout {
 
             ChoiceBlock {
                 header.text: "MODELO FÍSICO"
+                textArea.text: Content.overall.model
 
                 button.buttonLabel: "Elegir"
                 button.onClicked : mainWindow.switchSection("CE_Model")
@@ -51,6 +52,7 @@ RowLayout {
 
             ChoiceBlock {
                 header.text: "DOMINIO"
+                textArea.text: Content.overall.domain
 
                 button.buttonLabel: "Crear"
                 button.onClicked : mainWindow.switchSection("CE_Domain")
@@ -63,6 +65,7 @@ RowLayout {
 
             ChoiceBlock {
                 header.text: "FUNC. DE FORMA"
+                textArea.text: Content.overall.shape_functions
 
                 button.buttonLabel: "Repasar"
                 button.onClicked : mainWindow.switchSection("CE_ShapeFunction")
@@ -75,6 +78,7 @@ RowLayout {
 
             ChoiceBlock {
                 header.text: "RESULTADOS"
+                textArea.text: Content.overall.results
 
                 button.buttonLabel: "Ver"
                 button.onClicked : mainWindow.switchSection("CE_Results")
