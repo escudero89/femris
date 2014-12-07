@@ -71,7 +71,7 @@ RowLayout {
 
                     focus: true
 
-                    currentIndex: (StudyCaseHandler.getSingleStudyCaseInformation("example_index", true) !== "") ? StudyCaseHandler.getSingleStudyCaseInformation("example_index", true) : 0
+                    currentIndex: 0
 
                     delegate: Component {
 
@@ -163,11 +163,18 @@ RowLayout {
 
                         for ( var k = 1 ; k <= examples.length ; k++ ) {
                             var ex = examples[k - 1];
-                            listModelExamples.append({
+                            var newModel = {
                                 "name": "Example " + k,
                                 "portrait": fileApplicationDirPath + "/" + ex.substr(0, ex.search(".json")) + ".png",
                                 "exampleFile": ex.substring(ex.search(/example\d/))
-                            });
+                            };
+
+                            listModelExamples.append(newModel);
+
+                            var exampleName = StudyCaseHandler.getSingleStudyCaseInformation("exampleName");
+                            if (newModel.exampleFile === exampleName) {
+                                currentIndex = k - 1;
+                            }
                         }
 
                     }
@@ -185,7 +192,7 @@ RowLayout {
 
                         sideLoadContainer.jsonDomain = jsonDomain;
 
-                        StudyCaseHandler.setSingleStudyCaseInformation("example_index", newIndex, true);
+                        StudyCaseHandler.setSingleStudyCaseInformation("exampleName", exampleFile);
                     }
                 }
             }

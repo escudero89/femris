@@ -28,22 +28,18 @@ MenuBar {
         }
         MenuSeparator { }
         MenuItem {
-            id: menuItemContinue
-
-            text: qsTr("Continuar con Vista General")
-            shortcut: "Ctrl+Shift+O"
-            iconSource: "qrc:/resources/icons/black/file27.png"
-            onTriggered: mainWindow.switchSection("CE_Overall")
-
-            enabled: StudyCaseHandler.exists();
-        }
-        MenuItem {
             id: menuItemSave
 
             text: qsTr("Guardar Caso de Estudio")
             shortcut: "Ctrl+S"
             iconSource: "qrc:/resources/icons/black/save8.png"
-            onTriggered: femrisSaver.open();
+            onTriggered: {
+                if (StudyCaseHandler.getLastSavedPath() !== "") {
+                    StudyCaseHandler.saveCurrentStudyCase(StudyCaseHandler.getLastSavedPath());
+                } else {
+                    femrisSaver.open();
+                }
+            }
 
             enabled: StudyCaseHandler.exists();
         }
@@ -80,6 +76,14 @@ MenuBar {
                 menuItemClose.enabled = exists;
                 menuItemSave.enabled = exists;
                 menuItemSaveAs.enabled = exists;
+            }
+
+            onMarkedAsSaved: {
+                menuItemSave.enabled = false;
+            }
+
+            onMarkedAsNotSaved: {
+                menuItemSave.enabled = true;
             }
         }
 
@@ -118,7 +122,7 @@ MenuBar {
             text: qsTr("Tutorial")
             shortcut: "Ctrl+T"
             iconSource: "qrc:/resources/icons/black/book95.png"
-            onTriggered: mainWindow.switchSection("tutorial")
+            onTriggered: mainWindow.switchSection("Tutorial")
         }
     }
     Menu {
@@ -154,8 +158,8 @@ MenuBar {
             modality: "ApplicationModal"
 
             onAccepted: {
-                console.log("You chose: " + femrisSaver.fileUrl);
-                StudyCaseHandler.saveCurrentStudyCase(femrisSaver.fileUrl);
+                console.log("You chose: " + fileUrl);
+                StudyCaseHandler.saveCurrentStudyCase(fileUrl);
             }
             onRejected: {
                 console.log("Canceled");

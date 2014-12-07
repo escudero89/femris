@@ -246,7 +246,7 @@ ApplicationWindow {
     function doOnClose() {
         Configure.exitApp();
 
-        if (!StudyCaseHandler.savedStatus()) {
+        if (!StudyCaseHandler.getSavedStatus()) {
             beforeClosingDialog.open();
         } else {
             Qt.quit();

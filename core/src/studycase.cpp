@@ -73,7 +73,7 @@ void StudyCase::setInitialMapOfInformation() {
     m_mapOfInformation.clear();
 
     m_mapOfInformation["typeOfStudyCase"]        = "undefined";
-    m_mapOfInformation["fileTitle"]              = "undefined";
+    m_mapOfInformation["exampleName"]            = "undefined";
     m_mapOfInformation["stepOfProcess"]          = "1";
 
     m_mapOfInformation["gridHeight"]             = "1";

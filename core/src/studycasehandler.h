@@ -21,7 +21,7 @@ public:
     Q_INVOKABLE void createNewStudyCase();
     Q_INVOKABLE void createDomainFromScriptFile();
 
-    Q_INVOKABLE void saveCurrentStudyCase(const QString&);
+    Q_INVOKABLE void saveCurrentStudyCase(QString);
     Q_INVOKABLE bool loadStudyCase(const QString&);
 
     Q_INVOKABLE bool checkSingleStudyCaseInformation(const QString&);
@@ -34,9 +34,11 @@ public:
 
     Q_INVOKABLE void loadUrlInBrowser(QString, bool = false);
 
-    Q_INVOKABLE bool savedStatus();
     void markAsSaved();
+
+    Q_INVOKABLE bool getSavedStatus();
     Q_INVOKABLE void markAsNotSaved();
+    Q_INVOKABLE QString getLastSavedPath();
 
 public Q_SLOTS:
 
@@ -50,9 +52,13 @@ Q_SIGNALS:
 
     void callProcess();
 
+    void markedAsSaved();
+    void markedAsNotSaved();
+
 private:
 
     bool m_isSaved;
+    QString m_lastSavedPath;
 
     QString setSingleStudyCaseJsonHelper(const QString&, const QJsonArray&);
 

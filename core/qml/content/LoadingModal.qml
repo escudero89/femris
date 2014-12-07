@@ -141,8 +141,9 @@ Item {
                 PrimaryButton {
                     id: forceCloseLoadingModal
 
-                    buttonLabel: "Matar"
+                    buttonLabel: "Cancelar"
                     buttonStatus: "danger"
+                    iconSource: "qrc:/resources/icons/ban.png"
 
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignLeft
@@ -169,6 +170,7 @@ Item {
 
                     buttonLabel: "Cerrar"
                     buttonStatus: "used"
+                    iconSource: "qrc:/resources/icons/cross41.png"
 
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight
@@ -191,6 +193,7 @@ Item {
 
                     buttonLabel: "Continuar"
                     buttonStatus: "success"
+                    iconSource: "qrc:/resources/icons/save8.png"
 
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight
@@ -208,6 +211,8 @@ Item {
 
                         mainWindow.switchSection(StudyCaseHandler.saveAndContinue("CE_Domain"));
                     }
+
+
                 }
 
             }

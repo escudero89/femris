@@ -44,7 +44,7 @@
 % MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
 %                the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% PROBLEM TITLE = {{fileTitle}}
+% EXAMPLE SELECTED = {{exampleName}}
 %
 %  Material Properties
 %

@@ -101,10 +101,11 @@ Rectangle {
                         placeholderText: name
 
                         text: {
-                            if (StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess") > 2) {
-                                return (variable) ?
-                                            StudyCaseHandler.getSingleStudyCaseInformation(variable) :
-                                            StudyCaseHandler.getSingleStudyCaseInformation(variableTemp, true)
+                            if (variable && StudyCaseHandler.exists()) {
+                                var variableGetted = StudyCaseHandler.getSingleStudyCaseInformation(variable);
+                                if (variableGetted !== "undefined") {
+                                    return variableGetted;
+                                }
                             }
 
                             return '';

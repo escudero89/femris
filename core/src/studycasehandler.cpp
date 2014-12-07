@@ -13,6 +13,8 @@
  */
 StudyCaseHandler::StudyCaseHandler() {
     m_studyCase = NULL;
+    m_lastSavedPath = "";
+
     markAsSaved();
     start();
 }
@@ -89,10 +91,17 @@ void StudyCaseHandler::createNewStudyCase() {
     emit newStudyCaseCreated();
 }
 
-void StudyCaseHandler::saveCurrentStudyCase(const QString& whereToSave) {
+void StudyCaseHandler::saveCurrentStudyCase(QString whereToSave) {
     if (exists()) {
+
+        if (whereToSave != m_lastSavedPath && !whereToSave.toLower().contains(".femris")) {
+            whereToSave += ".femris";
+        }
+
         m_studyCase->saveCurrentConfiguration(whereToSave);
         markAsSaved();
+
+        m_lastSavedPath = whereToSave;
     }
 }
 
@@ -115,6 +124,9 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
 
     m_currentStudyCaseVariables = results;
     m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+    m_lastSavedPath = whereToLoad;
+
+    QMap<QString, QString>::const_iterator i = m_currentStudyCaseVariables.constBegin();while (i != m_currentStudyCaseVariables.constEnd()) {qDebug() << i.key() << ": " << i.value();++i;}
 
     markAsSaved();
     return true;
@@ -137,7 +149,7 @@ bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable) 
 QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable, bool isTemporal) {
 
     if (!m_currentStudyCaseVariables.contains(variable) && !isTemporal) {
-        Utils::throwErrorAndExit("StudyCaseHandler::getStudyCaseInformationAbout(): unknown variable " + variable);
+        Utils::throwErrorAndExit("StudyCaseHandler::getSingleStudyCaseInformation(): unknown variable " + variable);
     }
 
     if (isTemporal) {
@@ -294,14 +306,22 @@ void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
 //--                          GETTER AND SETTERS                            --//
 //----------------------------------------------------------------------------//
 
-bool StudyCaseHandler::savedStatus() {
+bool StudyCaseHandler::getSavedStatus() {
     return m_isSaved;
 }
 
 void StudyCaseHandler::markAsSaved() {
     m_isSaved = true;
+
+    emit StudyCaseHandler::markedAsSaved();
 }
 
 void StudyCaseHandler::markAsNotSaved() {
     m_isSaved = false;
+
+    emit StudyCaseHandler::markedAsNotSaved();
+}
+
+QString StudyCaseHandler::getLastSavedPath() {
+    return m_lastSavedPath;
 }
