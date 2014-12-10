@@ -43,6 +43,8 @@ RowLayout {
                 header.text: "MODELO FÍSICO"
                 textArea.text: Content.overall.model
 
+                image.source : "qrc:/resources/images/overall/model.png"
+
                 button.buttonLabel: "Elegir"
                 button.onClicked : mainWindow.switchSection("CE_Model")
                 button.iconSource: "qrc:/resources/icons/function.png"
@@ -53,6 +55,8 @@ RowLayout {
             ChoiceBlock {
                 header.text: "DOMINIO"
                 textArea.text: Content.overall.domain
+
+                image.source : "qrc:/resources/images/overall/domain.png"
 
                 button.buttonLabel: "Crear"
                 button.onClicked : mainWindow.switchSection("CE_Domain")
@@ -67,6 +71,8 @@ RowLayout {
                 header.text: "FUNC. DE FORMA"
                 textArea.text: Content.overall.shape_functions
 
+                image.source : "qrc:/resources/images/overall/shape_function.png"
+
                 button.buttonLabel: "Repasar"
                 button.onClicked : mainWindow.switchSection("CE_ShapeFunction")
                 button.iconSource: "qrc:/resources/icons/stats1.png"
@@ -79,6 +85,8 @@ RowLayout {
             ChoiceBlock {
                 header.text: "RESULTADOS"
                 textArea.text: Content.overall.results
+
+                image.source : "qrc:/resources/images/overall/results.png"
 
                 button.buttonLabel: "Ver"
                 button.onClicked : mainWindow.switchSection("CE_Results")

@@ -148,7 +148,7 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_Results.qml");
+            globalLoader.setSource("screens/CE_Domain.qml");
         }
 
     }
@@ -193,11 +193,22 @@ ApplicationWindow {
 
     MessageDialog {
         id: beforeClosingDialog
-        title: "May I have your attention please"
-        text: "It's so cool that you are using Qt Quick."
-        onAccepted: {
-            console.log("And of course you could only agree.")
+        title: qsTr("¿Guardar Caso de Estudio?")
+        text: qsTr("Sí no guarda, los cambios efectuados desde el último punto de guardado se perderán para siempre.")
+
+        icon: StandardIcon.Warning
+        standardButtons : StandardButton.Save | StandardButton.Cancel | StandardButton.Discard
+
+        onRejected: {
+            beforeClosingDialog.close();
+        }
+
+        onDiscard: {
             Qt.quit()
+        }
+
+        onAccepted: {
+            femrisSaverAndExit.open();
         }
 
         visible: false
@@ -215,12 +226,28 @@ ApplicationWindow {
             StudyCaseHandler.loadStudyCase(femrisLoader.fileUrl);
             mainWindow.switchSection("CE_Overall");
 
+            if (StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess") > 3) {
+                ProcessHandler.executeInterpreter();
+            }
+
             if (!markAsSaved) {
                 StudyCaseHandler.markAsNotSaved();
                 femrisLoader.markAsSaved = true;
             }
         }
 
+    }
+
+    FileDialog {
+        id: femrisSaverAndExit
+        title: "Guardar Caso de Estudio como..."
+        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
+        selectExisting: false
+        modality: "ApplicationModal"
+        onAccepted: {
+            StudyCaseHandler.saveCurrentStudyCase(fileUrl);
+            Qt.quit();
+        }
     }
 
     Connections {

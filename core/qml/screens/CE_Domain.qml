@@ -171,9 +171,11 @@ RowLayout {
 
                             listModelExamples.append(newModel);
 
-                            var exampleName = StudyCaseHandler.getSingleStudyCaseInformation("exampleName");
-                            if (newModel.exampleFile === exampleName) {
-                                currentIndex = k - 1;
+                            if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
+                                var exampleName = StudyCaseHandler.getSingleStudyCaseInformation("exampleName");
+                                if (newModel.exampleFile === exampleName) {
+                                    currentIndex = k - 1;
+                                }
                             }
                         }
 
@@ -192,7 +194,9 @@ RowLayout {
 
                         sideLoadContainer.jsonDomain = jsonDomain;
 
-                        StudyCaseHandler.setSingleStudyCaseInformation("exampleName", exampleFile);
+                        if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
+                            StudyCaseHandler.setSingleStudyCaseInformation("exampleName", exampleFile);
+                        }
                     }
                 }
             }
@@ -264,17 +268,11 @@ RowLayout {
 
                     onClicked: {
                         rowParent.saveCurrentLoads();
-
-                        ProcessHandler.setCommand("clear; cd temp; currentMatFemFile; cd ../scripts/MAT-fem; MATfemris");
-                        ProcessHandler.callingProcess();
+                        ProcessHandler.executeInterpreter();
                     }
                 }
             }
         }
-    }
-
-    AlertModal {
-        id: imageModal
     }
 
     function saveCurrentLoads() {

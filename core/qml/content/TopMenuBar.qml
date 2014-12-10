@@ -72,7 +72,6 @@ MenuBar {
             onNewStudyCaseCreated: {
                 var exists = StudyCaseHandler.exists();
 
-                menuItemContinue.enabled = exists;
                 menuItemClose.enabled = exists;
                 menuItemSave.enabled = exists;
                 menuItemSaveAs.enabled = exists;

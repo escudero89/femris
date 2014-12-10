@@ -147,7 +147,6 @@ Item {
 
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignLeft
-                    Layout.maximumWidth: parent.width / 4
 
                     enabled: false
 
@@ -174,45 +173,63 @@ Item {
 
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight
-                    Layout.maximumWidth: parent.width / 4
 
                     enabled: false
 
                     onClicked: {
-                        continueLoadingModal.enabled = false;
-                        closeLoadingModal.enabled = false;
-
-                        textAreaLoadingModal.text = "";
-                        loadingModal.visible = 0;
-                        progressBarModal.value = 0;
+                        parent.resetModal();
                     }
+                }
+
+                PrimaryButton {
+                    id: goToShapeFunctionLoadingModal
+
+                    buttonLabel: ""
+                    buttonStatus: "info"
+                    iconSource: "qrc:/resources/icons/stats1.png"
+
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignRight
+
+                    enabled: false
+
+                    onClicked: {
+                        parent.resetModal();
+
+                        mainWindow.switchSection(StudyCaseHandler.saveAndContinue("CE_Domain"));
+                    }
+
                 }
 
                 PrimaryButton {
                     id: continueLoadingModal
 
-                    buttonLabel: "Continuar"
+                    buttonLabel: "Resultados"
                     buttonStatus: "success"
-                    iconSource: "qrc:/resources/icons/save8.png"
+                    iconSource: "qrc:/resources/icons/calculator70.png"
 
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight
-                    Layout.maximumWidth: parent.width / 4
 
                     enabled: false
 
                     onClicked: {
-                        continueLoadingModal.enabled = false;
-                        closeLoadingModal.enabled = false;
+                        parent.resetModal();
 
-                        textAreaLoadingModal.text = "";
-                        loadingModal.visible = 0;
-                        progressBarModal.value = 0;
-
-                        mainWindow.switchSection(StudyCaseHandler.saveAndContinue("CE_Domain"));
+                        StudyCaseHandler.saveAndContinue("CE_Domain");
+                        mainWindow.switchSection(StudyCaseHandler.saveAndContinue("CE_ShapeFunction"));
                     }
 
+                }
 
+                function resetModal() {
+                    goToShapeFunctionLoadingModal.enabled = false;
+                    continueLoadingModal.enabled = false;
+                    closeLoadingModal.enabled = false;
+
+                    textAreaLoadingModal.text = "";
+                    loadingModal.visible = 0;
+                    progressBarModal.value = 0;
                 }
 
             }
@@ -250,6 +267,7 @@ Item {
         onProcessFinished: {
             console.log("Finished...");
             closeLoadingModal.enabled = true;
+            goToShapeFunctionLoadingModal.enabled = true;
             continueLoadingModal.enabled = true;
         }
         onProcessWithError: {

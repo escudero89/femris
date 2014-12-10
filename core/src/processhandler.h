@@ -17,7 +17,8 @@ public:
     void cppSlot(const QString &, const QString &, float);
     static void invokingOctave(const QString&);
 
-    Q_INVOKABLE void setCommand(const QString &);
+    Q_INVOKABLE void executeInterpreter();
+    void setCommand(const QString &);
 
     Q_INVOKABLE void kill();
 

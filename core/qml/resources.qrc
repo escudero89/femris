@@ -763,5 +763,11 @@
         <file>resources/icons/black/zoom28.png</file>
         <file>resources/images/square_shadow_disabled.png</file>
         <file>resources/config.xml</file>
+        <file>resources/images/overall/domain.png</file>
+        <file>resources/images/overall/geometry1.png</file>
+        <file>resources/images/overall/layout10.png</file>
+        <file>resources/images/overall/model.png</file>
+        <file>resources/images/overall/results.png</file>
+        <file>resources/images/overall/shape_function.png</file>
     </qresource>
 </RCC>

@@ -2,15 +2,15 @@
 % MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
 %                the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% EXAMPLE SELECTED = example1.json
+% EXAMPLE SELECTED = {{exampleName}}
 %
 %  Material Properties
 %
-  young = undefined ;
-  poiss = undefined ;
-  denss = undefined ;
+  young = 2700000 ;
+  poiss = 0.2 ;
+  denss = 1 ;
   pstrs = 0 ;
-  thick = undefined ;
+  thick = 1 ;
 
 %
 % Coordinates
@@ -43,6 +43,11 @@ global elements
 % Fixed Nodes
 %
 fixnodes = [
+    7,    1,    0 ;
+    7,    2,    0 ;
+    8,    2,    0 ;
+    9,    1,    0 ;
+    9,    2,    0 ;
 ];
 
 %
@@ -55,6 +60,8 @@ pointload = [
 % Uniform Side loads
 %
 sideload = [
+    1,    2,    0,    0 ;
+    2,    3,    0,    0 ;
 ];
 
 

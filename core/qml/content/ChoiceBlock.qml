@@ -85,6 +85,8 @@ ColumnLayout {
 
                 source: (blockStatus === "default") ? "qrc:/resources/images/square_shadow_disabled.png" : "qrc:/resources/images/square_shadow.png"
 
+                opacity: (blockStatus === "default") ? 1 : 0.3
+
                 smooth: true
 
                 fillMode: Image.PreserveAspectFit

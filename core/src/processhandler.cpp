@@ -18,7 +18,6 @@ ProcessHandler::ProcessHandler() {
     m_command = "ls";
 }
 
-
 void ProcessHandler::cppSlot(const QString &msg, const QString &amplitud, float freq = 1) {
     qDebug() << "Called the C++ slot with message:" << msg << " and " << amplitud;
     // GNUPLOT
@@ -140,6 +139,11 @@ void ProcessHandler::exitingProcess() {
 
 void ProcessHandler::errorInProcess() {
     emit processWithError();
+}
+
+void ProcessHandler::executeInterpreter() {
+    setCommand("clear; cd temp; currentMatFemFile; cd ../scripts/MAT-fem; MATfemris");
+    emit callingProcess();
 }
 
 void ProcessHandler::kill() {
