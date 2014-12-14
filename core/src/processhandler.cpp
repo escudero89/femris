@@ -18,45 +18,6 @@ ProcessHandler::ProcessHandler() {
     m_command = "ls";
 }
 
-void ProcessHandler::cppSlot(const QString &msg, const QString &amplitud, float freq = 1) {
-    qDebug() << "Called the C++ slot with message:" << msg << " and " << amplitud;
-    // GNUPLOT
-    QProcess gnuplot;
-    gnuplot.start("gnuplot", QIODevice::ReadWrite);
-
-    if (!gnuplot.waitForStarted()) {
-        qDebug() << "gnuplot no :c";
-        qDebug() << gnuplot.errorString();
-
-    } else {
-        qDebug() << "gnuplot yeah!";
-    }
-
-    // NO OLVIDAR LOS SALTOS DE LINEA
-    gnuplot.write("set term svg enhanced \n");
-    gnuplot.write("set output 'temp/output_qt.svg' \n");
-    //gnuplot.write("splot sin(x+y) lc rgb '#FF3030' \n");
-    gnuplot.write("plot ");
-    gnuplot.write(amplitud.toUtf8().constData());
-    gnuplot.write("*sin(x*");
-    QString str;
-    str.setNum(freq);
-    gnuplot.write(str.toUtf8().constData());
-    gnuplot.write(") \n");
-    // Cerramos
-    gnuplot.closeWriteChannel();
-    gnuplot.waitForBytesWritten();
-
-    if (!gnuplot.waitForFinished(1000)) {
-        qDebug() << "gnuplot crashing :c";
-
-    } else {
-        qDebug() << "gnuplot turning off...";
-    }
-
-    QByteArray result = gnuplot.readAll();
-}
-
 void ProcessHandler::callingProcess() {
     if (Configure::check("interpreter", "octave")) {
         callingOctave();
@@ -148,6 +109,9 @@ void ProcessHandler::executeInterpreter() {
 
 void ProcessHandler::kill() {
     m_process.kill();
+    m_process.close();
+    m_stepOfProcessManipulation = 0;
+
     emit processWithError();
 }
 

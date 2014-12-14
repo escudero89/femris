@@ -41,7 +41,7 @@
 
 %%==============|| STUDY CASE MAT-fem       ||==============>>>>>>>>>>>>
 %=======================================================================
-% MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
+% MAT-fem 1.3  - MAT-fem is a learning tool for undestanding
 %                the Finite Element Method with MATLAB and GiD
 %=======================================================================
 % EXAMPLE SELECTED = {{exampleName}}
@@ -56,16 +56,16 @@
 
 %%==============|| STUDY CASE MAT-femCal    ||==============>>>>>>>>>>>>
 %=======================================================================
-% MAT-femcCal 1.0  - MAT-femCal is a learning tool for undestanding 
+% MAT-femcCal 1.3  - MAT-femCal is a learning tool for undestanding
 %                    the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% PROBLEM TITLE = {{fileTitle}}
+% EXAMPLE SELECTED = {{exampleName}}
 %
 %  Material Properties
 %
-  kx = {{kx}} ;
-  ky = {{ky}} ;
- heat= {{heat}} ;
+  kx   = {{kx}} ;
+  ky   = {{ky}} ;
+  heat = {{heat}} ;
 
 %%==============|| STUDY CASE MAT-variables ||==============>>>>>>>>>>>>
 %

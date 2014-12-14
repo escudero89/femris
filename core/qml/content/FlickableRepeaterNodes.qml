@@ -102,7 +102,7 @@ ColumnLayout {
                     anchors.fill: parent
 
                     color: (index === repeater.currentIndex) ? Style.color.femris :
-                               ((index % 2 === 0) ? Style.color.background_highlight :  Style.color.background) ;
+                                                               ((index % 2 === 0) ? Style.color.background_highlight :  Style.color.background) ;
 
                     opacity: 0.3
 
@@ -139,10 +139,10 @@ ColumnLayout {
 
                         onClicked: {
                             switch(buttonNodeController.state) {
-                                case "libre"  : buttonNodeController.state = "x-fijo" ; buttonNodeController.fixnodeIcon = "lock24"; break;
-                                case "x-fijo" : buttonNodeController.state = "y-fijo" ; buttonNodeController.fixnodeIcon = "lock24"; break;
-                                case "y-fijo" : buttonNodeController.state = "xy-fijo"; buttonNodeController.fixnodeIcon = "lock24"; break;
-                                case "xy-fijo": buttonNodeController.state = "libre"  ; buttonNodeController.fixnodeIcon = "open94"; break;
+                            case "libre"  : buttonNodeController.state = "x-fijo" ; buttonNodeController.fixnodeIcon = "lock24"; break;
+                            case "x-fijo" : buttonNodeController.state = "y-fijo" ; buttonNodeController.fixnodeIcon = "lock24"; break;
+                            case "y-fijo" : buttonNodeController.state = "xy-fijo"; buttonNodeController.fixnodeIcon = "lock24"; break;
+                            case "xy-fijo": buttonNodeController.state = "libre"  ; buttonNodeController.fixnodeIcon = "open94"; break;
                             }
 
                             repeater.currentIndex = index;
@@ -238,7 +238,46 @@ ColumnLayout {
                         }
                     }
                 }
+
+                Component.onCompleted: {
+                    var previousFixNodesValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("fixnodes").replace(/;/g, ",").replace("],", "];").substr("fixnodes =".length));
+                    var previousPointLoadValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("pointload").replace(/;/g, ",").replace("],", "];").substr("pointload =".length));
+
+                    //--------------------------------------------------
+
+                    var nChecks = previousFixNodesValues.length / 3;
+
+                    for ( var k = 0 ; k < nChecks; k++ ) {
+                        var currentFixNode = previousFixNodesValues.splice(0,3);
+
+                        if (currentFixNode[0] === (index + 1)) {
+                            if (currentFixNode[1] === 1) {
+                                console.log(index, k, currentFixNode, buttonNodeController.state);
+                                buttonNodeController.state = ((buttonNodeController.state === "y-fijo") ? "xy-fijo" : "x-fijo");
+                            } else {
+                                buttonNodeController.state = ((buttonNodeController.state === "x-fijo") ? "xy-fijo" : "y-fijo");
+                            }
+                        }
+                    }
+
+                    //--------------------------------------------------
+
+                    nChecks = previousPointLoadValues.length / 3;
+
+                    for ( var k = 0 ; k < nChecks; k++ ) {
+                        var currentPointLoad = previousPointLoadValues.splice(0,3);
+
+                        if (currentPointLoad[0] === (index + 1)) {
+                            if (currentPointLoad[1] === 1) {
+                                xTextField.text = currentPointLoad[2];
+                            } else {
+                                yTextField.text = currentPointLoad[2];
+                            }
+                        }
+                    }
+                }
             }
+
         }
 
         // Attach scrollbars to the right of the view.

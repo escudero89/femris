@@ -85,8 +85,6 @@ ColumnLayout {
                 NumberAnimation { properties: "opacity"; duration: 400 }
             }
 
-            //highlight: Rectangle { color: Style.color.primary; opacity: 0.1; radius: 1 }
-
             focus: true
 
             model: 0
@@ -148,15 +146,14 @@ ColumnLayout {
                     }
 
                     TextField {
+
+                        id: textFieldSideloadX
+
                         Layout.preferredWidth: parent.width / 3
                         placeholderText: "x_" + ( index + 1 )
 
                         onEditingFinished: {
                             StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
-                        }
-
-                        onAccepted: {
-                            console.log("asd")
                         }
 
                         onFocusChanged: {
@@ -168,6 +165,9 @@ ColumnLayout {
                     }
 
                     TextField {
+
+                        id: textFieldSideloadY
+
                         Layout.preferredWidth: parent.width / 3
                         placeholderText: "y_" + ( index + 1 )
 
@@ -182,6 +182,24 @@ ColumnLayout {
                             }
                         }
                     }
+                }
+
+                Component.onCompleted: {
+                    var previousSideloadValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("sideload").replace(/;/g, ",").replace("],", "];").substr("sideload =".length));
+
+                    var currentSide = jsonDomain["sideloadNodes"][index];
+                    var nSideLoad = previousSideloadValues.length / 4;
+
+                    for ( var k = 0 ; k < nSideLoad; k++ ) {
+                        var currentLoad = previousSideloadValues.splice(0,4);
+
+                        if (currentSide.indexOf(currentLoad[0]) !== -1 && currentSide.indexOf(currentLoad[1]) !== -1) {
+                            textFieldSideloadX.text = currentLoad[2];
+                            textFieldSideloadY.text = currentLoad[3];
+                        }
+                    }
+
+                    return "";
                 }
             }
         }

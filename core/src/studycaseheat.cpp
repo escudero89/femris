@@ -9,16 +9,14 @@ StudyCaseHeat::StudyCaseHeat() {
 
 void StudyCaseHeat::setLocalMapOfInformation() {
 
-    m_mapOfInformation["youngModulus"]           = "undefined";
-    m_mapOfInformation["poissonCoefficient"]     = "undefined";
-    m_mapOfInformation["densityOfDomain"]        = "undefined";
-    m_mapOfInformation["typeOfProblem"]          = "undefined";
-    m_mapOfInformation["thickOfDomain"]          = "undefined";
+    m_mapOfInformation["kx"]     = "undefined";
+    m_mapOfInformation["ky"]     = "undefined";
+    m_mapOfInformation["heat"]   = "undefined";
 
 }
 
 void StudyCaseHeat::saveLocalCurrentConfiguration() {
     QStringList configurationFilter;
-    configurationFilter << "MAT-variables" << "MAT-fem";
+    configurationFilter << "MAT-variables" << "MAT-femCal";
     FileIO::splitConfigurationFile("currentMatFemFile.m", m_source, configurationFilter, true);
 }
