@@ -19,7 +19,6 @@ ColumnLayout {
         border.bottom: 8
         source: "qrc:/resources/images/toolbar.png"
 
-        Layout.preferredHeight: indexLayout.height * 0.05
         Layout.fillWidth: true
 
         Rectangle {
@@ -80,7 +79,6 @@ ColumnLayout {
 
         Layout.alignment: Qt.AlignBottom
 
-        Layout.preferredHeight: indexLayout.height * 0.05
         Layout.fillWidth: true
         spacing: 0
 

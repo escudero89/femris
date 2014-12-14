@@ -228,7 +228,6 @@ Item {
 
                     PrimaryButton {
                         id: searchButton
-                        Layout.preferredWidth: parent.width / 3
 
                         buttonLabel: "Buscar"
                         buttonStatus: "white"
