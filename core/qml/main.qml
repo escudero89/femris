@@ -1,5 +1,5 @@
-import QtQuick 2.3
-import QtQuick.Controls 1.1
+import QtQuick 2.4
+import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.1
 
@@ -107,7 +107,7 @@ ApplicationWindow {
 
             id: globalLoader
 
-            // Esperamos a que se cargen los hijos antes de cargar el resto
+            // We wait until the children are loaded to start
             asynchronous: true
             visible: false
 
@@ -148,9 +148,8 @@ ApplicationWindow {
 
         // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
-            globalLoader.setSource("screens/CE_Domain.qml");
+            globalLoader.setSource("screens/Tutorial.qml");
         }
-
     }
 
     AlertModal { id: alertModal }

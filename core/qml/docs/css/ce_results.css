@@ -19,6 +19,12 @@ span.femris {
     font-weight: bold;
 }
 
+strong.tooltipped {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #ca428b;
+}
+
 .MathJax_Menu { z-index: 1200 !important;}
 .MathJax_MenuItem { z-index: 1300 !important;}
 

@@ -1,6 +1,6 @@
-import QtQuick 2.3
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.3
 
 import QtQuick.XmlListModel 2.0
 
@@ -13,11 +13,6 @@ ColumnLayout {
 
     // Reloads the central loader usign the StackView
     signal loader(string url)
-
-    Rectangle {
-        color: Style.color.complement_highlight
-        anchors.fill: parent
-    }
 
     // TopBar
     BorderImage {
@@ -50,8 +45,6 @@ ColumnLayout {
                 source: "qrc:/resources/icons/chevron20.png"
                 height: parent.height
                 width: height
-
-
             }
 
             MouseArea {
@@ -77,6 +70,9 @@ ColumnLayout {
 
     StackIndex {
         id: stackView
+
+        Layout.fillWidth: true
+        Layout.fillHeight: true
     }
 
     // BottomBar

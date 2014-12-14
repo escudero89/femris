@@ -1,6 +1,6 @@
-import QtQuick 2.3
+import QtQuick 2.4
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.3
 
 import QtQuick.XmlListModel 2.0
 
@@ -9,9 +9,6 @@ import "../"
 // Contenido del Index
 StackView {
     id: stackView
-
-    Layout.fillWidth: true
-    Layout.fillHeight: true
 
     // Para volver hacia atras con la navegacion
     signal makePop()

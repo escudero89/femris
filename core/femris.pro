@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets webkit xml webkitwidgets network
+QT += widgets qml quick webengine xml
 
 SOURCES += \
     src/main.cpp \
