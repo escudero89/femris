@@ -2,14 +2,14 @@
 % MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
 %                the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% EXAMPLE SELECTED = undefined
+% EXAMPLE SELECTED = example2.json
 %
 %  Material Properties
 %
   young = undefined ;
   poiss = undefined ;
   denss = undefined ;
-  pstrs = 0 ;
+  pstrs = undefined ;
   thick = undefined ;
 
 %

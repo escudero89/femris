@@ -66,7 +66,7 @@ void StudyCaseHandler::selectNewTypeStudyCase(const QString& studyCaseType) {
 void StudyCaseHandler::createNewStudyCase() {
 
     if (m_studyCaseType == "heat") {
-        //m_studyCase = new StudyCaseHeat();
+        m_studyCase = new StudyCaseHeat();
 
     } else if (m_studyCaseType == "plane-stress") {
         m_studyCase = new StudyCaseStructural();

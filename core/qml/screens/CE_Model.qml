@@ -2,7 +2,7 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.3
 
-import QtWebKit 3.0
+import QtWebEngine 1.0
 
 import "../docs"
 import "../content"
@@ -36,7 +36,7 @@ RowLayout {
         rows: 2
         columns: 3
 
-        WebView {
+        WebEngineView {
             Layout.fillHeight: true
             Layout.fillWidth: true
 

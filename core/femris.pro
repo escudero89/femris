@@ -11,7 +11,8 @@ SOURCES += \
     src/utils.cpp \
     src/studycasestructural.cpp \
     src/configure.cpp \
-    src/femrisxmlcontenthandler.cpp
+    src/femrisxmlcontenthandler.cpp \
+    src/studycaseheat.cpp
 
 RESOURCES += \
     qml/resources.qrc \
@@ -40,5 +41,6 @@ HEADERS += \
     src/processhandler.h \
     src/studycasehandler.h \
     src/configure.h \
+    src/studycaseheat.h
 
 RC_ICONS = rc/logo.ico

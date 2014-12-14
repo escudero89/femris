@@ -37,8 +37,6 @@ Rectangle {
 
         ModelElectionSBox { visible : { return parentStage === 'CE_Model' } }
 
-        VariablesSBox { visible : { return parentStage === 'CE_DomainOriginal'; } }
-
         PropertiesAssignationSBox { visible : { return parentStage === 'CE_Domain'; } }
 
         Rectangle {

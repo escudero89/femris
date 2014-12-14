@@ -5,6 +5,7 @@
 
 #include "studycase.h"
 #include "studycasestructural.h"
+#include "studycaseheat.h"
 
 class StudyCaseHandler : public QObject
 {
