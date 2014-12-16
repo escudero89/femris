@@ -77,7 +77,7 @@ global coordinates
 % Elements
 %
 global elements
- {{elements}}
+{{elements}}
 %
 % Fixed Nodes
 %

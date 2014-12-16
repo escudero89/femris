@@ -20,7 +20,7 @@
 %%  ----------------------------------------------------------------  %%
 %%====================================================================%%
 
-function parsed = jsonParser(key, value, avoidBreakline)
+function [parsed] = jsonParser(key, value, avoidBreakline)
 
     parsed = strcat('  "', key, '" : "', value, '",\r\n');
 
@@ -28,3 +28,4 @@ function parsed = jsonParser(key, value, avoidBreakline)
         parsed = strcat('  "', key, '" : ', value);
     end
 
+end

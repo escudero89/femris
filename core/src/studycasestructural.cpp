@@ -9,11 +9,11 @@ StudyCaseStructural::StudyCaseStructural() {
 
 void StudyCaseStructural::setLocalMapOfInformation() {
 
-    m_mapOfInformation["youngModulus"]           = "undefined";
-    m_mapOfInformation["poissonCoefficient"]     = "undefined";
-    m_mapOfInformation["densityOfDomain"]        = "undefined";
-    m_mapOfInformation["typeOfProblem"]          = "undefined";
-    m_mapOfInformation["thickOfDomain"]          = "undefined";
+    m_mapOfInformation["youngModulus"]           = "false";
+    m_mapOfInformation["poissonCoefficient"]     = "false";
+    m_mapOfInformation["densityOfDomain"]        = "false";
+    m_mapOfInformation["typeOfProblem"]          = "false";
+    m_mapOfInformation["thickOfDomain"]          = "false";
 
 }
 

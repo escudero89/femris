@@ -24,7 +24,7 @@ function [jsonfy] = MultidimensionalToJSON(multidimensional, label, comment, isL
 
     numberOfDimensions = size(multidimensional, 3);
 
-    jsonfy = jsonParser(["_" label], comment);
+    jsonfy = jsonParser(strcat('_', label), comment);
     jsonfy = strcat(jsonfy, jsonParser(label, '[\r\n', true));
 
     % We jump up the first value (that's zeros for how it is implemented)

@@ -72,8 +72,8 @@ void StudyCase::setInitialMapOfInformation() {
 
     m_mapOfInformation.clear();
 
-    m_mapOfInformation["typeOfStudyCase"]        = "undefined";
-    m_mapOfInformation["exampleName"]            = "undefined";
+    m_mapOfInformation["typeOfStudyCase"]        = "false";
+    m_mapOfInformation["exampleName"]            = "false";
     m_mapOfInformation["stepOfProcess"]          = "1";
 
     m_mapOfInformation["gridHeight"]             = "1";
@@ -85,10 +85,10 @@ void StudyCase::setInitialMapOfInformation() {
     setLocalMapOfInformation();
 
     m_mapOfInformation["coordinates"]           = "coordinates = [\r\n];" ;
-    m_mapOfInformation["elements"]              = "elements    = [\r\n];" ;
-    m_mapOfInformation["fixnodes"]              = "fixnodes    = [\r\n];" ;
-    m_mapOfInformation["pointload"]             = "pointload   = [\r\n];" ;
-    m_mapOfInformation["sideload"]              = "sideload    = [\r\n];" ;
+    m_mapOfInformation["elements"]              = "elements = [\r\n];" ;
+    m_mapOfInformation["fixnodes"]              = "fixnodes = [\r\n];" ;
+    m_mapOfInformation["pointload"]             = "pointload = [\r\n];" ;
+    m_mapOfInformation["sideload"]              = "sideload = [\r\n];" ;
 
     compressMapOfInformation();
 }
@@ -100,7 +100,7 @@ void StudyCase::compressMapOfInformation() {
     while (i.hasNext()) {
         i.next();
 
-        QString val = i.value().isEmpty() ? "undefined" : i.value();
+        QString val = i.value().isEmpty() ? "false" : i.value();
 
         encodedMap += i.key() + Utils::midSeparator + val + Utils::endSeparator;
     }

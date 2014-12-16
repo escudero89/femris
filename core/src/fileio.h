@@ -32,7 +32,7 @@ public:
 
 public Q_SLOTS:
 
-    void setSource(QString arg);
+    bool setSource(QString arg);
 
 Q_SIGNALS:
 

@@ -198,6 +198,7 @@ Item {
                         Layout.fillWidth: true
 
                         placeholderText: "Ingresa la ubicación de MATLAB o GNU Octave"
+                        text: Configure.read("interpreter") !== "null" ? Configure.read("interpreter") : ""
 
                         states: State {
                             name: "danger"
@@ -322,12 +323,11 @@ Item {
 
                         if (radioMatlab.checked) {
                             Configure.write("interpreter", "matlab");
-                            Configure.write("matlab", searchResult.text);
                         } else if (radioOctave.checked) {
                             Configure.write("interpreter", "octave");
-                            Configure.write("octave", searchResult.text);
                         }
 
+                        Configure.write("interpreterPath", searchResult.text);
                         Configure.write("firstTime", "true");
                     }
                 }

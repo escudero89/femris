@@ -3,10 +3,25 @@
 
   % FEMRIS ADDITION >>>>>>>
   global femris_elemental_matrix
-  femris_elemental_matrix = cell;
+  femris_elemental_matrix = cell(30);
 
   file_name = '../../temp/currentMatFemFile';%'__1_trash'; %
-  %eval(file_name);
+
+  if (size(fixnodes, 1) == 0)
+    fixnodes
+    sideload
+    pointload
+    fprintf(1,'\nFalta definirse alguna condición de contorno.');
+    exit;
+  end
+ls
+  if (exist('scripts/') == 0)
+    cd ..;
+  end
+
+  cd 'scripts/';
+  cd 'MAT-fem/';
+
   % <<< END FEMRIS ADDITION
 
   tic;                   % Start clock

@@ -3,8 +3,7 @@
         <item setting="firstTime" value="false" />
         <item setting="os" value="linux" />
         <item setting="interpreter" value="octave" />
-        <item setting="octave" value="octave" />
-        <item setting="matlab" value="/media/Cristian/MatLabLinux/bin/matlab" />
+        <item setting="interpreterPath" value="null" />
 
         <item setting="lastAccessDate" value="datetime" />
         <item setting="lastExitDate" value="datetime" />

@@ -78,11 +78,14 @@ QString FileIO::source() const {
     return m_source;
 }
 
-void FileIO::setSource(QString arg) {
+bool FileIO::setSource(QString arg) {
     if (m_source != arg) {
         m_source = Configure::getPathWithoutPrefix(arg);
         emit sourceChanged();
     }
+
+    QFile file(m_source);
+    return file.exists();
 }
 
 QJsonObject FileIO::getVarFromJsonString(const QString& jsonFile) {
@@ -215,7 +218,7 @@ void FileIO::removeTemporaryFiles() {
     QDir dir("temp");
 
     QStringList filters;
-    filters << "*.femris.old" << "*.base64";
+    filters << "*.femris.old" << "*.base64" << "*_tmp*";
 
     QStringList temporaryFiles;
     temporaryFiles = dir.entryList(filters, QDir::Files);

@@ -185,7 +185,7 @@ ColumnLayout {
                 }
 
                 Component.onCompleted: {
-                    var previousSideloadValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("sideload").replace(/;/g, ",").replace("],", "];").substr("sideload =".length));
+                    var previousSideloadValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("sideload").replace(/;/g, ",").replace("],", "];").replace("=", "").replace("sideload", "").trim());
 
                     var currentSide = jsonDomain["sideloadNodes"][index];
                     var nSideLoad = previousSideloadValues.length / 4;

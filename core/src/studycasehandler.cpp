@@ -227,7 +227,7 @@ void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
 QString StudyCaseHandler::setSingleStudyCaseJsonHelper(const QString& nameVariable,
                                                        const QJsonArray& jsonVariable) {
 
-    QString jsonQString = nameVariable;
+    QString jsonQString = nameVariable.trimmed();
 
     jsonQString += " = [\r\n";
 
@@ -279,7 +279,7 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
     unsigned int nextStepOfProcess = stagesList.indexOf(parentStage) + 1;
 
     setSingleStudyCaseInformation("stepOfProcess", QString::number(nextStepOfProcess));
-qDebug() << nextStepOfProcess;
+
     return stagesList.at(nextStepOfProcess);
 }
 

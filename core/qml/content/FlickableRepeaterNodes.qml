@@ -240,8 +240,8 @@ ColumnLayout {
                 }
 
                 Component.onCompleted: {
-                    var previousFixNodesValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("fixnodes").replace(/;/g, ",").replace("],", "];").substr("fixnodes =".length));
-                    var previousPointLoadValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("pointload").replace(/;/g, ",").replace("],", "];").substr("pointload =".length));
+                    var previousFixNodesValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("fixnodes").replace(/;/g, ",").replace("],", "];").replace("=", "").replace("fixnodes", "").trim());
+                    var previousPointLoadValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("pointload").replace(/;/g, ",").replace("],", "];").replace("=", "").replace("pointload", "").trim());
 
                     //--------------------------------------------------
 

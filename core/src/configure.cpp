@@ -88,8 +88,7 @@ void Configure::loadConfiguration(const QString& pathConfigurationXml) {
     m_pathUserConfigurationXml = pathConfigurationXml;
 
     FileIO fileIO;
-    fileIO.setSource(m_pathConfigurationXml);
-    bool firstTime = fileIO.read().isEmpty();
+    bool firstTime = !fileIO.setSource(m_pathConfigurationXml) || fileIO.read().isEmpty();
 
     if (firstTime) {
         m_pathConfigurationXml = ":/resources/config.xml";

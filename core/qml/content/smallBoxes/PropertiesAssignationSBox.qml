@@ -57,7 +57,7 @@ Rectangle {
 
             boundsBehavior: Flickable.StopAtBounds
 
-            Layout.minimumHeight: 30 * listModelVariablesSBox.count
+            Layout.minimumHeight: 30 * variablesList.model.count
 
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -84,6 +84,8 @@ Rectangle {
                         Layout.fillWidth: true
                         text: math
 
+                        textFormat: Text.RichText
+
                         MouseArea {
                             anchors.fill: parent
                             hoverEnabled: true
@@ -103,7 +105,7 @@ Rectangle {
                         text: {
                             if (variable && StudyCaseHandler.exists()) {
                                 var variableGetted = StudyCaseHandler.getSingleStudyCaseInformation(variable);
-                                if (variableGetted !== "undefined") {
+                                if (variableGetted !== "false") {
                                     return variableGetted;
                                 }
                             }
@@ -131,50 +133,92 @@ Rectangle {
 
             z: variablesRectangle.z - 1
 
-            model: ListModel {
-                id: listModelVariablesSBox
+            model: StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase") && StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase") === 'heat' ?
+                listModelVariablesSBoxHeat : listModelVariablesSBoxStructural
+        }
 
-                ListElement {
-                    math: 'Ancho'
-                    mathInfo: 'El dominio será escalado a este ancho'
-                    name: 'Ancho del dominio'
-                    variable: 'gridWidth'
-                }
+        ListModel {
+            id: listModelVariablesSBoxStructural
 
-                ListElement {
-                    math: 'Alto'
-                    mathInfo: 'El dominio será escalado a este alto'
-                    name: 'Alto del dominio'
-                    variable: 'gridHeight'
-                }
+            ListElement {
+                math: 'Ancho'
+                mathInfo: 'El dominio será escalado a este ancho'
+                name: 'Ancho del dominio'
+                variable: 'gridWidth'
+            }
 
-                ListElement {
-                    math: 'E'
-                    mathInfo: 'Caracteriza el comportamiento elástico del material'
-                    name: 'Módulo de Young'
-                    variable: 'youngModulus'
-                }
+            ListElement {
+                math: 'Alto'
+                mathInfo: 'El dominio será escalado a este alto'
+                name: 'Alto del dominio'
+                variable: 'gridHeight'
+            }
 
-                ListElement {
-                    math: "ν"
-                    mathInfo: 'El valor del Coeficiente de Poisson debe ser mayor o igual que 0, pero menor a 0.5'
-                    name: 'Coeficiente de Poisson'
-                    variable: 'poissonCoefficient'
-                }
+            ListElement {
+                math: 'E'
+                mathInfo: 'Caracteriza el comportamiento elástico del material'
+                name: 'Módulo de Young'
+                variable: 'youngModulus'
+            }
 
-                ListElement {
-                    math: "ρ"
-                    mathInfo: "Densidad del dominio"
-                    name: 'Densidad'
-                    variable: 'densityOfDomain'
-                }
+            ListElement {
+                math: "&nu;"
+                mathInfo: 'El valor del Coeficiente de Poisson debe ser mayor o igual que 0, pero menor a 0.5'
+                name: 'Coeficiente de Poisson'
+                variable: 'poissonCoefficient'
+            }
 
-                ListElement {
-                    math: 't'
-                    mathInfo: "Espesor del dominio"
-                    name: 'Espesor'
-                    variable: 'thickOfDomain'
-                }
+            ListElement {
+                math: "&rho;"
+                mathInfo: "Densidad del dominio"
+                name: 'Densidad'
+                variable: 'densityOfDomain'
+            }
+
+            ListElement {
+                math: 't'
+                mathInfo: "Espesor del dominio"
+                name: 'Espesor'
+                variable: 'thickOfDomain'
+            }
+        }
+
+        ListModel {
+            id: listModelVariablesSBoxHeat
+
+            ListElement {
+                math: 'Ancho'
+                mathInfo: 'El dominio será escalado a este ancho'
+                name: 'Ancho del dominio'
+                variable: 'gridWidth'
+            }
+
+            ListElement {
+                math: 'Alto'
+                mathInfo: 'El dominio será escalado a este alto'
+                name: 'Alto del dominio'
+                variable: 'gridHeight'
+            }
+
+            ListElement {
+                math: 'k<sub>x</sub>'
+                mathInfo: 'Caracteriza el comportamiento elástico del material'
+                name: 'Módulo de Young'
+                variable: 'kx'
+            }
+
+            ListElement {
+                math: "k<sub>y</sub>"
+                mathInfo: 'El valor del Coeficiente de Poisson debe ser mayor o igual que 0, pero menor a 0.5'
+                name: 'Coeficiente de Poisson'
+                variable: 'ky'
+            }
+
+            ListElement {
+                math: "heat"
+                mathInfo: "Densidad del dominio"
+                name: 'Densidad'
+                variable: 'heat'
             }
         }
     }

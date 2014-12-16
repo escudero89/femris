@@ -46,10 +46,11 @@ Q_SIGNALS:
 
 private:
 
-    QProcess m_process;
+    QProcess* m_process;
     unsigned int m_stepOfProcessManipulation;
 
     QString m_command;
+    QString m_currentMatFemFile;
 };
 
 

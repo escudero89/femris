@@ -145,7 +145,6 @@ Item {
                     buttonStatus: "danger"
                     iconSource: "qrc:/resources/icons/ban.png"
 
-                    Layout.fillWidth: true
                     Layout.alignment: Qt.AlignLeft
 
                     enabled: false
@@ -171,7 +170,6 @@ Item {
                     buttonStatus: "used"
                     iconSource: "qrc:/resources/icons/cross41.png"
 
-                    Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight
 
                     enabled: false
@@ -188,7 +186,7 @@ Item {
                     buttonStatus: "info"
                     iconSource: "qrc:/resources/icons/stats1.png"
 
-                    Layout.fillWidth: true
+                    Layout.preferredWidth: 30
                     Layout.alignment: Qt.AlignRight
 
                     enabled: false
@@ -208,7 +206,6 @@ Item {
                     buttonStatus: "success"
                     iconSource: "qrc:/resources/icons/calculator70.png"
 
-                    Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight
 
                     enabled: false

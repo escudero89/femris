@@ -9,9 +9,9 @@ StudyCaseHeat::StudyCaseHeat() {
 
 void StudyCaseHeat::setLocalMapOfInformation() {
 
-    m_mapOfInformation["kx"]     = "undefined";
-    m_mapOfInformation["ky"]     = "undefined";
-    m_mapOfInformation["heat"]   = "undefined";
+    m_mapOfInformation["kx"]     = "false";
+    m_mapOfInformation["ky"]     = "false";
+    m_mapOfInformation["heat"]   = "false";
 
 }
 
