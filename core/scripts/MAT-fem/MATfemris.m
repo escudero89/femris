@@ -1,20 +1,11 @@
-%% MAT-femris (without clear nor load from input file)
-%
-
   % FEMRIS ADDITION >>>>>>>
+  %% This file has been modify from the original, MAT-fem
+
   global femris_elemental_matrix
   femris_elemental_matrix = cell(30);
 
   file_name = '../../temp/currentMatFemFile';%'__1_trash'; %
 
-  if (size(fixnodes, 1) == 0)
-    fixnodes
-    sideload
-    pointload
-    fprintf(1,'\nFalta definirse alguna condición de contorno.');
-    exit;
-  end
-ls
   if (exist('scripts/') == 0)
     cd ..;
   end
@@ -22,10 +13,12 @@ ls
   cd 'scripts/';
   cd 'MAT-fem/';
 
+  if ( size(fixnodes, 1) == 0 && size(pointload, 1) == 0 )
+    fixnodes
+    pointload
+    throwExitSignal('Falta definirse alguna condición de contorno.');
+  end
   % <<< END FEMRIS ADDITION
-
-  tic;                   % Start clock
-  ttim = 0;              % Initialize time counter
 
 % The variables are read as a MAT-fem subroutine
 % pstrs = 1 indicate Plane Stress; 0 indicate Plane Strain
@@ -145,7 +138,17 @@ ls
 
   ttim = timing('Time to solve the stiffness matrix',ttim); %Reporting time
 
-  % FEMRIS ADDITION >>>>>>>
+% Compute the stresses
+  Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);
+
+  ttim = timing('Time to  solve the  nodal stresses',ttim); %Reporting time
+
+% Graphic representation
+  ToGiD_v1_3(file_name,u,reaction,Strnod);
+
+  ttim = timing('Time  used to write  the  solution',ttim); %Reporting time
+
+% FEMRIS ADDITION >>>>>>>
   global femris_elemental_matrix;
   femris_elemental_matrix{01} = full(StifMat);
   femris_elemental_matrix{02} = dmat;
@@ -154,22 +157,9 @@ ls
   femris_elemental_matrix{05} = pstrs;
   femris_elemental_matrix{21} = full(force1);
   femris_elemental_matrix{22} = u;
-  % <<< END FEMRIS ADDITION
 
-% Compute the stresses
-  Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);
-
-  ttim = timing('Time to  solve the  nodal stresses',ttim); %Reporting time
-
-% Graphic representation
-
-  ToGiD_v1_3(file_name,u,reaction,Strnod);
-  ttim = timing('Time  used to write  the  solution',ttim); %Reporting time
-
-% FEMRIS ADDITION >>>>>>>
 % JS and JSON Representation.
   ToJS (file_name, u, reaction, Strnod);
-  ToJSON (file_name, u, reaction, Strnod);
 
   ToElementalJS(file_name);
 
@@ -179,3 +169,6 @@ ls
   itim = toc;                                               %Close last tic
   fprintf(1,'\nTotal running time %12.6f \n\n',ttim); %Reporting final time
 
+% FEMRIS ADDITION >>>>>>>
+  throwExitSignal();
+% <<< END FEMRIS ADDITION

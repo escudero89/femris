@@ -50,16 +50,16 @@ void ProcessHandler::callingMatlab() {
 
     QStringList processArgs;
 
-    processArgs << "-nojvm "          // start MATLAB without the JVM software
-                << "-nosplash "       // does  not display the splash screen during startup
+    processArgs << "-nosplash "       // does  not display the splash screen during startup
                 << "-nodesktop"       // use the current terminal for commands
                 << "-r \"run('temp/fileForProcessingInterpreter_tmp.m'); exit;\"";
+
+    emit proccessCalled();
 
     m_process->start(Configure::read("interpreterPath"), processArgs);
 
     m_stepOfProcessManipulation = 0;
 
-    emit proccessCalled();
 }
 
 void ProcessHandler::writingInProcess() {
@@ -69,10 +69,7 @@ void ProcessHandler::writingInProcess() {
         m_stepOfProcessManipulation = 1;
 
         qDebug() << "writingInProcess... " << m_command;
-/*
-        m_process->write("clear;");
-        m_process->write(m_command.toUtf8().constData());
-        qDebug()<<m_currentMatFemFile;*/
+
         m_process->closeWriteChannel();
 
         m_process->waitForBytesWritten();
@@ -88,6 +85,10 @@ void ProcessHandler::readingInProcess() {
         qDebug() << "Result: "  << result;
 
         emit resultMessage(result);
+
+        if (QString(result).contains("EXIT_PROCESS")) {
+            finishingProcess();
+        }
     }
 }
 
@@ -96,29 +97,44 @@ void ProcessHandler::finishingProcess() {
 
         m_stepOfProcessManipulation = 2;
 
-        qDebug() << "ProcessHandler::readingInProcess(): Closing process...";
-        m_process->close();
+        qDebug() << "ProcessHandler::finishingProcess(): Closing process...";
+        m_process->kill();
 
         emit processRead();
+        exitingProcess();
     }
 }
 
 void ProcessHandler::exitingProcess() {
     if (m_stepOfProcessManipulation == 2) {
+
+        qDebug() << "ProcessHandler::exitingProcess(): Process finished.";
+
         m_stepOfProcessManipulation = 0;
         emit processFinished();
     }
 }
 
 void ProcessHandler::errorInProcess() {
+    qDebug() << "state for gosh sake: " << m_process->state();
     emit processWithError();
 }
 
-void ProcessHandler::executeInterpreter() {
+void ProcessHandler::executeInterpreter(QString typeOfStudyCase) {
+//@TODO Modificar ToJS en base a GidCal. Revisar el terma de "Guardar" cuando se cierra un archivo.
     FileIO fileIO("temp/currentMatFemFile.m");
     m_currentMatFemFile = fileIO.read();
 
-    fileIO.setSource("scripts/MAT-fem/MATfemris.m");
+    if (typeOfStudyCase == "heat") {
+        fileIO.setSource("scripts/MAT-fem/MATfemrisCal.m");
+
+    } else if (typeOfStudyCase == "plane-stress" || typeOfStudyCase == "plane-strain") {
+        fileIO.setSource("scripts/MAT-fem/MATfemris.m");
+
+    } else {
+        Utils::throwErrorAndExit("ProcessHandler::executeInterpreter(): typeOfStudyCase unkown - " + typeOfStudyCase);
+    }
+
     m_currentMatFemFile += fileIO.read();
 
     fileIO.setSource("temp/fileForProcessingInterpreter_tmp.m");

@@ -244,11 +244,12 @@ Item {
             forceCloseLoadingModal.enabled = true;
 
             var interpreter =
-                    Configure.read("interpreter") === 'octave' ?
-                   'GNU Octave' : Configure.read("interpreter") === 'matlab' ?
-                   'MATLAB' : 'undefined';
+                Configure.read("interpreter") === 'octave' ?
+                    'GNU Octave' : Configure.read("interpreter") === 'matlab' ?
+                        'MATLAB' : 'undefined';
 
-            textAreaLoadingModal.text += "Comenzando la ejecución de MAT-fem. Llamando a " + interpreter + ".\n\n"
+            textAreaLoadingModal.text += "Comenzando la ejecución de MAT-fem. Llamando a " + interpreter + ".\n\n";
+            textAreaLoadingModal.text += "------------------------------------------------------------------\n\n";
         }
 
         onProcessWrote: {
@@ -267,6 +268,7 @@ Item {
             goToShapeFunctionLoadingModal.enabled = true;
             continueLoadingModal.enabled = true;
         }
+
         onProcessWithError: {
             console.log("Error...");
             textAreaLoadingModal.text += "\n\n\nHubo un ERROR al ejecutar el proceso. Revise sí el binario es correcto."

@@ -202,22 +202,22 @@ Rectangle {
 
             ListElement {
                 math: 'k<sub>x</sub>'
-                mathInfo: 'Caracteriza el comportamiento elástico del material'
-                name: 'Módulo de Young'
+                mathInfo: 'Coeficiente difusivo aplicado sobre el eje-x'
+                name: 'Coeficiente difusivo'
                 variable: 'kx'
             }
 
             ListElement {
                 math: "k<sub>y</sub>"
-                mathInfo: 'El valor del Coeficiente de Poisson debe ser mayor o igual que 0, pero menor a 0.5'
-                name: 'Coeficiente de Poisson'
+                mathInfo: 'Coeficiente difusivo aplicado sobre el eje-y'
+                name: 'Coeficiente difusivo'
                 variable: 'ky'
             }
 
             ListElement {
                 math: "heat"
-                mathInfo: "Densidad del dominio"
-                name: 'Densidad'
+                mathInfo: "Aporte de calor distribuído uniformemente por todo el dominio"
+                name: 'Calor distribuído'
                 variable: 'heat'
             }
         }

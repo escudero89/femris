@@ -351,45 +351,63 @@
                                                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                                     <div class="panel-body">
                                                         <pre class="matlab-code">%=======================================================================
-% MAT-fem 1.0  - MAT-fem is a learning tool for undestanding 
+% MAT-fem 1.3  - MAT-fem is a learning tool for undestanding
 %                the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% EXAMPLE SELECTED = undefined
+% EXAMPLE SELECTED = example1.json
 %
 %  Material Properties
 %
-  young = undefined ;
-  poiss = undefined ;
-  denss = undefined ;
-  pstrs = 0 ;
-  thick = undefined ;
+  young = 2700000 ;
+  poiss = 0.2 ;
+  denss = 1 ;
+  pstrs = 1 ;
+  thick = 1 ;
 
 %
 % Coordinates
 %
 global coordinates
 coordinates = [
+    0,    0 ;
+    0.5,    0 ;
+    1,    0 ;
+    0,    0.5 ;
+    0.5,    0.5 ;
+    1,    0.5 ;
+    0,    1 ;
+    0.5,    1 ;
+    1,    1 ;
 ];
+
 %
 % Elements
 %
 global elements
- elements    = [
+elements = [
+    1,    4,    5,    2 ;
+    2,    5,    6,    3 ;
+    4,    7,    8,    5 ;
+    5,    8,    9,    6 ;
 ];
+
 %
 % Fixed Nodes
 %
-fixnodes    = [
+fixnodes = [
+    1,    1,    0 ;
 ];
+
 %
 % Point loads
 %
-pointload   = [
+pointload = [
 ];
+
 %
 % Uniform Side loads
 %
-sideload    = [
+sideload = [
 ];
 </pre>
                                                     </div>

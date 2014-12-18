@@ -265,7 +265,7 @@ RowLayout {
 
                     onClicked: {
                         rowParent.saveCurrentLoads();
-                        ProcessHandler.executeInterpreter();
+                        ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
                     }
                 }
             }

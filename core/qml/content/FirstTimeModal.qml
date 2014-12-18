@@ -198,7 +198,7 @@ Item {
                         Layout.fillWidth: true
 
                         placeholderText: "Ingresa la ubicación de MATLAB o GNU Octave"
-                        text: Configure.read("interpreter") !== "null" ? Configure.read("interpreter") : ""
+                        text: Configure.read("interpreter") !== "null" ? Configure.read("interpreterPath") : ""
 
                         states: State {
                             name: "danger"
@@ -278,11 +278,15 @@ Item {
                         id: radioMatlab
                         text: "MATLAB"
                         exclusiveGroup: radioGroup
+
+                        checked: ( Configure.read("interpreter") === "matlab" )
                     }
                     RadioButton {
                         id: radioOctave
                         text: "GNU Octave"
                         exclusiveGroup: radioGroup
+
+                        checked: ( Configure.read("interpreter") === "octave" )
                     }
                 }
             }

@@ -181,13 +181,16 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
             Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
         }
 
-        m_currentStudyCaseVariables[variable] = newVariable;
-        m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
+        // We only update the data if differs from the previous one recorded
+        if (m_currentStudyCaseVariables[variable] != newVariable) {
+            m_currentStudyCaseVariables[variable] = newVariable;
+            m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
 
-        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
-        m_studyCase->saveCurrentConfiguration();
+            m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+            m_studyCase->saveCurrentConfiguration();
 
-        markAsNotSaved();
+            markAsNotSaved();
+        }
     }
 }
 
@@ -209,12 +212,17 @@ void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
             Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
         }
 
-        m_currentStudyCaseVariables[variable] = setSingleStudyCaseJsonHelper(variable, newVariable);
+        QString newJsonfyVariable = setSingleStudyCaseJsonHelper(variable, newVariable);
 
-        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
-        m_studyCase->saveCurrentConfiguration();
+        // We only update the data if differs from the previous one recorded
+        if (m_currentStudyCaseVariables[variable] != newJsonfyVariable) {
+            m_currentStudyCaseVariables[variable] = newJsonfyVariable;
 
-        markAsNotSaved();
+            m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+            m_studyCase->saveCurrentConfiguration();
+
+            markAsNotSaved();
+        }
     }
 }
 

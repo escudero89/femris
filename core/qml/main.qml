@@ -226,7 +226,7 @@ ApplicationWindow {
             mainWindow.switchSection("CE_Overall");
 
             if (StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess") > 3) {
-                ProcessHandler.executeInterpreter();
+                ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
             }
 
             if (!markAsSaved) {

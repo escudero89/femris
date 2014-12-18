@@ -1,58 +1,36 @@
 Gid Post Results File 1.0 
 ### 
-# MAT-fem v1.3 
+# MAT-femCal v1.2 
 # 
-Result "Displacement" "Load Analysis"  1  Vector OnNodes 
-ComponentNames "X-Displ", "Y-Displ", "Z-Displ" 
+Result "Temperature" "Load Analysis"  1  Scalar OnNodes 
+ComponentNames "Temperature" 
 Values 
-     1  -1.39254e-05         00000 
-     2  -1.21755e-05  -5.62166e-06 
-     3  -1.07937e-05         00000 
-     4  -5.18008e-06  -3.86490e-07 
-     5  -4.83054e-06  -4.99302e-06 
-     6         00000  -7.94872e-06 
-     7   3.24124e-07  -4.83559e-07 
-     8   5.89967e-07  -5.99714e-06 
-     9  -7.23283e-07  -8.54326e-06 
+     1         00001 
+     2         00010 
+     3         00012 
+     4         00012 
+     5         00012 
+     6         00015 
 End Values 
 # 
-Result "Reaction Force" "Load Analysis"  1  Vector OnNodes 
-ComponentNames "Rx", "Ry", "Rz" 
+Result "Reactive Flux" "Load Analysis"  1  Scalar OnNodes 
+ComponentNames "Fx" 
 Values 
-     1        00000 -2.77556e-16 
-     2        00000        00000 
-     3        00000 -1.50000e+00 
-     4        00000        00000 
-     5        00000        00000 
-     6 -1.50000e+00        00000 
-     7        00000        00000 
-     8        00000        00000 
-     9        00000        00000 
+     1       -00100 
+     2        00000 
+     3        00000 
+     4        00000 
+     5        00000 
+     6        00000 
 End Values 
 # 
-Result "Stress" "Load Analysis"  1  Matrix OnNodes 
-ComponentNames "Sx", "Sy", "Sz", "Sxy", "Syz", "Sxz" 
+Result "Flux" "Load Analysis"  1  Vector OnNodes 
+ComponentNames "Fx", "Fy", "Fz" 
 Values 
-     1  9.91933e-01  3.05829e-02 -2.04503e-01  7.02816e-01  0.0  0.0 
-     2  1.03380e+00  6.12057e-01 -3.29172e-01  1.65262e+00  0.0  0.0 
-     3 -3.63196e-01 -4.56195e+00  9.85030e-01  3.69345e+00  0.0  0.0 
-     4  1.73455e-01 -9.26373e-02 -1.61635e-02  5.66597e-01  0.0  0.0 
-     5  1.52586e+00  2.75862e-01 -3.60345e-01  5.85366e-01  0.0  0.0 
-     6  2.25758e+00 -1.83840e+00 -8.38365e-02  4.67886e-01  0.0  0.0 
-     7  1.44945e-01 -1.83654e-02 -2.53160e-02 -2.10953e-03  0.0  0.0 
-     8 -4.64839e-01 -6.81023e-01  2.29172e-01  3.12898e-01  0.0  0.0 
-     9 -8.77131e-01 -5.53712e-01  2.86168e-01 -7.35617e-01  0.0  0.0 
-End Values 
-Result "Principal Stress" "Load Analysis"  1  Matrix OnNodes 
-ComponentNames "S1", "S2", "S3" 
-Values 
-     1  9.91933e-01  3.05829e-02 -2.04503e-01 
-     2  1.03380e+00  6.12057e-01 -3.29172e-01 
-     3 -3.63196e-01 -4.56195e+00  9.85030e-01 
-     4  1.73455e-01 -9.26373e-02 -1.61635e-02 
-     5  1.52586e+00  2.75862e-01 -3.60345e-01 
-     6  2.25758e+00 -1.83840e+00 -8.38365e-02 
-     7  1.44945e-01 -1.83654e-02 -2.53160e-02 
-     8 -4.64839e-01 -6.81023e-01  2.29172e-01 
-     9 -8.77131e-01 -5.53712e-01  2.86168e-01 
+     1        00210        00154  0.0 
+     2        00125        00019  0.0 
+     3        00040        00004  0.0 
+     4        00010        00004  0.0 
+     5       -00025        00019  0.0 
+     6       -00060        00155  0.0 
 End Values 
