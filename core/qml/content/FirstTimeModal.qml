@@ -198,7 +198,8 @@ Item {
                         Layout.fillWidth: true
 
                         placeholderText: "Ingresa la ubicación de MATLAB o GNU Octave"
-                        text: Configure.read("interpreter") !== "null" ? Configure.read("interpreterPath") : ""
+                        text: ( "" + Configure.read("interpreter") ).trim() !== "null" ?
+                                  Configure.read("interpreterPath") : ""
 
                         states: State {
                             name: "danger"

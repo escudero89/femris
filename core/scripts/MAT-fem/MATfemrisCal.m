@@ -154,8 +154,7 @@
   femris_elemental_matrix{22} = u;
 
 % JS and JSON Representation.
-  ToJS (file_name, u, reaction, Strnod);
-  ToJSON (file_name, u, reaction, Strnod);
+  ToJSCal (file_name, u, reaction, Strnod);
 
   ToElementalJS(file_name);
 

@@ -23,7 +23,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
-#include <QtWebEngine/qtwebengineglobal.h>
+//#include <QtWebEngine/qtwebengineglobal.h>
 
 #include <QObject>
 #include <QDebug>
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
-    QtWebEngine::initialize();
+    //QtWebEngine::initialize();
 
     qmlRegisterType<FileIO>("FileIO", 1, 0, "FileIO");
 
@@ -61,6 +61,7 @@ int main(int argc, char *argv[]) {
 
     // A little fix for windows (file should have /// in Windows)
     QString applicationDirPath = qApp->applicationDirPath();
+    Configure::write("applicationDirPath", applicationDirPath + "/");
 
     if (applicationDirPath[0] != '/') {
         configure->write("OS", "windows");
@@ -73,9 +74,6 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("fileApplicationDirPath", "file://" + applicationDirPath);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
-    QString link = "docs/ce_results.html";
-    //QDesktopServices::openUrl(QUrl(link));
 
     return app.exec();
 

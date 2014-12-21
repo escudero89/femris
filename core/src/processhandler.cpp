@@ -37,7 +37,7 @@ void ProcessHandler::callingOctave() {
 
     QStringList processArgs;
 
-    processArgs << "--interactive" << "temp/fileForProcessingInterpreter_tmp.m";
+    processArgs << "--interactive" << Configure::read("applicationDirPath") + "temp/fileForProcessingInterpreter_tmp.m";
 
     m_process->start(Configure::read("interpreterPath"), processArgs);
 
@@ -121,15 +121,19 @@ void ProcessHandler::errorInProcess() {
 }
 
 void ProcessHandler::executeInterpreter(QString typeOfStudyCase) {
-//@TODO Modificar ToJS en base a GidCal. Revisar el terma de "Guardar" cuando se cierra un archivo.
-    FileIO fileIO("temp/currentMatFemFile.m");
+
+    QString dir(Configure::read("fileApplicationDirPath"));
+    FileIO fileIO(dir + "temp/currentMatFemFile.m");
+
     m_currentMatFemFile = fileIO.read();
 
+    m_currentMatFemFile += "\n  cd '" + Configure::read("applicationDirPath") + "'\n\n";
+
     if (typeOfStudyCase == "heat") {
-        fileIO.setSource("scripts/MAT-fem/MATfemrisCal.m");
+        fileIO.setSource(dir + "scripts/MAT-fem/MATfemrisCal.m");
 
     } else if (typeOfStudyCase == "plane-stress" || typeOfStudyCase == "plane-strain") {
-        fileIO.setSource("scripts/MAT-fem/MATfemris.m");
+        fileIO.setSource(dir + "scripts/MAT-fem/MATfemris.m");
 
     } else {
         Utils::throwErrorAndExit("ProcessHandler::executeInterpreter(): typeOfStudyCase unkown - " + typeOfStudyCase);
@@ -137,7 +141,7 @@ void ProcessHandler::executeInterpreter(QString typeOfStudyCase) {
 
     m_currentMatFemFile += fileIO.read();
 
-    fileIO.setSource("temp/fileForProcessingInterpreter_tmp.m");
+    fileIO.setSource(dir + "temp/fileForProcessingInterpreter_tmp.m");
     fileIO.write(m_currentMatFemFile);
 
     emit callingProcess();

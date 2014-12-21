@@ -33,6 +33,8 @@ void StudyCaseHandler::start() {
     if (exists()) {
         delete m_studyCase;
         m_studyCase = NULL;
+
+        m_lastSavedPath = "";
     }
 
     // We initialize the StudyCaseHandler with some information

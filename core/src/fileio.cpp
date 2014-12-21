@@ -81,6 +81,7 @@ QString FileIO::source() const {
 bool FileIO::setSource(QString arg) {
     if (m_source != arg) {
         m_source = Configure::getPathWithoutPrefix(arg);
+qDebug() << "New Source Set: " << m_source;
         emit sourceChanged();
     }
 
@@ -102,14 +103,14 @@ QJsonObject FileIO::getVarFromJsonString(const QString& jsonFile) {
 QStringList FileIO::getFilteredFilesFromDirectory(const QStringList& filters, const QString& directory) {
 
     QDir dir(directory);
-
+qDebug() << directory << dir.exists() << dir.absolutePath();
     QStringList searchedFiles;
     searchedFiles = dir.entryList(filters, QDir::Files);
 
     QStringList searchedFilesPath;
 
     for ( int k = 0 ; k < searchedFiles.length() ; k++ ) {
-        searchedFilesPath << dir.filePath(searchedFiles[k]);
+        searchedFilesPath << dir.filePath(searchedFiles[k]);qDebug() <<searchedFiles[k] << dir.filePath(searchedFiles[k]);
     }
 
     return searchedFilesPath;
