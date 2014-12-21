@@ -10,7 +10,6 @@
         <file>main.qml</file>
         <file>Style.qml</file>
         <file>test.qml</file>
-        <file>screens/CE_Properties.qml</file>
         <file>screens/CE_ShapeFunction.qml</file>
         <file>Content.qml</file>
     </qresource>

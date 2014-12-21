@@ -317,8 +317,20 @@ RowLayout {
         }
 
         StudyCaseHandler.setSingleStudyCaseJson('coordinates', coordinates);
-
         StudyCaseHandler.setSingleStudyCaseJson('elements', jsonDomain['elements']);
+
+        if (StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase", "heat")) {
+            saveCurrentLoadsHeat();
+        } else {
+            saveCurrentLoadsStructural();
+        }
+    }
+
+    function saveCurrentLoadsHeat() {
+
+    }
+
+    function saveCurrentLoadsStructural() {
 
         /// SIDELOAD
 
@@ -381,5 +393,13 @@ RowLayout {
 
         StudyCaseHandler.setSingleStudyCaseJson('fixnodes', fixnodes);
         StudyCaseHandler.setSingleStudyCaseJson('pointload', pointload);
+    }
+
+    Connections {
+        target: StudyCaseHandler
+
+        onSavingCurrentStudyCase: {
+            saveCurrentLoads();
+        }
     }
 }

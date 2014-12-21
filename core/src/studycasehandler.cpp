@@ -93,8 +93,14 @@ void StudyCaseHandler::createNewStudyCase() {
     emit newStudyCaseCreated();
 }
 
+/**
+ * @brief StudyCaseHandler::saveCurrentStudyCase
+ * @param whereToSave
+ */
 void StudyCaseHandler::saveCurrentStudyCase(QString whereToSave) {
     if (exists()) {
+
+        emit savingCurrentStudyCase();
 
         if (whereToSave != m_lastSavedPath && !whereToSave.toLower().contains(".femris")) {
             whereToSave += ".femris";

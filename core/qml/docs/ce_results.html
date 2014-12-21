@@ -351,18 +351,16 @@
                                                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                                     <div class="panel-body">
                                                         <pre class="matlab-code">%=======================================================================
-% MAT-fem 1.3  - MAT-fem is a learning tool for undestanding
-%                the Finite Element Method with MATLAB and GiD
+% MAT-femcCal 1.3  - MAT-femCal is a learning tool for undestanding
+%                    the Finite Element Method with MATLAB and GiD
 %=======================================================================
 % EXAMPLE SELECTED = example1.json
 %
 %  Material Properties
 %
-  young = 2700000 ;
-  poiss = 0.2 ;
-  denss = 1 ;
-  pstrs = 1 ;
-  thick = 1 ;
+  kx   = 1 ;
+  ky   = 1 ;
+  heat = 1 ;
 
 %
 % Coordinates
@@ -396,6 +394,7 @@ elements = [
 %
 fixnodes = [
     1,    1,    0 ;
+    1,    2,    0 ;
 ];
 
 %
@@ -582,10 +581,7 @@ sideload = [
                                                 .
                                             </small>
                                         </p>
-                                        <pre class="matlab-code">%% MAT-femris (without clear nor load from input file)
-%
-  tic;                   % Start clock
-  ttim = 0;              % Initialize time counter
+                                        <pre class="matlab-code">  
 
 % The variables are read as a MAT-fem subroutine
 % pstrs = 1 indicate Plane Stress; 0 indicate Plane Strain
@@ -704,14 +700,15 @@ sideload = [
   reaction(fix) = StifMat(fix,1:nndof) * u(1:nndof) - force(fix);
 
   ttim = timing('Time to solve the stiffness matrix',ttim); %Reporting time
+
 % Compute the stresses
   Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);
 
   ttim = timing('Time to  solve the  nodal stresses',ttim); %Reporting time
 
 % Graphic representation
-
   ToGiD_v1_3(file_name,u,reaction,Strnod);
+
   ttim = timing('Time  used to write  the  solution',ttim); %Reporting time
   itim = toc;                                               %Close last tic
   fprintf(1,'\nTotal running time %12.6f \n\n',ttim); %Reporting final time

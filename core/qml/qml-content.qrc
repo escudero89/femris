@@ -21,5 +21,7 @@
         <file>content/smallBoxes/MyToolTip.qml</file>
         <file>content/FirstTimeModal.qml</file>
         <file>content/AlertModal.qml</file>
+        <file>content/components/NodesSideloadStructural.qml</file>
+        <file>content/components/NodesStructural.qml</file>
     </qresource>
 </RCC>
