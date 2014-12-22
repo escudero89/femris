@@ -50,9 +50,9 @@ void ProcessHandler::callingMatlab() {
 
     QStringList processArgs;
 
-    processArgs << "-nosplash "       // does  not display the splash screen during startup
+    processArgs << "-nosplash"       // does  not display the splash screen during startup
                 << "-nodesktop"       // use the current terminal for commands
-                << "-r \"run('temp/fileForProcessingInterpreter_tmp.m'); exit;\"";
+                << "-r" << "run('temp/fileForProcessingInterpreter_tmp.m'); exit;";
 
     emit proccessCalled();
 
