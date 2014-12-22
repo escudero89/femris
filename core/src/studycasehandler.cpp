@@ -150,6 +150,15 @@ bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable) 
 }
 
 /**
+ * @brief StudyCaseHandler::checkSingleStudyCaseInformation
+ * @param variable
+ * @return
+ */
+bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable, const QString &comparison) {
+    return checkSingleStudyCaseInformation(variable) && m_currentStudyCaseVariables[variable] == comparison;
+}
+
+/**
  * @brief StudyCaseHandler::getSingleStudyCaseInformation
  * @param variable
  * @return

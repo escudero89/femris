@@ -91,8 +91,7 @@ ColumnLayout {
 
             model: 0
 
-            delegate: NodesSideloadStructural {
-            }
+            delegate: NodesSideloadStructural {}
         }
 
         // Attach scrollbars to the right of the view.

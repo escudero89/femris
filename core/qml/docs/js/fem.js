@@ -248,7 +248,7 @@ $(document).ready(function() {
 
 
     var params = {
-        valuesToColorise : getSingleColFromCurrentDomain('displacements', 1)
+        valuesToColorise : getSingleColFromCurrentDomain('displacements', [0,1])
     };
 
     params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;

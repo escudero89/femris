@@ -320,18 +320,17 @@ RowLayout {
         StudyCaseHandler.setSingleStudyCaseJson('elements', jsonDomain['elements']);
 
         if (StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase", "heat")) {
-            saveCurrentLoadsHeat();
+            saveCurrentLoadsHeat(coordinates);
         } else {
-            saveCurrentLoadsStructural();
+            saveCurrentLoadsStructural(coordinates);
         }
     }
 
-    function saveCurrentLoadsHeat() {
+    function saveCurrentLoadsHeat(coordinates) {
 
     }
 
-    function saveCurrentLoadsStructural() {
-
+    function saveCurrentLoadsStructural(coordinates) {
         /// SIDELOAD
 
         var sideloadNodes = jsonDomain['sideloadNodes'];

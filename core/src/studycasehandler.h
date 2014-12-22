@@ -26,6 +26,7 @@ public:
     Q_INVOKABLE bool loadStudyCase(const QString&);
 
     Q_INVOKABLE bool checkSingleStudyCaseInformation(const QString&);
+    Q_INVOKABLE bool checkSingleStudyCaseInformation(const QString&, const QString&);
     Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&, bool = false);
 
     Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString &, bool = false);

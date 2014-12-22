@@ -97,7 +97,7 @@ Rectangle {
 
                 id: textAreaFirstTime
 
-                text : Content.firstTime[parent.objectName]
+                text : Content.firstTime[leftContentBox.parent.objectName]
                 textColor: Style.color.background
 
                 textFormat: TextEdit.RichText
