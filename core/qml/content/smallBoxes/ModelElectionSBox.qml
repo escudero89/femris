@@ -12,8 +12,6 @@ TableView {
 
     id: tableViewModel
 
-    //Layout.fillWidth: true
-    //Layout.fillHeight: true
     anchors.fill: parent
 
     frameVisible: false
@@ -61,7 +59,10 @@ TableView {
             id: textItemHeader
 
             text: styleData.value
+
+            font.pixelSize: Style.fontSize.h5
             font.italic: true
+            font.bold: true
             color: Style.color.background
 
             anchors.fill: parent

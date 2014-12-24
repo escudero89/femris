@@ -7,7 +7,6 @@ import "../smallBoxes"
 import "../"
 import "."
 
-
 RowLayout {
 
     property string fromWhere : ""

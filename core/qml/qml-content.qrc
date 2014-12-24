@@ -24,5 +24,8 @@
         <file>content/components/NodesSideloadStructural.qml</file>
         <file>content/components/NodesStructural.qml</file>
         <file>content/components/FooterButtons.qml</file>
+        <file>content/components/MiniOverall.qml</file>
+        <file>content/components/MiniChoiceBlock.qml</file>
+        <file>content/components/FirstTimeHere.qml</file>
     </qresource>
 </RCC>

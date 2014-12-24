@@ -31,20 +31,20 @@ Rectangle {
 
             id: variablesRectangle
 
-            Layout.preferredHeight: textCode.height * 1.5
+            Layout.preferredHeight: textCode.height * 1.4
             Layout.fillWidth: true
 
-            color: Style.color.background_highlight
+            color: Style.color.complement
 
             Text {
                 id: textCode
 
                 text: qsTr("Propiedades")
-                font.italic: true
 
-                color: Style.color.complement
                 font.pixelSize: Style.fontSize.h5
+                font.italic: true
                 font.bold: true
+                color: Style.color.background
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -70,7 +70,7 @@ Rectangle {
 
                 width: variablesRectangle.width - 2
                 height: variablesTextField.height * 1.2
-                color: (index % 2 === 0) ? Style.color.background :  Style.color.background_highlight;
+                color: (index % 2 === 0) ? Style.color.complement :  Style.color.complement_highlight;
 
                 RowLayout {
 
