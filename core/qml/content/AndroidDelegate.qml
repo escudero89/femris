@@ -76,7 +76,7 @@ Item {
     Text {
         id: textItem
 
-        color: (xmlView.currentIndex === index && xmlView.highlightItem.opacity === 1) ? Style.color.complement : Style.color.background
+        color: (xmlView.currentIndex === index) ? Style.color.complement : Style.color.background
         font.pixelSize: root.height * .6
         text: modelData
 

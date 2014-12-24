@@ -34,15 +34,15 @@ StackView {
             model: xmlModel
             anchors.fill: parent
 
+            currentIndex: 0
+
             signal currentIndexChanged()
 
             highlight: Rectangle {
                 id: highlightRectangle
                 color: Style.color.background_highlight
                 radius: 2
-                opacity: 0
             }
-
 
             delegate: AndroidDelegate {
                 // Mi seleccion actual
@@ -57,7 +57,7 @@ StackView {
                 height: indexLayout.height * 0.04
                 text: title
 
-                isSelected: (xmlView.currentIndex === index)
+                isSelected: (xmlView.currentIndex === index || index === 0)
                 hasChild: (source) ? true : false
 
                 onClicked: {
@@ -77,6 +77,12 @@ StackView {
 
                     } else {
                         // Informamos a IndexLayout que cargue la nueva pagina
+                        indexLayout.loader(myCurrent.page);
+                    }
+                }
+
+                Component.onCompleted: {
+                    if (index === 0) {
                         indexLayout.loader(myCurrent.page);
                     }
                 }

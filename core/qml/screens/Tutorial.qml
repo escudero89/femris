@@ -58,15 +58,31 @@ RowLayout {
 
         Layout.fillHeight: true
         width: 10
+        opacity: 0.7
 
-        color: Style.color.complement_highlight
+        color: Style.color.complement
+
+        Image {
+            source: "qrc:/resources/icons/caret4.png"
+            height: 20
+
+            mirror: (indiceContenido.state !== "NORMAL")
+            smooth: true
+            opacity: 0.5
+
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+        }
 
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
 
             onContainsMouseChanged: {
-                ocultarIndice.color = (containsMouse) ? Style.color.complement : Style.color.complement_highlight
+                ocultarIndice.color = (containsMouse) ? Style.color.femris : Style.color.complement
                 globalInfoBox.setInfoBox((indiceContenido.state === "NORMAL") ? qsTr("Ocultar Índice") : qsTr("Mostrar Índice"), !containsMouse)
             }
 
@@ -75,72 +91,98 @@ RowLayout {
             }
         }
     }
+    Rectangle {
 
-    //WebEngineView {
-    WebView {
-
-        property string previous_url : ""
-
-        id: currentWebView
-
+        color: Style.color.background
+        //width: rowParent.width - indiceContenido.width
         Layout.fillWidth: true
         Layout.fillHeight: true
 
-        // We load the layout and the view, and put the info in the WebView
-        FileIO {
-            id: io_layout
-            source: fileApplicationDirPath + "/docs/layout.html"
-            onError: console.log(msg)
-        }
+        RowLayout {
 
-        FileIO {
-            id: io_view
-            onError: console.log(msg)
-        }
+            height: parent.height
+            width: parent.width
+            spacing: 0
+            //WebEngineView {
+            WebView {
 
-        FileIO {
-            id: io_current
-            source: fileApplicationDirPath + "/docs/current.html"
-            onError: console.log(msg)
-        }
+                property string previous_url : ""
 
-        Component.onCompleted: {
-            rowParent.layoutForTutorial = io_layout.read();
-            rowParent.currentUrlForTutorial = "docs/view/femris_inicio_tutorial.html";
-            currentWebView.url = fileApplicationDirPath + "/docs/current.html";
-        }
+                id: currentWebView
 
-        onUrlChanged: {
-            var url_stringed = String(url);
+                Layout.fillWidth: true
+                Layout.fillHeight: true
 
-            if (previous_url === url_stringed) {
-                return;
-            } else {
-                previous_url = url_stringed;
+                // We load the layout and the view, and put the info in the WebView
+                FileIO {
+                    id: io_layout
+                    source: fileApplicationDirPath + "/docs/layout.html"
+                    onError: console.log(msg)
+                }
+
+                FileIO {
+                    id: io_view
+                    onError: console.log(msg)
+                }
+
+                FileIO {
+                    id: io_current
+                    source: fileApplicationDirPath + "/docs/current.html"
+                    onError: console.log(msg)
+                }
+
+                Component.onCompleted: {
+                    rowParent.layoutForTutorial = io_layout.read();
+                    rowParent.currentUrlForTutorial = "docs/view/femris_inicio_tutorial.html";
+                    currentWebView.url = fileApplicationDirPath + "/docs/current.html";
+                }
+
+                onUrlChanged: {
+                    var url_stringed = String(url);
+
+                    if (previous_url === url_stringed) {
+                        return;
+                    } else {
+                        previous_url = url_stringed;
+                    }
+
+                    // These are for those that we don't to wrap with the layout
+                    if (rowParent.currentUrlForTutorial[0] === '$') {
+                        currentWebView.url = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
+
+                        // Source that we want to wrap with the layout
+                    } else if (rowParent.currentUrlForTutorial.search("http") === -1) {
+
+                        var viewPath = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial;
+
+                        io_view.setSource(viewPath);
+                        var layout  = rowParent.layoutForTutorial;
+                        var view = io_view.read();
+
+                        layout = layout.replace("{{=include(view)}}", view);
+                        io_current.write(layout);
+
+                        currentWebView.url = fileApplicationDirPath + "/docs/current.html";
+
+                        // Direct link to a website
+                    } else {
+                        currentWebView.url = rowParent.currentUrlForTutorial;
+                    }
+                }
             }
 
-            // These are for those that we don't to wrap with the layout
-            if (rowParent.currentUrlForTutorial[0] === '$') {
-                currentWebView.url = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
+            // Attach scrollbars to the right of the view.
+            ScrollBar {
+                id: currentWebViewScrollBar
+                Layout.preferredWidth: 10
+                Layout.preferredHeight: currentWebView.height - 12
 
-                // Source that we want to wrap with the layout
-            } else if (rowParent.currentUrlForTutorial.search("http") === -1) {
-
-                var viewPath = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial;
-
-                io_view.setSource(viewPath);
-                var layout  = rowParent.layoutForTutorial;
-                var view = io_view.read();
-
-                layout = layout.replace("{{=include(view)}}", view);
-                io_current.write(layout);
-
-                currentWebView.url = fileApplicationDirPath + "/docs/current.html";
-
-                // Direct link to a website
-            } else {
-                currentWebView.url = rowParent.currentUrlForTutorial;
+                opacity: 0.7
+                orientation: Qt.Vertical
+                position: currentWebView.visibleArea.yPosition
+                pageSize: currentWebView.visibleArea.heightRatio
             }
         }
+
     }
 }

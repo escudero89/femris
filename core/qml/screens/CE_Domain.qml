@@ -156,13 +156,13 @@ RowLayout {
                     function fillExamples() {
 
                         listModelExamples.clear();
-                        var examples = CurrentFileIO.getFilteredFilesFromDirectory(["example*.json"], 'docs/examples');
+                        var examples = CurrentFileIO.getFilteredFilesFromDirectory(["example*.json"], applicationDirPath + '/docs/examples');
 
                         for ( var k = 1 ; k <= examples.length ; k++ ) {
                             var ex = examples[k - 1];
                             var newModel = {
                                 "name": "Example " + k,
-                                "portrait": fileApplicationDirPath + "/" + ex.substr(0, ex.search(".json")) + ".png",
+                                "portrait": fileApplicationDirPath + "/docs/examples/" + ex.substring(ex.search(/example\d/), ex.search(".json")) + ".png",
                                 "exampleFile": ex.substring(ex.search(/example\d/))
                             };
 

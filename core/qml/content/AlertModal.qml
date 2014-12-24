@@ -53,7 +53,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
 
-        height: textAreaModal.height * 2
+        height: parent.height * 0.8
         width: 600
 
         color: Style.color.comment
@@ -175,7 +175,7 @@ Item {
 
                 text: qsTr(Content.alert[contentName])
 
-                Layout.maximumHeight: 120
+                Layout.fillHeight: true
                 Layout.fillWidth: true
 
                 backgroundVisible: false

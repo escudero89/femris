@@ -35,7 +35,13 @@ Rectangle {
 
         spacing: 0
 
-        ModelElectionSBox { visible : { return parentStage === 'CE_Model' } }
+        Rectangle {
+            color: Style.color.complement
+            Layout.preferredHeight: parent.height * 0.4
+            Layout.fillWidth: true
+
+            ModelElectionSBox { visible : { return parentStage === 'CE_Model' } }
+        }
 
         PropertiesAssignationSBox { visible : { return parentStage === 'CE_Domain'; } }
 

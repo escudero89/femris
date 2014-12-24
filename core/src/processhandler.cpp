@@ -116,7 +116,8 @@ void ProcessHandler::exitingProcess() {
 }
 
 void ProcessHandler::errorInProcess() {
-    qDebug() << "state for gosh sake: " << m_process->state();
+    qDebug() << "ProcessHandler::errorInProcess: state[" << m_process->state() << "]";
+    qDebug() << "ProcessHandler::errorInProcess(): " << m_process->errorString();
     emit processWithError();
 }
 

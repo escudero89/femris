@@ -23,5 +23,6 @@
         <file>content/AlertModal.qml</file>
         <file>content/components/NodesSideloadStructural.qml</file>
         <file>content/components/NodesStructural.qml</file>
+        <file>content/components/FooterButtons.qml</file>
     </qresource>
 </RCC>

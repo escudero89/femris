@@ -12,5 +12,6 @@
         <file>test.qml</file>
         <file>screens/CE_ShapeFunction.qml</file>
         <file>Content.qml</file>
+        <file>custom.js</file>
     </qresource>
 </RCC>

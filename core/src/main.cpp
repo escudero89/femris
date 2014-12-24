@@ -61,7 +61,9 @@ int main(int argc, char *argv[]) {
 
     // A little fix for windows (file should have /// in Windows)
     QString applicationDirPath = qApp->applicationDirPath();
+
     Configure::write("applicationDirPath", applicationDirPath + "/");
+    engine.rootContext()->setContextProperty("applicationDirPath", applicationDirPath);
 
     if (applicationDirPath[0] != '/') {
         configure->write("OS", "windows");
@@ -69,8 +71,6 @@ int main(int argc, char *argv[]) {
     }
 
     Configure::write("fileApplicationDirPath", "file://" + applicationDirPath + "/");
-
-    engine.rootContext()->setContextProperty("applicationDirPath", applicationDirPath);
     engine.rootContext()->setContextProperty("fileApplicationDirPath", "file://" + applicationDirPath);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

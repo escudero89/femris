@@ -10,6 +10,7 @@
 #include <QFile>
 #include <QRegExp>
 #include <QStringList>
+
 #include <QDebug>
 
 Configure* Configure::instance = NULL;

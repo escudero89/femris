@@ -358,8 +358,8 @@ $(document).ready(function() {
 
             var $baseFunction = $("#baseFunction");
             $('.list-unstyled > li > a').on('click', function() {
-                console.log($(this));
                 $baseFunction.val($(this).html());
+                updateGraph();
             });
         });
 

@@ -3,9 +3,11 @@ pragma Singleton
 import QtQuick 2.4
 import "."
 
+import "custom.js" as Custom
+
 QtObject {
 
-    property string baseDir : fileApplicationDirPath + "/docs/inner/"
+    property string baseDir : applicationDirPath + "/docs/inner/"
 
     property string femris : "<strong style='color:" + Style.color.femris + "'>FEMRIS</strong>";
 
@@ -45,6 +47,16 @@ QtObject {
                 insideBlock = matchResultStart[1];
             }
         }
+
+        /*
+        for ( var keyContent in mainContent ) {
+            if (!mainContent.hasOwnProperty(keyContent)) {
+                continue;
+            }
+
+            mainContent[keyContent] = Custom.escapeHtmlEntities(mainContent[keyContent]);
+            console.log(mainContent[keyContent]);
+        }*/
 
         return mainContent;
     }

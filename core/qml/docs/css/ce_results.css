@@ -20,7 +20,7 @@ span.femris {
 }
 
 strong.tooltipped {
-    cursor: pointer;
+    cursor: default;
     text-decoration: underline;
     color: #ca428b;
 }

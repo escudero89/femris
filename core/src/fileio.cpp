@@ -81,7 +81,7 @@ QString FileIO::source() const {
 bool FileIO::setSource(QString arg) {
     if (m_source != arg) {
         m_source = Configure::getPathWithoutPrefix(arg);
-qDebug() << "New Source Set: " << m_source;
+qDebug() << "---------------> New Source Set: " << m_source;
         emit sourceChanged();
     }
 
@@ -119,7 +119,7 @@ qDebug() << directory << dir.exists() << dir.absolutePath();
 QString FileIO::readFromSource(const QString& file) {
     QString previous_m_source = m_source;
     setSource(file);
-
+qDebug() << "-------------------> File source: " << file;
     QString data = read();
     setSource(previous_m_source);
 
