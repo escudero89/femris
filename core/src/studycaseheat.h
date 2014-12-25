@@ -11,6 +11,8 @@ public:
 
     void setLocalMapOfInformation();
     void saveLocalCurrentConfiguration();
+
+    bool checkIfReady();
 };
 
 #endif // STUDYCASEHEAT_H

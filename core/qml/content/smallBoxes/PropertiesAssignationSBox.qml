@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.3
+import QtQuick.Controls.Styles 1.3
 
 import QtQuick.Dialogs 1.2
 
@@ -19,7 +20,8 @@ Rectangle {
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    border.color: Style.color.background_highlight
+    border.color: Style.color.complement
+    color: Style.color.complement_highlight
 
     ColumnLayout {
         height: parent.height
@@ -85,32 +87,39 @@ Rectangle {
                         text: math
 
                         textFormat: Text.RichText
+                        color: Style.color.background
 
                         MouseArea {
                             anchors.fill: parent
                             hoverEnabled: true
 
                             onEntered: {
-                                Configure.emitMainSignal("setInfoBox " + "<em>Info:</em> " + mathInfo);
+                                Configure.emitMainSignal("setInfoBox", "<em>Info:</em> " + mathInfo);
                             }
                         }
                     }
 
                     TextField {
+                        property bool isReady : false
+
                         id: variablesTextField
 
                         Layout.preferredWidth: parent.width / 1.5
                         placeholderText: name
 
                         text: {
-                            if (variable && StudyCaseHandler.exists()) {
-                                var variableGetted = StudyCaseHandler.getSingleStudyCaseInformation(variable);
-                                if (variableGetted !== "false") {
-                                    return variableGetted;
-                                }
+                            if (!variable || !StudyCaseHandler.exists()) {
+                                return '';
                             }
 
-                            return '';
+                            var variableGetted = StudyCaseHandler.getSingleStudyCaseInformation(variable);
+                            if (variableGetted === "false") {
+                                variableGetted = '';
+                            } else {
+                                isReady = true;
+                            }
+
+                            return variableGetted;
                         }
 
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -123,6 +132,37 @@ Rectangle {
                                 StudyCaseHandler.setSingleStudyCaseInformation(variable, text);
                             } else {
                                 StudyCaseHandler.setSingleStudyCaseInformation(variableTemp, text, true);
+                            }
+
+                            isReady = true;
+                        }
+
+                        onTextChanged: isReady = false;
+
+                        onFocusChanged: {
+                            if (!variablesTextField.text && propertiesAssignationSBox.visible) {
+                                editingFinished();
+                                textChanged();
+                            }
+                        }
+
+                        style: TextFieldStyle {
+                            textColor: Style.color.background_highlight
+                            placeholderTextColor: Style.color.comment_emphasized
+                            background: Rectangle {
+                                radius: 2
+                                implicitWidth: 100
+                                implicitHeight: 24
+                                border.color: (variablesTextField.isReady) ? Style.color.success : Style.color.content
+                                border.width: 1
+
+                                color: "black"//Style.color.complement
+                            }
+                        }
+
+                        Component.onCompleted: {
+                            if (text.length) {
+                                isReady = true;
                             }
                         }
                     }
@@ -203,19 +243,19 @@ Rectangle {
             ListElement {
                 math: 'k<sub>x</sub>'
                 mathInfo: 'Coeficiente difusivo aplicado sobre el eje-x'
-                name: 'Coeficiente difusivo'
+                name: 'Coeficiente de difusividad'
                 variable: 'kx'
             }
 
             ListElement {
                 math: "k<sub>y</sub>"
                 mathInfo: 'Coeficiente difusivo aplicado sobre el eje-y'
-                name: 'Coeficiente difusivo'
+                name: 'Coeficiente de difusividad'
                 variable: 'ky'
             }
 
             ListElement {
-                math: "heat"
+                math: "Q"
                 mathInfo: "Aporte de calor distribuído uniformemente por todo el dominio"
                 name: 'Calor distribuído'
                 variable: 'heat'

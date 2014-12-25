@@ -1,6 +1,7 @@
 #include "studycasestructural.h"
 
 #include <QStringList>
+#include <QDebug>
 
 #include "fileio.h"
 
@@ -21,4 +22,25 @@ void StudyCaseStructural::saveLocalCurrentConfiguration() {
     QStringList configurationFilter;
     configurationFilter << "MAT-variables" << "MAT-fem";
     FileIO::splitConfigurationFile("currentMatFemFile.m", m_source, configurationFilter, true);
+}
+
+bool StudyCaseStructural::checkIfReady() {
+
+    QStringList variablesToCheck;
+    variablesToCheck << "youngModulus"
+                     << "poissonCoefficient"
+                     << "densityOfDomain"
+                     << "typeOfProblem"
+                     << "thickOfDomain";
+
+    bool isReady = true;
+
+    foreach (const QString &str, variablesToCheck) {
+        if ( m_mapOfInformation[str] == "false" || m_mapOfInformation[str] == "" ) {
+            isReady = false;
+            break;
+        }
+    }
+
+    return isReady;
 }

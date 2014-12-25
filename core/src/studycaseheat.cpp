@@ -20,3 +20,23 @@ void StudyCaseHeat::saveLocalCurrentConfiguration() {
     configurationFilter << "MAT-variables" << "MAT-femCal";
     FileIO::splitConfigurationFile("currentMatFemFile.m", m_source, configurationFilter, true);
 }
+
+bool StudyCaseHeat::checkIfReady() {
+
+    QStringList variablesToCheck;
+    variablesToCheck << "kx"
+                     << "ky"
+                     << "heat";
+
+    bool isReady = true;
+
+    foreach (const QString &str, variablesToCheck) {
+        if ( m_mapOfInformation[str] == "false" || m_mapOfInformation[str] == "" ) {
+            isReady = false;
+            break;
+        }
+    }
+
+    return isReady;
+}
+

@@ -69,6 +69,8 @@ Item {
                 }
 
                 repeater.currentIndex = index;
+
+                Configure.emitMainSignal("fixnodesChanged");
             }
 
             state: "libre"

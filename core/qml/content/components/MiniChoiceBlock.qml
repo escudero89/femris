@@ -11,6 +11,8 @@ Rectangle {
     id: rectangle1
 
     property string blockStatus : "default"
+    property string currentStepName : ""
+    property bool isCurrent : false
 
     property alias image : imageMiniChoiceBlock
 
@@ -42,6 +44,23 @@ Rectangle {
     }
 
     Rectangle {
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+
+        height: parent.height * 0.07
+
+        border.color: isCurrent ? Style.color.complement : "transparent"
+
+        color : isCurrent ? Style.color.primary : "transparent"
+
+        opacity: 0.9
+    }
+
+    Rectangle {
 
         anchors.fill: parent
 
@@ -55,4 +74,10 @@ Rectangle {
         opacity: 0.1
     }
 
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+
+        onEntered: Configure.emitMainSignal("setInfoBox", qsTr("<em>Etapa actual:</em> " + currentStepName))
+    }
 }

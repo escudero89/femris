@@ -49,7 +49,7 @@ ApplicationWindow {
 
     statusBar: StatusBar {
         Text {
-            property string baseValue : qsTr("InfoBox")
+            property string baseValue : qsTr("")
 
             id: globalInfoBox
             horizontalAlignment: Text.AlignRight
@@ -57,12 +57,20 @@ ApplicationWindow {
             text: baseValue
             textFormat: Text.RichText
 
+            Timer {
+                id: resetGlobalInfoBox
+                interval: 5000; running: false;
+                onTriggered: globalInfoBox.text = globalInfoBox.baseValue
+            }
+
             function setInfoBox (msg, reset) {
                 if (reset) {
                     text = baseValue
                 } else {
                     text = msg
                 }
+
+                resetGlobalInfoBox.start();
             }
         }
     }
@@ -258,9 +266,8 @@ ApplicationWindow {
             if (signalName === "femrisLoader.open()") {
                 femrisLoader.folder = '';
                 femrisLoader.open();
-            } else if (signalName.search('setInfoBox') !== -1) {
-                var message = signalName.substring(("setInfoBox ").length);
-                globalInfoBox.setInfoBox(message);
+            } else if (signalName === "setInfoBox") {
+                globalInfoBox.setInfoBox(args);
             }
         }
     }

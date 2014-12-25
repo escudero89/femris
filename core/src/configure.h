@@ -26,7 +26,7 @@ public:
     Q_INVOKABLE static bool check(const QString&, const QString&);
     Q_INVOKABLE static QString getPathWithoutPrefix(QString);
 
-    Q_INVOKABLE void emitMainSignal(const QString&);
+    Q_INVOKABLE void emitMainSignal(const QString&, QString = "");
 
     static Configure* getInstance();
 
@@ -35,7 +35,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
 
-    void mainSignalEmitted(const QString& signalName);
+    void mainSignalEmitted(const QString& signalName, const QString& args);
 
 private:
 

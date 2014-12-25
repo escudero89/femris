@@ -36,7 +36,7 @@ ColumnLayout {
         Text {
             id: textHeader
 
-            text: qsTr("Cargas puntuales y condiciones nodales") + "<br /><small style='color:" + Style.color.content + "'><em>" + qsTr("Número de nodos: ") + repeater.count + "</em></small>"
+            text: qsTr("Condiciones nodales") + "<br /><small style='color:" + Style.color.content + "'><em>" + qsTr("Número de nodos: ") + repeater.count + "</em></small>"
             textFormat: Text.RichText
             font.pointSize: Style.fontSize.h5
 

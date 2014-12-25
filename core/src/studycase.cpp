@@ -117,6 +117,28 @@ void StudyCase::compressMapOfInformation() {
     m_mapOfInformation["encoded"] = m_encoded;
 }
 
+/**
+ * @brief StudyCase::isReady
+ * @return
+ */
+bool StudyCase::isReady() {
+
+    bool isReady = checkIfReady();
+
+    if (!isReady) {
+        return false;
+    }
+
+    if ( (m_mapOfInformation["gridHeight"].toDouble()) == 0.0 ||
+         (m_mapOfInformation["gridWidth"].toDouble())  == 0.0 ) {
+
+        return false;
+    }
+
+
+    return true;
+}
+
 //----------------------------------------------------------------------------//
 //--                          GETTER AND SETTERS                            --//
 //----------------------------------------------------------------------------//

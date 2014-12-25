@@ -172,6 +172,6 @@ Configure* Configure::getInstance() {
     return instance;
 }
 
-void Configure::emitMainSignal(const QString &signalName) {
-    emit mainSignalEmitted(signalName);
+void Configure::emitMainSignal(const QString &signalName, QString args ) {
+    emit mainSignalEmitted(signalName, args);
 }

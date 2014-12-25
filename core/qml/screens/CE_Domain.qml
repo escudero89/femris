@@ -21,6 +21,8 @@ RowLayout {
         color: Style.color.content_emphasized
         Layout.fillHeight: true
         Layout.preferredWidth: parent.width * 0.20
+
+        parentStage : rowParent.objectName
     }
 
     Rectangle {
@@ -226,14 +228,14 @@ RowLayout {
                     FlickableRepeaterNodesSideload {
                         id: sideLoadContainer
 
-                        width: parent.width * 0.45
+                        width: parent.width * 0.5
                     }
 
                     FlickableRepeaterNodes {
                         id: nodesContainer
                         jsonDomain: rowParent.jsonDomain
 
-                        width: parent.width * 0.55
+                        width: parent.width * 0.5
                     }
                 }
             }
@@ -255,6 +257,12 @@ RowLayout {
                 }
 
                 PrimaryButton {
+
+                    property bool isReadyToCheckForFixnodes : false
+                    property bool fixnodesReady : false
+
+                    signal changedProperties()
+
                     id: continueButton
 
                     buttonLabel: "Guardar y Continuar"
@@ -263,9 +271,38 @@ RowLayout {
 
                     Layout.preferredWidth: 0.5 * parent.width
 
+                    enabled: false
+
                     onClicked: {
                         rowParent.saveCurrentLoads();
                         ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
+                    }
+
+                    onChangedProperties: {
+                        if (isReadyToCheckForFixnodes && fixnodesReady) {
+                            enabled = true;
+                        } else {
+                            enabled = false;
+                        }
+                    }
+
+                    Connections {
+                        target : StudyCaseHandler
+
+                        onReady: {
+                            continueButton.isReadyToCheckForFixnodes = status;
+                            continueButton.changedProperties();
+                        }
+                    }
+
+                    Connections {
+                        target: Configure
+
+                        onMainSignalEmitted: {
+                            if (signalName === "fixnodesChanged") {
+                                rowParent.saveCurrentLoads();
+                            }
+                        }
                     }
                 }
             }
@@ -392,6 +429,11 @@ RowLayout {
 
         StudyCaseHandler.setSingleStudyCaseJson('fixnodes', fixnodes);
         StudyCaseHandler.setSingleStudyCaseJson('pointload', pointload);
+
+        // Only after we check the other validations, we check if the fixnodes are not empty
+        // If that's the case, we are ready to go
+        continueButton.fixnodesReady = (continueButton.isReadyToCheckForFixnodes && fixnodes.length);
+        continueButton.changedProperties();
     }
 
     Connections {

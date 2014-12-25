@@ -23,6 +23,11 @@ Row {
 
         image.source : "qrc:/resources/images/overall/model.png"
         blockStatus : (stepOnStudyCase > 1) ? "used" : "default";
+
+        currentStepName : "Elegir Modelo Físico"
+        isCurrent: parentStage === "CE_Model"
+
+        Component.onCompleted: console.log(parentStage)
     }
     MiniChoiceBlock {
         height: width * 1.5
@@ -32,6 +37,9 @@ Row {
         blockStatus :
             (stepOnStudyCase > 2) ? "used" :
             (stepOnStudyCase == 2) ? "default" : "disabled";
+
+        currentStepName : "Crear Dominio"
+        isCurrent: parentStage === "CE_Domain"
     }
     MiniChoiceBlock {
         height: width * 1.5
@@ -41,6 +49,9 @@ Row {
         blockStatus :
             (stepOnStudyCase > 3) ? "used" :
             (stepOnStudyCase == 3) ? "default" : "disabled";
+
+        currentStepName : "Repasar Funciones de Forma"
+        isCurrent: parentStage === "CE_ShapeFunction"
     }
     MiniChoiceBlock {
         height: width * 1.5
@@ -48,9 +59,8 @@ Row {
 
         image.source : "qrc:/resources/images/overall/results.png"
         blockStatus : (stepOnStudyCase == 4) ? "default" : "disabled";
-    }
 
-    Component.onCompleted: {
-        console.log("width", width);
+        currentStepName : "Ver Resultados"
+        isCurrent: parentStage === "CE_Results"
     }
 }

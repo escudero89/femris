@@ -24,6 +24,8 @@ RowLayout {
         color: Style.color.content_emphasized
         Layout.fillHeight: true
         Layout.preferredWidth: parent.width * 0.20
+
+        parentStage : "CE_Model"
     }
 
     GridLayout {

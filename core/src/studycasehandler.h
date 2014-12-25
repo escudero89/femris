@@ -30,13 +30,11 @@ public:
     Q_INVOKABLE QString getSingleStudyCaseInformation(const QString&, bool = false);
 
     Q_INVOKABLE void setSingleStudyCaseInformation(const QString&, const QString &, bool = false);
-    Q_INVOKABLE void setSingleStudyCaseJson(const QString&, const QJsonArray&, bool = false);
+    Q_INVOKABLE void setSingleStudyCaseJson(const QString&, const QJsonArray&);
 
     Q_INVOKABLE QString saveAndContinue(const QString&);
 
     Q_INVOKABLE void loadUrlInBrowser(QString, bool = false);
-
-    void markAsSaved();
 
     Q_INVOKABLE bool getSavedStatus();
     Q_INVOKABLE void markAsNotSaved();
@@ -59,7 +57,12 @@ Q_SIGNALS:
     void markedAsSaved();
     void markedAsNotSaved();
 
+    void ready(const bool& status);
+
 private:
+
+    void markAsSaved();
+    void isReady();
 
     bool m_isSaved;
     QString m_lastSavedPath;

@@ -67,12 +67,92 @@ Item {
                 }
             }
         }
+/*
+        Button {
 
+            property string fixnodeIcon : "open94"
+
+            id: buttonNodeController
+            Layout.preferredWidth: parent.width * 0.18
+            text: qsTr("libre")
+
+            iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
+
+            onClicked: {
+
+                switch(buttonNodeController.state) {
+                case "libre"  : buttonNodeController.state = "x-fijo" ; break;
+                case "x-fijo" : buttonNodeController.state = "y-fijo" ; break;
+                case "y-fijo" : buttonNodeController.state = "xy-fijo"; break;
+                case "xy-fijo": buttonNodeController.state = "libre"  ; break;
+                }
+
+                repeater.currentIndex = index;
+            }
+
+            state: "libre"
+
+            states: [
+                State {
+                    name: "libre"
+                    PropertyChanges {
+                        target: buttonNodeController
+                        text: qsTr("libre")
+                        fixnodeIcon: "open94"
+                    }
+                },
+                State {
+                    name: "x-fijo"
+                    PropertyChanges {
+                        target: buttonNodeController
+                        text: qsTr("x-fijo")
+                        fixnodeIcon: "lock24"
+                    }
+                    PropertyChanges {
+                        target: textFieldSideloadX
+                        text: qsTr("fijado")
+                        enabled: false
+                    }
+                },
+                State {
+                    name: "y-fijo"
+                    PropertyChanges {
+                        target: buttonNodeController
+                        text: qsTr("y-fijo")
+                        fixnodeIcon: "lock24"
+                    }
+                    PropertyChanges {
+                        target: textFieldSideloadY
+                        text: qsTr("fijado")
+                        enabled: false
+                    }
+                },
+                State {
+                    name: "xy-fijo"
+                    PropertyChanges {
+                        target: buttonNodeController
+                        text: qsTr("xy-fijo")
+                        fixnodeIcon: "lock24"
+                    }
+                    PropertyChanges {
+                        target: textFieldSideloadX
+                        text: qsTr("fijado")
+                        enabled: false
+                    }
+                    PropertyChanges {
+                        target: textFieldSideloadY
+                        text: qsTr("fijado")
+                        enabled: false
+                    }
+                }
+            ]
+        }
+*/
         TextField {
 
             id: textFieldSideloadX
 
-            Layout.preferredWidth: parent.width / 3
+            Layout.preferredWidth: parent.width / 4
             placeholderText: "x_" + ( index + 1 )
 
             onEditingFinished: {
@@ -91,7 +171,7 @@ Item {
 
             id: textFieldSideloadY
 
-            Layout.preferredWidth: parent.width / 3
+            Layout.preferredWidth: parent.width / 4
             placeholderText: "y_" + ( index + 1 )
 
             onEditingFinished: {

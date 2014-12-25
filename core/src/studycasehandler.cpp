@@ -191,55 +191,51 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
 
     if (isTemporal) {
         m_temporalStudyCaseVariables.insert(variable, newVariable);
-
-    } else {
-
-        if (!m_currentStudyCaseVariables.contains(variable)) {
-            Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
-        }
-
-        // We only update the data if differs from the previous one recorded
-        if (m_currentStudyCaseVariables[variable] != newVariable) {
-            m_currentStudyCaseVariables[variable] = newVariable;
-            m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
-
-            m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
-            m_studyCase->saveCurrentConfiguration();
-
-            markAsNotSaved();
-        }
+        return;
     }
+
+    if (!m_currentStudyCaseVariables.contains(variable)) {
+        Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
+    }
+
+    // We only update the data if differs from the previous one recorded
+    if (m_currentStudyCaseVariables[variable] != newVariable) {
+        m_currentStudyCaseVariables[variable] = newVariable;
+        m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
+
+        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+        m_studyCase->saveCurrentConfiguration();
+
+        markAsNotSaved();
+
+        isReady();
+    }
+
+    qDebug() << "called";
 }
 
 /**
- * @brief StudyCaseHandler::setSingleStudyCaseInformation
+ * @brief StudyCaseHandler::setSingleStudyCaseJson
  * @param variable
  * @param newVariable
  */
 void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
-                                              const QJsonArray& newVariable,
-                                              bool isTemporal) {
+                                              const QJsonArray& newVariable) {
 
-    if (isTemporal) {
-        //m_temporalStudyCaseVariables.insert(variable, newVariable.toString());
+    if (!m_currentStudyCaseVariables.contains(variable)) {
+        Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
+    }
 
-    } else {
+    QString newJsonfyVariable = setSingleStudyCaseJsonHelper(variable, newVariable);
 
-        if (!m_currentStudyCaseVariables.contains(variable)) {
-            Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
-        }
+    // We only update the data if differs from the previous one recorded
+    if (m_currentStudyCaseVariables[variable] != newJsonfyVariable) {
+        m_currentStudyCaseVariables[variable] = newJsonfyVariable;
 
-        QString newJsonfyVariable = setSingleStudyCaseJsonHelper(variable, newVariable);
+        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+        m_studyCase->saveCurrentConfiguration();
 
-        // We only update the data if differs from the previous one recorded
-        if (m_currentStudyCaseVariables[variable] != newJsonfyVariable) {
-            m_currentStudyCaseVariables[variable] = newJsonfyVariable;
-
-            m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
-            m_studyCase->saveCurrentConfiguration();
-
-            markAsNotSaved();
-        }
+        markAsNotSaved();
     }
 }
 
@@ -319,12 +315,25 @@ void StudyCaseHandler::createDomainFromScriptFile() {
     emit loadingDone();
 }
 
+/**
+ * @brief StudyCaseHandler::loadUrlInBrowser
+ * @param link
+ * @param withoutFullPath
+ */
 void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
     if (withoutFullPath) {
         QDesktopServices::openUrl(QUrl(link));
     } else {
         QDesktopServices::openUrl(QUrl(Configure::read("fileApplicationDirPath") + link));
     }
+}
+
+/**
+ * @brief StudyCaseHandler::isReady
+ */
+void StudyCaseHandler::isReady() {
+    bool isReady = m_studyCase->isReady();
+    emit ready(isReady);
 }
 
 //----------------------------------------------------------------------------//

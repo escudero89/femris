@@ -42,7 +42,7 @@ Rectangle {
 
             Layout.alignment: Qt.AlignTop
 
-            parentStage : parentStage
+            parentStage : leftContentBox.parentStage
         }
 
         Rectangle {

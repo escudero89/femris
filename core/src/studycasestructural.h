@@ -7,10 +7,12 @@ class StudyCaseStructural : public virtual StudyCase
 {
 public:
     StudyCaseStructural();
-    ~StudyCaseStructural() {};
+    ~StudyCaseStructural() {}
 
     void setLocalMapOfInformation();
     void saveLocalCurrentConfiguration();
+
+    bool checkIfReady();
 };
 
 #endif // STUDYCASESTRUCTURAL_H

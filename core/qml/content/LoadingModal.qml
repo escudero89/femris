@@ -141,6 +141,8 @@ Item {
                 PrimaryButton {
                     id: forceCloseLoadingModal
 
+                    tooltip: qsTr("Forzar el cierre del proceso actual")
+
                     buttonLabel: "Cancelar"
                     buttonStatus: "danger"
                     iconSource: "qrc:/resources/icons/ban.png"
@@ -166,6 +168,8 @@ Item {
                 PrimaryButton {
                     id: closeLoadingModal
 
+                    tooltip: qsTr("Cerrar ésta ventana")
+
                     buttonLabel: "Cerrar"
                     buttonStatus: "used"
                     iconSource: "qrc:/resources/icons/cross41.png"
@@ -181,6 +185,8 @@ Item {
 
                 PrimaryButton {
                     id: goToShapeFunctionLoadingModal
+
+                    tooltip: qsTr("Repasar funciones de forma")
 
                     buttonLabel: ""
                     buttonStatus: "info"
@@ -201,6 +207,8 @@ Item {
 
                 PrimaryButton {
                     id: continueLoadingModal
+
+                    tooltip: qsTr("Ver los resultados")
 
                     buttonLabel: "Resultados"
                     buttonStatus: "success"

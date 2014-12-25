@@ -21,8 +21,11 @@ public:
     void setInitialMapOfInformation();
     void compressMapOfInformation();
 
-    virtual void setLocalMapOfInformation() {};
-    virtual void saveLocalCurrentConfiguration() {};
+    bool isReady();
+    virtual bool checkIfReady() { return false; }
+
+    virtual void setLocalMapOfInformation() {}
+    virtual void saveLocalCurrentConfiguration() {}
 
     // Getters and setters
     QMap<QString, QString> getMapOfInformation();
