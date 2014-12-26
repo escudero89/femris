@@ -13,5 +13,6 @@
         <file>screens/CE_ShapeFunction.qml</file>
         <file>Content.qml</file>
         <file>custom.js</file>
+        <file>screens/CE_NewModel.qml</file>
     </qresource>
 </RCC>

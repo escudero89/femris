@@ -93,8 +93,27 @@ ColumnLayout {
 
             model: 0
 
-            delegate: NodesStructural {}
+            delegate: delegateItem
+        }
 
+        Component {
+            id: delegateItem
+
+            Item {
+                NodesHeat {
+                    id: nodesHeat
+                    visible : StudyCaseHandler.isStudyType("heat")
+                }
+                NodesStructural {
+                    id: nodesStructural
+                    visible : !StudyCaseHandler.isStudyType("heat")
+                }
+
+                Component.onCompleted: {
+                    nodesHeat.index = index
+                    nodesStructural.index = index
+                }
+            }
         }
 
         // Attach scrollbars to the right of the view.

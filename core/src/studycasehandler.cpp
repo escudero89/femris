@@ -359,3 +359,7 @@ void StudyCaseHandler::markAsNotSaved() {
 QString StudyCaseHandler::getLastSavedPath() {
     return m_lastSavedPath;
 }
+
+bool StudyCaseHandler::isStudyType(const QString& typeOfStudyCase) {
+    return checkSingleStudyCaseInformation("typeOfStudyCase", typeOfStudyCase);
+}

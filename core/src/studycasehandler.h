@@ -39,6 +39,7 @@ public:
     Q_INVOKABLE bool getSavedStatus();
     Q_INVOKABLE void markAsNotSaved();
     Q_INVOKABLE QString getLastSavedPath();
+    Q_INVOKABLE bool isStudyType(const QString&);
 
 public Q_SLOTS:
 

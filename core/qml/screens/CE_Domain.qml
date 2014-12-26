@@ -356,7 +356,7 @@ RowLayout {
         StudyCaseHandler.setSingleStudyCaseJson('coordinates', coordinates);
         StudyCaseHandler.setSingleStudyCaseJson('elements', jsonDomain['elements']);
 
-        if (StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase", "heat")) {
+        if (StudyCaseHandler.isStudyType("heat")) {
             saveCurrentLoadsHeat(coordinates);
         } else {
             saveCurrentLoadsStructural(coordinates);

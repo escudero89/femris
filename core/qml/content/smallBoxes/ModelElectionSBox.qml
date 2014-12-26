@@ -110,7 +110,11 @@ TableView {
     }
 
     onClicked: {
-        var studyCaseType = listModelProblem.get(row).soCalled;
-        StudyCaseHandler.selectNewTypeStudyCase(studyCaseType);
+        StudyCaseHandler.selectNewTypeStudyCase(listModelProblem.get(row).soCalled);
+    }
+
+    onDoubleClicked: {
+        StudyCaseHandler.selectNewTypeStudyCase(listModelProblem.get(row).soCalled);
+        Configure.emitMainSignal("continueStep()");
     }
 }

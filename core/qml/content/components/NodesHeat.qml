@@ -54,7 +54,7 @@ Item {
             property string fixnodeIcon : "open94"
 
             id: buttonNodeController
-            Layout.preferredWidth: parent.width * 0.18
+            Layout.preferredWidth: parent.width * 0.3
             text: qsTr("libre")
 
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
@@ -64,10 +64,8 @@ Item {
             onClicked: {
 
                 switch(buttonNodeController.state) {
-                case "libre"  : buttonNodeController.state = "x-fijo" ; break;
-                case "x-fijo" : buttonNodeController.state = "y-fijo" ; break;
-                case "y-fijo" : buttonNodeController.state = "xy-fijo"; break;
-                case "xy-fijo": buttonNodeController.state = "libre"  ; break;
+                case "neumann"   : buttonNodeController.state = "dirichlet" ; break;
+                case "dirichlet" : buttonNodeController.state = "neumann"   ; break;
                 }
 
                 repeater.currentIndex = index;
@@ -75,69 +73,37 @@ Item {
                 Configure.emitMainSignal("fixnodesChanged");
             }
 
-            state: "libre"
+            state: "dirichlet"
 
             states: [
                 State {
-                    name: "libre"
+                    name: "neumann"
                     PropertyChanges {
                         target: buttonNodeController
-                        text: qsTr("libre")
-                        fixnodeIcon: "open94"
+                        text: qsTr("Neumann")
+                        fixnodeIcon: "bookmark10"
                     }
                 },
                 State {
-                    name: "x-fijo"
+                    name: "dirichlet"
                     PropertyChanges {
                         target: buttonNodeController
-                        text: qsTr("x-fijo")
-                        fixnodeIcon: "lock24"
+                        text: qsTr("Dirichlet")
+                        fixnodeIcon: "bookmark9"
                     }
                     PropertyChanges {
-                        target: xTextField
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                },
-                State {
-                    name: "y-fijo"
-                    PropertyChanges {
-                        target: buttonNodeController
-                        text: qsTr("y-fijo")
-                        fixnodeIcon: "lock24"
-                    }
-                    PropertyChanges {
-                        target: yTextField
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                },
-                State {
-                    name: "xy-fijo"
-                    PropertyChanges {
-                        target: buttonNodeController
-                        text: qsTr("xy-fijo")
-                        fixnodeIcon: "lock24"
-                    }
-                    PropertyChanges {
-                        target: xTextField
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                    PropertyChanges {
-                        target: yTextField
-                        text: qsTr("fijado")
-                        enabled: false
+                        target: heatTextField
+                        textColor: Style.color.femris
                     }
                 }
             ]
         }
 
         TextField {
-            id: xTextField
+            id: heatTextField
 
-            Layout.preferredWidth: parent.width / 4
-            placeholderText: "x_" + ( index + 1 )
+            Layout.preferredWidth: parent.width * 0.4
+            placeholderText: (buttonNodeController.state === "dirichlet") ? "[C]" : "[W]"
 
             onTextChanged: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
 
@@ -149,23 +115,6 @@ Item {
             }
         }
 
-        TextField {
-            id: yTextField
-
-            Layout.preferredWidth: parent.width / 4
-            placeholderText: "y_" + ( index + 1 )
-
-            onTextChanged: {
-                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
-            }
-
-            onFocusChanged: {
-                if (focus === true && repeater.currentIndex !== index) {
-                    repeater.currentIndex = index;
-                    focus = true;
-                }
-            }
-        }
     }
 
     Component.onCompleted: {
@@ -211,9 +160,9 @@ Item {
 
             if (currentPointLoad[0] === (index + 1)) {
                 if (currentPointLoad[1] === 1) {
-                    xTextField.text = currentPointLoad[2];
+                    heatTextField.text = currentPointLoad[2];
                 } else {
-                    yTextField.text = currentPointLoad[2];
+                    heatTextField.text = currentPointLoad[2];
                 }
             }
         }

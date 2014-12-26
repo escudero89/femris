@@ -173,7 +173,7 @@ Rectangle {
 
             z: variablesRectangle.z - 1
 
-            model: StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase") && StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase") === 'heat' ?
+            model: StudyCaseHandler.isStudyType("heat") ?
                 listModelVariablesSBoxHeat : listModelVariablesSBoxStructural
         }
 

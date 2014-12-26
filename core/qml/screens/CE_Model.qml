@@ -40,17 +40,29 @@ RowLayout {
         columns: 3
 
         WebView {
+
+            signal newUrlBase(string newUrl)
+            property string urlBase : "docs/ce_model/index.html"
+
+            id: modelWebView
+
             Layout.fillHeight: true
             Layout.fillWidth: true
 
             Layout.columnSpan: 3
 
-            url: fileApplicationDirPath + "/docs/ce_model.html"
+            url: fileApplicationDirPath + "/" + urlBase
+
+            onNewUrlBase: {
+                urlBase = newUrl;
+                url = fileApplicationDirPath + "/" + urlBase;
+            }
+
         }
 
         PrimaryButton {
 
-            property string loadUrlBase : "docs/ce_model.html"
+            property string loadUrlBase : modelWebView.urlBase
             tooltip: qsTr("Abrir esta página en tu navegador por defecto")
 
             buttonStatus: "femris"
@@ -74,6 +86,9 @@ RowLayout {
         }
 
         PrimaryButton {
+
+            signal continueStep();
+
             id: continueButton
 
             buttonLabel: "Guardar y Continuar"
@@ -86,11 +101,24 @@ RowLayout {
                 target: StudyCaseHandler
 
                 onNewStudyCaseChose: {
+                    modelWebView.newUrlBase("docs/ce_model/" + studyCaseType + ".html");
                     continueButton.buttonStatus = "success";
                 }
             }
 
-            onClicked: {
+            Connections {
+                target: Configure
+
+                onMainSignalEmitted: {
+                    if (signalName === "continueStep()") {
+                        continueButton.continueStep();
+                    }
+                }
+            }
+
+            onClicked: continueStep();
+
+            onContinueStep: {
                 StudyCaseHandler.createNewStudyCase();
                 mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
             }
