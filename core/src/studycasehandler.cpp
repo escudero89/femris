@@ -137,6 +137,8 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
     QMap<QString, QString>::const_iterator i = m_currentStudyCaseVariables.constBegin();while (i != m_currentStudyCaseVariables.constEnd()) {qDebug() << i.key() << ": " << i.value();++i;}
 
     markAsSaved();
+    isReady();
+
     return true;
 }
 
@@ -210,8 +212,6 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
 
         isReady();
     }
-
-    qDebug() << "called";
 }
 
 /**
@@ -332,8 +332,7 @@ void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
  * @brief StudyCaseHandler::isReady
  */
 void StudyCaseHandler::isReady() {
-    bool isReady = m_studyCase->isReady();
-    emit ready(isReady);
+    emit ready(m_studyCase->isReady());
 }
 
 //----------------------------------------------------------------------------//

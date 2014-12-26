@@ -40,6 +40,7 @@ public:
     Q_INVOKABLE void markAsNotSaved();
     Q_INVOKABLE QString getLastSavedPath();
     Q_INVOKABLE bool isStudyType(const QString&);
+    Q_INVOKABLE void isReady();
 
 public Q_SLOTS:
 
@@ -63,7 +64,6 @@ Q_SIGNALS:
 private:
 
     void markAsSaved();
-    void isReady();
 
     bool m_isSaved;
     QString m_lastSavedPath;

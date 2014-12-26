@@ -44,6 +44,8 @@ Rectangle {
         color: "white"
         font.pointSize: 10
         font.bold: true
+
+        textFormat: Text.RichText
     }
 
     MouseArea {

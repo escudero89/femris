@@ -55,7 +55,6 @@ Item {
 
             id: buttonNodeController
             Layout.preferredWidth: parent.width * 0.3
-            text: qsTr("libre")
 
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
 
@@ -70,6 +69,7 @@ Item {
 
                 repeater.currentIndex = index;
 
+                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "-state" + (index + 1), buttonNodeController.state, true);
                 Configure.emitMainSignal("fixnodesChanged");
             }
 
@@ -103,9 +103,9 @@ Item {
             id: heatTextField
 
             Layout.preferredWidth: parent.width * 0.4
-            placeholderText: (buttonNodeController.state === "dirichlet") ? "[C]" : "[W]"
+            placeholderText: (buttonNodeController.state === "dirichlet") ? "[ºC]" : "[W]"
 
-            onTextChanged: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
+            onTextChanged: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && repeater.currentIndex !== index) {

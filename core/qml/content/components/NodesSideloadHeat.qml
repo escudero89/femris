@@ -69,116 +69,62 @@ Item {
                 }
             }
         }
-/*
+
         Button {
 
             property string fixnodeIcon : "open94"
 
             id: buttonNodeController
-            Layout.preferredWidth: parent.width * 0.18
-            text: qsTr("libre")
+            Layout.preferredWidth: parent.width * 0.3
 
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
 
             onClicked: {
 
                 switch(buttonNodeController.state) {
-                case "libre"  : buttonNodeController.state = "x-fijo" ; break;
-                case "x-fijo" : buttonNodeController.state = "y-fijo" ; break;
-                case "y-fijo" : buttonNodeController.state = "xy-fijo"; break;
-                case "xy-fijo": buttonNodeController.state = "libre"  ; break;
+                case "dirichlet"  : buttonNodeController.state = "neumann"   ; break;
+                case "neumann"    : buttonNodeController.state = "dirichlet" ; break;
                 }
 
                 repeater.currentIndex = index;
             }
 
-            state: "libre"
+            state: "neumann"
+            enabled: false
 
             states: [
                 State {
-                    name: "libre"
+                    name: "neumann"
                     PropertyChanges {
                         target: buttonNodeController
-                        text: qsTr("libre")
-                        fixnodeIcon: "open94"
+                        text: qsTr("Neumann")
+                        fixnodeIcon: "bookmark10"
                     }
                 },
                 State {
-                    name: "x-fijo"
+                    name: "dirichlet"
                     PropertyChanges {
                         target: buttonNodeController
-                        text: qsTr("x-fijo")
-                        fixnodeIcon: "lock24"
+                        text: qsTr("Dirichlet")
+                        fixnodeIcon: "bookmark9"
                     }
                     PropertyChanges {
-                        target: textFieldSideloadX
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                },
-                State {
-                    name: "y-fijo"
-                    PropertyChanges {
-                        target: buttonNodeController
-                        text: qsTr("y-fijo")
-                        fixnodeIcon: "lock24"
-                    }
-                    PropertyChanges {
-                        target: textFieldSideloadY
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                },
-                State {
-                    name: "xy-fijo"
-                    PropertyChanges {
-                        target: buttonNodeController
-                        text: qsTr("xy-fijo")
-                        fixnodeIcon: "lock24"
-                    }
-                    PropertyChanges {
-                        target: textFieldSideloadX
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                    PropertyChanges {
-                        target: textFieldSideloadY
-                        text: qsTr("fijado")
-                        enabled: false
+                        target: textFieldSideload
+                        textColor: Style.color.femris
                     }
                 }
             ]
         }
-*/
-        TextField {
 
-            id: textFieldSideloadX
-
-            Layout.preferredWidth: parent.width / 4
-            placeholderText: "x_" + ( index + 1 )
-
-            onEditingFinished: {
-                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
-            }
-
-            onFocusChanged: {
-                if (focus === true && repeater.currentIndex !== index) {
-                    repeater.currentIndex = index;
-                    focus = true;
-                }
-            }
-        }
 
         TextField {
 
-            id: textFieldSideloadY
+            id: textFieldSideload
 
-            Layout.preferredWidth: parent.width / 4
-            placeholderText: "y_" + ( index + 1 )
+            Layout.preferredWidth: parent.width * 0.4
+            placeholderText: (buttonNodeController.state === "dirichlet") ? "[ºC]" : "[W/m]"
 
-            onEditingFinished: {
-                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
-            }
+            onEditingFinished: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && repeater.currentIndex !== index) {
@@ -193,14 +139,13 @@ Item {
         var previousSideloadValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("sideload").replace(/;/g, ",").replace("],", "];").replace("=", "").replace("sideload", "").trim());
 
         var currentSide = jsonDomain["sideloadNodes"][index];
-        var nSideLoad = previousSideloadValues.length / 4;
+        var nSideLoad = previousSideloadValues.length / 3;
 
         for ( var k = 0 ; k < nSideLoad; k++ ) {
-            var currentLoad = previousSideloadValues.splice(0,4);
+            var currentLoad = previousSideloadValues.splice(0, 3);
 
             if (currentSide.indexOf(currentLoad[0]) !== -1 && currentSide.indexOf(currentLoad[1]) !== -1) {
-                textFieldSideloadX.text = currentLoad[2];
-                textFieldSideloadY.text = currentLoad[3];
+                textFieldSideload.text = currentLoad[2];
             }
         }
 

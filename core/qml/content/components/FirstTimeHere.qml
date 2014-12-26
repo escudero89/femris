@@ -73,6 +73,7 @@ ColumnLayout {
             height: parent.height
             width : parent.width
 
+            readOnly: true
         }
 
     }

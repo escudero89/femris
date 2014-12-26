@@ -88,6 +88,8 @@ RowLayout {
                                 width: parent.width
 
                                 Image {
+                                    id: exampleImage
+
                                     source: (name !== "empty") ? portrait : "qrc:/resources/images/square_shadow.png"
 
                                     Layout.preferredHeight: parent.height * 0.95
@@ -95,8 +97,31 @@ RowLayout {
                                     Layout.alignment: Qt.AlignCenter
 
                                     fillMode: Image.PreserveAspectFit
+                                    smooth: true
 
                                     opacity: (gridViewDomain.currentIndex === index) ? 1 : 0.3
+                                    state: (gridViewDomain.currentIndex === index) ? "selected" : "default"
+
+                                    Behavior on scale {
+                                        NumberAnimation {}
+                                    }
+
+                                    states: [
+                                        State {
+                                            name: "selected"
+                                            PropertyChanges {
+                                                target : exampleImage
+                                                scale : 1
+                                            }
+                                        },
+                                        State {
+                                            name: "default"
+                                            PropertyChanges {
+                                                target : exampleImage
+                                                scale : 0.8
+                                            }
+                                        }
+                                    ]
                                 }
 
                             }
@@ -140,6 +165,7 @@ RowLayout {
                                 // We just load the conditions for the first component
                                 if (index === gridViewDomain.currentIndex) {
                                     gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
+                                    rowParent.saveCurrentLoads();
                                 }
                             }
                         }
@@ -304,12 +330,15 @@ RowLayout {
                             }
                         }
                     }
+
+                    Component.onCompleted: StudyCaseHandler.isReady();
                 }
             }
         }
     }
 
     function saveCurrentLoads() {
+
         // First we adjust the coordinates usign the width and height set
         var maxCoord = {
             x : jsonDomain['coordinates'][0][0],
@@ -348,26 +377,91 @@ RowLayout {
 
         var coordinates = jsonDomain['coordinates'];
 
-        for ( var k = 0 ; k < coordinates.length ; k++ ) {
+        for ( k = 0 ; k < coordinates.length ; k++ ) {
             coordinates[k][0] *= scaleFactor.width / ( maxCoord.x - minCoord.x );
             coordinates[k][1] *= scaleFactor.height / ( maxCoord.y - minCoord.y );
         }
 
-        StudyCaseHandler.setSingleStudyCaseJson('coordinates', coordinates);
-        StudyCaseHandler.setSingleStudyCaseJson('elements', jsonDomain['elements']);
+        // Then we set the sideload, pointload and fixnodes according to the type of study case
+        var extraValues = {
+            fixnodes : [],
+            sideload : [],
+            pointload : []
+        };
 
         if (StudyCaseHandler.isStudyType("heat")) {
-            saveCurrentLoadsHeat(coordinates);
+            extraValues = saveCurrentLoadsHeat(coordinates);
         } else {
-            saveCurrentLoadsStructural(coordinates);
+            extraValues = saveCurrentLoadsStructural(coordinates);
         }
+
+        // And finally we save all the values
+        StudyCaseHandler.setSingleStudyCaseJson('coordinates', coordinates);
+        StudyCaseHandler.setSingleStudyCaseJson('elements', jsonDomain['elements']);
+        StudyCaseHandler.setSingleStudyCaseJson('sideload',  extraValues.sideload );
+        StudyCaseHandler.setSingleStudyCaseJson('fixnodes',  extraValues.fixnodes );
+        StudyCaseHandler.setSingleStudyCaseJson('pointload', extraValues.pointload);
+
+        // Only after we check the other validations, we check if the fixnodes are not empty
+        // If that's the case, we are ready to go
+        continueButton.fixnodesReady = (continueButton.isReadyToCheckForFixnodes && extraValues.fixnodes.length);
+        continueButton.changedProperties();
     }
 
     function saveCurrentLoadsHeat(coordinates) {
+        /// SIDELOAD
 
+        var sideloadNodes = jsonDomain['sideloadNodes'];
+        var sideload = [];
+
+        for ( var k = 0 ; k < sideloadNodes.length ; k++ ) {
+            var temp_ = StudyCaseHandler.getSingleStudyCaseInformation('sideload' + ( k + 1 ), true);
+
+            if (temp_ !== '') {
+
+                temp_ = (temp_ === '') ? 0.0 : parseFloat(temp_);
+
+                var N = sideloadNodes[k].length;
+                for ( var j = 0 ; j < N - 1 ; j++ ) {
+                    // The nodes from the edges only take 1/2 of the sideload. Instead,
+                    // the nodes in between took the full sideload
+                    if (j === 0 || j === N - 2) {
+                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_ / 2.0 ]);
+                    } else {
+                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_ ]);
+                    }
+                }
+            }
+        }
+
+        /// POINTLOAD & FIXNODES
+
+        var pointload = [];
+        var fixnodes = [];
+
+        for ( k = 0 ; k < coordinates.length ; k++ ) {
+            temp_ = StudyCaseHandler.getSingleStudyCaseInformation('pointload' + ( k + 1 ), true);
+            var temp_state_ = StudyCaseHandler.getSingleStudyCaseInformation('pointload-state' + ( k + 1 ), true);
+
+            if (temp_ !== '') {
+                if (temp_state_ === 'neumann') {
+                    pointload.push([ k + 1, parseFloat(temp_) ]);
+
+                } else {
+                    fixnodes.push([ k + 1, parseFloat(temp_) ]);
+                }
+            }
+        }
+
+        return {
+            fixnodes : fixnodes,
+            sideload : sideload,
+            pointload : pointload
+        };
     }
 
     function saveCurrentLoadsStructural(coordinates) {
+
         /// SIDELOAD
 
         var sideloadNodes = jsonDomain['sideloadNodes'];
@@ -394,10 +488,6 @@ RowLayout {
                 }
             }
         }
-
-        console.log(sideload);
-
-        StudyCaseHandler.setSingleStudyCaseJson('sideload', sideload);
 
         /// POINTLOAD & FIXNODES
 
@@ -427,13 +517,11 @@ RowLayout {
             }
         }
 
-        StudyCaseHandler.setSingleStudyCaseJson('fixnodes', fixnodes);
-        StudyCaseHandler.setSingleStudyCaseJson('pointload', pointload);
-
-        // Only after we check the other validations, we check if the fixnodes are not empty
-        // If that's the case, we are ready to go
-        continueButton.fixnodesReady = (continueButton.isReadyToCheckForFixnodes && fixnodes.length);
-        continueButton.changedProperties();
+        return {
+            fixnodes : fixnodes,
+            sideload : sideload,
+            pointload : pointload
+        };
     }
 
     Connections {

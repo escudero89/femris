@@ -82,12 +82,18 @@ Rectangle {
 
                     spacing: 0
 
-                    Text {
-                        Layout.fillWidth: true
-                        text: math
+                    Item {
 
-                        textFormat: Text.RichText
-                        color: Style.color.background
+                        Layout.preferredHeight: parent.height
+                        Layout.fillWidth: true
+
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: math
+
+                            textFormat: Text.RichText
+                            color: Style.color.background
+                        }
 
                         MouseArea {
                             anchors.fill: parent
@@ -95,7 +101,15 @@ Rectangle {
 
                             onEntered: {
                                 Configure.emitMainSignal("setInfoBox", "<em>Info:</em> " + mathInfo);
+                                (unit) ? tooltTipText.show() : false;
                             }
+                        }
+
+                        MyToolTip {
+                            id: tooltTipText
+                            text: (unit) ? unit : "";
+
+                            anchors.fill: parent
                         }
                     }
 
@@ -124,7 +138,8 @@ Rectangle {
 
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
 
-                        validator: DoubleValidator { bottom: 0;}
+                        validator: RegExpValidator { regExp: /[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/ }
+
                         focus: true
 
                         onEditingFinished: {
@@ -156,7 +171,7 @@ Rectangle {
                                 border.color: (variablesTextField.isReady) ? Style.color.success : Style.color.content
                                 border.width: 1
 
-                                color: "black"//Style.color.complement
+                                color: Style.color.complement
                             }
                         }
 
@@ -185,6 +200,7 @@ Rectangle {
                 mathInfo: 'El dominio será escalado a este ancho'
                 name: 'Ancho del dominio'
                 variable: 'gridWidth'
+                unit: "[m]"
             }
 
             ListElement {
@@ -192,6 +208,7 @@ Rectangle {
                 mathInfo: 'El dominio será escalado a este alto'
                 name: 'Alto del dominio'
                 variable: 'gridHeight'
+                unit: "[m]"
             }
 
             ListElement {
@@ -199,6 +216,7 @@ Rectangle {
                 mathInfo: 'Caracteriza el comportamiento elástico del material'
                 name: 'Módulo de Young'
                 variable: 'youngModulus'
+                unit: "[Pa]"
             }
 
             ListElement {
@@ -213,6 +231,7 @@ Rectangle {
                 mathInfo: "Densidad del dominio"
                 name: 'Densidad'
                 variable: 'densityOfDomain'
+                unit: "[Kg/m<sup>3</sup>]"
             }
 
             ListElement {
@@ -220,6 +239,7 @@ Rectangle {
                 mathInfo: "Espesor del dominio"
                 name: 'Espesor'
                 variable: 'thickOfDomain'
+                unit: "[m]"
             }
         }
 
@@ -231,6 +251,7 @@ Rectangle {
                 mathInfo: 'El dominio será escalado a este ancho'
                 name: 'Ancho del dominio'
                 variable: 'gridWidth'
+                unit: "[m]"
             }
 
             ListElement {
@@ -238,6 +259,7 @@ Rectangle {
                 mathInfo: 'El dominio será escalado a este alto'
                 name: 'Alto del dominio'
                 variable: 'gridHeight'
+                unit: "[m]"
             }
 
             ListElement {
@@ -245,6 +267,7 @@ Rectangle {
                 mathInfo: 'Coeficiente difusivo aplicado sobre el eje-x'
                 name: 'Coeficiente de difusividad'
                 variable: 'kx'
+                unit: "[W/ºC]"
             }
 
             ListElement {
@@ -252,6 +275,7 @@ Rectangle {
                 mathInfo: 'Coeficiente difusivo aplicado sobre el eje-y'
                 name: 'Coeficiente de difusividad'
                 variable: 'ky'
+                unit: "[W/ºC]"
             }
 
             ListElement {
@@ -259,6 +283,7 @@ Rectangle {
                 mathInfo: "Aporte de calor distribuído uniformemente por todo el dominio"
                 name: 'Calor distribuído'
                 variable: 'heat'
+                unit: "[W/m<sup>2</sup>]"
             }
         }
     }

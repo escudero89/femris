@@ -91,7 +91,27 @@ ColumnLayout {
 
             model: 0
 
-            delegate: NodesSideloadStructural {}
+            delegate: delegateSideloadItem
+        }
+
+        Component {
+            id: delegateSideloadItem
+
+            Item {
+                NodesSideloadHeat {
+                    id: nodesSideloadHeat
+                    visible : StudyCaseHandler.isStudyType("heat")
+                }
+                NodesSideloadStructural {
+                    id: nodesSideloadStructural
+                    visible : !StudyCaseHandler.isStudyType("heat")
+                }
+
+                Component.onCompleted: {
+                    nodesSideloadHeat.index = index
+                    nodesSideloadStructural.index = index
+                }
+            }
         }
 
         // Attach scrollbars to the right of the view.

@@ -152,9 +152,9 @@ Item {
                     enabled: false
 
                     onClicked: {
-                        textAreaLoadingModal.text += "\n\nForzando cierre...";
+                        textAreaLoadingModal.append("\n\nForzando cierre...");
                         ProcessHandler.kill();
-                        textAreaLoadingModal.text += "\nEjecución finalizada (forzada).";
+                        textAreaLoadingModal.append("\nEjecución finalizada (forzada).");
                         forceCloseLoadingModal.enabled = false;
                     }
                 }
@@ -256,8 +256,8 @@ Item {
                     'GNU Octave' : Configure.read("interpreter") === 'matlab' ?
                         'MATLAB' : 'undefined';
 
-            textAreaLoadingModal.text += "Comenzando la ejecución de MAT-fem. Llamando a " + interpreter + ".\n\n";
-            textAreaLoadingModal.text += "------------------------------------------------------------------\n\n";
+            textAreaLoadingModal.append("Comenzando la ejecución de MAT-fem. Llamando a " + interpreter + ".\n\n");
+            textAreaLoadingModal.append("------------------------------------------------------------------\n\n");
         }
 
         onProcessWrote: {
@@ -279,7 +279,7 @@ Item {
 
         onProcessWithError: {
             console.log("Error...");
-            textAreaLoadingModal.text += "\n\n\nHubo un ERROR al ejecutar el proceso. Revise sí el binario es correcto."
+            textAreaLoadingModal.append("\n\n\nHubo un ERROR al ejecutar el proceso. Revise sí el binario es correcto.");
             closeLoadingModal.enabled = true;
             forceCloseLoadingModal.enabled = false;
         }

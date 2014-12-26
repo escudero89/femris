@@ -28,5 +28,6 @@
         <file>content/components/MiniChoiceBlock.qml</file>
         <file>content/components/FirstTimeHere.qml</file>
         <file>content/components/NodesHeat.qml</file>
+        <file>content/components/NodesSideloadHeat.qml</file>
     </qresource>
 </RCC>

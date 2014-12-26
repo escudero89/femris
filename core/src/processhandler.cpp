@@ -98,7 +98,7 @@ void ProcessHandler::finishingProcess() {
         m_stepOfProcessManipulation = 2;
 
         qDebug() << "ProcessHandler::finishingProcess(): Closing process...";
-        m_process->kill();
+        //m_process->kill();
 
         emit processRead();
         exitingProcess();

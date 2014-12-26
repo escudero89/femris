@@ -87,8 +87,6 @@ ColumnLayout {
                 NumberAnimation { properties: "opacity"; duration: 400 }
             }
 
-            //highlight: Rectangle { color: Style.color.primary; opacity: 0.1; radius: 1; z: repeater.z }
-
             focus: true
 
             model: 0
