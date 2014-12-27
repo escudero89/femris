@@ -98,7 +98,7 @@ function transformCoordinates(xnode, factorOfDeformation) {
         }
 
         if (xnode[k][0] > y_max) {
-            y_max = xnode[k][1]
+            y_max = xnode[k][1];
         }
     }
 
@@ -110,11 +110,9 @@ function transformCoordinates(xnode, factorOfDeformation) {
 
     // Finally we apply the scale factor to the coordinates
     for ( k = 0; k < xnode.length; k++ ) {
-        //xnode[k][0] = alpha * xnode[k][0] + beta;
-        //xnode[k][1] = alpha * ( y_max - xnode[k][1] ) + beta; // We need to flip de y-axis
         new_xnode[k] = [];
-        
-        if (G_DISPLACEMENTS.length > 0 && factorOfDeformation !== 0) {
+
+        if (G_DISPLACEMENTS.length > 0 && factorOfDeformation && factorOfDeformation !== 0) {
             new_xnode[k][0] = xnode[k][0] + G_DISPLACEMENTS[k][0] * factorOfDeformation;
             new_xnode[k][1] = y_max - xnode[k][1] - G_DISPLACEMENTS[k][1] * factorOfDeformation; // We need to flip de y-axis
         } else {
@@ -175,7 +173,6 @@ var domainObject = {
             twoElem.currentValue += this.options.valuesToColorise[elem[kNode] - 1];
         }
         twoElem.currentValue /= elem.length;
-
         return twoElem;
     },
 
@@ -226,8 +223,8 @@ var domainObject = {
             // And we paint the element (by interpolation between the values of the nodes)
             if (this.currentValuesToColorise && this.options) {
                 twoElem.fill = getColorFromInterpolation(
-                    currentValueInterpolated / elem.length, 
-                    this.options.minValue, 
+                    currentValueInterpolated / elem.length,
+                    this.options.minValue,
                     this.options.maxValue);
 
             } else {
@@ -258,8 +255,8 @@ var domainObject = {
             if (this.currentValuesToColorise && this.options) {
 
                 twoNode.fill = getColorFromInterpolation(
-                    this.currentValuesToColorise[j], 
-                    this.options.minValue, 
+                    this.currentValuesToColorise[j],
+                    this.options.minValue,
                     this.options.maxValue);
 
             } else {
@@ -297,7 +294,7 @@ var domainObject = {
 
         $("#draw-shapes-dummy").html('<g></g>');
         $("#draw-shapes").html('<div class="two-container w100p" style="height: 93vh;"></div>');
-        
+
         this.makeElements(this.xnode, this.ielem, this.options);
 
         drawCurrentMatrix(this.two, this.group);
@@ -319,9 +316,10 @@ var domainObject = {
         local = this;
 
         $.each(this.groupNode.children, function(idx, twoNode) {
+            twoNode.currentValue = options.valuesToColorise[twoNode.ielem];
             twoNode.fill = getColorFromInterpolation(
-                options.valuesToColorise[twoNode.ielem], 
-                options.minValue, 
+                twoNode.currentValue,
+                options.minValue,
                 options.maxValue);
 
             twoNode.fill_original = twoNode.fill;
@@ -343,9 +341,10 @@ var domainObject = {
                 currentValueInterpolated += local.currentValuesToColorise[ twoElem.ielem[j] - 1 ];
             }
 
+            twoElem.currentValue = currentValueInterpolated / twoElem.ielem.length;
             twoElem.fill = getColorFromInterpolation(
-                currentValueInterpolated / twoElem.ielem.length, 
-                options.minValue, 
+                twoElem.currentValue,
+                options.minValue,
                 options.maxValue);
 
             twoElem.fill_original = twoElem.fill;
@@ -357,9 +356,9 @@ var domainObject = {
 
     changeColorDueToValuesHelper : function (twoObject) {
         twoObject.fill = getColorFromInterpolation(
-            this.currentValuesToColorise[j], 
-            this.options.minValue, 
-            this.options.maxValue); 
+            this.currentValuesToColorise[j],
+            this.options.minValue,
+            this.options.maxValue);
 
         return twoObject;
     },
@@ -369,7 +368,7 @@ var domainObject = {
      * @return {Two.group()}
      */
     makeElements : function (xnode, ielem, options) {
-    
+
         // Make an instance of two and place it on the page.
         this.two = new Two({
                 width: "100%",

@@ -56,7 +56,7 @@
 
 %%==============|| STUDY CASE MAT-femCal    ||==============>>>>>>>>>>>>
 %=======================================================================
-% MAT-femcCal 1.3  - MAT-femCal is a learning tool for undestanding
+% MAT-femcCal 1.2  - MAT-femCal is a learning tool for undestanding
 %                    the Finite Element Method with MATLAB and GiD
 %=======================================================================
 % EXAMPLE SELECTED = {{exampleName}}

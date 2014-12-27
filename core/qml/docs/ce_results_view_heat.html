@@ -13,18 +13,11 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Desplazamientos
+                                Temperaturas
                                 <span class="caret"></span>
                             </a>
                             <ul name="displacements" class="dropdown-menu visualization" role="menu">
-                                <li name="0">
-                                    <a href="#">Eje X</a>
-                                </li>
-                                <li name="1">
-                                    <a href="#">Eje Y</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li name="0,1" class="active">
+                                <li name="0" class="active">
                                     <a href="#">Totales</a>
                                 </li>
                             </ul>
@@ -32,59 +25,23 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Reacciones
-                                <span class="caret"></span>
-                            </a>
-                            <ul name="reactions" class="dropdown-menu visualization" role="menu">
-                                <li name="0">
-                                    <a href="#">R<sub>x</sub></a>
-                                </li>
-                                <li name="1">
-                                    <a href="#">R<sub>y</sub></a>
-                                </li>
-                                <li class="divider"></li>
-                                <li name="0,1">
-                                    <a href="#">[Reacci&oacute;n]</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Tensiones
+                                Flujos
                                 <span class="caret"></span>
                             </a>
                             <ul name="stresses" class="dropdown-menu visualization" role="menu">
                                 <li name="0">
-                                    <a href="#">S<sub>x</sub></a>
+                                    <a href="#">q<sub>x</sub></a>
                                 </li>
                                 <li name="1">
-                                    <a href="#">S<sub>y</sub></a>
-                                </li>
-                                <li name="2">
-                                    <a href="#">S<sub>z</sub></a>
+                                    <a href="#">q<sub>y</sub></a>
                                 </li>
                                 <li class="divider"></li>
-                                <li name="3">
-                                    <a href="#">S<sub>xy</sub></a>
-                                </li>
-                                <li name="4">
-                                    <a href="#">S<sub>yz</sub></a>
-                                </li>
-                                <li name="5">
-                                    <a href="#">S<sub>zx</sub></a>
+                                <li name="0,1">
+                                    <a href="#">Totales</a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left" role="search" style="margin:3px">
-                        <div class="form-group">
-                            <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
-                        </div>
-                        <button type="button" class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
-                            <span class="glyphicon glyphicon-eye-open"></span>
-                        </button>
-                    </form>
 
                     <form class="navbar-form navbar-right" role="search" style="margin:3px">
                         <button type="button" class="btn btn-primary" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
@@ -199,24 +156,20 @@
 
                             <div class="output">
                                 \[
-                            \boldsymbol\sigma =
+                            \boldsymbol q =
                                 \left\{\begin{matrix}
-                                    \sigma_x \\
-                                    \sigma_y \\
-                                    \tau_{xy}
+                                    q_x \\
+                                    q_y
                                 \end{matrix}\right\}
-                            = \mathbf{D} \left(
+                            = - \begin{bmatrix}
+                                    k_x & 0 \\ 0 & k_y
+                                \end{bmatrix}
                                 \left\{\begin{matrix}
-                                    \epsilon_x \\
-                                    \epsilon_y \\
-                                    \gamma_{xy}
-                                \end{matrix}\right\} - {\boldsymbol\epsilon}_0
-                             \right )
+                                    \frac{\partial T}{\partial x} \\
+                                    \frac{\partial T}{\partial y}
+                                \end{matrix}\right\}
+                            = - \mathbf{D} \nabla T
                                 \]
-                                <small class="pull-right" style="color:#555"> <u>Nota:</u>
-                                    `\mathbf{\epsilon}_0` representa la <em>deformación inicial</em>
-                                    , que suele considerarse nula.
-                                </small>
                             </div>
 
                             <p>se puede establecer explícitamente para cualquier material.</p>
@@ -228,30 +181,10 @@
                             <div id="constitutiveMatrixBase" class="output"></div>
 
                             <p>
-                                con los valores del <strong>Módulo de Young</strong>
-                                y
-                                <strong>Coeficiente de Poisson</strong>
-                                respectivos de:
+                                con una <strong>carga distribuída</strong> `Q` de:
                             </p>
 
                             <div id="constitutiveMatrixBaseVariables" class="output"></div>
-
-                            <hr>
-
-                            <h3>
-                                Matriz de Deformación
-                                <small>Deformation matrix</small>
-                            </h3>
-
-                            <p>
-                                La matriz de deformación `\mathbf{B}` calculada es:
-                            </p>
-
-                            <div id="bmat" class="output"></div>
-
-                            <p>la cuál está conformada de la siguiente manera:</p>
-
-                            <div id="bmatBase" class="output"></div>
 
                         </div>
                         <div role="tabpanel" class="tab-pane" id="matfem">
@@ -262,16 +195,16 @@
                                         <a href="#mainTab" aria-controls="mainTab" role="tab" data-toggle="tab">currentMatFemFile.m</a>
                                     </li>
                                     <li role="presentation">
-                                        <a href="#matfemris" aria-controls="matfemris" role="tab" data-toggle="tab">MATfemris.m</a>
+                                        <a href="#matfemris" aria-controls="matfemris" role="tab" data-toggle="tab">MATfemrisCal.m</a>
                                     </li>
                                     <li role="presentation">
-                                        <a href="#stiffness" aria-controls="stiffness" role="tab" data-toggle="tab">TrStif.m</a>
+                                        <a href="#stiffness" aria-controls="stiffness" role="tab" data-toggle="tab">TrStifCal.m</a>
                                     </li>
                                     <li role="presentation">
-                                        <a href="#constitutive" aria-controls="constitutive" role="tab" data-toggle="tab">constt.m</a>
+                                        <a href="#constitutive" aria-controls="constitutive" role="tab" data-toggle="tab">consttCal.m</a>
                                     </li>
                                     <li role="presentation">
-                                        <a href="#stresses" aria-controls="stresses" role="tab" data-toggle="tab">TrStrs.m</a>
+                                        <a href="#stresses" aria-controls="stresses" role="tab" data-toggle="tab">TrStrsCal.m</a>
                                     </li>
                                 </ul>
 
@@ -310,13 +243,11 @@
                                                     <div class="panel-body">
                                                         <pre class="matlab-code">
 % Find basic dimensions
-  npnod = size(coordinates,1);         % Number of nodes
-  nndof = 2*npnod;                     % Number of total DOF
-  nelem = size(elements,1);            % Number of elements
-  nnode = size(elements,2);            % Number of nodes per element
-  neleq = nnode*2;                     % Number of DOF per element
-
-  elements = sortrows(elements);
+  npnod = size(coordinates,1);       % Number of nodes
+  nndof = npnod;                     % Number of total DOF
+  nelem = size(elements,1);          % Number of elements
+  nnode = size(elements,2);          % Number of nodes per element
+  neleq = nnode;                     % Number of DOF per element
 
 % Dimension the global matrices
   StifMat  = sparse( nndof , nndof );  % Create the global stiffness matrix
@@ -326,7 +257,7 @@
   u        = sparse( nndof , 1 );      % Nodal variables
 
 % Material properties (Constant over the domain)
-  dmat = constt(young,poiss,pstrs);
+  dmat = consttCal(kx,ky);
 
 % Element cycle
   for ielem = 1 : nelem
@@ -335,11 +266,11 @@
     lnods = elements(ielem,:);                         % Elem. connectivity
     coord(1:nnode,:) = coordinates(lnods(1:nnode),:);  % Elem. coordinates
 
-% Evaluate the elemental stiffness matrix and mass force vector
-    if (nnode == 3)   % 3 Nds. Triangle
-      [ElemMat,ElemFor] = TrStif_v1_3(coord,dmat ,thick,denss);
-    else              % 4 Nds. Quadrilateral
-      [ElemMat,ElemFor] = QdStif_v1_3(coord,dmat ,thick,denss);
+% Evaluate the elemental stiffnes matrix and mass force vector
+    if (nnode == 3)
+      [ElemMat,ElemFor] = TrStifCal_v1_2(coord,dmat,heat); % 3 Nds Triangle
+    else
+      [ElemMat,ElemFor] = QdStifCal_v1_2(coord,dmat,heat); % 4 Nds Quad.
     end
                                                         </pre>
                                                     </div>
@@ -359,48 +290,45 @@
                                                     <div class="panel-body">
                                                         <pre class="matlab-code">
 % Find the equation number list for the i-th element
-    eqnum = [];                                        % Clear the list
-    for i = 1 : nnode                                  % Node cycle
-      eqnum = [eqnum,lnods(i)*2-1,lnods(i)*2];         % Build the equation
-    end                                                % number list
+    eqnum = [];                            % Clear the list
+    for i =1 : nnode                       % Node cycle
+      eqnum = [eqnum,lnods];               % Build the equation number list
+    end
 
-% Assemble the force vector and the stiffness matrix
+% Assemble the force vector and the stiffnes matrix
     for i = 1 : neleq
       force(eqnum(i)) = force(eqnum(i)) + ElemFor(i);
       for j = 1 : neleq
-         StifMat(eqnum(i),eqnum(j)) = StifMat(eqnum(i),eqnum(j)) + ...
-                                      ElemMat(i,j);
+        StifMat(eqnum(i),eqnum(j)) = StifMat(eqnum(i),eqnum(j)) + ...
+                                     ElemMat(i,j);
       end
     end
 
   end  % End element cycle
 
-% Add side forces to the force vector
+% Add side fluxes to the force vector
   for i = 1 : size(sideload,1)
     x = coordinates(sideload(i,1),:) - coordinates(sideload(i,2),:);
-    l = sqrt(x*transpose(x));          % Find the length of the side
-    ieqn = sideload(i,1)*2;            % Find eq. number for the first node
-    force(ieqn-1) = force(ieqn-1) + l*sideload(i,3)/2;        % Add x force
-    force(ieqn  ) = force(ieqn  ) + l*sideload(i,4)/2;        % Add y force
+    l = sqrt(x*transpose(x));          % Find the lenght of the side
+    ieqn = sideload(i,1);              % Find eq. number for the first node
+    force(ieqn) = force(ieqn) + l*sideload(i,3)/2;      % Add punctual heat
 
-    ieqn = sideload(i,2)*2;           % Find eq. number for the second node
-    force(ieqn-1) = force(ieqn-1) + l*sideload(i,3)/2;        % Add x force
-    force(ieqn  ) = force(ieqn  ) + l*sideload(i,4)/2;        % Add y force
+    ieqn = sideload(i,2);             % Find eq. number for the second node
+    force(ieqn) = force(ieqn) + l*sideload(i,3)/2;      % Add punctual heat
   end
 
-% Add point load conditions to the force vector
+% Add punctual flux conditions to the force vector
   for i = 1 : size(pointload,1)
-    ieqn = (pointload(i,1)-1)*2 + pointload(i,2);       % Find eq. number
-    force(ieqn) = force(ieqn) + pointload(i,3);         % and add the force
+    ieqn = pointload(i,1);                               % Find eq. number
+    force(ieqn) = force(ieqn) + pointload(i,2);          % and add the flux
   end
 
 % Apply the Dirichlet conditions and adjust the right hand side
   for i = 1 : size(fixnodes,1)
-    ieqn = (fixnodes(i,1)-1)*2 + fixnodes(i,2);  % Find the equation number
-    u(ieqn) = fixnodes(i,3);                  % and store the solution in u
+    ieqn = fixnodes(i,1);                        % Find the equation number
+    u(ieqn) = fixnodes(i,2);                  % and store the solution in u
     fix(i) = ieqn;                        % and mark the eq. as a fix value
   end
-
   force1 = force - StifMat * u;      % Adjust the rhs with the known values
                                                         </pre>
                                                     </div>
@@ -438,8 +366,8 @@
                                                     <h4 class="panel-title">
                                                         <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
                                                             SUBRUTINA
-                                                            <strong>TENSIÓN</strong>
-                                                            <small>Cálculo de deformaciones y tensiones en cada elemento</small>
+                                                            <strong>FLUJOS</strong>
+                                                            <small>Cálculo de "tensiones" (flujos) en cada elemento</small>
                                                         </a>
                                                     </h4>
                                                 </div>
@@ -447,7 +375,7 @@
                                                     <div class="panel-body">
                                                         <pre class="matlab-code">
 % Compute the stresses
-  Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);
+  Strnod = StressCal_v1_2(dmat,u);
                                                         </pre>
                                                     </div>
                                                 </div>
@@ -459,13 +387,13 @@
                                         <p class="help-block">
                                             <small>
                                                 Éste es el archivo completo de
-                                                <tt>MATfemris.m</tt>
+                                                <tt>MATfemrisCal.m</tt>
                                                 , el cual se utiliza directamente en {{femris}} para resolver los problemas. Sí ésta ha sido modificada, puede que los cambios no se reflejen en la versión presentada en la pestaña principal
                                                 <tt>currentMatFemFile.m</tt>
                                                 .
                                             </small>
                                         </p>
-                                        <pre class="matlab-code">{{=include(MATfemris.m)}}</pre>
+                                        <pre class="matlab-code">{{=include(MATfemrisCal.m)}}</pre>
                                     </div>
 
                                     <div role="tabpanel" class="tab-pane" id="stiffness">
@@ -474,8 +402,8 @@
                                                 Esta función es llamada una vez por cada elemento de la malla, y obtiene la matriz de rigidez elemental.
                                             </small>
                                         </p>
-                                        <pre class="matlab-code hidden triangular-hidden">{{=include(TrStif_v1_3.m)}}</pre>
-                                        <pre class="matlab-code hidden quadrangular-hidden">{{=include(QdStif_v1_3.m)}}</pre>
+                                        <pre class="matlab-code hidden triangular-hidden">{{=include(TrStifCal_v1_2.m)}}</pre>
+                                        <pre class="matlab-code hidden quadrangular-hidden">{{=include(QdStifCal_v1_2.m)}}</pre>
                                     </div>
 
                                     <div role="tabpanel" class="tab-pane" id="constitutive">
@@ -484,17 +412,17 @@
                                                 Ésta función es utilizada para obtener la matriz constitutiva.
                                             </small>
                                         </p>
-                                        <pre class="matlab-code">{{=include(constt.m)}}</pre>
+                                        <pre class="matlab-code">{{=include(consttCal.m)}}</pre>
                                     </div>
 
                                     <div role="tabpanel" class="tab-pane" id="stresses">
                                         <p class="help-block">
                                             <small>
-                                                Ésta función es utilizada para obtener la matriz de tensiones.
+                                                Ésta función es utilizada para obtener la matriz de flujos.
                                             </small>
                                         </p>
-                                        <pre class="matlab-code hidden triangular-hidden">{{=include(TrStrs_v1_3.m)}}</pre>
-                                        <pre class="matlab-code hidden quadrangular-hidden">{{=include(QdStrs_v1_3.m)}}</pre>
+                                        <pre class="matlab-code hidden triangular-hidden">{{=include(TrStrsCal_v1_2.m)}}</pre>
+                                        <pre class="matlab-code hidden quadrangular-hidden">{{=include(QdStrsCal_v1_2.m)}}</pre>
                                     </div>
                                 </div>
                             </div>

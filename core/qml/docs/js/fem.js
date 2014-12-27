@@ -186,7 +186,7 @@ function getSingleColFromCurrentDomainHelper(variable, col_idx, singleColumnArra
             singleColArray[k] = Math.pow(singleColArray[k], 2) + Math.pow(G_CURRENT_DOMAIN[variable][k][col_idx], 2);
         }
     } else {
-        for ( var k = 0 ; k < G_CURRENT_DOMAIN[variable].length ; k++ ) {
+        for ( k = 0 ; k < G_CURRENT_DOMAIN[variable].length ; k++ ) {
             singleColArray.push(G_CURRENT_DOMAIN[variable][k][col_idx]);
         }
     }
@@ -236,7 +236,7 @@ function getOptions(xnode, ielem, params) {
         $("#maxValue").html(Utils.parseNumber(params.maxValue));
     }
 
-    params["localParamsTextSVG"] = localParamsTextSVG;
+    params.localParamsTextSVG = localParamsTextSVG;
 
     return params;
 }
@@ -248,7 +248,7 @@ $(document).ready(function() {
 
 
     var params = {
-        valuesToColorise : getSingleColFromCurrentDomain('displacements', [0,1])
+        valuesToColorise : getSingleColFromCurrentDomain('displacements', $("ul[name='displacements'] > li.active").attr("name"))
     };
 
     params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;
@@ -362,32 +362,3 @@ function discolorDueToMouseHelper(currentElem, currentCell, clearAll) {
     }
 
 }
-
-(function(){
-
-    encode_as_link();
-
-  var button_id = "download";
-
-  // include this code in your page
-  // you must have jQuery installed
-  // you must have a link element with an id of "download"
-  // this is limited to only one chart on the page (the first)
-  function encode_as_link(){
-    // Add some critical information
-    $("svg").attr({ version: '1.1' , xmlns:"http://www.w3.org/2000/svg"});
-
-    var svg      = $("svg").parent().html(),
-        b64      = btoa(svg),
-        download = $("#" + button_id),
-        html     = download.html();
-
-    download.replaceWith(
-      $("<a id='"+button_id+"' href-lang='image/svg+xml' href='data:image/svg+xml;base64,\n"+b64+"' title='file.svg' download></a>").html(html));
-  }
-
-  $(function(){
-    $("div").delegate("#"+button_id, "mouseover", encode_as_link);
-  });
-
-})();

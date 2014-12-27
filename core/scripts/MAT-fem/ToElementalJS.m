@@ -16,11 +16,14 @@ function ToElementalJS(file_name)
     fprintf(fid, 'var G_CURRENT_ELEMENTAL_DATA = {\r\n');
 
     fprintf(fid, MatrixToJSON(femris_elemental_matrix{1}, 'stiffness_matrix', 'This is the matrix of the global stiffness matrix'));
-    
+
     fprintf(fid, MatrixToJSON(femris_elemental_matrix{2}, 'dmat', 'This is the constitutive matrix'));
     fprintf(fid, MatrixToJSON(femris_elemental_matrix{3}, 'young', 'Young Modulus'));
     fprintf(fid, MatrixToJSON(femris_elemental_matrix{4}, 'poiss', 'Poission Ratio'));
     fprintf(fid, MatrixToJSON(femris_elemental_matrix{5}, 'pstrs', '1 indicate Plane Stress; 0 indicate Plane Strain'));
+    fprintf(fid, MatrixToJSON(femris_elemental_matrix{6}, 'kx', 'Heat transfer coeffcient in X direction'));
+    fprintf(fid, MatrixToJSON(femris_elemental_matrix{7}, 'ky', 'Heat transfer coeffcient in Y direction'));
+    fprintf(fid, MatrixToJSON(femris_elemental_matrix{8}, 'heat', 'Heat source per area unit'));
 
     fprintf(fid, MultidimensionalToJSON(femris_elemental_matrix{10}, 'M', 'This is the matrix of the global stiffness matrix'));
     fprintf(fid, MatrixToJSON(femris_elemental_matrix{21}, 'f', 'This is the vector of forces'));

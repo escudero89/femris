@@ -30,7 +30,10 @@ ColumnLayout {
 
         FileIO {
             id: io_view
-            source: fileApplicationDirPath + "/docs/ce_results_view.html"
+            source: (StudyCaseHandler.isStudyType("heat")) ?
+                        fileApplicationDirPath + "/docs/ce_results_view_heat.html"  :
+                        fileApplicationDirPath + "/docs/ce_results_view.html"
+
             onError: console.log(msg)
         }
 

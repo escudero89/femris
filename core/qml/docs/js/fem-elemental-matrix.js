@@ -107,12 +107,20 @@ var globalElementalMatrixObject = {
         if (this.current.problem_type == 'plane-stress') {
             latexfiedConstitutiveMatrixBase += "\\frac{E}{1-\\nu^2}" +
                 this.wrapInTag("1&\\nu&0\\\\ \\nu&1&0 \\\\ 0&0&(1-\\nu)/2", 'bmatrix');
-        } else {
+        } else if (this.current.problem_type == 'plane-strain') {
             latexfiedConstitutiveMatrixBase += "\\frac{E}{(1+\\nu)(1-2\\nu)}" +
                 this.wrapInTag("1-\\nu&\\nu&0\\\\ \\nu&1-\\nu&0 \\\\ 0&0&(1-2\\nu)/2", 'bmatrix');
+        } else {
+            latexfiedConstitutiveMatrixBase += this.wrapInTag("k_x&0\\\\ 0&k_y", 'bmatrix');
         }
 
         this.setMathJax(latexfiedConstitutiveMatrixBase, 'constitutiveMatrixBase');
+
+        // For heat we do not show the Poisson's coefficient nor the Young's Modulus
+        if (this.current.problem_type === 'heat') {
+            this.setMathJax("Q = " + this.latexfyNumber(this.data.heat), 'constitutiveMatrixBaseVariables');
+            return;
+        }
 
         var latexfiedVariables =
             this.wrapInTag(
@@ -216,8 +224,13 @@ var globalElementalMatrixObject = {
         this.data = $.extend(true, {}, elemental_data);
         this.wasInitialized = true;
 
-        this.current.problem_type = parseInt(this.data._pstrs) ? 'plane-stress' : 'plain-strain';
-        this.current.problem_type_text = parseInt(this.data._pstrs) ? 'Tensión Plana' : 'Deformación Plana';
+        if (!eval(this.data.pstrs)) {
+            this.current.problem_type = 'heat';
+            this.current.problem_type_text = 'Transporte de calor';
+        } else {
+            this.current.problem_type = parseInt(this.data.pstrs) ? 'plane-stress' : 'plain-strain';
+            this.current.problem_type_text = parseInt(this.data.pstrs) ? 'Tensión Plana' : 'Deformación Plana';
+        }
 
         return true;
 

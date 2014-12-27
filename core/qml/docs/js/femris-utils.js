@@ -56,7 +56,7 @@
 
     var huePos = 240;
 
-    if ( (max -min) !== 0) {
+    if ( (max -min) > 10e-15) {
         huePos = (1 - (current - min) / (max - min)) * 240;
     }
 

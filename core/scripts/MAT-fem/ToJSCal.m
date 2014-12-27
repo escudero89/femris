@@ -92,8 +92,8 @@ function ToJSCal (file_name, nodalTemperatures, nodalReactiveFluxes, nodalFluxes
 
     %% temperature
 
-    fprintf(fid, jsonParser('_temperatures', 'The values are [ temperature-value ]'));
-    fprintf(fid, jsonParser('temperatures', '[\r\n', true));
+    fprintf(fid, jsonParser('_temperatures', 'The values are [ temperature-value ], despite that the name of the variable is -displacements-'));
+    fprintf(fid, jsonParser('displacements', '[\r\n', true));
 
     for i = 1 : numberOfNodes
         fprintf(fid, '    [');
@@ -111,7 +111,7 @@ function ToJSCal (file_name, nodalTemperatures, nodalReactiveFluxes, nodalFluxes
     %% reactive
 
     fprintf(fid, jsonParser('_nodalReactiveFluxes', 'The values are [ reactive-flux-value ]'));
-    fprintf(fid, jsonParser('nodalReactiveFluxes', '[\r\n', true));
+    fprintf(fid, jsonParser('reactions', '[\r\n', true));
 
     for i = 1 : numberOfNodes
         fprintf(fid, '    [');
@@ -128,8 +128,8 @@ function ToJSCal (file_name, nodalTemperatures, nodalReactiveFluxes, nodalFluxes
 
     %% fluxes
 
-    fprintf(fid, jsonParser('_fluxes', 'The values are [ Sx Sy Sz Sxy Syz Sxz ]'));
-    fprintf(fid, jsonParser('fluxes', '[\r\n', true));
+    fprintf(fid, jsonParser('_fluxes', 'The values are [ q_x q_y q_z ]'));
+    fprintf(fid, jsonParser('stresses', '[\r\n', true));
 
     for i = 1 : numberOfNodes
         fprintf(fid, '    [');

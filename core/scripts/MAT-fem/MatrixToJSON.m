@@ -23,6 +23,12 @@
 function [jsonfy] = MatrixToJSON(matrix, label, comment, isLastBlock)
 
     jsonfy = jsonParser(strcat('_', label), comment);
+
+    if (!matrix)
+        jsonfy = strcat(jsonfy, jsonParser(label, 'false'));
+        return;
+    end
+
     jsonfy = strcat(jsonfy, jsonParser(label, '[\r\n', true));
 
     nRows = size(matrix, 1);
