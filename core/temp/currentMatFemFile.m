@@ -1,5 +1,5 @@
 %=======================================================================
-% MAT-femcCal 1.3  - MAT-femCal is a learning tool for undestanding
+% MAT-femcCal 1.2  - MAT-femCal is a learning tool for undestanding
 %                    the Finite Element Method with MATLAB and GiD
 %=======================================================================
 % EXAMPLE SELECTED = example1.json
@@ -8,7 +8,7 @@
 %
   kx   = 1 ;
   ky   = 1 ;
-  heat = 100 ;
+  heat = 1 ;
 
 %
 % Coordinates
@@ -41,10 +41,7 @@ elements = [
 % Fixed Nodes
 %
 fixnodes = [
-    1,    0 ;
-    3,    0 ;
-    7,    0 ;
-    9,    0 ;
+    1,    111 ;
 ];
 
 %

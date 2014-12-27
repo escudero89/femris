@@ -145,24 +145,5 @@ MenuBar {
 
             visible: false
         }
-
-        FileDialog {
-            id: femrisSaver
-            title: "Guardar Caso de Estudio como..."
-
-            nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
-
-            selectExisting: false
-
-            modality: "ApplicationModal"
-
-            onAccepted: {
-                console.log("You chose: " + fileUrl);
-                StudyCaseHandler.saveCurrentStudyCase(fileUrl);
-            }
-            onRejected: {
-                console.log("Canceled");
-            }
-        }
     }
 }

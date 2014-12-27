@@ -223,6 +223,34 @@ ApplicationWindow {
         visible: false
     }
 
+    MessageDialog {
+
+        property string parentStage : ""
+
+        id: anotherFileAlreadyOpenedDialog
+        title: qsTr("Ya hay un Caso de Estudio abierto")
+        text: qsTr("Puede guardar los cambios de su Caso de Estudio actual antes de continuar con uno nuevo. Sí no guarda, los cambios efectuados desde el último punto de guardado se perderán para siempre.")
+
+        icon: StandardIcon.Warning
+        standardButtons : StandardButton.Save | StandardButton.Cancel | StandardButton.Discard
+
+        onRejected: {
+            anotherFileAlreadyOpenedDialog.close();
+        }
+
+        onDiscard: {
+            mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+        }
+
+        onAccepted: {
+            femrisSaver.parentStage = parentStage;
+            femrisSaver.open();
+            anotherFileAlreadyOpenedDialog.close();
+        }
+
+        visible: false
+    }
+
     FileDialog {
         id: femrisLoader
         title: "Por favor seleccione un archivo de FEMRIS"
@@ -245,6 +273,31 @@ ApplicationWindow {
             }
         }
 
+    }
+
+    FileDialog {
+        property string parentStage : ""
+
+        id: femrisSaver
+        title: "Guardar Caso de Estudio como..."
+
+        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
+
+        selectExisting: false
+
+        modality: "ApplicationModal"
+
+        onAccepted: {
+            console.log("You chose: " + fileUrl);
+            StudyCaseHandler.saveCurrentStudyCase(fileUrl);
+
+            if (parentStage.length) {
+                mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+            }
+        }
+        onRejected: {
+            console.log("Canceled");
+        }
     }
 
     FileDialog {
@@ -277,6 +330,30 @@ ApplicationWindow {
         doOnClose();
     }
 
+    function saveAndContinue(parentStage, callbackFunction) {
+
+        var parentStageStep = {
+            'CE_Model'         : 1,
+            'CE_Domain'        : 2,
+            'CE_ShapeFunction' : 3,
+            'CE_Results'       : 4
+        }
+
+        var stepOfProcess = parentStageStep[parentStage];
+
+        if (StudyCaseHandler.exists() &&
+            parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess")) > stepOfProcess) {
+            anotherFileAlreadyOpenedDialog.parentStage = parentStage;
+            anotherFileAlreadyOpenedDialog.open();
+            return;
+        }
+
+        if (stepOfProcess === 1) {
+            StudyCaseHandler.createNewStudyCase();
+        }
+
+        mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+    }
 
     function doOnClose() {
         Configure.exitApp();
@@ -298,11 +375,6 @@ ApplicationWindow {
         switch (section) {
         case "Tutorial":
             StudyCaseHandler.setSingleStudyCaseInformation("tutorialReturnTo", "Initial", true);
-            break;
-
-        case "CE_Results":
-            buttonLoadUrlInBrowser.loadUrlBase = "docs/ce_results.html";
-            buttonLoadUrlInBrowser.visible = true;
             break;
 
         default :

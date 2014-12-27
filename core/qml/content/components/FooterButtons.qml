@@ -48,7 +48,7 @@ RowLayout {
         Layout.fillWidth: true
 
         onClicked: {
-            mainWindow.switchSection(StudyCaseHandler.saveAndContinue(fromWhere));
+            mainWindow.saveAndContinue(fromWhere);
         }
 
         visible: ( fromWhere !== "" )

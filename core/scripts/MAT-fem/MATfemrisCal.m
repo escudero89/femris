@@ -19,8 +19,7 @@
     throwExitSignal('Falta definirse alguna condición de contorno.');
   end
   % <<< END FEMRIS ADDITION
-
-% The variables are readed as a MAT-femCal subroutine
+% The variables are read as a MAT-femCal subroutine
 % kx   = Heat transfer coeffcient in X direction
 % ky   = Heat transfer coeffcient in Y direction
 % heat = Heat source per area unit

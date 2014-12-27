@@ -284,7 +284,7 @@
                                                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                                     <div class="panel-body">
                                                         <pre class="matlab-code">%=======================================================================
-% MAT-femcCal 1.3  - MAT-femCal is a learning tool for undestanding
+% MAT-femcCal 1.2  - MAT-femCal is a learning tool for undestanding
 %                    the Finite Element Method with MATLAB and GiD
 %=======================================================================
 % EXAMPLE SELECTED = example1.json
@@ -293,7 +293,7 @@
 %
   kx   = 1 ;
   ky   = 1 ;
-  heat = 100 ;
+  heat = 1 ;
 
 %
 % Coordinates
@@ -326,10 +326,7 @@ elements = [
 % Fixed Nodes
 %
 fixnodes = [
-    1,    0 ;
-    3,    0 ;
-    7,    0 ;
-    9,    0 ;
+    1,    1 ;
 ];
 
 %
@@ -512,8 +509,7 @@ sideload = [
                                             </small>
                                         </p>
                                         <pre class="matlab-code">  
-
-% The variables are readed as a MAT-femCal subroutine
+% The variables are read as a MAT-femCal subroutine
 % kx   = Heat transfer coeffcient in X direction
 % ky   = Heat transfer coeffcient in Y direction
 % heat = Heat source per area unit

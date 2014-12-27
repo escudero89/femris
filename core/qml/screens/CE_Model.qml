@@ -119,8 +119,7 @@ RowLayout {
             onClicked: continueStep();
 
             onContinueStep: {
-                StudyCaseHandler.createNewStudyCase();
-                mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+                mainWindow.saveAndContinue(parentStage);
             }
         }
     }

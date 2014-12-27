@@ -199,8 +199,7 @@ Item {
 
                     onClicked: {
                         parent.resetModal();
-
-                        mainWindow.switchSection(StudyCaseHandler.saveAndContinue("CE_Domain"));
+                        mainWindow.saveAndContinue("CE_Domain");
                     }
 
                 }
@@ -221,8 +220,8 @@ Item {
                     onClicked: {
                         parent.resetModal();
 
-                        StudyCaseHandler.saveAndContinue("CE_Domain");
-                        mainWindow.switchSection(StudyCaseHandler.saveAndContinue("CE_ShapeFunction"));
+                        mainWindow.saveAndContinue("CE_Domain");
+                        mainWindow.saveAndContinue("CE_ShapeFunction");
                     }
 
                 }

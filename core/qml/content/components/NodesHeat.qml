@@ -105,7 +105,10 @@ Item {
             Layout.preferredWidth: parent.width * 0.4
             placeholderText: (buttonNodeController.state === "dirichlet") ? "[ºC]" : "[W]"
 
-            onTextChanged: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
+            onEditingFinished: {
+                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
+                Configure.emitMainSignal("fixnodesChanged");
+            }
 
             onFocusChanged: {
                 if (focus === true && repeater.currentIndex !== index) {
