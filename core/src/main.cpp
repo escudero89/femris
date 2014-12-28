@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
     Configure::write("fileApplicationDirPath", "file://" + applicationDirPath + "/");
     engine.rootContext()->setContextProperty("fileApplicationDirPath", "file://" + applicationDirPath);
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/start.qml")));
 
     return app.exec();
 

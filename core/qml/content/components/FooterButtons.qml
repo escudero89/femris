@@ -24,7 +24,7 @@ RowLayout {
         iconSource: "qrc:/resources/icons/external2.png"
 
         onClicked: {
-            StudyCaseHandler.loadUrlInBrowser(loadUrlBase, true);
+            StudyCaseHandler.loadUrlInBrowser(loadUrlBase);
         }
     }
 

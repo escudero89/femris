@@ -7,12 +7,13 @@
         <file>screens/CE_Overall.qml</file>
         <file>screens/CE_Model.qml</file>
         <file>screens/CE_Domain.qml</file>
-        <file>main.qml</file>
+        <file>Main.qml</file>
         <file>Style.qml</file>
-        <file>test.qml</file>
+        <file>start.qml</file>
         <file>screens/CE_ShapeFunction.qml</file>
         <file>Content.qml</file>
         <file>custom.js</file>
         <file>screens/CE_NewModel.qml</file>
+        <file>content/Splash.qml</file>
     </qresource>
 </RCC>

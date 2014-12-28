@@ -78,6 +78,6 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
 
-        onEntered: Configure.emitMainSignal("setInfoBox", qsTr("<em>Etapa actual:</em> " + currentStepName))
+        onEntered: Configure.emitMainSignal("setInfoBox", qsTr("<em>Etapa:</em> " + currentStepName))
     }
 }

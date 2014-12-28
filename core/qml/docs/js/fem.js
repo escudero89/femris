@@ -248,7 +248,7 @@ $(document).ready(function() {
 
 
     var params = {
-        valuesToColorise : getSingleColFromCurrentDomain('displacements', $("ul[name='displacements'] > li.active").attr("name"))
+        valuesToColorise : getSingleColFromCurrentDomain('displacements', eval($("ul[name='displacements'] > li.active").attr("name")))
     };
 
     params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;
@@ -271,7 +271,7 @@ $(document).ready(function() {
         var indexColumn = $this.attr('name');
 
         if (indexColumn.search(',') > 0) {
-            indexColumn = indexColumn.split(',');
+            indexColumn = eval(indexColumn);
         }
 
         params = {

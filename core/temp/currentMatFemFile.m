@@ -1,29 +1,28 @@
 %=======================================================================
-% MAT-femcCal 1.2  - MAT-femCal is a learning tool for undestanding
-%                    the Finite Element Method with MATLAB and GiD
+% MAT-fem 1.3  - MAT-fem is a learning tool for undestanding
+%                the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% EXAMPLE SELECTED = example1.json
+% EXAMPLE SELECTED = example2.json
 %
 %  Material Properties
 %
-  kx   = 1 ;
-  ky   = 1 ;
-  heat = 1 ;
+  young = 27000000 ;
+  poiss = 0.2 ;
+  denss = 1 ;
+  pstrs = 1 ;
+  thick = 1 ;
 
 %
 % Coordinates
 %
 global coordinates
 coordinates = [
-    0,    0 ;
-    0.5,    0 ;
-    1,    0 ;
-    0,    0.5 ;
+    -0.5,    -0.5 ;
+    0,    -0.5 ;
+    0.5,    -0.5 ;
     0.5,    0.5 ;
-    1,    0.5 ;
-    0,    1 ;
-    0.5,    1 ;
-    1,    1 ;
+    0,    0.5 ;
+    -0.5,    0.5 ;
 ];
 
 %
@@ -31,17 +30,16 @@ coordinates = [
 %
 global elements
 elements = [
-    1,    4,    5,    2 ;
-    2,    5,    6,    3 ;
-    4,    7,    8,    5 ;
-    5,    8,    9,    6 ;
+    1,    2,    5,    6 ;
+    2,    3,    4,    5 ;
 ];
 
 %
 % Fixed Nodes
 %
 fixnodes = [
-    1,    111 ;
+    1,    1,    0 ;
+    1,    2,    0 ;
 ];
 
 %
@@ -54,6 +52,8 @@ pointload = [
 % Uniform Side loads
 %
 sideload = [
+    4,    5,    0,    0 ;
+    5,    6,    0,    0 ;
 ];
 
 

@@ -162,6 +162,10 @@ QString Configure::getPathWithoutPrefix(QString path) {
     return path;
 }
 
+QString Configure::formatWithAbsPath(QString base_path) {
+    return instance->read("fileApplicationDirPath") + base_path;
+}
+
 // Singleton Pattern Design
 Configure* Configure::getInstance() {
 

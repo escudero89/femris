@@ -62,7 +62,6 @@ RowLayout {
 
         PrimaryButton {
 
-            property string loadUrlBase : modelWebView.urlBase
             tooltip: qsTr("Abrir esta página en tu navegador por defecto")
 
             buttonStatus: "femris"
@@ -70,7 +69,7 @@ RowLayout {
             iconSource: "qrc:/resources/icons/external2.png"
 
             onClicked: {
-                StudyCaseHandler.loadUrlInBrowser(loadUrlBase, true);
+                StudyCaseHandler.loadUrlInBrowser(modelWebView.urlBase);
             }
 
         }

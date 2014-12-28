@@ -14,18 +14,17 @@ RowLayout {
 
     anchors.fill: globalLoader
 
-    anchors.topMargin: globalLoader.width / 40 ; anchors.bottomMargin: globalLoader.width / 40
-    anchors.leftMargin: globalLoader.width / 20 ; anchors.rightMargin: globalLoader.width / 20
-
     ColumnLayout {
 
         id: columnLayout
 
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        Layout.fillHeight: true
+        Layout.fillWidth: true
 
-        Layout.maximumWidth: 900
-        anchors.horizontalCenter: parent.horizontalCenter
+        Layout.maximumHeight: parent.height * 0.9
+        Layout.maximumWidth: (width < 900) ? parent.width * 0.9 : 900
+
+        Layout.alignment: Qt.AlignCenter
 
         spacing: 0
 

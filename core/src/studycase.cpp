@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QDebug>
 
+#include "configure.h"
 #include "fileio.h"
 
 void StudyCase::createNew() {
@@ -33,7 +34,7 @@ QMap<QString, QString> StudyCase::loadConfiguration(const QString& whereToLoad) 
         return QMap<QString,QString>();
     }
 
-    FileIO encodedFileStudyCase("temp/currentEnconding.base64");
+    FileIO encodedFileStudyCase(Configure::formatWithAbsPath("temp/currentEnconding.base64"));
     QString encodedInfo = encodedFileStudyCase.read();
 
     // We remove all the breaklines, and then we decode
@@ -99,6 +100,10 @@ void StudyCase::compressMapOfInformation() {
     QMapIterator<QString, QString> i(m_mapOfInformation);
     while (i.hasNext()) {
         i.next();
+
+        if (i.key() == "encoded") {
+            continue;
+        }
 
         QString val = i.value().isEmpty() ? "false" : i.value();
 

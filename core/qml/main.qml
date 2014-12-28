@@ -23,7 +23,7 @@ ApplicationWindow {
 
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
-    property string initialScreen : "screens/CE_Model.qml"
+    property string initialScreen : "screens/Initial.qml"
 
     menuBar: TopMenuBar {
         onWhichMenu: {
@@ -84,79 +84,37 @@ ApplicationWindow {
         anchors.leftMargin: 0
         anchors.topMargin: 0
         z: -1000
+
+        AnimatedImage {
+            id: loadingImage
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/resources/images/loader.gif"
+
+            height: parent.height / 5
+            width: height
+            opacity: 0.8
+        }
     }
 
-    function doSomething () {
-        console.log("does something")
-    }
-
-    Item  {
-
+    Loader  {
         anchors.fill: parent
 
-        Rectangle {
-            anchors.fill: parent
-            color: "transparent"
+        id: globalLoader
 
-            AnimatedImage {
-                id: loadingImage
+        // We wait until the children are loaded to start
+        asynchronous: true
+        visible: false
 
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/resources/images/loader.gif"
+        onLoaded: {
+            visible = true;
+            globalInfoBox.setInfoBox(null, true);
+            console.debug("Loaded: " + globalLoader.source)
 
-                height: parent.height / 5
-                width: height
-                opacity: 0.8
-            }
-
+            loadingImage.opacity = 0
         }
 
-        Loader  {
-            anchors.fill: parent
-
-            id: globalLoader
-
-            // We wait until the children are loaded to start
-            asynchronous: true
-            visible: false
-
-            onLoaded: {
-                visible = true;
-                globalInfoBox.setInfoBox(null, true);
-                console.debug("Loaded: " + globalLoader.source)
-
-                loadingImage.opacity = 0
-            }
-
-            PrimaryButton {
-
-                id: buttonLoadUrlInBrowser
-
-                property string loadUrlBase : "docs/ce_results.html"
-                tooltip: qsTr("Abrir esta página en tu navegador por defecto")
-
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                buttonStatus: "femris"
-                buttonLabel: "BROWSER"
-
-                visible: false
-                z: 1000
-
-                onClicked: {
-                    StudyCaseHandler.loadUrlInBrowser(loadUrlBase);
-                }
-
-                iconSource: "qrc:/resources/icons/external2.png"
-            }
-
-        }
-
-        // Esto activara el onLoaded cuando se complete
         Component.onCompleted: {
             globalLoader.setSource(initialScreen);
         }
@@ -330,9 +288,10 @@ ApplicationWindow {
         doOnClose();
     }
 
-    function saveAndContinue(parentStage, callbackFunction) {
+    function saveAndContinue(parentStage) {
 
         var parentStageStep = {
+            'CE_Overall'       : 0,
             'CE_Model'         : 1,
             'CE_Domain'        : 2,
             'CE_ShapeFunction' : 3,
@@ -348,8 +307,9 @@ ApplicationWindow {
             return;
         }
 
-        if (stepOfProcess === 1) {
-            StudyCaseHandler.createNewStudyCase();
+        switch (stepOfProcess) {
+        case 0: StudyCaseHandler.start();              break;
+        case 1: StudyCaseHandler.createNewStudyCase(); break;
         }
 
         mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
@@ -367,10 +327,7 @@ ApplicationWindow {
 
     // This function manages the switch between screens
     function switchSection(section) {
-        var redirection = null;
-
-        buttonLoadUrlInBrowser.visible = false;
-        redirection = section;
+        var redirection = section;
 
         switch (section) {
         case "Tutorial":
@@ -382,7 +339,9 @@ ApplicationWindow {
         }
 
         globalInfoBox.setInfoBox("Cargando...");
+
         loadingImage.opacity = 0.8;
+
         globalLoader.visible = false;
         globalLoader.setSource("screens/" + redirection + ".qml");
     }

@@ -25,6 +25,7 @@ public:
     Q_INVOKABLE static void write(const QString&, const QString&, bool = false);
     Q_INVOKABLE static bool check(const QString&, const QString&);
     Q_INVOKABLE static QString getPathWithoutPrefix(QString);
+    Q_INVOKABLE static QString formatWithAbsPath(QString);
 
     Q_INVOKABLE void emitMainSignal(const QString&, QString = "");
 

@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-QString Utils::midSeparator = "___";
-QString Utils::endSeparator = "______";
+QString Utils::midSeparator = "_-_.-_-";
+QString Utils::endSeparator = "_--.-__";
 
 QString Utils::dateFormat = "dd/MM/yyyy hh:mm:ss";
 

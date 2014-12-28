@@ -1,45 +1,46 @@
 Gid Post Results File 1.0 
 ### 
-# MAT-femCal v1.2 
+# MAT-fem v1.3 
 # 
-Result "Temperature" "Load Analysis"  1  Scalar OnNodes 
-ComponentNames "Temperature" 
+Result "Displacement" "Load Analysis"  1  Vector OnNodes 
+ComponentNames "X-Displ", "Y-Displ", "Z-Displ" 
 Values 
-     1         00001 
-     2         00002 
-     3         00002 
-     4         00002 
-     5         00002 
-     6         00002 
-     7         00002 
-     8         00002 
-     9         00002 
+     1         00000         00000 
+     2         00000    -268435456 
+     3         00000    -536870912 
+     4     536870912    -536870912 
+     5     536870912    -268435456 
+     6     536870912         00000 
 End Values 
 # 
-Result "Reactive Flux" "Load Analysis"  1  Scalar OnNodes 
-ComponentNames "Fx" 
+Result "Reaction Force" "Load Analysis"  1  Vector OnNodes 
+ComponentNames "Rx", "Ry", "Rz" 
 Values 
-     1        00001 
-     2        00000 
-     3        00000 
-     4        00000 
-     5        00000 
-     6        00000 
-     7        00000 
-     8        00000 
-     9        00000 
+     1        00003        00005 
+     2        00000        00000 
+     3        00000        00000 
+     4        00000        00000 
+     5        00000        00000 
+     6        00000        00000 
 End Values 
 # 
-Result "Flux" "Load Analysis"  1  Vector OnNodes 
-ComponentNames "Fx", "Fy", "Fz" 
+Result "Stress" "Load Analysis"  1  Matrix OnNodes 
+ComponentNames "Sx", "Sy", "Sz", "Sxy", "Syz", "Sxz" 
 Values 
-     1        00002        00002  0.0 
-     2        00001        00000  0.0 
-     3        00000        00000  0.0 
-     4        00000        00001  0.0 
-     5        00000        00000  0.0 
-     6        00000        00000  0.0 
-     7        00000        00000  0.0 
-     8        00000        00000  0.0 
-     9        00000        00000  0.0 
+     1       -00005       -00010  0.0       -00007  0.0  0.0 
+     2       -00001        00000  0.0       -00007  0.0  0.0 
+     3       -00004        00001  0.0       -00003  0.0  0.0 
+     4        00000       -00003  0.0       -00002  0.0  0.0 
+     5       -00005        00000  0.0       -00001  0.0  0.0 
+     6       -00010       -00012  0.0        00000  0.0  0.0 
+End Values 
+Result "Principal Stress" "Load Analysis"  1  Matrix OnNodes 
+ComponentNames "S1", "S2", "S3" 
+Values 
+     1        00000       -00016  0.0 
+     2        00006       -00008  0.0 
+     3        00002       -00005  0.0 
+     4        00001       -00004  0.0 
+     5        00000       -00005  0.0 
+     6       -00010       -00012  0.0 
 End Values 
