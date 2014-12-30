@@ -8,7 +8,7 @@
     <meta name="author" content="Cristian Escudero">
 
     <!-- Bootstrap -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-darkly.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -19,6 +19,8 @@
       <![endif]-->
 
 
+<link rel="stylesheet" href="../css/ce_results.css">
+
 <style>
 .output {
 background-color: #f3f3f3;
@@ -26,28 +28,37 @@ background-color: #f3f3f3;
 }
 
 .tooltipped {
-    cursor: pointer;
+    cursor: default;
     text-decoration: underline;
     color: #ca428b;
+}
+
+
+.background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -101;
+
+  display: block;
+  background: transparent url("../img/femris_dark.png") no-repeat fixed center;
+  background-size: 100%;
+
+  height: 100%;
+  width: 100%;
+
+  opacity: 0.05;
 }
 </style>
   </head>
   <body>
-      <img id="left_arrow" style="position:absolute; top: 30px; opacity:0.7" width="90" src="img/left_arrow.png" />
+
+    <div class="background-image"></div>
 
       <div class="container-fluid">
         <div class="row">
-            <div class="jumbotron" style="padding-left: 120px">
-                <h2>Selecciona el Modelo Físico <small>Primer paso en el FEM</small></h2>
-
-                <p>Presta atención a la <em class="tooltipped" data-toggle="tooltip" title="Sí estás viendo ésta página dentro de FEMRIS.">flecha de la izquierda</em>. Hace enfoque en el listado de los <strong>módelos físicos</strong> disponibles en este Software.</p>
-
-                <p>Por favor, <strong>elige</strong> uno de ellos para <strong>continuar</strong>. Para conocer más, sigue leyendo.</p>
-            </div>
-
-            <div class="col-sm-6">
-
-                <h3>Elasticidad Plana</h3>
+            <div class="col-md-6 col-md-offset-6 form-horizontal">
+                <h2>Elasticidad Plana</h2>
 
                 <p>La elasticidad plana se refiere al estudio de soluciones particulares del problema elástico general y al estudio del conjunto de aplicaciones técnicas en que aparecen dichos estados elásticos de tensión-deformación reducibles a problemas "planos" o bidimensionales.</p>
 
@@ -56,43 +67,15 @@ background-color: #f3f3f3;
                 <ul>
                     <li>Los estados de <strong>deformación plana</strong>.</li>
                     <li>Los estados de <strong>tensión plana</strong>.</li>
-                </ul>    
+                </ul>
+
+                <hr>
+
+                <h3>Tensión plana</h3>
+
+                <p>El estado tensional sobre un cuerpo elástico es de <strong>tensión plana</strong> el cuerpo tiene forma de prisma recto y las fuerzas existentes son tales que las fuerzas sobre cada plano perpendicular al eje baricéntrico del prisma recto son paralelas a dicho plano e idénticas sobre todos los planos perpendiculares.</p>
 
             </div>
-
-            <div class="col-sm-6">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <video class="embed-responsive-item" controls>
-                        <source src="movies/stress definition an tensor - p1.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <!--<small class="right"><a href="https://www.youtube.com/watch?v=LEO9QqOJnHo">Verlo en YouTube</a></small>-->
-            </div>
-
-            <div class="clearfix"></div>
-
-            <hr>
-
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                  </div>
-                  <div class="modal-body">
-                    ...
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
         </div>
     </div>
 
@@ -103,37 +86,6 @@ background-color: #f3f3f3;
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("[data-toggle=popover]").popover();
-
-            var kounterBeforeFading = 0;
-            var $left_arrow = $("#left_arrow");
-
-            function loopIn() {
-                $left_arrow.css({left:'0px'});
-                $left_arrow.animate ({
-                    left: '+=3',
-                }, 500, 'linear', function() {
-                    kounterBeforeFading++;
-
-                    if (kounterBeforeFading > 10) {
-                        $left_arrow.fadeOut('slow');
-                        $(".jumbotron").animate({'padding-left':'30px'}, 3000);
-                    } else {
-                        loopOut();
-                    }
-                });
-            }
-
-            function loopOut() {
-                $left_arrow.animate ({
-                    left: '-=3',
-                }, 500, 'linear', function() {
-                    loopIn();
-                });
-            }
-
-            loopIn();
-
             $("[data-toggle=popover]").popover();
             $('[data-toggle=tooltip]').tooltip({html: true});
         });

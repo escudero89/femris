@@ -78,4 +78,6 @@ RowLayout {
             }
         }
     }
+
+    Component.onCompleted: StudyCaseHandler.setSingleStudyCaseInformation("tutorialReturnTo", "Initial", true);
 }

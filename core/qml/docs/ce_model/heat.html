@@ -8,7 +8,7 @@
     <meta name="author" content="Cristian Escudero">
 
     <!-- Bootstrap -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-darkly.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -19,6 +19,8 @@
       <![endif]-->
 
 
+<link rel="stylesheet" href="../css/ce_results.css">
+
 <style>
 .output {
 background-color: #f3f3f3;
@@ -26,73 +28,54 @@ background-color: #f3f3f3;
 }
 
 .tooltipped {
-    cursor: pointer;
+    cursor: default;
     text-decoration: underline;
     color: #ca428b;
+}
+
+
+.background-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -101;
+
+  display: block;
+  background: transparent url("../img/femris_dark.png") no-repeat fixed center;
+  background-size: 100%;
+
+  height: 100%;
+  width: 100%;
+
+  opacity: 0.05;
 }
 </style>
   </head>
   <body>
-      <img id="left_arrow" style="position:absolute; top: 30px; opacity:0.7" width="90" src="img/left_arrow.png" />
+
+    <div class="background-image"></div>
 
       <div class="container-fluid">
         <div class="row">
-            <div class="jumbotron" style="padding-left: 120px">
-                <h2>Selecciona el Modelo Físico <small>Primer paso en el FEM</small></h2>
+            <div class="col-md-6 col-md-offset-6 form-horizontal">
+                <h2>Transferencia de Calor</h2>
 
-                <p>Presta atención a la <em class="tooltipped" data-toggle="tooltip" title="Sí estás viendo ésta página dentro de FEMRIS.">flecha de la izquierda</em>. Hace enfoque en el listado de los <strong>módelos físicos</strong> disponibles en este Software.</p>
+                <p>
+La <b>transferencia de calor</b> es el paso de <strong>energía térmica</strong> desde un cuerpo de mayor temperatura a otro de menor temperatura. Cuando un cuerpo, por ejemplo, un objeto sólido o un fluido, está a una <strong>temperatura</strong> diferente de la de su entorno u otro cuerpo, <i>la transferencia de energía térmica</i>, también conocida como transferencia de <strong>calor</strong> o intercambio de calor, ocurre de tal manera que el cuerpo y su entorno alcancen <strong>equilibrio térmico</strong>. La transferencia de calor siempre ocurre desde un cuerpo más caliente a uno más frío, como resultado de la <strong>segunda ley de la termodinámica</strong>. Cuando existe una diferencia de temperatura entre dos objetos en proximidad uno del otro, la transferencia de calor no puede ser detenida; solo puede hacerse más lenta.</p>
 
-                <p>Por favor, <strong>elige</strong> uno de ellos para <strong>continuar</strong>. Para conocer más, sigue leyendo.</p>
-            </div>
+                <hr>
 
-            <div class="col-sm-6">
+                <h3>Modos de transferencia</h3>
 
-                <h3>Elasticidad Plana</h3>
-
-                <p>La elasticidad plana se refiere al estudio de soluciones particulares del problema elástico general y al estudio del conjunto de aplicaciones técnicas en que aparecen dichos estados elásticos de tensión-deformación reducibles a problemas "planos" o bidimensionales.</p>
-
-                <p>Los estados de elasticidad plana sólo son posibles en cuerpos que geométricamente son prismas mecánicos. Esta condición necesaria no es suficiente para asegurar que el cuerpo está sometido a un estado de elasticidad plana. Las condiciones suficientes dependen del tipo de fuerzas o solicitaciones a los que esté sometido dicho prisma. En las aplicaciones prácticas se diferencia entre dos tipos de estados de elasticidad plana:</p>
+                <p>Los modos de transferencia son diferentes procesos de transporte de calor, usualmente se agrupan en tres tipos según haya también transferencia o no transferencia de materia (o fotones)como los siguientes:</p>
 
                 <ul>
-                    <li>Los estados de <strong>deformación plana</strong>.</li>
-                    <li>Los estados de <strong>tensión plana</strong>.</li>
-                </ul>    
+                    <li><strong>Conducción:</strong> Es la transferencia de calor que se produce a través de un medio estacionario -que puede ser un sólido- cuando existe una diferencia de temperatura.</li>
+                    <li><strong>Convección:</strong> La convección es una de las tres formas de transferencia de calor y se caracteriza porque se produce por medio de un fluido (líquido o gas) que transporta el calor entre zonas con diferentes temperaturas. La convección se produce únicamente por medio de materiales fluidos. Lo que se llama convección en sí, es el transporte de calor por medio del movimiento del fluido, por ejemplo: al trasegar el fluido por medio de bombas o al calentar agua en una cacerola, la que está en contacto con la parte de abajo de la cacerola se mueve hacia arriba, mientras que el agua que está en la superficie, desciende, ocupando el lugar que dejó la cacerola caliente.</li>
+                    <li><strong>Radiación:</strong> se puede atribuir a cambios en las configuraciones electrónicas de los átomos o moléculas constitutivas. En ausencia de un medio, existe una transferencia neta de calor por radiación entre dos superficies a diferentes temperaturas, debido a que todas las superficies con temperatura finita emiten energía en forma de ondas electromagnéticas.</li>
+                </ul>
 
             </div>
-
-            <div class="col-sm-6">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <video class="embed-responsive-item" controls>
-                        <source src="movies/stress definition an tensor - p1.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <!--<small class="right"><a href="https://www.youtube.com/watch?v=LEO9QqOJnHo">Verlo en YouTube</a></small>-->
-            </div>
-
-            <div class="clearfix"></div>
-
-            <hr>
-
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                  </div>
-                  <div class="modal-body">
-                    ...
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
         </div>
     </div>
 
@@ -103,37 +86,6 @@ background-color: #f3f3f3;
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("[data-toggle=popover]").popover();
-
-            var kounterBeforeFading = 0;
-            var $left_arrow = $("#left_arrow");
-
-            function loopIn() {
-                $left_arrow.css({left:'0px'});
-                $left_arrow.animate ({
-                    left: '+=3',
-                }, 500, 'linear', function() {
-                    kounterBeforeFading++;
-
-                    if (kounterBeforeFading > 10) {
-                        $left_arrow.fadeOut('slow');
-                        $(".jumbotron").animate({'padding-left':'30px'}, 3000);
-                    } else {
-                        loopOut();
-                    }
-                });
-            }
-
-            function loopOut() {
-                $left_arrow.animate ({
-                    left: '-=3',
-                }, 500, 'linear', function() {
-                    loopIn();
-                });
-            }
-
-            loopIn();
-
             $("[data-toggle=popover]").popover();
             $('[data-toggle=tooltip]').tooltip({html: true});
         });

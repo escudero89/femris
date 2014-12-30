@@ -42,7 +42,7 @@ Item {
 
         Text {
             Layout.fillWidth: true
-            text: qsTr(textRow + (index + 1))
+            text: qsTr(textRow + tooltip.text)
 
             MyToolTip {
                 id: tooltip
@@ -155,7 +155,7 @@ Item {
             id: textFieldSideloadX
 
             Layout.preferredWidth: parent.width / 4
-            placeholderText: "x_" + ( index + 1 )
+            placeholderText: "x_" + ( index + 1 ) + " [N/m]"
 
             onEditingFinished: {
                 StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
@@ -174,7 +174,7 @@ Item {
             id: textFieldSideloadY
 
             Layout.preferredWidth: parent.width / 4
-            placeholderText: "y_" + ( index + 1 )
+            placeholderText: "y_" + ( index + 1 ) + " [N/m]"
 
             onEditingFinished: {
                 StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);

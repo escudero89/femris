@@ -15,7 +15,7 @@ Rectangle {
 
     id: propertiesAssignationSBox
 
-    Layout.minimumHeight: parent.height / 3
+    Layout.minimumHeight: parent.height * 0.2
 
     Layout.fillHeight: true
     Layout.fillWidth: true
@@ -24,6 +24,7 @@ Rectangle {
     color: Style.color.complement_highlight
 
     ColumnLayout {
+
         height: parent.height
         width: parent.width
 

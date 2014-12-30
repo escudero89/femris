@@ -327,14 +327,12 @@ ApplicationWindow {
 
     // This function manages the switch between screens
     function switchSection(section) {
-        var redirection = section;
-
         switch (section) {
         case "Tutorial":
-            StudyCaseHandler.setSingleStudyCaseInformation("tutorialReturnTo", "Initial", true);
             break;
 
         default :
+            StudyCaseHandler.setSingleStudyCaseInformation("tutorialReturnTo", section, true);
             break;
         }
 
@@ -343,6 +341,6 @@ ApplicationWindow {
         loadingImage.opacity = 0.8;
 
         globalLoader.visible = false;
-        globalLoader.setSource("screens/" + redirection + ".qml");
+        globalLoader.setSource("screens/" + section + ".qml");
     }
 }

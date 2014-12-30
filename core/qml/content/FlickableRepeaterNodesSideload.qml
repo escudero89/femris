@@ -17,7 +17,7 @@ ColumnLayout {
     property alias objectRepeater: repeater
     property alias objectHeader: textHeader
 
-    property string textRow : "Lado #"
+    property string textRow : "Lado "
 
     property string textInformation : "sideload"
 

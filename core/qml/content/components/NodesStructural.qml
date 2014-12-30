@@ -137,7 +137,7 @@ Item {
             id: xTextField
 
             Layout.preferredWidth: parent.width / 4
-            placeholderText: "x_" + ( index + 1 )
+            placeholderText: "x_" + ( index + 1 ) + " [N]"
 
             onTextChanged: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
 
@@ -153,7 +153,7 @@ Item {
             id: yTextField
 
             Layout.preferredWidth: parent.width / 4
-            placeholderText: "y_" + ( index + 1 )
+            placeholderText: "y_" + ( index + 1 ) + " [N]"
 
             onTextChanged: {
                 StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
