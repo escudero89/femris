@@ -23,7 +23,6 @@ Window {
         source: "qrc:/resources/images/femris_logo.png"
         MouseArea {
             anchors.fill: parent
-            onClicked: Qt.quit()
         }
     }
     //! [timer]

@@ -218,4 +218,32 @@ Item {
             }
         }
     }
+
+    Connections {
+        target : Configure
+
+        onMainSignalEmitted : {
+            if (signalName !== "NodesSideloadChanged") {
+                return;
+            }
+
+            var changes = JSON.parse(args);
+            var isShowing = ( changes.state === "show" );
+            var isHiding  = !isShowing;
+
+            visible = isHiding ? true : false;
+
+            if (isHiding) {
+                return;
+            }
+
+            // As the index starts in zero, we need to add one
+            if (changes.affectedNodes.indexOf(index + 1) === -1) {
+                return;
+            }
+
+            visible = isShowing ? true : false ;
+            repeater.update();
+        }
+    }
 }

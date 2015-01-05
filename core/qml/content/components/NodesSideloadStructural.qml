@@ -42,7 +42,7 @@ Item {
 
         Text {
             Layout.fillWidth: true
-            text: qsTr(textRow + tooltip.text)
+            text: qsTr(textRow + "[" + tooltip.text + "]")
 
             MyToolTip {
                 id: tooltip
@@ -51,7 +51,7 @@ Item {
                           "" :
                           (!jsonDomain["sideloadNodes"][index]) ?
                               "" :
-                              jsonDomain["sideloadNodes"][index].join('-')
+                              jsonDomain["sideloadNodes"][index].join(', ')
 
                 z: cellContent.z + 100
             }
@@ -69,87 +69,74 @@ Item {
                 }
             }
         }
-/*
-        Button {
 
-            property string fixnodeIcon : "open94"
+        Button {
+            property string fixnodeIcon : "filter10"
 
             id: buttonNodeController
-            Layout.preferredWidth: parent.width * 0.18
-            text: qsTr("libre")
+
+            Layout.minimumWidth: 20
+            Layout.preferredWidth: parent.width * 0.05
 
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
 
             onClicked: {
-
                 switch(buttonNodeController.state) {
-                case "libre"  : buttonNodeController.state = "x-fijo" ; break;
-                case "x-fijo" : buttonNodeController.state = "y-fijo" ; break;
-                case "y-fijo" : buttonNodeController.state = "xy-fijo"; break;
-                case "xy-fijo": buttonNodeController.state = "libre"  ; break;
+                case "show" : buttonNodeController.state = "hide" ; break;
+                case "hide" : buttonNodeController.state = "show" ; break;
                 }
 
                 repeater.currentIndex = index;
+
+                var changes = {
+                    affectedNodes : jsonDomain["sideloadNodes"][index],
+                    affectedIndex : index,
+                    state : buttonNodeController.state
+                };
+
+                Configure.emitMainSignal("NodesSideloadChanged", JSON.stringify(changes));
             }
 
-            state: "libre"
+            state: "hide"
 
             states: [
                 State {
-                    name: "libre"
+                    name: "hide"
                     PropertyChanges {
                         target: buttonNodeController
-                        text: qsTr("libre")
-                        fixnodeIcon: "open94"
+                        tooltip: qsTr("ocultar")
+                        fixnodeIcon: "eye51"
                     }
                 },
                 State {
-                    name: "x-fijo"
+                    name: "show"
                     PropertyChanges {
                         target: buttonNodeController
-                        text: qsTr("x-fijo")
-                        fixnodeIcon: "lock24"
-                    }
-                    PropertyChanges {
-                        target: textFieldSideloadX
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                },
-                State {
-                    name: "y-fijo"
-                    PropertyChanges {
-                        target: buttonNodeController
-                        text: qsTr("y-fijo")
-                        fixnodeIcon: "lock24"
-                    }
-                    PropertyChanges {
-                        target: textFieldSideloadY
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                },
-                State {
-                    name: "xy-fijo"
-                    PropertyChanges {
-                        target: buttonNodeController
-                        text: qsTr("xy-fijo")
-                        fixnodeIcon: "lock24"
-                    }
-                    PropertyChanges {
-                        target: textFieldSideloadX
-                        text: qsTr("fijado")
-                        enabled: false
-                    }
-                    PropertyChanges {
-                        target: textFieldSideloadY
-                        text: qsTr("fijado")
-                        enabled: false
+                        tooltip: qsTr("mostrar")
+                        fixnodeIcon: "eye50"
                     }
                 }
             ]
+
+            Connections {
+                target : Configure
+
+                onMainSignalEmitted : {
+                    if ( signalName !== "NodesSideloadChanged" ) {
+                        return;
+                    }
+
+                    var changes = JSON.parse(args);
+                    var isShowing = ( changes.state === "show" );
+
+                    if ( changes.affectedIndex !== index && isShowing) {
+                        console.log(index);
+                        buttonNodeController.state = "hide";
+                    }
+                }
+            }
         }
-*/
+
         TextField {
 
             id: textFieldSideloadX
