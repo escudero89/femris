@@ -13,14 +13,11 @@
         <file>content/smallBoxes/VariablesSBox.qml</file>
         <file>content/smallBoxes/TutorialSBox.qml</file>
         <file>content/smallBoxes/CodeSBox.qml</file>
-        <file>content/LoadingModal.qml</file>
         <file>content/smallBoxes/PropertiesAssignationSBox.qml</file>
         <file>content/FlickableRepeaterNodesSideload.qml</file>
         <file>content/FlickableRepeaterNodes.qml</file>
         <file>content/ScrollBar.qml</file>
         <file>content/smallBoxes/MyToolTip.qml</file>
-        <file>content/FirstTimeModal.qml</file>
-        <file>content/AlertModal.qml</file>
         <file>content/components/NodesSideloadStructural.qml</file>
         <file>content/components/NodesStructural.qml</file>
         <file>content/components/FooterButtons.qml</file>
@@ -29,5 +26,11 @@
         <file>content/components/FirstTimeHere.qml</file>
         <file>content/components/NodesHeat.qml</file>
         <file>content/components/NodesSideloadHeat.qml</file>
+        <file>content/components/FlickableRepeaterHeader.qml</file>
+        <file>content/Modals.qml</file>
+        <file>content/modals/AlertModal.qml</file>
+        <file>content/modals/FirstTimeModal.qml</file>
+        <file>content/modals/LoadingModal.qml</file>
+        <file>content/Dialogs.qml</file>
     </qresource>
 </RCC>

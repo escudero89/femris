@@ -3,12 +3,13 @@ import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.1
 
-import "../docs"
-import "../screens"
+import "../../docs"
+import "../../screens"
+import "../../"
 import "../"
 import "."
 
-import "smallBoxes"
+import "../smallBoxes"
 
 Item {
     id: loadingModal

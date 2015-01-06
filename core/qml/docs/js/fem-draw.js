@@ -4,11 +4,11 @@ var G_COLOR_NODE = "#428bca";
 var G_COLOR_ELEM = "#428bca";
 
 // We set the SVG as a global variable, and also the dummy (efficiency)
-var $G_DRAW_SHAPES = $("#draw-shapes");
-var $G_DRAW_SHAPES_DUMMY = $('#draw-shapes-dummy');
+var G_DRAW_SHAPES = "#draw-shapes";
+var G_DRAW_SHAPES_DUMMY = '#draw-shapes-dummy';
 
 // We get in this variable the width of the SVG that contains the drawing
-var G_SHAPES_WIDTH = parseInt($G_DRAW_SHAPES.css("width"));
+var G_SHAPES_WIDTH = parseInt($(G_DRAW_SHAPES).css("width"));
 
 /**
  * Transform a string of SVG code into an object that can work along with Two.js
@@ -65,7 +65,7 @@ function getTextSVG(text, params) {
  * @return {bool} - True if the operation was successuful, false otherwise
  */
 function addElementToSVG(elem) {
-    $G_DRAW_SHAPES_DUMMY.children().append(elem);
+    $(G_DRAW_SHAPES_DUMMY).children().append(elem);
 }
 
 /**
@@ -141,6 +141,11 @@ var domainObject = {
     groupNode                       : false,
     groupElem                       : false,
     group                           : false,
+
+    resetCanvas : function() {
+        $("#draw-shapes-dummy").html('<g></g>');
+        $("#draw-shapes").html('<div class="two-container w100p" style="height: 90vh;"></div>');
+    },
 
     drawElement : function (k, isTriangle) {
 
@@ -292,8 +297,7 @@ var domainObject = {
 
         this.xnode = transformCoordinates(xnode, factorOfDeformation);
 
-        $("#draw-shapes-dummy").html('<g></g>');
-        $("#draw-shapes").html('<div class="two-container w100p" style="height: 93vh;"></div>');
+        this.resetCanvas();
 
         this.makeElements(this.xnode, this.ielem, this.options);
 
@@ -386,6 +390,7 @@ var domainObject = {
         this.groupElem = this.drawElements();
         this.groupNode = this.drawNodes();
 
+        this.two.clear();
         this.two.add(this.groupElem);
         this.two.add(this.groupNode);
 
@@ -396,7 +401,7 @@ var domainObject = {
 
         // Adds the text
         var drawShapes = "#draw-shapes svg";
-        $(drawShapes).append(parseSVG($G_DRAW_SHAPES_DUMMY.html()));
+        $(drawShapes).append(parseSVG($(G_DRAW_SHAPES_DUMMY).html()));
 
         svgPanZoom(drawShapes, {
             panEnabled: true,

@@ -15,7 +15,6 @@ import "components"
 ColumnLayout {
 
     property alias objectRepeater: repeater
-    property alias objectHeader: textHeader
 
     property string textRow : "Lado "
 
@@ -26,32 +25,14 @@ ColumnLayout {
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    Rectangle {
+    FlickableRepeaterHeader {
+        objectHeader.text :
+            qsTr("Condiciones de borde") +
+            "<br /><small style='color:" + Style.color.content + "'>" +
+            "<em>" + qsTr("Número de lados: ") + repeater.count + "</em></small>"
 
-        Layout.preferredHeight: textHeader.height * 1.1
-        Layout.preferredWidth: parent.width
-
-        color: Style.color.background_highlight
-
-        Text {
-            id: textHeader
-
-            text: qsTr("Condiciones de borde") + "<br /><small style='color:" + Style.color.content + "'><em>" + qsTr("Número de lados: ") + repeater.count + "</em></small>"
-            textFormat: Text.RichText
-            font.pointSize: Style.fontSize.h5
-
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-        }
-
-    }
-
-    Rectangle {
+        Layout.fillHeight: true
         Layout.fillWidth: true
-        Layout.preferredHeight: 3
-
-        color: Style.color.complement
-        opacity: 0.3
     }
 
     RowLayout {
@@ -91,26 +72,51 @@ ColumnLayout {
 
             model: 0
 
-            delegate: delegateSideloadItem
-        }
+            delegate: Component {
 
-        Component {
-            id: delegateSideloadItem
+                Loader {
 
-            Item {
-                NodesSideloadHeat {
-                    id: nodesSideloadHeat
-                    visible : StudyCaseHandler.isStudyType("heat")
-                }
-                NodesSideloadStructural {
-                    id: nodesSideloadStructural
-                    visible : !StudyCaseHandler.isStudyType("heat")
-                }
+                    // These are needed for getDelegateInstanceAt() below.
+                    objectName: "summaryDelegate"
+                    property int index: model.index
 
-                Component.onCompleted: {
-                    nodesSideloadHeat.index = index
-                    nodesSideloadStructural.index = index
+                    asynchronous: true
+                    sourceComponent : StudyCaseHandler.isStudyType("heat") ?
+                                          nodesHeatComponent :
+                                          nodesStructuralComponent
+
+                    visible: status == Loader.Ready
+
+                    onLoaded: {
+                        item.index = index
+                    }
+
+                    Component {
+                        id: nodesHeatComponent
+                        NodesSideloadHeat {}
+                    }
+
+                    Component {
+                        id: nodesStructuralComponent
+                        NodesSideloadStructural {}
+                    }
                 }
+            }
+
+            // Uses black magic to hunt for the delegate instance with the given
+            // index.  Returns undefined if there's no currently instantiated
+            // delegate with that index.
+            function getDelegateInstanceAt(index) {
+                for(var i = 0; i < contentItem.children.length; ++i) {
+                    var item = contentItem.children[i];
+                    // We have to check for the specific objectName we gave our
+                    // delegates above, since we also get some items that are not
+                    // our delegates here.
+                    if (item.objectName === "summaryDelegate" && item.index === index) {
+                        return item;
+                    }
+                }
+                return undefined;
             }
         }
 

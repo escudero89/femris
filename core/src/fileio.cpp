@@ -82,7 +82,7 @@ bool FileIO::setSource(QString arg) {
     if (m_source != arg) {
         m_source = Configure::getPathWithoutPrefix(arg);
 
-        qDebug() << "---------------> New Source Set: " << m_source;
+//        qDebug() << "---------------> New Source Set: " << m_source;
         emit sourceChanged();
     }
 

@@ -14,7 +14,6 @@ import "components"
 ColumnLayout {
 
     property alias objectRepeater: repeater
-    property alias objectHeader: textHeader
 
     property string textRow : "Nodo #"
 
@@ -25,33 +24,14 @@ ColumnLayout {
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    Rectangle {
-        id: rectangle1
+    FlickableRepeaterHeader {
+        objectHeader.text :
+            qsTr("Condiciones nodales") +
+            "<br /><small style='color:" + Style.color.content + "'>" +
+            "<em>" + qsTr("Número de nodos: ") + repeater.count + "</em></small>"
 
-        Layout.preferredHeight: textHeader.height * 1.1
-        Layout.preferredWidth: parent.width
-
-        color: Style.color.background_highlight
-
-        Text {
-            id: textHeader
-
-            text: qsTr("Condiciones nodales") + "<br /><small style='color:" + Style.color.content + "'><em>" + qsTr("Número de nodos: ") + repeater.count + "</em></small>"
-            textFormat: Text.RichText
-            font.pointSize: Style.fontSize.h5
-
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-        }
-
-    }
-
-    Rectangle {
+        Layout.fillHeight: true
         Layout.fillWidth: true
-        Layout.preferredHeight: 3
-
-        color: Style.color.complement
-        opacity: 0.3
     }
 
     RowLayout {
@@ -91,25 +71,29 @@ ColumnLayout {
 
             model: 0
 
-            delegate: delegateItem
-        }
+            delegate: Component {
 
-        Component {
-            id: delegateItem
+                Loader {
+                    asynchronous: true
+                    sourceComponent : StudyCaseHandler.isStudyType("heat") ?
+                                          nodesHeatComponent :
+                                          nodesStructuralComponent
 
-            Item {
-                NodesHeat {
-                    id: nodesHeat
-                    visible : StudyCaseHandler.isStudyType("heat")
-                }
-                NodesStructural {
-                    id: nodesStructural
-                    visible : !StudyCaseHandler.isStudyType("heat")
-                }
+                    visible: status == Loader.Ready
 
-                Component.onCompleted: {
-                    nodesHeat.index = index
-                    nodesStructural.index = index
+                    onLoaded: {
+                        item.index = index
+                    }
+
+                    Component {
+                        id: nodesHeatComponent
+                        NodesHeat {}
+                    }
+
+                    Component {
+                        id: nodesStructuralComponent
+                        NodesStructural {}
+                    }
                 }
             }
         }

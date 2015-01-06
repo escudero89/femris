@@ -8,7 +8,7 @@ import "../"
 
 RowLayout {
 
-    property variant jsonDomain : false
+    property variant jsonDomain : null
 
     id: rowParent
     objectName: "CE_Domain"
@@ -165,7 +165,7 @@ RowLayout {
                                 // We just load the conditions for the first component
                                 if (index === gridViewDomain.currentIndex) {
                                     gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
-                                    rowParent.saveCurrentLoads();
+                                    //rowParent.saveCurrentLoads();
                                 }
                             }
                         }
@@ -208,20 +208,25 @@ RowLayout {
 
                     function fillSideLoadAndFixedNodes(newIndex, exampleFile) {
 
+                        // Loading new data
                         gridViewDomain.currentIndex = newIndex;
 
                         CurrentFileIO.setSource(fileApplicationDirPath + '/docs/examples/' + exampleFile);
 
                         jsonDomain = CurrentFileIO.getVarFromJsonString(CurrentFileIO.read());
 
-                        sideLoadContainer.objectRepeater.model = jsonDomain["sideloadNodes"].length
-                        nodesContainer.objectRepeater.model = jsonDomain["coordinates"].length
+                        sideLoadContainer.objectRepeater.model = jsonDomain["sideloadNodes"].length;
+                        nodesContainer.objectRepeater.model = jsonDomain["coordinates"].length;
 
                         sideLoadContainer.jsonDomain = jsonDomain;
+                        nodesContainer.jsonDomain = jsonDomain;
 
                         if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
                             StudyCaseHandler.setSingleStudyCaseInformation("exampleName", exampleFile);
                         }
+
+                        sideLoadContainer.objectRepeater.visible = true;
+                        nodesContainer.objectRepeater.visible = true;
                     }
                 }
             }
@@ -236,6 +241,8 @@ RowLayout {
 
             Rectangle {
 
+                id: rectangleLoaderWrap
+
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
@@ -243,25 +250,28 @@ RowLayout {
 
                 GridLayout {
 
-                    width: parent.width
-                    height: parent.height
+                    property alias sideLoadContainer : sideLoadContainer
+                    property alias nodesContainer    : nodesContainer
 
                     columns : 2
                     rows : 2
 
                     columnSpacing: 0
 
+                    height: parent.height
+                    width: parent.width
+
                     FlickableRepeaterNodesSideload {
                         id: sideLoadContainer
 
-                        width: parent.width * 0.5
+                        Layout.preferredWidth: parent.width * 0.5
                     }
 
                     FlickableRepeaterNodes {
                         id: nodesContainer
                         jsonDomain: rowParent.jsonDomain
 
-                        width: parent.width * 0.5
+                        Layout.preferredWidth: parent.width * 0.5
                     }
                 }
             }

@@ -108,6 +108,7 @@ ColumnLayout {
     }
 
     FooterButtons {
+        urlBase : "docs/ce_results.html"
     }
 
 }

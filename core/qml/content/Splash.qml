@@ -24,6 +24,8 @@ Window {
         MouseArea {
             anchors.fill: parent
         }
+
+        z: -1000
     }
     //! [timer]
     Timer {

@@ -10,13 +10,12 @@ import "."
 RowLayout {
 
     property string fromWhere : ""
+    property string urlBase   : "docs/ce_shapefunction.html"
 
     Layout.fillWidth: true
     spacing: 0
 
     PrimaryButton {
-
-        property string loadUrlBase : "docs/ce_shapefunction.html"
         tooltip: qsTr("Abrir esta página en tu navegador por defecto")
 
         buttonStatus: "femris"
@@ -24,7 +23,7 @@ RowLayout {
         iconSource: "qrc:/resources/icons/external2.png"
 
         onClicked: {
-            StudyCaseHandler.loadUrlInBrowser(loadUrlBase);
+            StudyCaseHandler.loadUrlInBrowser(urlBase);
         }
     }
 

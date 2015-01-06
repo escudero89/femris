@@ -10,6 +10,9 @@ import "content"
 import "screens"
 
 ApplicationWindow {
+
+    signal finishedLoading();
+
     id: mainWindow
     visible: true
 
@@ -30,14 +33,14 @@ ApplicationWindow {
 
             switch (menuItem) {
             case "preferences":
-                preferencesModal.visible = true;
+                modals.preferences.visible = true;
                 break;
 
             case "about":
-                alertModal.visible = true;
+                modals.alert.visible = true;
 
-                alertModal.contentTitle = "Acerca de...";
-                alertModal.contentName = "about";
+                modals.alert.contentTitle = "Acerca de...";
+                modals.alert.contentName = "about";
                 break;
 
             case "close":
@@ -64,12 +67,7 @@ ApplicationWindow {
             }
 
             function setInfoBox (msg, reset) {
-                if (reset) {
-                    text = baseValue
-                } else {
-                    text = msg
-                }
-
+                text = (reset) ? baseValue : msg;
                 resetGlobalInfoBox.start();
             }
         }
@@ -120,163 +118,29 @@ ApplicationWindow {
         }
     }
 
-    AlertModal { id: alertModal }
-    LoadingModal {}
-    FirstTimeModal { visible: !Configure.check("firstTime", "true") }
-    FirstTimeModal { id: preferencesModal; firstTime: false }
-
-    MessageDialog {
-        id: crashedDialog
-        visible: false
-
-        title: qsTr("Al parecer FEMRIS sufrió un fallo")
-        text: {
-            var msg =
-                "Al parecer, la última vez que iniciaste FEMRIS éste no se cerró correctamente." +
-                "\n\nSin embargo, puedes intentar recuperar tu Caso de Estudio revisando los archivos temporales.";
-
-            return qsTr(msg);
+    onFinishedLoading: {
+        if (Configure.check("crashed", "true")) {
+            dialogs.crashed.open();
         }
 
-        detailedText: "La última vez que iniciaste FEMRIS, según nuestros registros, fue el "  + Configure.read("lastAccessDate") + ".";
-
-        icon: StandardIcon.Warning
-
-        standardButtons: StandardButton.Open | StandardButton.Cancel
-
-        onAccepted: {
-            femrisLoader.folder = fileApplicationDirPath + "/temp/";
-            femrisLoader.markAsSaved = false;
-            femrisLoader.open();
-        }
-
-        Component.onCompleted: {
-            if (Configure.check("crashed", "true")) {
-                crashedDialog.open();
-            }
-            Configure.initApp();
-        }
+        Configure.initApp();
     }
 
-    MessageDialog {
-        id: beforeClosingDialog
-        title: qsTr("¿Guardar Caso de Estudio?")
-        text: qsTr("Sí no guarda, los cambios efectuados desde el último punto de guardado se perderán para siempre.")
-
-        icon: StandardIcon.Warning
-        standardButtons : StandardButton.Save | StandardButton.Cancel | StandardButton.Discard
-
-        onRejected: {
-            beforeClosingDialog.close();
-        }
-
-        onDiscard: {
-            Qt.quit()
-        }
-
-        onAccepted: {
-            femrisSaverAndExit.open();
-        }
-
-        visible: false
+    Modals {
+        id : modals
     }
 
-    MessageDialog {
-
-        property string parentStage : ""
-
-        id: anotherFileAlreadyOpenedDialog
-        title: qsTr("Ya hay un Caso de Estudio abierto")
-        text: qsTr("Puede guardar los cambios de su Caso de Estudio actual antes de continuar con uno nuevo. Sí no guarda, los cambios efectuados desde el último punto de guardado se perderán para siempre.")
-
-        icon: StandardIcon.Warning
-        standardButtons : StandardButton.Save | StandardButton.Cancel | StandardButton.Discard
-
-        onRejected: {
-            anotherFileAlreadyOpenedDialog.close();
-        }
-
-        onDiscard: {
-            mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
-        }
-
-        onAccepted: {
-            femrisSaver.parentStage = parentStage;
-            femrisSaver.open();
-            anotherFileAlreadyOpenedDialog.close();
-        }
-
-        visible: false
-    }
-
-    FileDialog {
-        id: femrisLoader
-        title: "Por favor seleccione un archivo de FEMRIS"
-
-        property bool markAsSaved : true;
-
-        nameFilters: [ "Archivos de FEMRIS (*.femris *.femris.old)", "Todos los archivos (*)" ]
-
-        onAccepted: {
-            StudyCaseHandler.loadStudyCase(femrisLoader.fileUrl);
-            mainWindow.switchSection("CE_Overall");
-
-            if (StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess") > 3) {
-                ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
-            }
-
-            if (!markAsSaved) {
-                StudyCaseHandler.markAsNotSaved();
-                femrisLoader.markAsSaved = true;
-            }
-        }
-
-    }
-
-    FileDialog {
-        property string parentStage : ""
-
-        id: femrisSaver
-        title: "Guardar Caso de Estudio como..."
-
-        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
-
-        selectExisting: false
-
-        modality: "ApplicationModal"
-
-        onAccepted: {
-            console.log("You chose: " + fileUrl);
-            StudyCaseHandler.saveCurrentStudyCase(fileUrl);
-
-            if (parentStage.length) {
-                mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
-            }
-        }
-        onRejected: {
-            console.log("Canceled");
-        }
-    }
-
-    FileDialog {
-        id: femrisSaverAndExit
-        title: "Guardar Caso de Estudio como..."
-        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
-        selectExisting: false
-        modality: "ApplicationModal"
-        onAccepted: {
-            StudyCaseHandler.saveCurrentStudyCase(fileUrl);
-            Qt.quit();
-        }
+    Dialogs {
+        id : dialogs
     }
 
     Connections {
         target: Configure
 
         onMainSignalEmitted: {
-            if (signalName === "femrisLoader.open()") {
-                femrisLoader.folder = '';
-                femrisLoader.open();
+            if (signalName === "dialogs.load.open()") {
+                dialogs.load.folder = '';
+                dialogs.load.open();
             } else if (signalName === "setInfoBox") {
                 globalInfoBox.setInfoBox(args);
             }
@@ -301,7 +165,7 @@ ApplicationWindow {
         var stepOfProcess = parentStageStep[parentStage];
 
         if (StudyCaseHandler.exists() &&
-            parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess")) > stepOfProcess) {
+            stepOfProcess < parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"))) {
             anotherFileAlreadyOpenedDialog.parentStage = parentStage;
             anotherFileAlreadyOpenedDialog.open();
             return;
@@ -318,10 +182,10 @@ ApplicationWindow {
     function doOnClose() {
         Configure.exitApp();
 
-        if (!StudyCaseHandler.getSavedStatus()) {
-            beforeClosingDialog.open();
-        } else {
+        if (StudyCaseHandler.getSavedStatus()) {
             Qt.quit();
+        } else {
+            dialogs.beforeClosing.open();
         }
     }
 

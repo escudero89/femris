@@ -72,7 +72,7 @@ RowLayout {
                 button.buttonStatus: "primary"
                 button.iconSource: "qrc:/resources/icons/open96.png"
 
-                button.onClicked : Configure.emitMainSignal("femrisLoader.open()")
+                button.onClicked : Configure.emitMainSignal("dialogs.load.open()")
 
                 image.source: "qrc:/resources/images/femris_load.png"
             }

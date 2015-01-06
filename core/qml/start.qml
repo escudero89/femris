@@ -18,6 +18,6 @@ QtObject {
     }
 
     property var splashWindow: Splash {
-        onTimeout: myMainWindow.visible = true
+        onTimeout: { myMainWindow.visible = true; myMainWindow.finishedLoading(); }
     }
 }

@@ -4,12 +4,13 @@ import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 
-import "../docs"
-import "../screens"
+import "../../docs"
+import "../../screens"
+import "../../"
 import "../"
 import "."
 
-import "smallBoxes"
+import "../smallBoxes"
 
 Item {
     id: firstTimeModal

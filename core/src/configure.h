@@ -8,7 +8,6 @@ class Configure : public QObject {
 
     Q_OBJECT
 
-
 public:
 
     Configure();

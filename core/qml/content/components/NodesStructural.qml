@@ -231,7 +231,9 @@ Item {
             var isShowing = ( changes.state === "show" );
             var isHiding  = !isShowing;
 
-            visible = isHiding ? true : false;
+            // These applies to all the nodes
+            parent.enabled = isHiding ? true : false;
+            parent.opacity = isHiding ? 1    : 0.2  ;
 
             if (isHiding) {
                 return;
@@ -242,8 +244,9 @@ Item {
                 return;
             }
 
-            visible = isShowing ? true : false ;
-            repeater.update();
+            // These only to those nodes selected
+            parent.enabled = isShowing ? true : false ;
+            parent.opacity = isShowing ? 1    : 0.2   ;
         }
     }
 }

@@ -24,7 +24,7 @@ MenuBar {
             text: qsTr("Cargar Caso de Estudio")
             shortcut: "Ctrl+O"
             iconSource: "qrc:/resources/icons/black/open96.png"
-            onTriggered: Configure.emitMainSignal("femrisLoader.open()")
+            onTriggered: Configure.emitMainSignal("dialogs.load.open()")
         }
         MenuSeparator { }
         MenuItem {
@@ -37,7 +37,7 @@ MenuBar {
                 if (StudyCaseHandler.getLastSavedPath() !== "") {
                     StudyCaseHandler.saveCurrentStudyCase(StudyCaseHandler.getLastSavedPath());
                 } else {
-                    femrisSaver.open();
+                    dialogs.save.open();
                 }
             }
 
@@ -49,7 +49,7 @@ MenuBar {
             text: qsTr("Guardar Caso de Estudio como...")
             iconSource: "qrc:/resources/icons/black/save8.png"
             shortcut: "Ctrl+Shift+S"
-            onTriggered: femrisSaver.open();
+            onTriggered: dialogs.save.open();
 
             enabled: StudyCaseHandler.exists();
         }

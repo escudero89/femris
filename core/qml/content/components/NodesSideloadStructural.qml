@@ -75,7 +75,7 @@ Item {
 
             id: buttonNodeController
 
-            Layout.minimumWidth: 20
+            Layout.minimumWidth: 30
             Layout.preferredWidth: parent.width * 0.05
 
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
@@ -94,6 +94,7 @@ Item {
                     state : buttonNodeController.state
                 };
 
+                Configure.emitMainSignal("NodesChanged", JSON.stringify(changes));
                 Configure.emitMainSignal("NodesSideloadChanged", JSON.stringify(changes));
             }
 
@@ -104,16 +105,16 @@ Item {
                     name: "hide"
                     PropertyChanges {
                         target: buttonNodeController
-                        tooltip: qsTr("ocultar")
-                        fixnodeIcon: "eye51"
+                        tooltip: qsTr("Resaltar")
+                        fixnodeIcon: "star61"
                     }
                 },
                 State {
                     name: "show"
                     PropertyChanges {
                         target: buttonNodeController
-                        tooltip: qsTr("mostrar")
-                        fixnodeIcon: "eye50"
+                        tooltip: qsTr("Dejar de resaltar")
+                        fixnodeIcon: "star60"
                     }
                 }
             ]
@@ -130,7 +131,6 @@ Item {
                     var isShowing = ( changes.state === "show" );
 
                     if ( changes.affectedIndex !== index && isShowing) {
-                        console.log(index);
                         buttonNodeController.state = "hide";
                     }
                 }
