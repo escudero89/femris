@@ -239,40 +239,30 @@ RowLayout {
                 opacity: 0.3
             }
 
-            Rectangle {
+            GridLayout {
 
-                id: rectangleLoaderWrap
+                property alias sideLoadContainer : sideLoadContainer
+                property alias nodesContainer    : nodesContainer
+
+                columns : 2
+                rows : 2
+
+                columnSpacing: 0
 
                 Layout.fillHeight: true
-                Layout.fillWidth: true
+                Layout.preferredWidth : parent.width
 
-                color: "transparent"
+                FlickableRepeaterNodesSideload {
+                    id: sideLoadContainer
 
-                GridLayout {
+                    Layout.preferredWidth : parent.width / 2
+                }
 
-                    property alias sideLoadContainer : sideLoadContainer
-                    property alias nodesContainer    : nodesContainer
+                FlickableRepeaterNodes {
+                    id: nodesContainer
+                    jsonDomain: rowParent.jsonDomain
 
-                    columns : 2
-                    rows : 2
-
-                    columnSpacing: 0
-
-                    height: parent.height
-                    width: parent.width
-
-                    FlickableRepeaterNodesSideload {
-                        id: sideLoadContainer
-
-                        Layout.preferredWidth: parent.width * 0.5
-                    }
-
-                    FlickableRepeaterNodes {
-                        id: nodesContainer
-                        jsonDomain: rowParent.jsonDomain
-
-                        Layout.preferredWidth: parent.width * 0.5
-                    }
+                    Layout.preferredWidth : parent.width / 2
                 }
             }
 

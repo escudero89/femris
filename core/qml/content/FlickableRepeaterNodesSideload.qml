@@ -22,9 +22,6 @@ ColumnLayout {
 
     property variant jsonDomain : null
 
-    Layout.fillHeight: true
-    Layout.fillWidth: true
-
     FlickableRepeaterHeader {
         objectHeader.text :
             qsTr("Condiciones de borde") +
@@ -32,13 +29,13 @@ ColumnLayout {
             "<em>" + qsTr("Número de lados: ") + repeater.count + "</em></small>"
 
         Layout.fillHeight: true
-        Layout.fillWidth: true
+        Layout.preferredWidth: parent.width
     }
 
     RowLayout {
 
         Layout.fillHeight: true
-        Layout.fillWidth: true
+        Layout.preferredWidth: parent.width
 
         spacing: 0
 
