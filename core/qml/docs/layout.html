@@ -8,8 +8,7 @@
     <meta name="author" content="Cristian Escudero">
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link href="css/bootstrap-yeti.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/ce_results.css">
 
     <link href="css/matlab-highlighter-1.55.css" rel="stylesheet" type="text/css">
@@ -48,7 +47,8 @@
 
          "HTML-CSS": {
              availableFonts:[],
-             styles: {".MathJax_Preview": {visibility: "hidden"}}
+             styles: {".MathJax_Preview": {visibility: "hidden"}},
+             minScaleAdjust: 110
         }
     });
     </script>
@@ -61,8 +61,10 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/third-party/bootstrap.min.js"></script>
 
+    <div class="background-image"></div>
+
     <div class="container">
-        <div class="row">
+        <div class="row" id="mainWrap" style="opacity:0">
             {{=include(view)}}
         </div>
     </div>
@@ -71,6 +73,11 @@
         $(document).ready(function() {
             $("[data-toggle=popover]").popover();
             $('[data-toggle=tooltip]').tooltip({html: true});
+
+            // Wait until MathJax is ready before showing the page
+            MathJax.Hub.Queue(function () {
+                setTimeout(function() {$("#mainWrap").css({'opacity':0}).animate({'opacity':1}, 1000)}, 500)
+            });
         });
     </script>
 </body>

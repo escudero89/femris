@@ -6,10 +6,10 @@
 %
 %  Material Properties
 %
-  young = false ;
+  young = 2113 ;
   poiss = false ;
   denss = false ;
-  pstrs = 1 ;
+  pstrs = 0 ;
   thick = false ;
 
 %

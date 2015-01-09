@@ -20,7 +20,7 @@ Window {
 
     Image {
         id: splashImage
-        source: "qrc:/resources/images/femris_logo.png"
+        source: "qrc:/resources/images/splash-screen.png"
         MouseArea {
             anchors.fill: parent
         }

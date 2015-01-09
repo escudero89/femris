@@ -25,6 +25,33 @@ strong.tooltipped {
     color: #ca428b;
 }
 
+strong.popovered {
+    cursor: default;
+    text-decoration: underline;
+    color: #43ac6a;
+}
+
+.background-image {
+  position: fixed;
+
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: -101;
+
+  display: block;
+  background: transparent url("../img/femris_light.png") no-repeat fixed center;
+  background-size: 50%;
+
+  height: 100%;
+  width: 100%;
+
+  opacity: 0.02;
+
+}
+
+/* MathJax */
+
 .MathJax_Menu { z-index: 1200 !important;}
 .MathJax_MenuItem { z-index: 1300 !important;}
 

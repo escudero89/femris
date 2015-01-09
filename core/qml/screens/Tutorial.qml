@@ -171,6 +171,15 @@ RowLayout {
                 }
             }
 
+            Text {
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 10
+                anchors.bottomMargin: 10
+
+                text: (currentWebView.loading) ? qsTr("Cargando (" + currentWebView.loadProgress + "%)...") : ""
+            }
+
             // Attach scrollbars to the right of the view.
             ScrollBar {
                 id: currentWebViewScrollBar

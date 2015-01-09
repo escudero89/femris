@@ -1,11 +1,34 @@
 <div class="jumbotron">
     <h2>Método de los Elementos Finitos</h2>
-
-    <p>Esta sección está dedicada a dar un rápido paseo a por el Método de Elementos Finitos. Usaremos un ejemplo para ayudar a visualizar como el método funciona, y no nos adentraremos demasiado en la lógica matemática que le da sentido a todo.</p>
+    <p>Esta sección está dedicada a dar un rápido paseo a por el Método de Elementos Finitos. Usaremos un ejemplo para ayudar a visualizar como el método funciona, pero no nos adentraremos demasiado en la lógica matemática que le da sentido a todo.</p>
 </div>
-
-<div class="col-sm-12">
-    <h4>Descripción Rápida</h4>
-
-    <p>La principal ventaja de utilizar los modelos físicos es la de predecir el valor de una cantidad desconocida. Sin embargo, no todos las ecuaciones físicas son simples de resolver. Frecuentemente encontramos situaciones que, a pesar de conocer la Ecuación Diferencial que rige el problema, no hay una forma directa1 de calcular su solución. El Método de Elementos Finitos (o FEM, del inglés Finite Element Method) es una de las técnicas existente para solventar este problema.</p>
+<div class="col-sm-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Descripción Rápida <small>Para empezar</small></h3>
+        </div>
+        <div class="panel-body">
+            <p>La principal ventaja de utilizar los <strong>modelos físicos</strong> es la de predecir el valor de una cantidad desconocida. Sin embargo, no todos las ecuaciones físicas son simples de resolver. Frecuentemente encontramos situaciones que, a pesar de conocer la <em>Ecuación Diferencial</em> que rige el problema, no hay una <strong class="tooltipped" data-toggle="tooltip" title="La mayoría de los problemas reales están definidos sobre dominios que son geométricamente complejos, y que además pueden tener diferentes ecuaciones de contorno en diferentes porciones del contorno, por lo que usualmente es difícil o imposible encontrar solución analítica exacta o generar funciones de aproximación para todo el dominio como las requeridas en métodos tradicionales de aproximación.">forma directa</strong> de calcular su solución. El <strong>Método de Elementos Finitos</strong> (o FEM, del inglés <em>Finite Element Method</em>) es una de las técnicas existente para solventar este problema.</p>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    ¿Qué es un modelo físico? <small>(<em>click para expandir</em>)</small>
+                </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <p>En este contexto, un <strong>modelo físico</strong> hace referencia a una construcción teórica (<em>modelo matemático</em>) de un sistema físico. En esta línea, un <em>modelo matemático</em> es uno de los tipos de <em>modelos científicos</em> que emplea algún tipo de formulismo matemático para expresar relaciones, proposiciones sustantivas de hechos, variables, parámetros, entidades y relaciones entre variables y/o entidades u operaciones, para estudiar comportamientos de sistemas complejos ante situaciones difíciles de observar en la realidad.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-4">
+    <img class="img-thumbnail" style="float: right" src="img/bracket.jpg"/>
+    <p class="help-block"><small><strong>Figura 1.</strong> Herramienta de soporte separada en piezas de tamaño regular para su análisis mediante el FEM.</small></p>
 </div>

@@ -5,10 +5,11 @@ import "."
 
 Item {
 
-    property alias crashed         : crashedDialog
-    property alias beforeClosing   : beforeClosingDialog
-    property alias load            : femrisLoader
-    property alias save            : femrisSaver
+    property alias crashed                   : crashedDialog
+    property alias beforeClosing             : beforeClosingDialog
+    property alias load                      : femrisLoader
+    property alias save                      : femrisSaver
+    property alias anotherFileAlreadyOpened  : anotherFileAlreadyOpenedDialog
 
     anchors.fill: parent
 
@@ -66,7 +67,9 @@ Item {
         standardButtons : StandardButton.Save | StandardButton.Cancel | StandardButton.Discard
 
         onRejected: anotherFileAlreadyOpenedDialog.close();
-        onDiscard: mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+        onDiscard: {
+            mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+        }
         onAccepted: {
             femrisSaver.parentStage = parentStage;
             femrisSaver.open();

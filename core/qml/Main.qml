@@ -26,7 +26,7 @@ ApplicationWindow {
 
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
-    property string initialScreen : "screens/CE_Model.qml"
+    property string initialScreen : "screens/Initial.qml"
 
     menuBar: TopMenuBar {
         onWhichMenu: {
@@ -37,7 +37,7 @@ ApplicationWindow {
                 break;
 
             case "about":
-                modals.alert.visible = true;
+                //modals.alert.visible = true;
 
                 modals.alert.contentTitle = "Acerca de...";
                 modals.alert.contentName = "about";
@@ -166,8 +166,8 @@ ApplicationWindow {
 
         if (StudyCaseHandler.exists() &&
             stepOfProcess < parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"))) {
-            anotherFileAlreadyOpenedDialog.parentStage = parentStage;
-            anotherFileAlreadyOpenedDialog.open();
+            dialogs.anotherFileAlreadyOpened.parentStage = parentStage;
+            dialogs.anotherFileAlreadyOpened.open();
             return;
         }
 

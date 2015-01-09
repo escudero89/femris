@@ -5,7 +5,6 @@
         <file>docs/fonts/glyphicons-halflings-regular.svg</file>
         <file>docs/fonts/glyphicons-halflings-regular.ttf</file>
         <file>docs/fonts/glyphicons-halflings-regular.woff</file>
-        <file>docs/css/bootstrap-theme.min.css</file>
         <file>docs/js/fem.js</file>
         <file>docs/js/fem-draw.js</file>
         <file>docs/js/fem-logic.js</file>
