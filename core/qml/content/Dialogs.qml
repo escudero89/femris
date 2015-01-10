@@ -55,6 +55,18 @@ Item {
         visible: false
     }
 
+    FileDialog {
+        id: femrisSaverAndExit
+        title: "Guardar Caso de Estudio como..."
+        nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
+        selectExisting: false
+        modality: "ApplicationModal"
+        onAccepted: {
+            StudyCaseHandler.saveCurrentStudyCase(fileUrl);
+            Qt.quit();
+        }
+    }
+
     MessageDialog {
 
         property string parentStage : ""

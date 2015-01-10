@@ -48,6 +48,7 @@ Item {
 
     property alias text: textItem.text
     property bool isSelected: false
+    property bool isExternal: false
     property bool hasChild: false
 
     signal clicked
@@ -56,7 +57,7 @@ Item {
         id: indexSelector
 
         anchors.fill: parent
-        color: (hasChild) ? Style.color.primary : Style.color.success
+        color: (hasChild) ? Style.color.primary : (isExternal) ? Style.color.femris : Style.color.success
         opacity: 0
 
         MouseArea {

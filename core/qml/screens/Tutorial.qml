@@ -113,6 +113,8 @@ RowLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
+                visible: false
+
                 // We load the layout and the view, and put the info in the WebView
                 FileIO {
                     id: io_layout
@@ -132,6 +134,8 @@ RowLayout {
                 }
 
                 Component.onCompleted: {
+                    visible = true;
+
                     rowParent.layoutForTutorial = io_layout.read();
                     rowParent.currentUrlForTutorial = "docs/view/femris_inicio_tutorial.html";
                     currentWebView.url = fileApplicationDirPath + "/docs/current.html";
@@ -151,7 +155,12 @@ RowLayout {
                         currentWebView.url = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
 
                         // Source that we want to wrap with the layout
-                    } else if (rowParent.currentUrlForTutorial.search("http") === -1) {
+                    } else {
+
+                        if (rowParent.currentUrlForTutorial.search("http") !== -1) {
+                            StudyCaseHandler.loadUrlInBrowser(rowParent.currentUrlForTutorial, true);
+                            rowParent.currentUrlForTutorial = "docs/view/external.html";
+                        }
 
                         var viewPath = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial;
 
@@ -165,9 +174,9 @@ RowLayout {
                         currentWebView.url = fileApplicationDirPath + "/docs/current.html";
 
                         // Direct link to a website
-                    } else {
-                        currentWebView.url = rowParent.currentUrlForTutorial;
                     }
+
+                    indiceContenido.urlPath = currentWebView.url;
                 }
             }
 

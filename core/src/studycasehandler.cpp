@@ -132,6 +132,7 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
 
     m_currentStudyCaseVariables = results;
     m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+    m_studyCase->saveCurrentConfiguration();
     m_lastSavedPath = whereToLoad;
 
     QMap<QString, QString>::const_iterator i = m_currentStudyCaseVariables.constBegin();while (i != m_currentStudyCaseVariables.constEnd()) {qDebug() << i.key() << ": " << i.value();++i;}

@@ -39,26 +39,45 @@ RowLayout {
         rows: 2
         columns: 3
 
-        WebView {
-
-            signal newUrlBase(string newUrl)
-            property string urlBase : "docs/ce_model/index.html"
-
-            id: modelWebView
+        Item {
 
             Layout.fillHeight: true
             Layout.fillWidth: true
-
             Layout.columnSpan: 3
 
-            url: fileApplicationDirPath + "/" + urlBase
+            WebView {
 
-            onNewUrlBase: {
-                urlBase = newUrl;
-                url = fileApplicationDirPath + "/" + urlBase;
+                signal newUrlBase(string newUrl)
+                property string urlBase : "docs/ce_model/index.html"
+
+                id: modelWebView
+                visible: false
+
+                anchors.fill: parent
+
+                url: fileApplicationDirPath + "/" + urlBase
+
+                onNewUrlBase: {
+                    urlBase = newUrl;
+                    url = fileApplicationDirPath + "/" + urlBase;
+                }
+
+                onLoadingChanged: visible = (!loading && loadProgress === 100) ? true : false;
+
+            }
+
+            Text {
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 10
+                anchors.bottomMargin: 10
+
+                text: (modelWebView.loading) ? qsTr("Cargando (" + modelWebView.loadProgress + "%)...") : ""
+                color:  Style.color.background;
             }
 
         }
+
 
         PrimaryButton {
 

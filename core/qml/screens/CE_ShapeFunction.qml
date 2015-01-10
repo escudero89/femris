@@ -15,17 +15,45 @@ ColumnLayout {
     objectName: "CE_ShapeFunction"
     spacing: 2
 
-    //WebEngineView {
-    WebView {
-        id: currentWebView
+    Item {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        url: fileApplicationDirPath + "/docs/ce_shapefunction.html"
+        //WebEngineView {
+        WebView {
+            id: currentWebView
+
+            anchors.fill: parent
+
+            opacity: 0
+
+            url: fileApplicationDirPath + "/docs/ce_shapefunction.html"
+
+            onLoadingChanged: {
+                if (!loading && loadProgress === 100) {
+                    Configure.emitMainSignal("loadingImage.close()")
+                    opacity = 1;
+                }
+            }
+
+            Component.onCompleted: Configure.emitMainSignal("loadingImage.show()")
+        }
+
+        Text {
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.leftMargin: 10
+            anchors.bottomMargin: 10
+
+            text: (currentWebView.loading) ? qsTr("Cargando (" + currentWebView.loadProgress + "%)...") : ""
+            color:  Style.color.background;
+        }
     }
 
     FooterButtons {
         fromWhere: parent.objectName
+
+        Layout.alignment: Qt.AlignBottom
     }
 }
 

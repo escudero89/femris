@@ -9,6 +9,8 @@ import "../"
 // Index
 ColumnLayout {
 
+    property string urlPath : "docs/current.html"
+
     id: indexLayout
 
     // Reloads the central loader usign the StackView
@@ -105,7 +107,7 @@ ColumnLayout {
 
             Layout.fillWidth: true
 
-            onClicked: StudyCaseHandler.loadUrlInBrowser("docs/current.html");
+            onClicked: StudyCaseHandler.loadUrlInBrowser(urlPath, true);
         }
     }
 }

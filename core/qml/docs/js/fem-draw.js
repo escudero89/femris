@@ -379,12 +379,11 @@ var domainObject = {
                 height: "100%"
             }).appendTo(document.getElementById('draw-shapes').children[0]);
 
-        this.xnode = xnode;
-        this.ielem = ielem;
+        this.xnode = assignIfNecessary(xnode,  this.xnode);
+        this.ielem = assignIfNecessary(ielem,  this.ielem);
+        this.options = assignIfNecessary(options,  this.options);
 
-        this.currentValuesToColorise = options.valuesToColorise;
-
-        this.options = options;
+        this.currentValuesToColorise = this.options.valuesToColorise;
 
         // And we draw the elements
         this.groupElem = this.drawElements();

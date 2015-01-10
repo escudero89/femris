@@ -4,28 +4,17 @@
 
 <header>
 <item title="Índice General" page="docs/view/femris_inicio_tutorial.html" />
-<item title="Método de los Elementos Finitos" source="child00" />
-<item title="FEMRIS" page="$docs/view/soon/index.html" />
-<item title="Referencias" page="$docs/view/soon/index.html" />
-<item title="F.A.Q." page="$docs/view/soon/index.html" />
+<item title="Método de los Elementos Finitos" source="fem" />
+<item title="FEMRIS - Documentación" page="https://github.com/escudero89/femris/wiki" external="true" />
+<item title="F.A.Q." page="docs/view/faq.html" />
 </header>
 
-<child00>
-<item title="Introducción" page="docs/view/fem_inicio.html" />
-<item title="Problema de Ejemplo" page="docs/view/fem_problema_ejemplo.html" />
-<item title="Descripción General" page="docs/view/fem_descripcion_general.html" />
-<item title="Un Poco de Historia" page="docs/view/fem_historia.html" />
-</child00>
-
-<child01>
-<item title="My Child Item" source="child2" />
-<item title="My Child Second Item" page="http://www.reddit.com" />
-</child01>
-
-<child2>
-<item title="My GrandChild Item" page="/docs/index.xml" />
-</child2>
-
+<fem>
+<item title="Introducción" page="docs/view/fem/inicio.html" />
+<item title="Problema de Ejemplo" page="docs/view/fem/problema_ejemplo.html" />
+<item title="Descripción General" page="docs/view/fem/descripcion_general.html" />
+<item title="Un Poco de Historia" page="docs/view/fem/historia.html" />
+</fem>
 
 /******************************************************************************/
 </body>

@@ -84,6 +84,9 @@ ApplicationWindow {
         z: -1000
 
         AnimatedImage {
+
+            property double originalOpacity : 0.8
+
             id: loadingImage
 
             anchors.horizontalCenter: parent.horizontalCenter
@@ -92,7 +95,19 @@ ApplicationWindow {
 
             height: parent.height / 5
             width: height
-            opacity: 0.8
+            opacity: originalOpacity
+
+            Connections {
+                target: Configure
+
+                onMainSignalEmitted: {
+                    if (signalName === "loadingImage.show()") {
+                        loadingImage.opacity = loadingImage.originalOpacity;
+                    } else if (signalName === "loadingImage.close()") {
+                        loadingImage.opacity = 0;
+                    }
+                }
+            }
         }
     }
 
@@ -165,7 +180,8 @@ ApplicationWindow {
         var stepOfProcess = parentStageStep[parentStage];
 
         if (StudyCaseHandler.exists() &&
-            stepOfProcess < parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"))) {
+            stepOfProcess < parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess")) &&
+            !StudyCaseHandler.getSavedStatus()) {
             dialogs.anotherFileAlreadyOpened.parentStage = parentStage;
             dialogs.anotherFileAlreadyOpened.open();
             return;

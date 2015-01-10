@@ -59,6 +59,7 @@ StackView {
 
                 isSelected: (xmlView.currentIndex === index || index === 0)
                 hasChild: (source) ? true : false
+                isExternal: (external) ? true : false
 
                 onClicked: {
                     xmlView.currentIndex = index;
@@ -100,6 +101,7 @@ StackView {
         XmlRole { name: "title"; query: "@title/string()" }
         XmlRole { name: "source"; query: "@source/string()" }
         XmlRole { name: "page"; query: "@page/string()" }
+        XmlRole { name: "external"; query: "@external/string()" }
     }
 
     onMakePop : {
