@@ -170,4 +170,35 @@ Item {
             }
         }
     }
+
+    Connections {
+        target : Configure
+
+        onMainSignalEmitted : {
+            if (signalName !== "NodesSideloadChanged") {
+                return;
+            }
+
+            var changes = JSON.parse(args);
+            var isShowing = ( changes.state === "show" );
+            var isHiding  = !isShowing;
+
+            // These applies to all the nodes
+            parent.enabled = isHiding ? true : false;
+            parent.opacity = isHiding ? 1    : 0.2  ;
+
+            if (isHiding) {
+                return;
+            }
+
+            // As the index starts in zero, we need to add one
+            if (changes.affectedNodes.indexOf(index + 1) === -1) {
+                return;
+            }
+
+            // These only to those nodes selected
+            parent.enabled = isShowing ? true : false ;
+            parent.opacity = isShowing ? 1    : 0.2   ;
+        }
+    }
 }

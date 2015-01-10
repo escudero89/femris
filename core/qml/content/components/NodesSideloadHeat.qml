@@ -72,48 +72,70 @@ Item {
 
         Button {
 
-            property string fixnodeIcon : "open94"
+            property string fixnodeIcon : "filter10"
 
             id: buttonNodeController
-            Layout.preferredWidth: parent.width * 0.3
+
+            Layout.minimumWidth: 30
+            Layout.preferredWidth: parent.width * 0.05
 
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
 
             onClicked: {
-
                 switch(buttonNodeController.state) {
-                case "dirichlet"  : buttonNodeController.state = "neumann"   ; break;
-                case "neumann"    : buttonNodeController.state = "dirichlet" ; break;
+                case "show" : buttonNodeController.state = "hide" ; break;
+                case "hide" : buttonNodeController.state = "show" ; break;
                 }
 
                 repeater.currentIndex = index;
+
+                var changes = {
+                    affectedNodes : jsonDomain["sideloadNodes"][index],
+                    affectedIndex : index,
+                    state : buttonNodeController.state
+                };
+
+                Configure.emitMainSignal("NodesChanged", JSON.stringify(changes));
+                Configure.emitMainSignal("NodesSideloadChanged", JSON.stringify(changes));
             }
 
-            state: "neumann"
-            enabled: false
+            state: "hide"
 
             states: [
                 State {
-                    name: "neumann"
+                    name: "hide"
                     PropertyChanges {
                         target: buttonNodeController
-                        text: qsTr("Neumann")
-                        fixnodeIcon: "bookmark10"
+                        tooltip: qsTr("Resaltar")
+                        fixnodeIcon: "star61"
                     }
                 },
                 State {
-                    name: "dirichlet"
+                    name: "show"
                     PropertyChanges {
                         target: buttonNodeController
-                        text: qsTr("Dirichlet")
-                        fixnodeIcon: "bookmark9"
-                    }
-                    PropertyChanges {
-                        target: textFieldSideload
-                        textColor: Style.color.femris
+                        tooltip: qsTr("Dejar de resaltar")
+                        fixnodeIcon: "star60"
                     }
                 }
             ]
+
+            Connections {
+                target : Configure
+
+                onMainSignalEmitted : {
+                    if ( signalName !== "NodesSideloadChanged" ) {
+                        return;
+                    }
+
+                    var changes = JSON.parse(args);
+                    var isShowing = ( changes.state === "show" );
+
+                    if ( changes.affectedIndex !== index && isShowing) {
+                        buttonNodeController.state = "hide";
+                    }
+                }
+            }
         }
 
 

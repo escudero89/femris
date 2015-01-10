@@ -1,0 +1,3 @@
+[submodule "femris.wiki"]
+	path = femris.wiki
+	url = git://github.com/escudero89/femris.wiki

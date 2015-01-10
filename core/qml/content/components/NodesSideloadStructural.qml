@@ -71,6 +71,7 @@ Item {
         }
 
         Button {
+
             property string fixnodeIcon : "filter10"
 
             id: buttonNodeController
