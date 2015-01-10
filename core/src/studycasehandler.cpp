@@ -98,19 +98,35 @@ void StudyCaseHandler::createNewStudyCase() {
  * @param whereToSave
  */
 void StudyCaseHandler::saveCurrentStudyCase(QString whereToSave) {
-    if (exists()) {
-
-        emit savingCurrentStudyCase();
-
-        if (whereToSave != m_lastSavedPath && !whereToSave.toLower().contains(".femris")) {
-            whereToSave += ".femris";
-        }
-
-        m_studyCase->saveCurrentConfiguration(whereToSave);
-        markAsSaved();
-
-        m_lastSavedPath = whereToSave;
+    if (!exists()) {
+        return;
     }
+
+    emit savingCurrentStudyCase();
+
+    if (whereToSave != m_lastSavedPath && !whereToSave.toLower().contains(".femris")) {
+        whereToSave += ".femris";
+    }
+
+    m_studyCase->saveCurrentConfiguration(whereToSave);
+    markAsSaved();
+
+    m_lastSavedPath = whereToSave;
+
+}
+
+bool StudyCaseHandler::exportCurrentStudyCase(QString whereToSave) {
+    if (!exists()) {
+        return false;
+    }
+
+    emit savingCurrentStudyCase();
+
+    if (!whereToSave.toLower().contains(".m")) {
+        whereToSave += ".m";
+    }
+
+    return m_studyCase->exportToGid(whereToSave);
 }
 
 /**

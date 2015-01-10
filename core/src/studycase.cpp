@@ -69,6 +69,21 @@ void StudyCase::saveCurrentConfiguration(const QString& whereToSave) {
     saveLocalCurrentConfiguration();
 }
 
+/**
+ * @brief StudyCase::exportToGid
+ * @param whereToSave
+ * @return
+ */
+bool StudyCase::exportToGid(const QString& whereToSave) {
+
+    QString dir(Configure::read("fileApplicationDirPath"));
+
+    FileIO baseFile(dir + "temp/currentMatFemFile.m");
+    FileIO exportedFile(whereToSave);
+
+    return exportedFile.write(baseFile.read());
+}
+
 void StudyCase::setInitialMapOfInformation() {
 
     m_mapOfInformation.clear();

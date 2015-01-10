@@ -26,6 +26,16 @@ Window {
         }
 
         z: -1000
+
+        Text {
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.leftMargin: 10
+            anchors.bottomMargin: 10
+
+            text: qsTr("Cargando...")
+            color:  "#EEEEEE";
+        }
     }
     //! [timer]
     Timer {

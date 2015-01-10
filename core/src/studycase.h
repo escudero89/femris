@@ -10,13 +10,14 @@ class StudyCase
 
 public:
 
-    StudyCase() {};
+    StudyCase() {}
     virtual ~StudyCase();
 
     void createNew();
 
     QMap<QString, QString> loadConfiguration(const QString&);
     void saveCurrentConfiguration(const QString& = "");
+    bool exportToGid(const QString&);
 
     void setInitialMapOfInformation();
     void compressMapOfInformation();

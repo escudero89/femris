@@ -78,7 +78,6 @@ RowLayout {
 
         }
 
-
         PrimaryButton {
 
             tooltip: qsTr("Abrir esta página en tu navegador por defecto")

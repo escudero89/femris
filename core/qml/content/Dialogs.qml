@@ -9,6 +9,7 @@ Item {
     property alias beforeClosing             : beforeClosingDialog
     property alias load                      : femrisLoader
     property alias save                      : femrisSaver
+    property alias exportAs                  : femrisExporter
     property alias anotherFileAlreadyOpened  : anotherFileAlreadyOpenedDialog
 
     anchors.fill: parent
@@ -140,4 +141,35 @@ Item {
         }
     }
 
+    FileDialog {
+        property string parentStage : ""
+
+        id: femrisExporter
+        title: "Exportar Caso de Estudio como..."
+
+        nameFilters: [ "Archivos de resultados de MATfem (*.m)", "Todos los archivos (*)" ]
+
+        selectExisting: false
+
+        modality: "ApplicationModal"
+
+        onAccepted: {
+            console.log("You chose: " + fileUrl);
+            var success = StudyCaseHandler.exportCurrentStudyCase(fileUrl);
+
+            if (success) {
+                globalInfoBox.setInfoBox(qsTr("Archivo exportado con éxito."));
+            } else {
+                globalInfoBox.setInfoBox(qsTr("Error al exportar el archivo."));
+                return;
+            }
+
+            if (parentStage.length) {
+                mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+            }
+        }
+        onRejected: {
+            console.log("Canceled");
+        }
+    }
 }

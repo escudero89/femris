@@ -28,6 +28,10 @@ Item {
         color: Style.color.complement
 
         opacity: 0.8
+
+        MouseArea {
+            anchors.fill: parent
+        }
     }
 
     Rectangle {
@@ -144,10 +148,11 @@ Item {
 
                     tooltip: qsTr("Forzar el cierre del proceso actual")
 
-                    buttonLabel: "Cancelar"
+                    buttonLabel: ""
                     buttonStatus: "danger"
                     iconSource: "qrc:/resources/icons/ban.png"
 
+                    Layout.preferredWidth: 30
                     Layout.alignment: Qt.AlignLeft
 
                     enabled: false
@@ -182,6 +187,26 @@ Item {
                     onClicked: {
                         parent.resetModal();
                     }
+                }
+
+                PrimaryButton {
+                    id: exportStudyCaseLoadingModal
+
+                    tooltip: qsTr("Exportar Caso de Estudio para GiD")
+
+                    buttonLabel: ""
+                    buttonStatus: "femris"
+                    iconSource: "qrc:/resources/icons/GiD.png"
+
+                    Layout.preferredWidth: 30
+                    Layout.alignment: Qt.AlignRight
+
+                    enabled: false
+
+                    onClicked: {
+                        dialogs.exportAs.open();
+                    }
+
                 }
 
                 PrimaryButton {
@@ -230,6 +255,7 @@ Item {
                 function resetModal() {
                     goToShapeFunctionLoadingModal.enabled = false;
                     continueLoadingModal.enabled = false;
+                    exportStudyCaseLoadingModal.enabled = false;
                     closeLoadingModal.enabled = false;
 
                     textAreaLoadingModal.text = "";
@@ -272,9 +298,13 @@ Item {
 
         onProcessFinished: {
             console.log("Finished...");
+
+            forceCloseLoadingModal.enabled = false;
+
             closeLoadingModal.enabled = true;
             goToShapeFunctionLoadingModal.enabled = true;
             continueLoadingModal.enabled = true;
+            exportStudyCaseLoadingModal.enabled = true;
         }
 
         onProcessWithError: {

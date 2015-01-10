@@ -770,5 +770,7 @@
         <file>resources/images/overall/results.png</file>
         <file>resources/images/overall/shape_function.png</file>
         <file>resources/images/splash-screen.png</file>
+        <file>resources/icons/black/GiD.png</file>
+        <file>resources/icons/GiD.png</file>
     </qresource>
 </RCC>

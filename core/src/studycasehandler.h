@@ -23,6 +23,7 @@ public:
     Q_INVOKABLE void createDomainFromScriptFile();
 
     Q_INVOKABLE void saveCurrentStudyCase(QString);
+    Q_INVOKABLE bool exportCurrentStudyCase(QString);
     Q_INVOKABLE bool loadStudyCase(const QString&);
 
     Q_INVOKABLE bool checkSingleStudyCaseInformation(const QString&);
