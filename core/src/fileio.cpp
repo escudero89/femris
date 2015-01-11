@@ -217,7 +217,7 @@ bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
 
 void FileIO::removeTemporaryFiles() {
 
-    QDir dir("temp");
+    QDir dir(qApp->applicationDirPath() + "/temp");
 
     QStringList filters;
     filters << "*.femris.old" << "*.base64" << "*_tmp*";

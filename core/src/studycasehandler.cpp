@@ -59,13 +59,48 @@ bool StudyCaseHandler::exists() {
  */
 void StudyCaseHandler::selectNewTypeStudyCase(const QString& studyCaseType) {
     m_studyCaseType = studyCaseType;
+
     emit newStudyCaseChose(studyCaseType);
+}
+
+/**
+ * @brief StudyCaseHandler::adoptNewTypeStudyCase
+ */
+void StudyCaseHandler::adoptNewTypeStudyCaseIfNecessary() {
+
+    // If there is already a study case created, we check if the type is the same
+    // as the one we know. If not, we remove the previous one.
+    if (!exists()) {
+        return;
+    }
+
+    QString previousStudyCaseType = getSingleStudyCaseInformation("typeOfStudyCase");
+
+    if (previousStudyCaseType == m_studyCaseType) {
+        return;
+    }
+
+    // Note: only if there is a change between heat and plane-stress/strain
+    if ( ( ( previousStudyCaseType == "heat" ) &&
+           ( m_studyCaseType == "plane-stress" || m_studyCaseType == "plane-strain" ) ) ||
+         ( ( m_studyCaseType == "heat" ) &&
+           ( previousStudyCaseType == "plane-stress" || previousStudyCaseType == "plane-strain" ) ) ) {
+
+         createNewStudyCase();
+    }
+
 }
 
 /**
  * @brief StudyCaseHandler::createNewStudyCase
  */
 void StudyCaseHandler::createNewStudyCase() {
+
+    // Delete the previous (if there is one) study case
+    if (exists()) {
+        delete m_studyCase;
+        m_studyCase = NULL;
+    }
 
     if (m_studyCaseType == "heat") {
         m_studyCase = new StudyCaseHeat();

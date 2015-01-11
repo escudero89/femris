@@ -19,6 +19,7 @@ public:
     Q_INVOKABLE bool exists();
 
     Q_INVOKABLE void selectNewTypeStudyCase(const QString&);
+    Q_INVOKABLE void adoptNewTypeStudyCaseIfNecessary();
     Q_INVOKABLE void createNewStudyCase();
     Q_INVOKABLE void createDomainFromScriptFile();
 

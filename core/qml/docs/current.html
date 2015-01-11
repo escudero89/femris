@@ -71,13 +71,16 @@
 
 <h4>Introducción</h4>
 
-<img class="img-responsive img-thumbnail pull-right" width="40%" src="img/bridge-example.jpg" />
+<div class="output pull-right" style="width:40%">
+<img class="img-responsive img-thumbnail pull-right" src="img/bridge-example.jpg" />
+<p class="help-block"><strong>Figura 1.</strong> Ejemplo de un puente dividido en <em>elementos finitos</em> 3D más simples.</p>
+</div>
 
 <p>Un ingeniero desea construir un puente sobre un río y que una dos ciudades muy transitadas. Para ello, necesita conocer cómo la estructura que él propone se comportará bajo una determinada carga. Las ecuaciones que describen la distribución de tensiones estructurales son conocidas, pero no pueden ser resueltas de forma directa para formas complicadas como las de un puente.</p>
 
 <p>Sin embargo, las ecuaciones sí pueden ser resueltas para figuras simples, como triángulos y rectángulos. <em>El FEM toma ventaja de este hecho.</em></p>
 
-<p>Reemplazamos entonces la forma única y complicada del puente con una estructura aproximadamente similar conformada por <strong class="tooltipped" data-toggle="tooltip" data-placement="rigth" title="Como triángulos o rectángulos.">elementos simples</strong>. Esta nueva composición de elementos se le hace referencia por el nombre de <strong class="tooltipped" data-toggle="tooltip" data-placement="rigth" title="O simplemente “malla” o “retícula” sí hablamos dentro del contexto del FEM.">“malla de elementos finitos”</strong>.</p>
+<p>Reemplazamos entonces la forma única y complicada del puente con una estructura aproximadamente similar conformada por <strong class="tooltipped" data-toggle="tooltip" data-placement="rigth" title="Como triángulos o rectángulos.">elementos más simples</strong>. Esta nueva composición de elementos se le hace referencia por el nombre de <strong class="tooltipped" data-toggle="tooltip" data-placement="rigth" title="O simplemente “malla” o “retícula” sí hablamos dentro del contexto del FEM.">“malla de elementos finitos”</strong>.</p>
 
 <hr>
 
@@ -203,6 +206,7 @@ u(x_9,y_9 ) \\
 
 <div class="output text-center">
     <img class="img-responsive img-thumbnail" src="img/ensamblaje.png" style="margin:10px" />
+    <p class="help-block"><strong>Figura 2.</strong> Ensamblaje global de los cincos elementos interconectados de la figura (a).</p>
 </div>
 
 <p>Una vez ensamblada la nueva matriz global, podemos obtener los valores de los desplazamientos tras determinar las <em>fuerzas externas</em> aplicadas, al resolver:</p>

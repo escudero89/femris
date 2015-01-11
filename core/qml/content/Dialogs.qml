@@ -81,6 +81,10 @@ Item {
 
         onRejected: anotherFileAlreadyOpenedDialog.close();
         onDiscard: {
+            if (parentStage === "CE_Model") {
+                StudyCaseHandler.adoptNewTypeStudyCaseIfNecessary();
+            }
+
             mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
         }
         onAccepted: {
