@@ -24,7 +24,7 @@ function [jsonfy] = MatrixToJSON(matrix, label, comment, isLastBlock)
 
     jsonfy = jsonParser(strcat('_', label), comment);
 
-    if (!matrix)
+    if (islogical(matrix) && matrix == false)
         jsonfy = strcat(jsonfy, jsonParser(label, 'false'));
         return;
     end

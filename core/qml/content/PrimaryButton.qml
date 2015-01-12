@@ -101,7 +101,11 @@ Button {
                     fillMode: Image.PreserveAspectFit // Image should shrink if button is too small, depends on QTBUG-14957
                 }
                 Text {
-                    id:text
+
+                    property string originalText
+
+                    id: textLabel
+
                     anchors.verticalCenter: parent.verticalCenter
                     text: button.text
                     horizontalAlignment: Text.Center
@@ -113,6 +117,34 @@ Button {
                     color: button.enabled ? Style.color.background_highlight : Style.color.comment
 
                     verticalAlignment: Text.AlignVCenter
+
+                    state: "full"
+
+                    states: [
+                        State {
+                            name: "full"
+
+                            PropertyChanges {
+                                target: textLabel
+                                text: button.text;
+                            }
+                        },
+                        State {
+                            name: "less"
+
+                            PropertyChanges {
+                                target: textLabel
+                                text: "";
+                            }
+                        }
+                    ]
+
+                    Connections {
+                        target: button
+
+                        onWidthChanged: textLabel.state = ( rectangle.width > 100 ) ? "full" : "less"
+                    }
+
                 }
             }
         }

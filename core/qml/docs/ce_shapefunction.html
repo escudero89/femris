@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="jsxgraph/jsxgraph.css" />
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link href="css/bootstrap-yeti.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/ce_results.css">
 
     <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -65,7 +64,7 @@
 
             <div class="col-md-5">
 
-                <div id="panel-left" class="panel panel-default" style="height:91vh; overflow-y:auto">
+                <div id="panel-left" class="panel panel-default" style="height:90vh; overflow-y:auto">
                     <div class="panel-body" onchange="updateShapeFunction()">
 
                         <div class="form-group">
@@ -210,9 +209,9 @@
             </div>
 
             <div class="col-md-7">
-                <div id="panel-right" class="panel panel-default"  style="height:91vh; overflow:auto;">
+                <div id="panel-right" class="panel panel-default"  style="height:90vh; overflow:hidden;">
                     <div class="panel-body">
-                        <div id="box" class="" style="width:100%; height:43vh;"></div>
+                        <div id="box" class="" style="width:100%; height:42vh;"></div>
                         <hr>
                         <div id="boxShapeFunctions" class="" style="width:100%; height:30vh;"></div>
                     </div>
@@ -354,8 +353,8 @@ $(document).ready(function() {
     }, 5);
 
     $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').popover().on('shown.bs.popover', function () {
 
+    $('[data-toggle="popover"]').popover().on('shown.bs.popover', function () {
             var $baseFunction = $("#baseFunction");
             $('.list-unstyled > li > a').on('click', function() {
                 $baseFunction.val($(this).html());

@@ -1,8 +1,17 @@
-function equationParser(equation, val) {
+$('#panel-right input').keypress(function (e) {
+  if (e.which == 13) {
+    updateGraph();
+    e.preventDefault();
+    return false;    //<---- Add this line
+  }
+});
 
-    var PI;
+function equationParser(equation) {
+    return Parser.parse(equation);
+}
 
-    var expr = Parser.parse(equation);
+function equationEvaluate(equationParsed, val) {
+    var PI = Math.PI;
     var value = { 'x' : val, 'PI' :  PI };
 
     if (typeof(val) === 'object') {
@@ -10,7 +19,7 @@ function equationParser(equation, val) {
         value['PI'] = PI;
     }
 
-    return expr.evaluate(value);
+    return equationParsed.evaluate(value);
 }
 
 function miniLoader(callback) {
@@ -63,10 +72,19 @@ function drawShapeFunction(board, N, positionsForPolynomial, kFunction, elementC
     var x_ini = x_vector[0];
     var x_fin = x_vector[ x_vector.length - 1 ];
 
+    var originalEquation = null;
+    var originalEquationParsed = null;
+
     board.create(
         'functiongraph',
         function(x) {
-            return equationParser(N[kFunction + 1], {
+
+            if (originalEquation != N[kFunction + 1]) {
+                originalEquation = N[kFunction + 1];
+                originalEquationParsed = equationParser(originalEquation);
+            }
+
+            return equationEvaluate(originalEquationParsed, {
                 x: x,
                 x1: x1,
                 x2: x2,
@@ -402,8 +420,17 @@ function updateGraphHelper() {
         return equationSolved;
     };
 
+    var originalEquation = null;
+    var originalEquationParsed = null;
+
     var baseFunction = function(x) {
-        return equationParser(BASE_FUNCTION.equation, x);
+
+        if ( originalEquation !== BASE_FUNCTION.equation ) {
+            originalEquation = BASE_FUNCTION.equation;
+            originalEquationParsed = equationParser(originalEquation);
+        }
+
+        return equationEvaluate(originalEquationParsed, x);
     };
 
     var board = JXG.JSXGraph.initBoard(
@@ -480,6 +507,9 @@ function updateGraphHelper() {
         var x_ini = x_vector[0];
         var x_fin = x_vector[ x_vector.length - 1 ];
 
+        var originalEquation = null;
+        var originalEquationParsed = null;
+
         for ( ; counterOfSidesDone > 0 ; counterOfSidesDone-- ) {
 
             boardShapeFunctions.create('functiongraph', [
@@ -487,8 +517,13 @@ function updateGraphHelper() {
 
                     var value = 0;
 
+                    if (originalEquation != N[counterOfSidesDone]) {
+                        originalEquation = N[counterOfSidesDone];
+                        originalEquationParsed = equationParser(originalEquation);
+                    }
+
                     if (x >= x_ini && x <= x_fin) {
-                        value = equationParser(N[counterOfSidesDone], {
+                        value = equationEvaluate(originalEquationParsed, {
                             x: x,
                             x1: x1,
                             x2: x2,
@@ -511,7 +546,7 @@ function updateGraphHelper() {
             function(x) {
                 var value = 0;
 
-                value = equationParser(phi, {
+                value = equationEvaluate(equationParser(phi), {
                     x: x,
                     x1: x1,
                     x2: x2,

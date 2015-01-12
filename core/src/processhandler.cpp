@@ -93,12 +93,12 @@ void ProcessHandler::readingInProcess() {
 }
 
 void ProcessHandler::finishingProcess() {
+
     if (m_stepOfProcessManipulation == 1) {
 
         m_stepOfProcessManipulation = 2;
 
         qDebug() << "ProcessHandler::finishingProcess(): Closing process...";
-        //m_process->kill();
 
         emit processRead();
         exitingProcess();
@@ -106,6 +106,7 @@ void ProcessHandler::finishingProcess() {
 }
 
 void ProcessHandler::exitingProcess() {
+
     if (m_stepOfProcessManipulation == 2) {
 
         qDebug() << "ProcessHandler::exitingProcess(): Process finished.";

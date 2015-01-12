@@ -8,8 +8,7 @@
     <meta name="author" content="Cristian Escudero">
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap-yeti.min.css">
     <link rel="stylesheet" href="css/ce_results.css">
 
     <link href="css/matlab-highlighter-1.55.css" rel="stylesheet" type="text/css">
@@ -34,6 +33,7 @@
         imageFont:null,
 
         TeX: {
+            MAXBUFFER : 10 * 1024, // the double of the normal amount
             extensions: ["color.js"]
         },
 
@@ -153,7 +153,7 @@
                             <span class="glyphicon glyphicon-th-large"></span>
                         </button>
                         <button type="button" class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
-                            <span class="glyphicon glyphicon-eye-close"></span>
+                            <span class="glyphicon glyphicon-resize-horizontal"></span>
                         </button>
                     </form>
                 </nav>

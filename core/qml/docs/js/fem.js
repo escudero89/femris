@@ -47,7 +47,7 @@ function viewGlobalStiffnessMatrix() {
     modalBody.html('$${\\begin{align*}' +  globalK + globalPhi + "&&" + globalF + '\\end{align*}}$$');
 
     $('#modalStiffnessMatrix').modal();
-    globalElementalMatrixObject.loadMathJax('#modalStiffnessMatrix');
+    setTimeout(globalElementalMatrixObject.loadMathJax('#modalStiffnessMatrix'), 5);
 }
 
 function drawCurrentMatrix(two, group) {

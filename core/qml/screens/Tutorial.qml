@@ -21,12 +21,15 @@ RowLayout {
     spacing: 0
 
     Index {
+
+        property double originalMaximumWidth : rowParent.width * 0.3
+
         id: indiceContenido
 
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        Layout.maximumWidth: rowParent.width * 0.3
+        Layout.maximumWidth: originalMaximumWidth
 
         state: "NORMAL"
 
@@ -40,7 +43,7 @@ RowLayout {
                 name: "NORMAL"
                 PropertyChanges {
                     target: indiceContenido;
-                    Layout.maximumWidth: rowParent.width * 0.3
+                    Layout.maximumWidth: originalMaximumWidth
                 }
             },
             State {
@@ -78,17 +81,38 @@ RowLayout {
         }
 
         MouseArea {
+
+            property int oldMouseX
+
             anchors.fill: parent
             hoverEnabled: true
 
             onContainsMouseChanged: {
                 ocultarIndice.color = (containsMouse) ? Style.color.femris : Style.color.complement
-                globalInfoBox.setInfoBox((indiceContenido.state === "NORMAL") ? qsTr("Ocultar Índice") : qsTr("Mostrar Índice"), !containsMouse)
+                globalInfoBox.setInfoBox((indiceContenido.state === "NORMAL") ?
+                                             qsTr("Click para ocultar Índice. Arrastra el mouse para cambiar el tamaño del Índice.") :
+                                             qsTr("Click para mostrar Índice"), !containsMouse)
+            }
+
+            onPositionChanged: {
+                if (pressed && indiceContenido.state === 'NORMAL') {
+                    var widthDiff = indiceContenido.width + mouse.x;
+
+                    if (widthDiff > 60 && widthDiff < rowParent.width) {
+                        indiceContenido.Layout.maximumWidth = widthDiff;
+                        indiceContenido.originalMaximumWidth = widthDiff;
+                    }
+                }
             }
 
             onClicked : {
-                indiceContenido.state = (indiceContenido.state !== 'OCULTO') ? 'OCULTO' : 'NORMAL';
+                if (!pressed) {
+                    oldMouseX = 0;
+                    indiceContenido.state = (indiceContenido.state !== 'OCULTO') ? 'OCULTO' : 'NORMAL';
+                }
             }
+
+            Component.onCompleted: oldMouseX = ocultarIndice.x
         }
     }
     Rectangle {

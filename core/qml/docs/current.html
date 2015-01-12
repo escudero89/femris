@@ -65,160 +65,39 @@
 
     <div class="container">
         <div class="row" id="mainWrap" style="opacity:0">
-            <div class="col-sm-12">
-
-<h3>Problema de Ejemplo</h3>
-
-<h4>Introducción</h4>
-
-<div class="output pull-right" style="width:40%">
-<img class="img-responsive img-thumbnail pull-right" src="img/bridge-example.jpg" />
-<p class="help-block"><strong>Figura 1.</strong> Ejemplo de un puente dividido en <em>elementos finitos</em> 3D más simples.</p>
+            <div class="jumbotron">
+    <h2>Método de los Elementos Finitos</h2>
+    <p>Esta sección está dedicada a dar un rápido paseo a por el Método de Elementos Finitos. Usaremos un ejemplo para ayudar a visualizar como el método funciona, pero no nos adentraremos demasiado en la lógica matemática que le da sentido a todo.</p>
 </div>
-
-<p>Un ingeniero desea construir un puente sobre un río y que una dos ciudades muy transitadas. Para ello, necesita conocer cómo la estructura que él propone se comportará bajo una determinada carga. Las ecuaciones que describen la distribución de tensiones estructurales son conocidas, pero no pueden ser resueltas de forma directa para formas complicadas como las de un puente.</p>
-
-<p>Sin embargo, las ecuaciones sí pueden ser resueltas para figuras simples, como triángulos y rectángulos. <em>El FEM toma ventaja de este hecho.</em></p>
-
-<p>Reemplazamos entonces la forma única y complicada del puente con una estructura aproximadamente similar conformada por <strong class="tooltipped" data-toggle="tooltip" data-placement="rigth" title="Como triángulos o rectángulos.">elementos más simples</strong>. Esta nueva composición de elementos se le hace referencia por el nombre de <strong class="tooltipped" data-toggle="tooltip" data-placement="rigth" title="O simplemente “malla” o “retícula” sí hablamos dentro del contexto del FEM.">“malla de elementos finitos”</strong>.</p>
-
-<hr>
-
-<h4>Diseñando la Malla</h4>
-
-<p>El primer paso es entonces el de diseñar la malla. Para ello, debemos decidir qué tipo de elemento vamos a utilizar. Por ejemplo, podemos optar por elegir:</p>
-
-<ul>
-    <li>Elementos 1D.</li>
-    <li>Elementos 2D.</li>
-    <li>Elementos 3D.</li>
-</ul>
-
-<p>La exactitud del resultado va a depender del número de elementos que elijamos para componer la malla. Mientras más elementos haya, más pequeños van a ser, y más precisos serán los resultados obtenidos. Desafortunadamente, elementos más pequeños también significan más cálculos a llevar adelante. Por lo que lo que se busca es encontrar un balance entre una precisión tolerable del resultado y una razonable rapidez de cálculo.</p>
-
-<hr><h4>De nuevo al problema del puente</h4>
-
-<p>Para la malla del puente, hemos decidido optar por elementos 2D con forma de <strong class="tooltipped" data-toggle="tooltip" data-placement="top" data-html="true" title="<img class='img-responsive' src='img/8_nodes_rectangle.png' />">rectángulos de ocho puntos</strong>. Estos puntos son referidos como “<strong>nodos</strong>”. En general, consideramos a cada nodo como capaces de desplazarse tanto vertical como horizontalmente. La excepción sería que estos nodos no pueden ir más allá que los límites del borde que les hemos establecido: estas son, las <strong>condiciones de borde</strong> del problema. Éstas deben estar incluidas en el modelo físico para que de esa manera la solución obtenida sea <strong>ÚNICA</strong>.</p>
-
-<blockquote>Una vez establecida la malla y los elementos que la componen, como así también las <strong>propiedades materiales</strong> del objeto, establecemos que tipos de carga se desean aplicar a la estructura.</blockquote>
-
-<p>Supongamos que tenemos una sola carga en nuestra estructura, en el centro del puente. El objetivo sería arribar a una expresión matemática que describa el comportamiento de todo el sistema.</p>
-
-<hr><h4>Estableciendo los desplazamientos en los nodos</h4>
-
-<p>Comenzaremos con una descripción simple de las relaciones básicas de <strong>desplazamiento</strong> de cada nodo como funciones en las coordenadas `(x,y)`.</p>
-
-<p>Supongamos en primer lugar que el desplazamiento `u(x,y)` se exprese como forma polinómica de `x` e `y`. Para asegurar la continuidad del desplazamiento dentro del elemento a lo largo del eje de coordenadas, la variación debe ser <u><strong>CUADRÁTICA</strong></u>.</p>
-
-<img class="img-responsive pull-left" src="img/shapefunction_rectangle.png" />
-
-<p>Sí tenemos dos elementos rectangulares que comparten un mismo lado, a su vez éstos tienen en común tres nodos, y puesto que <strong id="tooltip1-ex" class="tooltipped" data-toggle="tooltip" data-placement="top" data-html="true" title="Una función cuadrática está dada por <tt>f(x)=a+bx+cx^2</tt>. Determinando los valores de los coeficientes <tt>a</tt>, <tt>b</tt>, <tt>c</tt> obtenemos una función cuadrática unívoca.">tres valores determinan una función cuadrática de forma única</strong>, aseguramos de esta forma que a lo largo de dicho lado las funciones correspondientes a los desplazamientos serán iguales. Lo anterior ocurre en ambos lados del elemento rectangular. Por consiguiente, escribimos:</p>
-
-<div class="output">
-\[
-\begin{align*}
-u(x,y)&=(a+bx+cx^2) \cdot (d+ey+fy^2) \\
-u(x,y)&=
-\alpha_1 +
-\alpha_2 x +
-\alpha_3 y+
-\alpha_4 x y+
-\alpha_5 x^2 +
-\alpha_6 y^2 +
-\alpha_7 x^2 y+
-\alpha_8 x y^2+
-\alpha_9 x^2 y^2
-\end{align*}
-\]
+<div class="col-sm-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Descripción Rápida <small>Para empezar</small></h3>
+        </div>
+        <div class="panel-body">
+            <p>La principal ventaja de utilizar los <strong>modelos físicos</strong> es la de predecir el valor de una cantidad desconocida. Sin embargo, no todos las ecuaciones físicas son simples de resolver. Frecuentemente encontramos situaciones que, a pesar de conocer la <em>Ecuación Diferencial</em> que rige el problema, no hay una <strong class="tooltipped" data-toggle="tooltip" title="La mayoría de los problemas reales están definidos sobre dominios que son geométricamente complejos, y que además pueden tener diferentes ecuaciones de contorno en diferentes porciones del contorno, por lo que usualmente es difícil o imposible encontrar solución analítica exacta o generar funciones de aproximación para todo el dominio como las requeridas en métodos tradicionales de aproximación.">forma directa</strong> de calcular su solución. El <strong>Método de Elementos Finitos</strong> (o FEM, del inglés <em>Finite Element Method</em>) es una de las técnicas existente para solventar este problema.</p>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    ¿Qué es un modelo físico? <small>(<em>click para expandir</em>)</small>
+                </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <p>En este contexto, un <strong>modelo físico</strong> hace referencia a una construcción teórica (<em>modelo matemático</em>) de un sistema físico. En esta línea, un <em>modelo matemático</em> es uno de los tipos de <em>modelos científicos</em> que emplea algún tipo de formulismo matemático para expresar relaciones, proposiciones sustantivas de hechos, variables, parámetros, entidades y relaciones entre variables y/o entidades u operaciones, para estudiar comportamientos de sistemas complejos ante situaciones difíciles de observar en la realidad.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<blockquote>Puesto que la variación de la función de desplazamiento ha de venir determinada unívocamente por la cantidad X de nodos del elemento, sólo pueden <strong class="tooltipped" data-toggle="tooltip" title="Y en general se retienen solo los coeficientes de menor grado posible.">retenerse</strong> X coeficientes de desarrollo.</blockquote>
-
-<hr><h4>Obtención de la Matriz de Rigidez de cada elemento</h4>
-
-<p>En nuestro ejemplo, cada elemento posee 8 nodos, y por cada uno de estos describimos el desplazamiento de estos como funciones de sus coordenadas:</p>
-
-<div class="output">
-\[
-
-\begin{bmatrix}
-u(x_1,y_1 ) \\
-u(x_2,y_2 ) \\
-u(x_3,y_3 ) \\
-u(x_4,y_4 ) \\
-u(x_5,y_5 ) \\
-u(x_6,y_6 ) \\
-u(x_7,y_7 ) \\
-u(x_8,y_8 ) \\
-u(x_9,y_9 ) \\
-\end{bmatrix}
-=
-\begin{bmatrix}
-1 & x_1 & y_1 & x_1 y_1 & x_1^2 & y_1^2 & x_1^2 y_1 & x_1 y_1^2 & x_1^2 y_1^2 \\
-1 & x_2 & y_2 & x_2 y_2 & x_2^2 & y_2^2 & x_2^2 y_2 & x_2 y_2^2 & x_2^2 y_2^2 \\
-1 & x_3 & y_3 & x_3 y_3 & x_3^2 & y_3^2 & x_3^2 y_3 & x_3 y_3^2 & x_3^2 y_3^2 \\
-1 & x_4 & y_4 & x_4 y_4 & x_4^2 & y_4^2 & x_4^2 y_4 & x_4 y_4^2 & x_4^2 y_4^2 \\
-1 & x_5 & y_5 & x_5 y_5 & x_5^2 & y_5^2 & x_5^2 y_5 & x_5 y_5^2 & x_5^2 y_5^2 \\
-1 & x_6 & y_6 & x_6 y_6 & x_6^2 & y_6^2 & x_6^2 y_6 & x_6 y_6^2 & x_6^2 y_6^2 \\
-1 & x_7 & y_7 & x_7 y_7 & x_7^2 & y_7^2 & x_7^2 y_7 & x_7 y_7^2 & x_7^2 y_7^2 \\
-1 & x_8 & y_8 & x_8 y_8 & x_8^2 & y_8^2 & x_8^2 y_8 & x_8 y_8^2 & x_8^2 y_8^2 \\
-1 & x_9 & y_9 & x_9 y_9 & x_9^2 & y_9^2 & x_9^2 y_9 & x_9 y_9^2 & x_9^2 y_9^2 \\
-\end{bmatrix}
-\cdot
-\begin{bmatrix}
-\alpha_1 \\
-\alpha_2 \\
-\alpha_3 \\
-\alpha_4 \\
-\alpha_5 \\
-\alpha_6 \\
-\alpha_7 \\
-\alpha_8 \\
-\alpha_9 \\
-\end{bmatrix}
-
-\]
-</div>
-
-<p>Del conjunto de ecuaciones anterior, obtenemos de forma abreviada el <strong class="tooltipped" data-toggle="tooltip" title="Las incógnitas en este tipo de sistema son siempre valores numéricos.">sistema de ecuaciones algebraicas</strong> siguiente:</p>
-
-<div class="output">
-\[ \mathbf{u}^e = \mathbf{C} \cdot \mathbf{\alpha}^e \]
-</div>
-
-<blockquote>El <strong>superíndice</strong> `e` indicará siempre que el vector o matriz con dicha notación pertenecerá a un <strong>elemento en particular</strong>, más que al sistema de ecuaciones global.</blockquote>
-
-<p>Hemos alcanzado de esta forma el punto inicial de una serie de pasos que van a estar basados en las leyes fundamentales de la mecánica.</p>
-
-<p>El primer paso relaciona los desplazamientos con las <strong>tensiones</strong>, y mediante la utilización del <strong>Principio de los Trabajos Virtuales</strong>, llegamos a obtener una relación entre los desplazamientos y las <strong>fuerzas externas</strong> aplicadas al elemento:</p>
-
-<div class="output">
-\[ \mathbf{f}_{\text{ext}}^e = \mathbf{K}^e\cdot \mathbf{u}^e \]
-</div>
-
-<p>Obtuvimos entonces una <strong>matriz de rigidez</strong> `\mathbf{K}^e` por cada elemento `e` de la malla.</p>
-
-<hr><h4>Obtención de la Matriz de Rigidez global</h4>
-
-<p>El siguiente paso es combinar todas estas matrices individuales de rigidez `\mathbf{K}^e` que obtuvimos por cada elemento en una única y gran matriz `\mathbf{K}` que represente la <strong>rigidez</strong> de <u>todo</u> el sistema.</p>
-
-<p>Es en este momento en que podemos empezar a hacer simplificaciones. Por ejemplo, las ecuaciones asociadas a nodos en común entre elementos aparecerán en varias matrices. De esta forma, se pueden realizar simplificaciones al obtener la matriz global.</p>
-
-<div class="output text-center">
-    <img class="img-responsive img-thumbnail" src="img/ensamblaje.png" style="margin:10px" />
-    <p class="help-block"><strong>Figura 2.</strong> Ensamblaje global de los cincos elementos interconectados de la figura (a).</p>
-</div>
-
-<p>Una vez ensamblada la nueva matriz global, podemos obtener los valores de los desplazamientos tras determinar las <em>fuerzas externas</em> aplicadas, al resolver:</p>
-
-<div class="output">
-\[ \mathbf{f}_{\text{ext}} = \mathbf{K} \cdot \mathbf{u}  \]
-</div>
-
-<p>El vector `\mathbf{u}` contendrá <strong class="tooltip" data-toggle="tooltip" title="Los grados de libertad en los nodos participantes impacta en la cantidad de filas y columnas que se pueden simplificar en el sistema global">a lo sumo</strong> una fila por cada nodo de la malla. De esta manera, una forma simple de obtener los desplazamientos en el <strong>interior</strong> de los elementos es la de <strong>interpolar</strong> estos valores conocidos en los nodos.</p>
-
-<blockquote>Dado a que el tamaño de la matriz obtenida `\mathbf{K}` puede ser muy grande para ser resuelta mediante calculaciones manuales, se procede a utilizar el poder de cómputo para resolverla. Una ventaja que existe aquí es que la matriz de rigidez global <strong>no</strong> ha de tener que volverse a recalcular sí cambiamos las fuerzas externas actuantes.</blockquote>
-
+<div class="col-sm-4">
+    <img class="img-thumbnail" style="float: right" src="img/bracket.jpg"/>
+    <p class="help-block"><small><strong>Figura 1.</strong> Herramienta de soporte separada en piezas de tamaño regular para su análisis mediante el FEM.</small></p>
 </div>
 
 
