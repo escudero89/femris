@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Window 2.1
 
+import "../"
+
 //! [splash-properties]
 Window {
     id: splash
@@ -8,7 +10,7 @@ Window {
     title: "Splash Window"
     modality: Qt.ApplicationModal
     flags: Qt.SplashScreen
-    property int timeoutInterval: 2000
+    property int timeoutInterval: 3000
     signal timeout
 //! [splash-properties]
 //! [screen-properties]
@@ -29,12 +31,28 @@ Window {
 
         Text {
             anchors.left: parent.left
-            anchors.bottom: parent.bottom
+            anchors.top: parent.top
             anchors.leftMargin: 10
-            anchors.bottomMargin: 10
+            anchors.topMargin: 10
 
-            text: qsTr("Cargando...")
-            color:  "#EEEEEE";
+            text: Content.appName + " <small>versión " + Content.version + "</small>" +
+                  "<br/><small>" + qsTr("Cargando...") + "</small>"
+            color:  "#EEEEEE"
+
+            textFormat: Text.RichText
+        }
+
+        Text {
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+
+            text: qsTr("<small>&copy; 2014-2015 Cristian Escudero. Todos los derechos reservados.</small>")
+            color:  "#CCCCCC"
+
+            textFormat: Text.RichText
+            opacity: 0.5
         }
     }
     //! [timer]

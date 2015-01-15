@@ -9,7 +9,12 @@ import "."
 
 Item {
 
+    property variant previousFixNodesValues;
+    property variant previousPointLoadValues;
+
     property int index : 0
+
+    signal loadPreviousValues();
 
     id: cellContent
 
@@ -60,6 +65,8 @@ Item {
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
 
             enabled: isEnabled
+
+            tooltip: qsTr("Click para seleccionar un tipo de condición de borde para éste nodo");
 
             onClicked: {
 
@@ -168,36 +175,24 @@ Item {
         }
     }
 
-    Component.onCompleted: {
-        var previousFixNodesValues = eval(StudyCaseHandler
-                                          .getSingleStudyCaseInformation("fixnodes")
-                                          .replace(/;/g, ",")
-                                          .replace("],", "];")
-                                          .replace("=", "")
-                                          .replace("fixnodes", "")
-                                          .trim());
-
-        var previousPointLoadValues = eval(StudyCaseHandler
-                                           .getSingleStudyCaseInformation("pointload")
-                                           .replace(/;/g, ",")
-                                           .replace("],", "];")
-                                           .replace("=", "")
-                                           .replace("pointload", "")
-                                           .trim());
-
-        //--------------------------------------------------
+    onLoadPreviousValues: {
 
         var nChecks = previousFixNodesValues.length / 3;
 
         for ( var k = 0 ; k < nChecks; k++ ) {
-            var currentFixNode = previousFixNodesValues.splice(0,3);
+            var currentFixNode = [
+                previousFixNodesValues[k * ( nChecks - 1)],
+                previousFixNodesValues[k * ( nChecks - 1) + 1],
+                previousFixNodesValues[k * ( nChecks - 1) + 2]
+            ];
 
             if (currentFixNode[0] === (index + 1)) {
-                if (currentFixNode[1] === 1) {
-                    console.log(index, k, currentFixNode, buttonNodeController.state);
-                    buttonNodeController.state = ((buttonNodeController.state === "y-fijo") ? "xy-fijo" : "x-fijo");
+                if (parseInt(currentFixNode[1]) === 1) {
+                    buttonNodeController.state =
+                            ((buttonNodeController.state === "y-fijo") ? "xy-fijo" : "x-fijo");
                 } else {
-                    buttonNodeController.state = ((buttonNodeController.state === "x-fijo") ? "xy-fijo" : "y-fijo");
+                    buttonNodeController.state =
+                            ((buttonNodeController.state === "x-fijo") ? "xy-fijo" : "y-fijo");
                 }
             }
         }
@@ -207,7 +202,11 @@ Item {
         nChecks = previousPointLoadValues.length / 3;
 
         for ( k = 0 ; k < nChecks; k++ ) {
-            var currentPointLoad = previousPointLoadValues.splice(0,3);
+            var currentPointLoad = [
+                previousPointLoadValues[k * ( nChecks - 1)],
+                previousPointLoadValues[k * ( nChecks - 1) + 1],
+                previousPointLoadValues[k * ( nChecks - 1) + 2]
+            ];
 
             if (currentPointLoad[0] === (index + 1)) {
                 if (currentPointLoad[1] === 1) {

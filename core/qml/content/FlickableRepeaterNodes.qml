@@ -40,6 +40,9 @@ ColumnLayout {
 
         GridView {
 
+            property variant previousFixNodesValues;
+            property variant previousPointLoadValues;
+
             id: repeater
 
             clip: true
@@ -80,18 +83,43 @@ ColumnLayout {
 
                     onLoaded: {
                         item.index = index
+                        item.loadPreviousValues();
                     }
 
                     Component {
                         id: nodesHeatComponent
-                        NodesHeat {}
+                        NodesHeat {
+                            previousFixNodesValues: repeater.previousFixNodesValues;
+                            previousPointLoadValues: repeater.previousPointLoadValues;
+                        }
                     }
 
                     Component {
                         id: nodesStructuralComponent
-                        NodesStructural {}
+                        NodesStructural {
+                            previousFixNodesValues: repeater.previousFixNodesValues;
+                            previousPointLoadValues: repeater.previousPointLoadValues;
+                        }
                     }
                 }
+            }
+
+            Component.onCompleted: {
+                previousFixNodesValues = eval(StudyCaseHandler
+                                              .getSingleStudyCaseInformation("fixnodes")
+                                              .replace(/;/g, ",")
+                                              .replace("],", "];")
+                                              .replace("=", "")
+                                              .replace("fixnodes", "")
+                                              .trim());
+
+                previousPointLoadValues = eval(StudyCaseHandler
+                                               .getSingleStudyCaseInformation("pointload")
+                                               .replace(/;/g, ",")
+                                               .replace("],", "];")
+                                               .replace("=", "")
+                                               .replace("pointload", "")
+                                               .trim());
             }
         }
 

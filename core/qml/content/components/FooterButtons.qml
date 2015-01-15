@@ -28,6 +28,20 @@ RowLayout {
     }
 
     PrimaryButton {
+        tooltip: qsTr("Exportar Caso de Estudio para GiD")
+
+        buttonLabel: "Exportar"
+        buttonStatus: "warning"
+        iconSource: "qrc:/resources/icons/GiD.png"
+
+        Layout.fillWidth: true
+
+        onClicked: dialogs.exportAs.open();
+
+        visible: ( fromWhere === "" )
+    }
+
+    PrimaryButton {
         buttonLabel: "Vista General"
         buttonStatus: "primary"
         iconSource: "qrc:/resources/icons/four29.png"
@@ -38,17 +52,13 @@ RowLayout {
     }
 
     PrimaryButton {
-        id: continueButton
-
         buttonLabel: "Guardar y Continuar"
         buttonStatus: "success"
         iconSource: "qrc:/resources/icons/save8.png"
 
         Layout.fillWidth: true
 
-        onClicked: {
-            mainWindow.saveAndContinue(fromWhere);
-        }
+        onClicked: mainWindow.saveAndContinue(fromWhere);
 
         visible: ( fromWhere !== "" )
     }

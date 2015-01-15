@@ -195,7 +195,7 @@ Item {
                     tooltip: qsTr("Exportar Caso de Estudio para GiD")
 
                     buttonLabel: ""
-                    buttonStatus: "femris"
+                    buttonStatus: "warning"
                     iconSource: "qrc:/resources/icons/GiD.png"
 
                     Layout.preferredWidth: 30
@@ -203,9 +203,7 @@ Item {
 
                     enabled: false
 
-                    onClicked: {
-                        dialogs.exportAs.open();
-                    }
+                    onClicked: dialogs.exportAs.open();
 
                 }
 

@@ -9,7 +9,10 @@ import "."
 
 Item {
 
+    property variant previousSideloadValues;
     property int index : 0
+
+    signal loadPreviousValues();
 
     id: cellContent
 
@@ -80,6 +83,8 @@ Item {
             Layout.preferredWidth: parent.width * 0.05
 
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
+
+            tooltip: qsTr("Click para resaltar los nodos que pertenecen a éste borde");
 
             onClicked: {
                 switch(buttonNodeController.state) {
@@ -157,20 +162,21 @@ Item {
         }
     }
 
-    Component.onCompleted: {
-        var previousSideloadValues = eval(StudyCaseHandler.getSingleStudyCaseInformation("sideload").replace(/;/g, ",").replace("],", "];").replace("=", "").replace("sideload", "").trim());
+    onLoadPreviousValues: {
 
         var currentSide = jsonDomain["sideloadNodes"][index];
         var nSideLoad = previousSideloadValues.length / 3;
 
         for ( var k = 0 ; k < nSideLoad; k++ ) {
-            var currentLoad = previousSideloadValues.splice(0, 3);
+            var currentLoad = [
+                        previousSideloadValues[k * ( nSideLoad - 1)],
+                        previousSideloadValues[k * ( nSideLoad - 1) + 1],
+                        previousSideloadValues[k * ( nSideLoad - 1) + 2]
+                    ];
 
             if (currentSide.indexOf(currentLoad[0]) !== -1 && currentSide.indexOf(currentLoad[1]) !== -1) {
                 textFieldSideload.text = currentLoad[2];
             }
         }
-
-        return "";
     }
 }

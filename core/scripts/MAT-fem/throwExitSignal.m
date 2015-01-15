@@ -35,8 +35,7 @@ function throwExitSignal(errormsg)
     fprintf(1, '------------------------------------------------------------------\n');
     fprintf(1, 'Reached end of the program...\n');
     fprintf(1, 'Signal (EXIT_PROCESS)\n');
-    fprintf(1, '------------------------------------------------------------------\n');
-    fprintf('\n');
+    fprintf(1, '------------------------------------------------------------------');
 
     exit;
 

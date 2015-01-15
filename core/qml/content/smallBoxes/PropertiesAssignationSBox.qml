@@ -192,11 +192,9 @@ Rectangle {
             model: StudyCaseHandler.isStudyType("heat") ?
                 listModelVariablesSBoxHeat : listModelVariablesSBoxStructural
 
-            Component.onCompleted: {model = StudyCaseHandler.isStudyType("heat") ?
-                                listModelVariablesSBoxHeat : listModelVariablesSBoxStructural;
-
-                console.log("dafuq", StudyCaseHandler.isStudyType("heat"));
-            }
+            Component.onCompleted: model = StudyCaseHandler.isStudyType("heat") ?
+                                       listModelVariablesSBoxHeat :
+                                       listModelVariablesSBoxStructural;
 
         }
 

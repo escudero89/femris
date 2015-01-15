@@ -7,6 +7,9 @@ import "custom.js" as Custom
 
 QtObject {
 
+    property string appName: "FEMRIS"
+    property string version: "0.9"
+
     property string baseDir : applicationDirPath + "/docs/inner/"
 
     property string femris : "<strong style='color:" + Style.color.femris + "'>FEMRIS</strong>";

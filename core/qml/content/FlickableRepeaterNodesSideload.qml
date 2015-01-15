@@ -41,6 +41,8 @@ ColumnLayout {
 
         GridView {
 
+            property variant previousSideloadValues;
+
             id: repeater
 
             clip: true
@@ -86,18 +88,33 @@ ColumnLayout {
 
                     onLoaded: {
                         item.index = index
+                        item.loadPreviousValues();
                     }
 
                     Component {
                         id: nodesHeatComponent
-                        NodesSideloadHeat {}
+                        NodesSideloadHeat {
+                            previousSideloadValues: repeater.previousSideloadValues;
+                        }
                     }
 
                     Component {
                         id: nodesStructuralComponent
-                        NodesSideloadStructural {}
+                        NodesSideloadStructural {
+                            previousSideloadValues: repeater.previousSideloadValues;
+                        }
                     }
                 }
+            }
+
+            Component.onCompleted: {
+                previousSideloadValues = eval(StudyCaseHandler
+                                              .getSingleStudyCaseInformation("sideload")
+                                              .replace(/;/g, ",")
+                                              .replace("],", "];")
+                                              .replace("=", "")
+                                              .replace("sideload", "")
+                                              .trim());
             }
 
             // Uses black magic to hunt for the delegate instance with the given

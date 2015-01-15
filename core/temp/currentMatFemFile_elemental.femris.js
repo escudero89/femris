@@ -35,7 +35,9 @@ var G_CURRENT_ELEMENTAL_DATA = {
     [ 2.00000e-01]
   ],
   "_pstrs" : "1 indicate Plane Stress; 0 indicate Plane Strain",
-  "pstrs" : "false",
+  "pstrs" :[
+    [ 0.00000e+00]
+  ],
   "_kx" : "Heat transfer coeffcient in X direction",
   "kx" :[
   ],
