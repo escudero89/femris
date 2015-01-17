@@ -84,6 +84,10 @@ MenuBar {
             onMarkedAsNotSaved: {
                 menuItemSave.enabled = true;
             }
+
+            onLoadingNewStudyCase: {
+                menuItemClose.trigger();
+            }
         }
 
         MenuSeparator { }

@@ -5,7 +5,7 @@
 #include <QDebug>
 
 #include <QProcess>
-
+#include "fileio.h"
 class ProcessHandler : public QObject
 {
     Q_OBJECT
@@ -18,9 +18,6 @@ public:
     static void invokingOctave(const QString&);
 
     Q_INVOKABLE void executeInterpreter(QString);
-
-    void setCommand(const QString &);
-
     Q_INVOKABLE void kill();
 
 public Q_SLOTS:
@@ -43,10 +40,11 @@ Q_SIGNALS:
     void processFinished();
     void processWithError();
 
+    void processMatlabInWindows();
+
     void resultMessage(const QString &msg);
 
 private:
-
     QProcess* m_process;
     unsigned int m_stepOfProcessManipulation;
 

@@ -176,6 +176,8 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
         return false;
     }
 
+    emit loadingNewStudyCase();
+
     start();
 
     m_studyCaseType = results["typeOfStudyCase"];

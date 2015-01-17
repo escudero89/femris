@@ -54,6 +54,7 @@ Q_SIGNALS:
     void loadingStart();
     void loadingDone();
 
+    void loadingNewStudyCase();
     void savingCurrentStudyCase();
 
     void callProcess();

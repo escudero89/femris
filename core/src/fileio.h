@@ -24,6 +24,10 @@ public:
     QString source() const;
     bool isSourceEmpty();
 
+    bool exists();
+    bool deleteFile();
+
+    // Statics
     static bool readConfigurationFile(QString, const QString&);
     static void writeConfigurationFile(const QString&, const QString&, const QMap<QString, QString>&);
     static bool splitConfigurationFile(const QString&, const QString&, const QStringList&, bool);

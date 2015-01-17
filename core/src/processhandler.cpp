@@ -24,6 +24,11 @@ void ProcessHandler::callingProcess() {
     connect(m_process, SIGNAL(finished(int)), this, SLOT(exitingProcess()));
     connect(m_process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(errorInProcess()));
 
+    // We remove the previous file with the current output of the interpreter
+    QString dir(Configure::read("fileApplicationDirPath"));
+    FileIO previousCurrentMatFemFileJs(dir + "temp/currentMatFemFile.femris.js");
+    previousCurrentMatFemFileJs.deleteFile();
+
     if (Configure::check("interpreter", "octave")) {
         callingOctave();
     } else if (Configure::check("interpreter", "matlab")) {
@@ -48,11 +53,12 @@ void ProcessHandler::callingOctave() {
 
 void ProcessHandler::callingMatlab() {
 
+    QString runThisFile(Configure::read("applicationDirPath") + "temp/fileForProcessingInterpreter_tmp.m");
     QStringList processArgs;
 
     processArgs << "-nosplash"       // does  not display the splash screen during startup
                 << "-nodesktop"       // use the current terminal for commands
-                << "-r" << "run('temp/fileForProcessingInterpreter_tmp.m'); exit;";
+                << "-r" << "run('" + runThisFile + "');";
 
     emit proccessCalled();
 
@@ -67,8 +73,6 @@ void ProcessHandler::writingInProcess() {
     if (m_process->state() == QProcess::Running && m_stepOfProcessManipulation == 0) {
 
         m_stepOfProcessManipulation = 1;
-
-        qDebug() << "writingInProcess... " << m_command;
 
         m_process->closeWriteChannel();
 
@@ -87,16 +91,16 @@ void ProcessHandler::readingInProcess() {
         emit resultMessage(result);
 
         if (QString(result).contains("EXIT_PROCESS")) {
-            finishingProcess();
+            m_stepOfProcessManipulation = 2;
         }
     }
 }
 
 void ProcessHandler::finishingProcess() {
 
-    if (m_stepOfProcessManipulation == 1) {
+    if (m_stepOfProcessManipulation == 2) {
 
-        m_stepOfProcessManipulation = 2;
+        m_stepOfProcessManipulation = 3;
 
         qDebug() << "ProcessHandler::finishingProcess(): Closing process...";
 
@@ -107,8 +111,15 @@ void ProcessHandler::finishingProcess() {
 
 void ProcessHandler::exitingProcess() {
 
-    if (m_stepOfProcessManipulation == 2) {
+    // If we are in Windows usign matlab, we can't know the current state of the process
+    // so, we enable the process anyways
+    if (Configure::check("interpreter", "matlab") && Configure::check("OS", "windows")) {
+        m_stepOfProcessManipulation = 3;
+        emit processMatlabInWindows();
+        return;
+    }
 
+    if (m_stepOfProcessManipulation == 3) {
         qDebug() << "ProcessHandler::exitingProcess(): Process finished.";
 
         m_stepOfProcessManipulation = 0;
@@ -155,12 +166,4 @@ void ProcessHandler::kill() {
     m_stepOfProcessManipulation = 0;
 
     emit processWithError();
-}
-
-//----------------------------------------------------------------------------//
-//--                          GETTER AND SETTERS                            --//
-//----------------------------------------------------------------------------//
-
-void ProcessHandler::setCommand(const QString& command) {
-    m_command = command;
 }

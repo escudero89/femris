@@ -72,6 +72,8 @@ Item {
 
             TextArea {
                 id: textAreaLoadingModal
+                font.family: "Courier"
+
                 Layout.alignment: Qt.AlignCenter
 
                 Layout.fillHeight: true
@@ -158,10 +160,13 @@ Item {
                     enabled: false
 
                     onClicked: {
-                        textAreaLoadingModal.append("\n\nForzando cierre...");
+                        textAreaLoadingModal.append("##################################################################\n");
+                        textAreaLoadingModal.append("Forzando cierre...\n");
+
                         ProcessHandler.kill();
-                        textAreaLoadingModal.append("\nEjecución finalizada (forzada).");
                         forceCloseLoadingModal.enabled = false;
+
+                        timerMatlabOnWindows.stop();
                     }
                 }
 
@@ -270,6 +275,9 @@ Item {
         target: ProcessHandler
 
         onProccessCalled: {
+            progressBarModal.value = 0;
+            textAreaLoadingModal.text = "";
+
             loadingModal.visible = 1;
             console.log("Called...");
             progressBarModal.value = Math.floor(Math.random() * 100 % 40) + 10;
@@ -280,8 +288,8 @@ Item {
                     'GNU Octave' : Configure.read("interpreter") === 'matlab' ?
                         'MATLAB' : 'undefined';
 
-            textAreaLoadingModal.append("Comenzando la ejecución de MAT-fem. Llamando a " + interpreter + ".\n\n");
-            textAreaLoadingModal.append("------------------------------------------------------------------\n\n");
+            textAreaLoadingModal.append("Comenzando la ejecución de MAT-fem. Llamando a " + interpreter + ".\n");
+            textAreaLoadingModal.append("------------------------------------------------------------------\n");
         }
 
         onProcessWrote: {
@@ -295,21 +303,77 @@ Item {
         }
 
         onProcessFinished: {
-            console.log("Finished...");
-
-            forceCloseLoadingModal.enabled = false;
-
-            closeLoadingModal.enabled = true;
-            goToShapeFunctionLoadingModal.enabled = true;
-            continueLoadingModal.enabled = true;
-            exportStudyCaseLoadingModal.enabled = true;
+            processFinishedSuccessfully();
         }
 
         onProcessWithError: {
-            console.log("Error...");
-            textAreaLoadingModal.append("\n\n\nHubo un ERROR al ejecutar el proceso. Revise sí el binario es correcto.");
-            closeLoadingModal.enabled = true;
-            forceCloseLoadingModal.enabled = false;
+            processFinishedWithErrors();
         }
+
+        onProcessMatlabInWindows: {
+            textAreaLoadingModal.append("Al parecer estás ejecutando MATLAB en Windows.\n");
+            textAreaLoadingModal.append("Por lo tanto, los resultados de MATfem aparecerán en MATLAB y no aquí.\n\n");
+            textAreaLoadingModal.append("Espere por favor, programa en ejecución...\n");
+
+            timerMatlabOnWindows.start();
+        }
+    }
+
+    function processFinishedSuccessfully() {
+        console.log("Finished...");
+
+        progressBarModal.value = 100;
+        textAreaLoadingModal.append("------------------------------------------------------------------\n");
+        textAreaLoadingModal.append("Ejecución con éxito. Ya puedes proseguir con los resultados.\n");
+        textAreaLoadingModal.append("------------------------------------------------------------------");
+
+        forceCloseLoadingModal.enabled = false;
+
+        closeLoadingModal.enabled = true;
+        goToShapeFunctionLoadingModal.enabled = true;
+        continueLoadingModal.enabled = true;
+        exportStudyCaseLoadingModal.enabled = true;
+    }
+
+    function processFinishedWithErrors() {
+        console.log("Error...");
+
+        progressBarModal.value = 100;
+        textAreaLoadingModal.append("##################################################################\n");
+        textAreaLoadingModal.append("Hubo un ERROR al ejecutar el proceso. Ejecución finalizada.\n");
+        textAreaLoadingModal.append("##################################################################\n");
+        closeLoadingModal.enabled = true;
+        forceCloseLoadingModal.enabled = false;
+    }
+
+    /// MATLAB IN WINDOWS NEEDS THE FOLLOWING COMPONENTS
+    Timer {
+        property int triedCounter : 0
+
+        id: timerMatlabOnWindows
+
+        interval: 500; running: false; repeat: true
+        onTriggered: {
+            // If the file exists
+            if (CurrentFileIO.setSource(fileApplicationDirPath + "/temp/currentMatFemFile.femris.js")) {
+                stop();
+                processFinishedSuccessfully();
+            }
+            triedCounter++;
+
+            // After long time has passed since the execution of MATLAB, we end the timer
+            // because there must have been a problem of some sort.
+            var secondsToWaitForSuccess = 180;
+            var maxTries = Math.round(secondsToWaitForSuccess / (timerMatlabOnWindows.interval / 1000));
+
+            if (triedCounter > maxTries) {
+                stop();
+                triedCounter = 0;
+                processFinishedWithErrors();
+            }
+
+
+        }
+
     }
 }
