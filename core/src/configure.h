@@ -4,6 +4,15 @@
 #include <QObject>
 #include <QMap>
 
+/**
+ * @brief The Configure class
+ *
+ * The Configure class works as a Singleton. Its main purpose is to read/write
+ * the custom configuration file for the user, which stores configuration
+ * parameters (such as which OS the user has, or what interpreter [matlab/octave]
+ * is the user using).
+ *
+ */
 class Configure : public QObject {
 
     Q_OBJECT
@@ -39,12 +48,12 @@ Q_SIGNALS:
 
 private:
 
-    static Configure *instance;
+    static Configure *instance; ///< Configure instance needed by the Singleton Pattern
 
-    QMap<QString, QString> m_configuration;
+    QMap<QString, QString> m_configuration; ///< Map of the configuration parameters
 
-    QString m_pathConfigurationXml;
-    QString m_pathUserConfigurationXml;
+    QString m_pathConfigurationXml; ///< Path of the original configuration file
+    QString m_pathUserConfigurationXml; ///< Path of the custom configuration file
 
 };
 

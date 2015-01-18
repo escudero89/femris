@@ -208,6 +208,7 @@ bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable) 
 /**
  * @brief StudyCaseHandler::checkSingleStudyCaseInformation
  * @param variable
+ * @param comparison
  * @return
  */
 bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable, const QString &comparison) {
@@ -217,6 +218,7 @@ bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable, 
 /**
  * @brief StudyCaseHandler::getSingleStudyCaseInformation
  * @param variable
+ * @param isTemporal
  * @return
  */
 QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable, bool isTemporal) {
@@ -240,6 +242,7 @@ QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable,
  * @brief StudyCaseHandler::setSingleStudyCaseInformation
  * @param variable
  * @param newVariable
+ * @param isTemporal
  */
 void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
                                                      const QString& newVariable,
@@ -360,8 +363,6 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
 
 /**
  * @brief StudyCaseHandler::createDomainFromScriptFile
- * @param pathfile
- * @return
  */
 void StudyCaseHandler::createDomainFromScriptFile() {
     emit loadingStart();

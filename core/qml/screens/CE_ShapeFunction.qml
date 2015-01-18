@@ -13,7 +13,7 @@ import "../"
 ColumnLayout {
 
     objectName: "CE_ShapeFunction"
-    spacing: 2
+    spacing: 0
 
     Item {
         Layout.fillHeight: true
@@ -37,6 +37,18 @@ ColumnLayout {
             }
 
             Component.onCompleted: Configure.emitMainSignal("loadingImage.show()")
+
+            MouseArea {
+                anchors.top: parent.top
+                anchors.topMargin: 3
+                anchors.right: parent.right
+                anchors.rightMargin: 18
+
+                height: 35
+                width: 41
+
+                onClicked: Qt.openUrlExternally("https://github.com/escudero89/femris/wiki/Funciones-de-Forma");
+            }
         }
 
         Text {

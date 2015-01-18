@@ -140,7 +140,7 @@ MenuBar {
         Timer {
             id : openOnlineHelp
             interval: 500; running: false;
-            onTriggered: Qt.openUrlExternally("https://github.com/escudero89/femris/wiki");
+            onTriggered: Qt.openUrlExternally("https://github.com/escudero89/femris/wiki/Gu%C3%ADa-del-Usuario");
         }
 
         MenuSeparator { }

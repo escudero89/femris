@@ -13,7 +13,7 @@ import "../"
 
 ColumnLayout {
 
-    spacing: 2
+    spacing: 0
 
     Item {
         Layout.fillHeight: true
@@ -119,6 +119,17 @@ ColumnLayout {
                 return file;
             }
 
+            MouseArea {
+                anchors.top: parent.top
+                anchors.topMargin: 3
+                anchors.right: parent.right
+                anchors.rightMargin: 3
+
+                height: 35
+                width: 41
+
+                onClicked: Qt.openUrlExternally("https://github.com/escudero89/femris/wiki/Resultados");
+            }
         }
 
         Text {
