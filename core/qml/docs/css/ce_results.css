@@ -90,3 +90,50 @@ img.img-center {
     margin-top: -50px; /* Half the height */
     margin-left: -50px; /* Half the width */
 }
+
+/* btn-femris */
+.btn-femris {
+  color: #FFFFFF;
+  background-color: #CA428B;
+  border-color: #962a64;
+}
+
+.btn-femris:hover,
+.btn-femris:focus,
+.btn-femris:active,
+.btn-femris.active,
+.open .dropdown-toggle.btn-femris {
+  color: #FFFFFF;
+  background-color: #a93071;
+  border-color: #962a64;
+}
+
+.btn-femris:active,
+.btn-femris.active,
+.open .dropdown-toggle.btn-femris {
+  background-image: none;
+}
+
+.btn-femris.disabled,
+.btn-femris[disabled],
+fieldset[disabled] .btn-femris,
+.btn-femris.disabled:hover,
+.btn-femris[disabled]:hover,
+fieldset[disabled] .btn-femris:hover,
+.btn-femris.disabled:focus,
+.btn-femris[disabled]:focus,
+fieldset[disabled] .btn-femris:focus,
+.btn-femris.disabled:active,
+.btn-femris[disabled]:active,
+fieldset[disabled] .btn-femris:active,
+.btn-femris.disabled.active,
+.btn-femris[disabled].active,
+fieldset[disabled] .btn-femris.active {
+  background-color: #CA428B;
+  border-color: #962a64;
+}
+
+.btn-femris .badge {
+  color: #CA428B;
+  background-color: #FFFFFF;
+}

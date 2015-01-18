@@ -28,6 +28,16 @@ RowLayout {
     }
 
     PrimaryButton {
+        buttonLabel: "Vista General"
+        buttonStatus: "primary"
+        iconSource: "qrc:/resources/icons/four29.png"
+
+        onClicked : mainWindow.switchSection("CE_Overall")
+
+        Layout.fillWidth: true
+    }
+
+    PrimaryButton {
         tooltip: qsTr("Exportar Caso de Estudio para GiD")
 
         buttonLabel: "Exportar"
@@ -39,16 +49,6 @@ RowLayout {
         onClicked: dialogs.exportAs.open();
 
         visible: ( fromWhere === "" )
-    }
-
-    PrimaryButton {
-        buttonLabel: "Vista General"
-        buttonStatus: "primary"
-        iconSource: "qrc:/resources/icons/four29.png"
-
-        onClicked : mainWindow.switchSection("CE_Overall")
-
-        Layout.fillWidth: true
     }
 
     PrimaryButton {

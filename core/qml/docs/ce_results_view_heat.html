@@ -44,15 +44,18 @@
                     </ul>
 
                     <form class="navbar-form navbar-right" role="search" style="margin:3px">
-                        <button type="button" class="btn btn-primary" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
+                        <button type="button" class="btn btn-info" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
                             <span class="glyphicon glyphicon-th"></span>
                         </button>
-                        <button type="button" id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
+                        <button type="button" id="buttonToggleViews" class="btn btn-success" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
                             <span class="glyphicon glyphicon-th-large"></span>
                         </button>
                         <button type="button" class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
                             <span class="glyphicon glyphicon-resize-horizontal"></span>
                         </button>
+                        <a class="btn btn-femris" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Resultados#heat">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
                     </form>
                 </nav>
             </div>

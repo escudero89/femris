@@ -8,7 +8,7 @@ import "custom.js" as Custom
 QtObject {
 
     property string appName: "FEMRIS"
-    property string version: "1.0.0"
+    property string version: "0.9.0"
 
     property string baseDir : applicationDirPath + "/docs/inner/"
 

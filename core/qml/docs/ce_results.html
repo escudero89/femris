@@ -136,25 +136,28 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left" role="search" style="margin:3px">
+                    <form class="navbar-form navbar-left" role="search" style="margin:3px; padding:0;">
                         <div class="form-group">
                             <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
                         </div>
-                        <button type="button" class="btn btn-info" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
+                        <button type="button" class="btn btn-danger" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
                             <span class="glyphicon glyphicon-eye-open"></span>
                         </button>
                     </form>
 
-                    <form class="navbar-form navbar-right" role="search" style="margin:3px">
-                        <button type="button" class="btn btn-primary" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
+                    <form class="navbar-form navbar-right" role="search" style="margin:3px; padding:0;">
+                        <button type="button" class="btn btn-info" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
                             <span class="glyphicon glyphicon-th"></span>
                         </button>
-                        <button type="button" id="buttonToggleViews" class="btn btn-info" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
+                        <button type="button" id="buttonToggleViews" class="btn btn-success" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
                             <span class="glyphicon glyphicon-th-large"></span>
                         </button>
                         <button type="button" class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
                             <span class="glyphicon glyphicon-resize-horizontal"></span>
                         </button>
+                        <a class="btn btn-femris" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Resultados#structural">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
                     </form>
                 </nav>
             </div>

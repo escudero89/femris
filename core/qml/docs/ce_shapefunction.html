@@ -38,23 +38,26 @@
             <div class="navbar-primary">
                 <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
                     <form class="navbar-form navbar-left" role="search" style="margin:3px">
-                        <button class="btn btn-default" type="button" onclick="updateGraph()" title="Actualizar gráfico">
-                            <span class="glyphicon glyphicon-floppy-disk"></span>
-                        </button>
-                        <button class="btn btn-info" type="button" data-toggle="modal" data-target="#modalInfo" title="Mostrar ayuda">
-                            <span class="glyphicon glyphicon-question-sign"></span>
-                        </button>
-                    </form>
-
-                    <form class="navbar-form navbar-right" style="margin:3px">
-                        <div class="form-group">
-                            <span class="alert-warning form-control text-right" id="errorValue" data-toggle="tooltip" data-placement="bottom" title="Valor cuadrático medio">Root Mean Square: 00.00%</span>
-                        </div>
                         <div id="miniLoader" class="form-group">
                             <div class="form-control" style="background-color:transparent;  padding: 0; margin:0;">
                                 <img class="img-responsive" src="img/loader.gif" alt="Cargando" title="Cargando..." width="26" style="background-color:transparent; padding: 3px 0; margin: 0 7px; opacity: 0;"/>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <span class="alert-warning form-control text-right" id="errorValue" data-toggle="tooltip" data-placement="bottom" title="Valor cuadrático medio presente en la función f(x) siendo aproximada por las funciones de forma elegidas.">Root Mean Square: 00.00%</span>
+                        </div>
+                    </form>
+
+                    <form class="navbar-form navbar-right" style="margin:3px">
+                        <button class="btn btn-default" type="button" onclick="updateGraph()" title="Actualizar gráfico">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>
+                        </button>
+                        <button class="btn btn-info" type="button" data-toggle="modal" data-target="#modalInfo" title="Más información">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
+                        <a class="btn btn-femris" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Funciones-de-Forma">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
                     </form>
                 </nav>
             </div>
@@ -62,7 +65,7 @@
 
         <div class="row" style="margin-top:10px">
 
-            <div class="col-md-5">
+            <div class="col-sm-5">
 
                 <div id="panel-left" class="panel panel-default" style="height:90vh; overflow-y:auto">
                     <div class="panel-body" onchange="updateShapeFunction()">
@@ -208,8 +211,8 @@
                 </div>
             </div>
 
-            <div class="col-md-7">
-                <div id="panel-right" class="panel panel-default"  style="height:90vh; overflow:hidden;">
+            <div class="col-sm-7">
+                <div id="panel-right" class="panel panel-default"  style="height:90vh; overflow-y:scroll;">
                     <div class="panel-body">
                         <div id="box" class="" style="width:100%; height:42vh;"></div>
                         <hr>
