@@ -29,7 +29,7 @@ build-*
 *.autosave
 
 # FEMRIS
-source/temp/
+core/temp/
 *.femris.old
 *.femris.bak
 *.fuse_hidden*

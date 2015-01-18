@@ -81,18 +81,27 @@ ColumnLayout {
     PrimaryButton {
         id: hideButton
 
-        buttonLabel: "Ocultar"
+        iconSource: "qrc:/resources/icons/black/question23.png"
+
+        buttonLabel: "Ayuda Online"
         buttonStatus: "black"
 
         Layout.fillWidth: parent.width
 
         onClicked: {
-            if (firstTimeOnly) {
-                blockHiding(textAreaPrimeraVezAqui.state !== 'OCULTO');
+            var url = "https://github.com/escudero89/femris/wiki";
+
+            switch (parentStage) {
+            case "CE_Model":
+                url = "https://github.com/escudero89/femris/wiki/Modelo-F%C3%ADsico";
+                break;
+            case "CE_Domain":
+                url = "https://github.com/escudero89/femris/wiki/Dominio";
+                break;
             }
 
-            textAreaPrimeraVezAqui.state =
-                    (textAreaPrimeraVezAqui.state !== 'OCULTO') ? 'OCULTO' : 'NORMAL';
+            globalInfoBox.setInfoBox(qsTr("La ayuda se ha abierto en tu navegador por defecto. La url es: " + url));
+            Qt.openUrlExternally(url);
         }
     }
 

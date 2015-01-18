@@ -73,6 +73,9 @@ int main(int argc, char *argv[]) {
     Configure::write("fileApplicationDirPath", "file://" + applicationDirPath + "/");
     engine.rootContext()->setContextProperty("fileApplicationDirPath", "file://" + applicationDirPath);
 
+    Configure::write("__DATE__", __DATE__);
+    Configure::write("__TIME__", __TIME__);
+
     engine.load(QUrl(QStringLiteral("qrc:/start.qml")));
 
     return app.exec();

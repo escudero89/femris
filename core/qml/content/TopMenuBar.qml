@@ -131,10 +131,24 @@ MenuBar {
     Menu {
         title: qsTr("Ayuda")
         MenuItem {
-            text: qsTr("Acerca de...")
+            text: qsTr("Ver Ayuda Online")
+            shortcut: "F1"
             iconSource: "qrc:/resources/icons/black/question23.png"
+            onTriggered: openOnlineHelp.start();
+        }
+        // This timer is required to avoid crashes due to immediate opening of url
+        Timer {
+            id : openOnlineHelp
+            interval: 500; running: false;
+            onTriggered: Qt.openUrlExternally("https://github.com/escudero89/femris/wiki");
+        }
+
+        MenuSeparator { }
+        MenuItem {
+            text: qsTr("Acerca de...")
             onTriggered: whichMenu("about");
         }
+
     }
 
     Menu {
