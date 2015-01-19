@@ -1,4 +1,7 @@
-
+/**
+ * [globalElementalMatrixObject description]
+ * @type {Object}
+ */
 var globalElementalMatrixObject = {
 
     original_html_content : {},
