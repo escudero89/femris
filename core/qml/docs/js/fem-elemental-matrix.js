@@ -1,7 +1,4 @@
-/**
- * [globalElementalMatrixObject description]
- * @type {Object}
- */
+
 var globalElementalMatrixObject = {
 
     original_html_content : {},
@@ -21,25 +18,52 @@ var globalElementalMatrixObject = {
         problem_type_text : false,
     },
 
+/**
+ * Surrounds a string of text by the tags, LaTeX style.
+ * Returned example: \begin{_tag} _text \end{_tag}
+ *
+ * @param  {String} text Text to be covered inside tags
+ * @param  {String} tag  Tag to be used in _tag
+ * @return {String}      Wrapped text
+ */
     wrapInTag : function (text, tag) {
         return "\\begin{" + tag + "}" + text + "\\end{" + tag + "}";
-
     },
 
+/**
+ * Parse a number into scientific notation (LaTeX style).
+ * For example, the number 52700 would be returned as "5.2700 \times 10^{4}".
+ * If the number is 0, returns "-".
+ *
+ * @param  {Number} number Number to be parsed
+ * @return {String}        Number in scientific notation
+ */
     latexfyNumber : function(number) {
         var scientific_expression = Utils.parseNumber(number).split('e');
 
-        var latex_expression = (number !== 0) ?
-                scientific_expression[0] + ' \\times 10^{' + parseInt(scientific_expression[1]) + '}' :
-                '-';
+        var latex_expression = (number === 0) ? '-' :
+                scientific_expression[0] + ' \\times 10^{' + parseInt(scientific_expression[1]) + '}';
 
         return latex_expression;
     },
 
+/**
+ * Renders a DOM element using MathJax.
+ *
+ * @param  {String} elementId ID of the DOM element
+ */
     loadMathJax : function(elementId) {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById(elementId)]);
     },
 
+/**
+ * Add the MathJax required tags for future rendering of the string passed,
+ * and stores the tagged string into a DOM element.
+ * For example, `5.700 \times 10^3` returns as `$${5.700 \times 10^3}$$`.
+ *
+ * @param {String} latexCode Latex syntax to be tagged with MathJax syntax
+ * @param {String} elementId ID of the DOM element which will store the result
+ */
     setMathJax : function(latexCode, elementId) {
         elementId = assignIfNecessary(elementId, 'MathOutput')
 
@@ -47,6 +71,17 @@ var globalElementalMatrixObject = {
         this.loadMathJax(elementId);
     },
 
+/**
+ * Receives an array of arrays, and parses them into a latexified matrix format.
+ * It also transforms the numbers of the array into scientific notation.
+ *
+ * Example: `[[1],[2]]` becomes...
+ *
+ *     "\begin{bmatrix}1.0000 \times 10^{0}\\2.0000 \times 10^{0}\\\end{bmatrix}"
+ *
+ * @param  {Object} setOfValues Double array of values ([[a1,a2,...],[b1,...]]).
+ * @return {String}             The array transformed into a matrix format
+ */
     latexfyMatrix : function(setOfValues) {
 
         var self = this;
@@ -81,12 +116,35 @@ var globalElementalMatrixObject = {
 
     },
 
+/**
+ * Put an array of arrays into the following format:
+ *
+ *     \\mathbf{label}extra_label = matrix_latexfied
+ *
+ * where matrix_latexfied is the result of parsing the variable `matrix`
+ * usign `latexfyMatrix`.
+ *
+ * @param  {Object} matrix      Double array of values ([[a1,a2,...],[b1,...]])
+ * @param  {String} label       The mathematical name of the matrix
+ * @param  {String} extra_label A label
+ * @return {String}             The parsed matrix
+ */
     latexfyMatrixWithLabel : function(matrix, label, extra_label) {
         extra_label = assignIfNecessary(extra_label, ' ');
 
         return '\\mathbf{' + label + '}' + extra_label + '=' + this.latexfyMatrix(matrix);
     },
 
+/**
+ * Look for all the DOM elements with the `data-eval` attribute, and evals them.
+ * The result is then put into the DOM element value. Example:
+ *
+ *     < span data-eval="{{Math.round(30.4)}}" ></ span > becomes...
+ *     < span data-eval="{{Math.round(3.5)}}" >30</ span >
+ *
+ * Requires that the `data-eval` attribute had its value surrounded by double
+ * parenthesis.
+ */
     setAllKeywordsInParagraphsOnTabs : function() {
 
         var self = this;
@@ -99,6 +157,9 @@ var globalElementalMatrixObject = {
         });
     },
 
+/**
+ * Prints the constitutive matrix into the `ce_results` (tab "Additional Information").
+ */
     printConstitutiveMatrix : function () {
 
         var latexfiedConstitutiveMatrix = "\\mathbf{D} =";
@@ -133,6 +194,9 @@ var globalElementalMatrixObject = {
         this.setMathJax(latexfiedVariables, 'constitutiveMatrixBaseVariables');
     },
 
+/**
+ * Prints the `B` matrix into the `ce_results` (tab "Additional Information").
+ */
     printBMatrix : function () {
 
         var latexfiedAllBMatrices = "";
@@ -188,6 +252,12 @@ var globalElementalMatrixObject = {
 
     },
 
+/**
+ * Sets the current workspace of `ce_results`, i.e. initializes the tabs when
+ * a element of the domain is clicked.
+ *
+ * @param {Number} selectedElementIdx Which element of the domain was selected
+ */
     setWorkspace : function (selectedElementIdx) {
 
         this.element_idx = selectedElementIdx;
@@ -218,6 +288,13 @@ var globalElementalMatrixObject = {
 
     },
 
+/**
+ * Starts the variables of `globalElementalMatrixObject`, usign the information
+ * stored in the `temp` folder.
+ *
+ * @param  {Object} elemental_data  All the information associated with the element
+ * @return {Boolean}                True if it was already initialized. False if not.
+ */
     initialize : function (elemental_data) {
 
         if (this.wasInitialized) {
