@@ -134,19 +134,47 @@ MenuBar {
             text: qsTr("Ver Ayuda Online")
             shortcut: "F1"
             iconSource: "qrc:/resources/icons/black/question23.png"
-            onTriggered: openOnlineHelp.start();
+            onTriggered: {
+                openOnlineHelp.github = "wiki/Gu%C3%ADa-del-Usuario";
+                openOnlineHelp.start();
+            }
         }
+        MenuSeparator { }
+        MenuItem {
+            text: qsTr("Reportar un problema")
+            iconSource: "qrc:/resources/icons/black/bug6.png"
+            onTriggered: {
+                openOnlineHelp.github = "issues";
+                openOnlineHelp.start();
+            }
+        }
+        MenuItem {
+            text: qsTr("Contacto")
+            iconSource: "qrc:/resources/icons/black/speech59.png"
+            onTriggered: {
+                openOnlineHelp.github = "wiki/Contacto";
+                openOnlineHelp.start();
+            }
+        }
+
         // This timer is required to avoid crashes due to immediate opening of url
         Timer {
+            property string github
+
             id : openOnlineHelp
             interval: 500; running: false;
-            onTriggered: Qt.openUrlExternally("https://github.com/escudero89/femris/wiki/Gu%C3%ADa-del-Usuario");
+            onTriggered: {
+                var urlToOpen = "https://github.com/escudero89/femris/" + github;
+                Qt.openUrlExternally(urlToOpen);
+                globalInfoBox.setInfoBox(urlToOpen + " se ha abierto en tu navegador por defecto.");
+            }
         }
 
         MenuSeparator { }
         MenuItem {
             text: qsTr("Acerca de...")
             onTriggered: whichMenu("about");
+            iconSource: "qrc:/resources/icons/black/star60.png"
         }
 
     }

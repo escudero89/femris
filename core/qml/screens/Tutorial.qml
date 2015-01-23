@@ -139,6 +139,15 @@ RowLayout {
 
                 visible: false
 
+                onNavigationRequested: {
+                    var url = "" + request.url;
+                    if (url.indexOf("http") !== -1) {
+                        request.action = WebView.IgnoreRequest;
+                        Qt.openUrlExternally(request.url);
+                        globalInfoBox.setInfoBox("<a href=" + url + ">" + url + "</a> se ha abierto en tu navegador por defecto.");
+                    }
+                }
+
                 // We load the layout and the view, and put the info in the WebView
                 FileIO {
                     id: io_layout

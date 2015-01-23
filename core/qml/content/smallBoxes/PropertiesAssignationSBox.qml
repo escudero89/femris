@@ -111,6 +111,7 @@ Rectangle {
                             text: (unit) ? unit : "";
 
                             anchors.fill: parent
+                            autoHideDelay: 2000
                         }
                     }
 

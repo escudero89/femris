@@ -372,7 +372,6 @@ Item {
                 processFinishedWithErrors();
             }
 
-
         }
 
     }

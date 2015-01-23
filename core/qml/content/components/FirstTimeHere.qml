@@ -81,7 +81,7 @@ ColumnLayout {
     PrimaryButton {
         id: hideButton
 
-        iconSource: "qrc:/resources/icons/black/question23.png"
+        iconSource: "qrc:/resources/icons/question23.png"
 
         buttonLabel: "Ayuda Online"
         buttonStatus: "black"

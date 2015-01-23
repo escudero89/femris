@@ -273,6 +273,20 @@ RowLayout {
                 Layout.fillHeight: true
 
                 PrimaryButton {
+
+                    tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+
+                    buttonStatus: "femris"
+                    buttonLabel: ""
+                    iconSource: "qrc:/resources/icons/external2.png"
+
+                    onClicked: {
+                        StudyCaseHandler.loadUrlInBrowser(modelWebView.urlBase);
+                    }
+
+                }
+
+                PrimaryButton {
                     buttonLabel: "Vista General"
                     buttonStatus: "primary"
                     iconSource: "qrc:/resources/icons/four29.png"
