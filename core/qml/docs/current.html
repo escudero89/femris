@@ -65,11 +65,41 @@
 
     <div class="container">
         <div class="row" id="mainWrap" style="opacity:0">
-            <div class="col-sm-12">
+            <h3>Problema de Ejemplo</h3>
 
-<h3>Problema de Ejemplo</h3>
+<div class="well">
 
-<h4>Introducción</h4>
+    <h4>Observación</h4>
+
+    <p>El comportamiento de los sistemas continuos puede generalmente expresarse mediante ecuaciones diferenciales con sus adecuadas condiciones de contorno.</p>
+
+    <p>Dada una ecuación diferencial o un sistema de éstas, con sus condiciones de contorno, son los caminos posibles para abordar su resolución:</p>
+
+    <ul>
+        <li>Recurrir a la integración directa, obteniendo la denominada solución analítica (<strong>método exacto</strong>), siempre que ésta no sea imposible ni extremadamente laboriosa;</li>
+        <li>Buscar una solución aproximada por otros procedimientos (<strong>método aproximado</strong>)</li>
+    </ul>
+
+    <p>
+    Sí se opta por el segundo método, el estudio se puede enfocar a partir de la ecuación diferencial original (<strong>método de diferencias finitas</strong>), o bien trabajar con una formulación integral equivalente. Ésta última alternativa dispone de dos procedimientos distintos para aplicar el FEM:
+    </p>
+
+    <ol>
+        <li>Formulaciones <strong>variacionales</strong>, qué buscan la solución al problema a partir de la resolución de una ecuación integral que representa una propiedad general del sistema (por ejemplo, la expresión de energía mínima).</li>
+        <li>Formulaciones <strong>residuales</strong>, qué están basadas en el <em>Método de Residuos Ponderados</em>.</li>
+    </ol>
+
+    <p>
+        De ésta manera se puede decir que el FEM es sólo un procedimiento más entre tantos para la solución de las ecuaciones matemáticas que expresan el comportamiento de un problema físico, y que puede aplicarse por vía de una formulación variacional o bien residual (qué suelen ser generalmente más ventajosos).
+    </p>
+
+    <p>
+        Finalmente, cabe resaltar que el punto de partida de la solución del FEM será siempre la existencia de una forma integral que describa el comportamiento del sistema, la cuál será obtenida por los métodos residuales o residuales.
+    </p>
+
+</div>
+
+<h4>Introducción al Ejemplo</h4>
 
 <div class="output pull-right" style="width:40%">
 <img class="img-responsive img-thumbnail pull-right" src="img/bridge-example.jpg" />
@@ -219,6 +249,10 @@ u(x_9,y_9 ) \\
 
 <blockquote>Dado a que el tamaño de la matriz obtenida `\mathbf{K}` puede ser muy grande para ser resuelta mediante calculaciones manuales, se procede a utilizar el poder de cómputo para resolverla. Una ventaja que existe aquí es que la matriz de rigidez global <strong>no</strong> ha de tener que volverse a recalcular sí cambiamos las fuerzas externas actuantes.</blockquote>
 
+</div>
+
+<div class="help-block small text-right col-sm-12" style="padding-top: 5em">
+    <p>Sí quieres contribuír a éste documento en particular, tanto como por sugerencias, cambios, o correcciones ortográficas, puedes hacerlo directamente en <a href="https://github.com/escudero89/femris/blob/master/core/qml/docs/view/fem/problema_ejemplo.html">GitHub</a>.</p>
 </div>
 
 
