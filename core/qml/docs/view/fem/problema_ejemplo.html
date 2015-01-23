@@ -9,11 +9,11 @@
 <p class="help-block"><strong>Figura 1.</strong> Ejemplo de un puente dividido en <em>elementos finitos</em> 3D más simples.</p>
 </div>
 
-<p>Un ingeniero desea construir un puente sobre un río y que una dos ciudades muy transitadas. Para ello, necesita conocer cómo la estructura que él propone se comportará bajo una determinada carga. Las ecuaciones que describen la distribución de tensiones estructurales son conocidas, pero no pueden ser resueltas de forma directa para formas complicadas como las de un puente.</p>
+<p>Un ingeniero desea construir un puente sobre un río y que una dos ciudades muy transitadas. Para ello, necesita conocer cómo la estructura que él propone se comportará bajo una determinada carga. Las ecuaciones que describen la distribución de tensiones estructurales son conocidas, pero no pueden ser resueltas de forma <strong class="tooltipped" data-toggle="tooltip" data-title="Es decir, mediante fórmulas, y no numericamente.">analítica</strong> para formas complicadas como las de un puente.</p>
 
-<p>Sin embargo, las ecuaciones sí pueden ser resueltas para figuras simples, como triángulos y rectángulos. <em>El FEM toma ventaja de este hecho.</em></p>
+<p>Sin embargo, las ecuaciones sí pueden ser resueltas para figuras de geometría sencilla, como lo son los triángulos y rectángulos. <em>El FEM toma ventaja de este hecho.</em></p>
 
-<p>Reemplazamos entonces la forma única y complicada del puente con una estructura aproximadamente similar conformada por <strong class="tooltipped" data-toggle="tooltip" data-placement="rigth" title="Como triángulos o rectángulos.">elementos más simples</strong>. Esta nueva composición de elementos se le hace referencia por el nombre de <strong class="tooltipped" data-toggle="tooltip" data-placement="rigth" title="O simplemente “malla” o “retícula” sí hablamos dentro del contexto del FEM.">“malla de elementos finitos”</strong>.</p>
+<p>Reemplazamos entonces la forma única y complicada del puente con una estructura aproximadamente similar conformada por <strong class="tooltipped" data-toggle="tooltip" title="Como triángulos o rectángulos.">elementos más simples</strong>. Esta nueva composición de elementos se le hace referencia por el nombre de <strong class="tooltipped" data-toggle="tooltip" title="O simplemente “malla” o “retícula” sí hablamos dentro del contexto del FEM.">“malla de elementos finitos”</strong>.</p>
 
 <hr>
 
@@ -31,7 +31,7 @@
 
 <hr><h4>De nuevo al problema del puente</h4>
 
-<p>Para la malla del puente, hemos decidido optar por elementos 2D con forma de <strong class="tooltipped" data-toggle="tooltip" data-placement="top" data-html="true" title="<img class='img-responsive' src='img/8_nodes_rectangle.png' />">rectángulos de ocho puntos</strong>. Estos puntos son referidos como “<strong>nodos</strong>”. En general, consideramos a cada nodo como capaces de desplazarse tanto vertical como horizontalmente. La excepción sería que estos nodos no pueden ir más allá que los límites del borde que les hemos establecido: estas son, las <strong>condiciones de borde</strong> del problema. Éstas deben estar incluidas en el modelo físico para que de esa manera la solución obtenida sea <strong>ÚNICA</strong>.</p>
+<p>Para la malla del puente, hemos decidido optar por elementos 2D con forma de <strong class="tooltipped" data-toggle="tooltip" data-placement="top" data-html="true" title="<img class='img-responsive' src='img/8_nodes_rectangle.png' />">rectángulos de ocho puntos</strong> <small>(9 nodos sí contamos el central)</small>. Estos puntos son referidos como “<strong>nodos</strong>”. En general, consideramos a cada nodo como capaces de desplazarse tanto vertical como horizontalmente. La excepción sería que estos nodos no pueden ir más allá que los límites del borde que les hemos establecido: estas son, las <strong>condiciones de borde</strong> del problema. Éstas deben estar incluidas en el modelo físico para que de esa manera la solución obtenida sea <strong>ÚNICA</strong>.</p>
 
 <blockquote>Una vez establecida la malla y los elementos que la componen, como así también las <strong>propiedades materiales</strong> del objeto, establecemos que tipos de carga se desean aplicar a la estructura.</blockquote>
 
