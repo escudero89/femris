@@ -10,6 +10,8 @@ import "."
 Item {
 
     property variant previousSideloadValues;
+    property variant previousFixNodesValues;
+    property variant previousPointLoadValues;
     property int index : 0
 
     signal loadPreviousValues();
@@ -87,60 +89,42 @@ Item {
             tooltip: qsTr("Click para resaltar los nodos que pertenecen a éste borde");
 
             onClicked: {
+
                 switch(buttonNodeController.state) {
-                case "show" : buttonNodeController.state = "hide" ; break;
-                case "hide" : buttonNodeController.state = "show" ; break;
+                case "neumann"   : buttonNodeController.state = "dirichlet" ; break;
+                case "dirichlet" : buttonNodeController.state = "neumann"   ; break;
                 }
 
                 repeater.currentIndex = index;
 
-                var changes = {
-                    affectedNodes : jsonDomain["sideloadNodes"][index],
-                    affectedIndex : index,
-                    state : buttonNodeController.state
-                };
-
-                Configure.emitMainSignal("NodesChanged", JSON.stringify(changes));
-                Configure.emitMainSignal("NodesSideloadChanged", JSON.stringify(changes));
+                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "-state" + (index + 1), buttonNodeController.state, true);
+                Configure.emitMainSignal("fixnodesChanged");
             }
 
-            state: "hide"
+            state: "dirichlet"
 
             states: [
                 State {
-                    name: "hide"
+                    name: "neumann"
                     PropertyChanges {
                         target: buttonNodeController
-                        tooltip: qsTr("Resaltar")
-                        fixnodeIcon: "star61"
+                        text: qsTr("Neumann")
+                        fixnodeIcon: "bookmark10"
                     }
                 },
                 State {
-                    name: "show"
+                    name: "dirichlet"
                     PropertyChanges {
                         target: buttonNodeController
-                        tooltip: qsTr("Dejar de resaltar")
-                        fixnodeIcon: "star60"
+                        text: qsTr("Dirichlet")
+                        fixnodeIcon: "bookmark9"
+                    }
+                    PropertyChanges {
+                        target: textFieldSideload
+                        textColor: Style.color.femris
                     }
                 }
             ]
-
-            Connections {
-                target : Configure
-
-                onMainSignalEmitted : {
-                    if ( signalName !== "NodesSideloadChanged" ) {
-                        return;
-                    }
-
-                    var changes = JSON.parse(args);
-                    var isShowing = ( changes.state === "show" );
-
-                    if ( changes.affectedIndex !== index && isShowing) {
-                        buttonNodeController.state = "hide";
-                    }
-                }
-            }
         }
 
 
@@ -151,7 +135,10 @@ Item {
             Layout.preferredWidth: parent.width * 0.4
             placeholderText: (buttonNodeController.state === "dirichlet") ? "[ºC]" : "[W/m]"
 
-            onEditingFinished: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
+            onEditingFinished: {
+                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
+                Configure.emitMainSignal("fixnodesChanged");
+            }
 
             onFocusChanged: {
                 if (focus === true && repeater.currentIndex !== index) {
@@ -176,6 +163,38 @@ Item {
 
             if (currentSide.indexOf(currentLoad[0]) !== -1 && currentSide.indexOf(currentLoad[1]) !== -1) {
                 textFieldSideload.text = currentLoad[2];
+            }
+        }
+
+        //--------------------------------------------------
+
+        var nChecks = previousFixNodesValues.length / 2;
+
+        for ( var k = 0 ; k < nChecks; k++ ) {
+            var currentFixNode = [
+                previousFixNodesValues[k * ( nChecks - 1)],
+                previousFixNodesValues[k * ( nChecks - 1) + 1]
+            ];
+
+            if (currentFixNode[0] === (index + 1)) {
+                buttonNodeController.state = "dirichlet";
+                heatTextField.text = currentFixNode[1];
+            }
+        }
+
+        //--------------------------------------------------
+
+        nChecks = previousPointLoadValues.length / 2;
+
+        for ( k = 0 ; k < nChecks; k++ ) {
+            var currentPointLoad = [
+                previousPointLoadValues[k * ( nChecks - 1)],
+                previousPointLoadValues[k * ( nChecks - 1) + 1]
+            ];
+
+            if (currentPointLoad[0] === (index + 1)) {
+                buttonNodeController.state = "neumann";
+                heatTextField.text = currentFixNode[1];
             }
         }
     }

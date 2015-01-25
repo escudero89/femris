@@ -244,7 +244,7 @@ RowLayout {
                 property alias sideLoadContainer : sideLoadContainer
                 property alias nodesContainer    : nodesContainer
 
-                columns : 2
+                columns : StudyCaseHandler.isStudyType("heat") ? 1 : 2
                 rows : 2
 
                 columnSpacing: 0
@@ -263,6 +263,8 @@ RowLayout {
                     jsonDomain: rowParent.jsonDomain
 
                     Layout.preferredWidth : parent.width / 2
+
+                    visible: !StudyCaseHandler.isStudyType("heat");
                 }
             }
 
