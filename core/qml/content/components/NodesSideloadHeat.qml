@@ -11,7 +11,6 @@ Item {
 
     property variant previousSideloadValues;
     property variant previousFixNodesValues;
-    property variant previousPointLoadValues;
     property int index : 0
 
     signal loadPreviousValues();
@@ -47,7 +46,7 @@ Item {
 
         Text {
             Layout.fillWidth: true
-            text: qsTr(textRow + (index + 1))
+            text: qsTr(textRow + "[" + tooltip.text + "]")
 
             MyToolTip {
                 id: tooltip
@@ -81,12 +80,15 @@ Item {
 
             id: buttonNodeController
 
-            Layout.minimumWidth: 30
-            Layout.preferredWidth: parent.width * 0.05
+            Layout.preferredWidth: parent.width * 0.3
 
             iconSource: "qrc:/resources/icons/black/" + fixnodeIcon + ".png"
 
-            tooltip: qsTr("Click para resaltar los nodos que pertenecen a éste borde");
+            tooltip: qsTr("Click para seleccionar un tipo de condición de borde para éste lado");
+
+            Component.onCompleted: {
+                clicked();
+            }
 
             onClicked: {
 
@@ -97,7 +99,7 @@ Item {
 
                 repeater.currentIndex = index;
 
-                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "-state" + (index + 1), buttonNodeController.state, true);
+                StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
                 Configure.emitMainSignal("fixnodesChanged");
             }
 
@@ -178,23 +180,7 @@ Item {
 
             if (currentFixNode[0] === (index + 1)) {
                 buttonNodeController.state = "dirichlet";
-                heatTextField.text = currentFixNode[1];
-            }
-        }
-
-        //--------------------------------------------------
-
-        nChecks = previousPointLoadValues.length / 2;
-
-        for ( k = 0 ; k < nChecks; k++ ) {
-            var currentPointLoad = [
-                previousPointLoadValues[k * ( nChecks - 1)],
-                previousPointLoadValues[k * ( nChecks - 1) + 1]
-            ];
-
-            if (currentPointLoad[0] === (index + 1)) {
-                buttonNodeController.state = "neumann";
-                heatTextField.text = currentFixNode[1];
+                textFieldSideload.text = currentFixNode[1];
             }
         }
     }

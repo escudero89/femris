@@ -138,7 +138,7 @@
                     </ul>
                     <form class="navbar-form navbar-left" role="search" style="margin:3px; padding:0;">
                         <div class="form-group">
-                            <input style="height: 25px;" id="changeFactorOfDeformation" type="text" placeholder="Factor de escala" class="form-control" />
+                            <input id="changeFactorOfDeformation" type="number" placeholder="Factor de escala" class="form-control" />
                         </div>
                         <button type="button" class="btn btn-danger" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
                             <span class="glyphicon glyphicon-eye-open"></span>
@@ -362,7 +362,7 @@
 %
 %  Material Properties
 %
-  young = 270000 ;
+  young = 2700000 ;
   poiss = 0.2 ;
   denss = 1 ;
   pstrs = 1 ;
@@ -400,6 +400,9 @@ elements = [
 %
 fixnodes = [
     1,    1,    0 ;
+    1,    2,    0 ;
+    2,    1,    0 ;
+    2,    2,    0 ;
 ];
 
 %
@@ -412,6 +415,8 @@ pointload = [
 % Uniform Side loads
 %
 sideload = [
+    1,    2,    5,    5 ;
+    2,    3,    5,    5 ;
 ];
 </pre>
                                                     </div>

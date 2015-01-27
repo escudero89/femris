@@ -81,6 +81,25 @@ bool StudyCase::exportToGid(const QString& whereToSave) {
     FileIO baseFile(dir + "temp/currentMatFemFile.m");
     FileIO exportedFile(whereToSave);
 
+    bool success = exportedFile.write(baseFile.read());
+
+    if (!success) {
+        return false;
+    }
+
+    // Exports also the files .rsh y .msh
+    baseFile.setSource(dir + "temp/currentMatFemFile.flavia.res");
+    exportedFile.setSource(whereToSave.left(whereToSave.length() - 2) + ".flavia.res");
+
+    success = exportedFile.write(baseFile.read());
+
+    if (!success) {
+        return false;
+    }
+
+    baseFile.setSource(dir + "temp/currentMatFemFile.flavia.msh");
+    exportedFile.setSource(whereToSave.left(whereToSave.length() - 2) + ".flavia.msh");
+
     return exportedFile.write(baseFile.read());
 }
 
@@ -145,18 +164,17 @@ bool StudyCase::isReady() {
 
     bool isReady = checkIfReady();
 
-    if (!isReady) {
-        return false;
-    }
-
-    if ( (m_mapOfInformation["gridHeight"].toDouble()) == 0.0 ||
-         (m_mapOfInformation["gridWidth"].toDouble())  == 0.0 ) {
+    if ( (!isReady) ||
+         ( (m_mapOfInformation["gridHeight"].toDouble()) == 0.0 ||
+           (m_mapOfInformation["gridWidth"].toDouble())  == 0.0 ) ) {
 
         return false;
     }
 
+    // We need at least some values in the fixnodes
+    isReady = m_mapOfInformation["fixnodes"].contains("fixnodes = [\r\n];");
 
-    return true;
+    return isReady;
 }
 
 //----------------------------------------------------------------------------//

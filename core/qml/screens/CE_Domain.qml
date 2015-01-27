@@ -343,6 +343,7 @@ RowLayout {
                         onMainSignalEmitted: {
                             if (signalName === "fixnodesChanged") {
                                 rowParent.saveCurrentLoads();
+                                StudyCaseHandler.isReady();
                             }
                         }
                     }
@@ -425,46 +426,29 @@ RowLayout {
     }
 
     function saveCurrentLoadsHeat(coordinates) {
-        /// SIDELOAD
+
+        /// SIDELOAD (neumann) & FIXNODES (dirichet)
 
         var sideloadNodes = jsonDomain['sideloadNodes'];
         var sideload = [];
+        var fixnodes = [];
 
         for ( var k = 0 ; k < sideloadNodes.length ; k++ ) {
             var temp_ = StudyCaseHandler.getSingleStudyCaseInformation('sideload' + ( k + 1 ), true);
+            var temp_state_ = StudyCaseHandler.getSingleStudyCaseInformation('condition-state' + ( k + 1 ), true);
 
-            if (temp_ !== '') {
-
-                temp_ = (temp_ === '') ? 0.0 : parseFloat(temp_);
-
-                var N = sideloadNodes[k].length;
-                for ( var j = 0 ; j < N - 1 ; j++ ) {
-                    // The nodes from the edges only take 1/2 of the sideload. Instead,
-                    // the nodes in between took the full sideload
-                    if (j === 0 || j === N - 2) {
-                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_ / 2.0 ]);
-                    } else {
-                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_ ]);
-                    }
-                }
+            if (temp_ === '') {
+                continue;
             }
-        }
 
-        /// POINTLOAD & FIXNODES
+            temp_ = parseFloat(temp_);
 
-        var pointload = [];
-        var fixnodes = [];
-
-        for ( k = 0 ; k < coordinates.length ; k++ ) {
-            temp_ = StudyCaseHandler.getSingleStudyCaseInformation('pointload' + ( k + 1 ), true);
-            var temp_state_ = StudyCaseHandler.getSingleStudyCaseInformation('pointload-state' + ( k + 1 ), true);
-
-            if (temp_ !== '') {
-                if (temp_state_ === 'neumann') {
-                    pointload.push([ k + 1, parseFloat(temp_) ]);
-
-                } else {
+            var N = sideloadNodes[k].length;
+            for ( var j = 0 ; j < N - 1 ; j++ ) {
+                if (temp_state_ === "dirichlet") {
                     fixnodes.push([ k + 1, parseFloat(temp_) ]);
+                } else {
+                    sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_ ]);
                 }
             }
         }
@@ -472,7 +456,7 @@ RowLayout {
         return {
             fixnodes : fixnodes,
             sideload : sideload,
-            pointload : pointload
+            pointload: []
         };
     }
 
