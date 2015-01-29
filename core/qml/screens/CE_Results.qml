@@ -128,7 +128,7 @@ ColumnLayout {
                 height: 35
                 width: 41
 
-                onClicked: Qt.openUrlExternally("https://github.com/escudero89/femris/wiki/Resultados");
+                onClicked: globalInfoBox.loadUrlInBrowser("https://github.com/escudero89/femris/wiki/Resultados");
             }
         }
 

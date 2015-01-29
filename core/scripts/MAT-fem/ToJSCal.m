@@ -97,7 +97,7 @@ function ToJSCal (file_name, nodalTemperatures, nodalReactiveFluxes, nodalFluxes
 
     for i = 1 : numberOfNodes
         fprintf(fid, '    [');
-        fprintf(fid, ['%13.5e'], nodalTemperatures(i));
+        fprintf(fid, ['%13.5e'], full(nodalTemperatures(i)));
 
         if (i ~= numberOfNodes)
             fprintf(fid, '],\r\n');
@@ -115,7 +115,7 @@ function ToJSCal (file_name, nodalTemperatures, nodalReactiveFluxes, nodalFluxes
 
     for i = 1 : numberOfNodes
         fprintf(fid, '    [');
-        fprintf(fid, [ '%13.5e' ], nodalReactiveFluxes(i));
+        fprintf(fid, [ '%13.5e' ], full(nodalReactiveFluxes(i)));
 
         if (i ~= numberOfNodes)
             fprintf(fid, '],\r\n');

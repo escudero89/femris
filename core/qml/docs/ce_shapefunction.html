@@ -68,14 +68,14 @@
             <div class="col-sm-5">
 
                 <div id="panel-left" class="panel panel-default" style="height:90vh; overflow-y:auto">
-                    <div class="panel-body" onchange="updateShapeFunction()">
+                    <div class="panel-body">
 
                         <div class="form-group">
                             <div id="singleShapeFunction" class="jxgbox w100p" style="height:34vh" ></div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6" onchange="updateShapeFunction()">
                                 <div class="form-group">
                                     <label>Cantidad de nodos por elemento</label>
                                     <select id="quantityOfNodes" class="form-control">
@@ -116,7 +116,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" onchange="updateShapeFunction()">
                             <label>Elige un tipo de Función de Forma</label>
                             <div class="radio" id="shapeFunctionChose">
                                 <label class="radio-inline">
@@ -126,7 +126,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" onchange="updateShapeFunction()">
                             <label>Posición de nodos internos y Funciones de Forma</label>
 
                             <div class="row" id="innerNodes">
@@ -159,7 +159,7 @@
                             </div>
                         </div>
 
-                        <div id="shapeFunctions">
+                        <div id="shapeFunctions" onchange="updateShapeFunction()">
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-addon">
@@ -337,11 +337,11 @@
 <script type="text/javascript" src="js/femris-utils.js"></script>
 <script type="text/javascript">
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
 
     function showShapeFunction() {
-        $("#loader").fadeOut(function() {
-            $("#mainShapeFunction").css({'opacity':0}).animate({'opacity':1});
+        jQuery("#loader").fadeOut(function() {
+            jQuery("#mainShapeFunction").css({'opacity':0}).animate({'opacity':1});
          });
     };
 
@@ -355,15 +355,21 @@ $(document).ready(function() {
         }, 5);
     }, 5);
 
-    $('[data-toggle="tooltip"]').tooltip();
+    jQuery('[data-toggle="tooltip"]').tooltip();
 
-    $('[data-toggle="popover"]').popover().on('shown.bs.popover', function () {
-            var $baseFunction = $("#baseFunction");
-            $('.list-unstyled > li > a').on('click', function() {
-                $baseFunction.val($(this).html());
+    jQuery('[data-toggle="popover"]').popover().on('shown.bs.popover', function () {
+            var $baseFunction = jQuery("#baseFunction");
+            jQuery('.list-unstyled > li > a').on('click', function() {
+                $baseFunction.val(jQuery(this).html());
                 updateGraph();
             });
         });
+
+    // If the window changes its size, we reload the graphs
+    jQuery(window).resize(function() {
+        updateShapeFunction();
+        updateGraph();
+    });
 
 });
 </script>

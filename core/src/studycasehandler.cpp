@@ -384,9 +384,10 @@ void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
 }
 
 /**
- * @brief StudyCaseHandler::isReady
+ * @brief Checks if the StudyCase is ready for MATfem
  */
 void StudyCaseHandler::isReady() {
+    emit beforeCheckIfReady();
     emit ready(m_studyCase->isReady());
 }
 

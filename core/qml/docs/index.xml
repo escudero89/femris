@@ -14,6 +14,7 @@
 <item title="Problema de Ejemplo" page="docs/view/fem/problema_ejemplo.html" />
 <item title="Descripción General" page="docs/view/fem/descripcion_general.html" />
 <item title="Un Poco de Historia" page="docs/view/fem/historia.html" />
+<item title="Funciones de Forma" page="$docs/ce_shapefunction.html" />
 </fem>
 
 /******************************************************************************/

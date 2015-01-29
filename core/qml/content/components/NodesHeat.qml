@@ -77,7 +77,6 @@ Item {
                 repeater.currentIndex = index;
 
                 StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "-state" + (index + 1), buttonNodeController.state, true);
-                Configure.emitMainSignal("fixnodesChanged");
             }
 
             state: "dirichlet"
@@ -114,10 +113,7 @@ Item {
             Layout.preferredWidth: parent.width * 0.4
             placeholderText: (buttonNodeController.state === "dirichlet") ? "[ºC]" : "[W]"
 
-            onEditingFinished: {
-                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
-                Configure.emitMainSignal("fixnodesChanged");
-            }
+            onEditingFinished: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && repeater.currentIndex !== index) {

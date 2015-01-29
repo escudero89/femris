@@ -5,7 +5,7 @@
 #include <QMap>
 
 /**
- * @brief The Configure class
+ * @brief The Configure class that handles mainly the Configuration
  *
  * The Configure class works as a Singleton. Its main purpose is to read/write
  * the custom configuration file for the user, which stores configuration

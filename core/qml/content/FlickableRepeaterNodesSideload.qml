@@ -24,7 +24,7 @@ ColumnLayout {
 
     FlickableRepeaterHeader {
         objectHeader.text :
-            qsTr("Condiciones de borde") +
+            qsTr("Condiciones de borde (en lados)") +
             "<br /><small style='color:" + Style.color.content + "'>" +
             "<em>" + qsTr("Número de lados: ") + repeater.count + "</em></small>"
 
@@ -42,6 +42,7 @@ ColumnLayout {
         GridView {
 
             property variant previousSideloadValues;
+            property variant previousFixNodesValues;
 
             id: repeater
 
@@ -75,8 +76,6 @@ ColumnLayout {
 
                 Loader {
 
-                    // These are needed for getDelegateInstanceAt() below.
-                    objectName: "summaryDelegate"
                     property int index: model.index
 
                     asynchronous: true
@@ -94,6 +93,7 @@ ColumnLayout {
                     Component {
                         id: nodesHeatComponent
                         NodesSideloadHeat {
+                            previousFixNodesValues: repeater.previousFixNodesValues;
                             previousSideloadValues: repeater.previousSideloadValues;
                         }
                     }
@@ -115,22 +115,15 @@ ColumnLayout {
                                               .replace("=", "")
                                               .replace("sideload", "")
                                               .trim());
-            }
 
-            // Uses black magic to hunt for the delegate instance with the given
-            // index.  Returns undefined if there's no currently instantiated
-            // delegate with that index.
-            function getDelegateInstanceAt(index) {
-                for(var i = 0; i < contentItem.children.length; ++i) {
-                    var item = contentItem.children[i];
-                    // We have to check for the specific objectName we gave our
-                    // delegates above, since we also get some items that are not
-                    // our delegates here.
-                    if (item.objectName === "summaryDelegate" && item.index === index) {
-                        return item;
-                    }
-                }
-                return undefined;
+                previousFixNodesValues = eval(StudyCaseHandler
+                                              .getSingleStudyCaseInformation("fixnodes")
+                                              .replace(/;/g, ",")
+                                              .replace("],", "];")
+                                              .replace("=", "")
+                                              .replace("fixnodes", "")
+                                              .trim());
+
             }
         }
 

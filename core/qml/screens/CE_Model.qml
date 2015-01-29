@@ -86,9 +86,7 @@ RowLayout {
             buttonLabel: ""
             iconSource: "qrc:/resources/icons/external2.png"
 
-            onClicked: {
-                StudyCaseHandler.loadUrlInBrowser(modelWebView.urlBase);
-            }
+            onClicked: globalInfoBox.loadUrlInBrowser(modelWebView.urlBase, true);
 
         }
 

@@ -1,3 +1,5 @@
+<div class="col-sm-12">
+
 <h3>Problema de Ejemplo</h3>
 
 <div class="well">
@@ -35,8 +37,8 @@
 <h4>Introducción al Ejemplo</h4>
 
 <div class="output pull-right" style="width:40%">
-<img class="img-responsive img-thumbnail pull-right" src="img/bridge-example.jpg" />
-<p class="help-block"><strong>Figura 1.</strong> Ejemplo de un puente dividido en <em>elementos finitos</em> 3D más simples.</p>
+    <img class="img-responsive img-thumbnail pull-right" src="img/bridge-example.jpg" />
+    <p class="help-block"><strong>Figura 1.</strong> Ejemplo de un puente dividido en <em>elementos finitos</em> 3D más simples.</p>
 </div>
 
 <p>Un ingeniero desea construir un puente sobre un río y que una dos ciudades muy transitadas. Para ello, necesita conocer cómo la estructura que él propone se comportará bajo una determinada carga. Las ecuaciones que describen la distribución de tensiones estructurales son conocidas, pero no pueden ser resueltas de forma <strong class="tooltipped" data-toggle="tooltip" data-title="Es decir, mediante fórmulas, y no numericamente.">analítica</strong> para formas complicadas como las de un puente.</p>
@@ -47,17 +49,26 @@
 
 <hr>
 
-<h4>Diseñando la Malla</h4>
 
-<p>El primer paso es entonces el de diseñar la malla. Para ello, debemos decidir qué tipo de elemento vamos a utilizar. Por ejemplo, podemos optar por elegir:</p>
+<h4>Selección del tipo de Elemento</h4>
 
-<ul>
-    <li>Elementos 1D.</li>
-    <li>Elementos 2D.</li>
-    <li>Elementos 3D.</li>
-</ul>
+<p>Una de las primeras decisiones para realizar un cálculo mediante el FEM  es la elección del tipo de elemento ha utilizar para el análisis. Dado a que pueden existir varios tipos de elementos utilizables, todos ellos con diferentes grados de precisión, la decisión de cual utilizar es muy importante, y se debería tomar en base a:</p>
 
-<p>La exactitud del resultado va a depender del número de elementos que elijamos para componer la malla. Mientras más elementos haya, más pequeños van a ser, y más precisos serán los resultados obtenidos. Desafortunadamente, elementos más pequeños también significan más cálculos a llevar adelante. Por lo que lo que se busca es encontrar un balance entre una precisión tolerable del resultado y una razonable rapidez de cálculo.</p>
+<ol>
+    <li>En caso de que se tenga una cierta idea de la <em>forma polinómica</em> de la solución, conviene utilizar elementos con funciones de forma del <strong>mismo grado</strong> que la solución conocida. Ésto no sólo favorece la obtención de la solución exacta en los nodos, sino también garantiza que la variación de los desplazamientos en el interior de cada elemento es la correcta. Desafortunadamente, ésta situación <strong>no</strong> ocurre en la mayor parte de los casos de interés práctico.</li>
+    <li>En zonas donde se intuya que pueden existir <strong>gradientes elevados</strong> es más adecuado utilizar <strong>elementos de mayor orden</strong>. Por el contrario, en zonas donde dicha variación sea más uniforme puede obtenerse una buena aproximación con elementos menos precisos.</li>
+    <li>Dadas las crecientes posibilidades de rapidez de cálculo y de capacidad de almacenamiento de los ordenadores actuales, se recomienda utilizar elementos finitos <strong>sencillos</strong> (<em>pocos nodos</em>) frente a elementos <strong>complejos</strong> (<em>muchos nodos</em>).</li>
+</ol>
+
+<p class="alert alert-info"><span class="glyphicon glyphicon-question-sign"></span> La selección de un elemento u otro se basa finalmente en la experiencia del usuario. La tendencia actual es la de utilizar elementos sencillos de orden de aproximación bajo.</p>
+
+<p>
+Es evidente que los elementos más sencillos tienen una capacidad menor de aproximar soluciones en las que el campo de desplazamientos "<em>exacto</em>" sea una función polinómica de alto grado. Por consiguiente, para obtener una buena aproximación en dichos casos será necesario utilizar un <strong>mayor número de elementos</strong> que sí se emplearan directamente elementos de órdenes superiores. Sin embargo, la mayor sencillez de los elementos de menor orden hace que el cálculo de las matrices del elemento sea más económico que en el caso de elementos más complejos. Ésto justifica la competitividad de los primeros, aún utilizándose en mayor número, puesto que los problemas asociados al mayor número de variables son cada vez menos importantes, dado al creciente incremento en la velocidad de las computadoras. Claro que el problema surgiría al tener que elegir entre elementos de órdenes similares, y es ahí dónde entra la experiencia del calculista en juego.
+</p>
+
+<div class="alert alert-success">
+    <p><span class="glyphicon glyphicon-info-sign"></span> Mira la sección <strong>Funciones de Forma</strong> en éste mismo tutorial para aprender más sobre como las éstas afectan la aproximación de una ecuación dada.</p>
+</div>
 
 <hr><h4>De nuevo al problema del puente</h4>
 
@@ -181,6 +192,21 @@ u(x_9,y_9 ) \\
 <p>El vector `\mathbf{u}` contendrá <strong class="tooltip" data-toggle="tooltip" title="Los grados de libertad en los nodos participantes impacta en la cantidad de filas y columnas que se pueden simplificar en el sistema global">a lo sumo</strong> una fila por cada nodo de la malla. De esta manera, una forma simple de obtener los desplazamientos en el <strong>interior</strong> de los elementos es la de <strong>interpolar</strong> estos valores conocidos en los nodos.</p>
 
 <blockquote>Dado a que el tamaño de la matriz obtenida `\mathbf{K}` puede ser muy grande para ser resuelta mediante calculaciones manuales, se procede a utilizar el poder de cómputo para resolverla. Una ventaja que existe aquí es que la matriz de rigidez global <strong>no</strong> ha de tener que volverse a recalcular sí cambiamos las fuerzas externas actuantes.</blockquote>
+
+
+    <div class="well">
+
+        <img class="img img-thumbnail img-responsive pull-right" style="margin: 0 0 1em 1em;" src="img/matrix_band.png" />
+
+        <h4>Consideraciones sobre la Matriz Global</h4>
+
+        <p>La matriz de coeficientes del sistema de ecuaciones `\mathbf{K}` que se obtiene al realizar el proceso de ensamblaje posee una serie de características importantes y útiles.</p>
+
+        <p>En primera instancia, se puede observar que la misma presenta coeficientes <strong>no-nulos</strong> en una <strong>banda centrada en la diagonal principal</strong>, mientras que todos los coeficientes fuera de ella son nulos. Las matrices que presentan esta particularidad son llamadas <strong>matrices en banda</strong>. La obtención de este tipo de matriz vacía (<em>con muchos elementos iguales a cero</em>) al realizar el proceso de ensamblaje, se debe a que cada elemento tiene relativamente pocos nodos comparados con la totalidad de nodos del sistema y solamente algunos elementos son los que comparten cada nodo. Cabe destacar que, sí se utiliza una <strong>numeración eficiente</strong> de cada uno de los nodos, el ancho de la banda puede ser <strong>minimizado</strong>. La figura de la derecha muestra esquemáticamente una matriz típica para un sistema de elementos finitos. La región de la matriz incluida por las líneas punteadas es la <strong>banda</strong> que contiene los coeficientes no-nulos. El ancho de esta banda se relaciona directamente con la <em>diferencia máxima</em> de la numeración global de dos nodos cualesquiera de un elemento. Otra característica importante es que este tipo de matrices es generalmente <strong>simétrica</strong>, razón por la cual a menudo se aprovecha esta ventaja para almacenar las matrices.</p>
+
+        <p>En el caso de sistemas grandes con un alto porcentaje de elementos nulos, es más conveniente utilizar los <strong>métodos iterativos</strong> ya que minimizan tanto el esfuerzo computacional como el tiempo de cómputo. Estos métodos rara vez se usan para resolver sistemas lineales de pequeña dimensión, ya que el tiempo necesario para obtener una aproximación satisfactoria supera el que requieren los métodos directos.</p>
+
+    </div>
 
 </div>
 

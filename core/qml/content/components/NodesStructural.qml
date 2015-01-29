@@ -78,8 +78,7 @@ Item {
                 }
 
                 repeater.currentIndex = index;
-
-                Configure.emitMainSignal("fixnodesChanged");
+                StudyCaseHandler.isReady();
             }
 
             state: "libre"
@@ -146,7 +145,10 @@ Item {
             Layout.preferredWidth: parent.width / 4
             placeholderText: "x_" + ( index + 1 ) + " [N]"
 
-            onTextChanged: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
+            onTextChanged: {
+                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "x" + (index + 1), text, true);
+                StudyCaseHandler.isReady();
+            }
 
             onFocusChanged: {
                 if (focus === true && repeater.currentIndex !== index) {
@@ -164,6 +166,7 @@ Item {
 
             onTextChanged: {
                 StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "y" + (index + 1), text, true);
+                StudyCaseHandler.isReady();
             }
 
             onFocusChanged: {
