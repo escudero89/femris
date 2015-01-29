@@ -9,7 +9,7 @@ StudyCaseStructural::StudyCaseStructural() {
 }
 
 /**
- * @brief Sets some properties related to the heat transfer problem.
+ * @brief Sets some properties related to the structural problem.
  */
 void StudyCaseStructural::setLocalMapOfInformation() {
 
@@ -26,7 +26,7 @@ void StudyCaseStructural::setLocalMapOfInformation() {
  *
  * The difference between this and StudyCaseHeat::saveLocalCurrentConfiguration()
  * is the filter used when selecting the blocks from the configuration file.
- * Here we are using `MAT-fem`
+ * Here we are using `MAT-fem`.
  *
  */
 void StudyCaseStructural::saveLocalCurrentConfiguration() {
@@ -39,7 +39,7 @@ void StudyCaseStructural::saveLocalCurrentConfiguration() {
  * @brief Check if the StudyCase is ready for MATfem
  *
  * Since there are certain conditions that allows MATfem to solve the problem,
- * such as having a Poisson's coefficient between 0 and 0.5, we check if this
+ * such as having a Poisson's coefficient between 0 and 0.5, we check if these
  * conditions are met before calling the interpreter.
  *
  * @return Whether the conditions are met or not
