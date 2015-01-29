@@ -163,11 +163,7 @@ MenuBar {
 
             id : openOnlineHelp
             interval: 500; running: false;
-            onTriggered: {
-                var urlToOpen = "https://github.com/escudero89/femris/" + github;
-                Qt.openUrlExternally(urlToOpen);
-                globalInfoBox.setInfoBox(urlToOpen + " se ha abierto en tu navegador por defecto.");
-            }
+            onTriggered: globalInfoBox.loadUrlInBrowser("https://github.com/escudero89/femris/" + github);
         }
 
         MenuSeparator { }

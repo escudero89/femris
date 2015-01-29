@@ -62,6 +62,7 @@ Q_SIGNALS:
     void markedAsSaved();
     void markedAsNotSaved();
 
+    void beforeCheckIfReady();
     void ready(const bool& status);
 
 private:

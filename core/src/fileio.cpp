@@ -11,12 +11,20 @@
 #include <QDir>
 #include <QDebug>
 
+/**
+ * @brief Constructor for the FileIO. It sets the filename of the file if it's passed
+ * @param filename Path of the source. It can be relative (like `:/resources/config.xml`)
+ */
 FileIO::FileIO(const QString& filename) {
     if (filename != "") {
         setSource(filename);
     }
 }
 
+/**
+ * @brief Checks if the source is empty (not the file, but rather the filename)
+ * @return Whether if empty (true) or not (false)
+ */
 bool FileIO::isSourceEmpty() {
     bool isEmpty = m_source.isEmpty();
 
@@ -27,6 +35,10 @@ bool FileIO::isSourceEmpty() {
     return isEmpty;
 }
 
+/**
+ * @brief Opens the current file associated, reads its content, and returns it.
+ * @return Content of the file, or empty string
+ */
 QString FileIO::read() {
     QString fileContent;
 
@@ -54,6 +66,12 @@ QString FileIO::read() {
     return fileContent;
 }
 
+/**
+ * @brief Writes data into the file
+ *
+ * @param data String with the data to be saved
+ * @return Whether succeeded in saving the data or not
+ */
 bool FileIO::write(const QString &data) {
     bool successInWriting = false;
 
@@ -74,30 +92,54 @@ bool FileIO::write(const QString &data) {
     return successInWriting;
 }
 
+/**
+ * @brief Gets the current path for the FileIO instance
+ * @return The path
+ */
 QString FileIO::source() const {
     return m_source;
 }
 
+/**
+ * @brief Whether the file linked by the stored path exists
+ * @return Exists result
+ */
 bool FileIO::exists() {
     QFile file(m_source);
     return file.exists();
 }
 
+/**
+ * @brief Removes the file linked with the stored path
+ * @return Returns true if successful; otherwise returns false
+ */
 bool FileIO::deleteFile() {
     return QFile::remove(m_source);
 }
 
+/**
+ * @brief Sets the stored path of the FileIO instance
+ * @param arg New path string to be set
+ * @return Wheter exists
+ */
 bool FileIO::setSource(QString arg) {
     if (m_source != arg) {
         m_source = Configure::getPathWithoutPrefix(arg);
-
-//        qDebug() << "---------------> New Source Set: " << m_source;
         emit sourceChanged();
     }
 
     return exists();
 }
 
+/**
+ * @brief Parses a JSON string, and returns its content
+ *
+ * This function is mainly used to read JSON files and parse its content to be
+ * used later on the QML files.
+ *
+ * @param jsonFile String with the content of a JSON file
+ * @return Returns the raw binary representation of the JSON
+ */
 QJsonObject FileIO::getVarFromJsonString(const QString& jsonFile) {
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(jsonFile.toUtf8());
@@ -109,6 +151,18 @@ QJsonObject FileIO::getVarFromJsonString(const QString& jsonFile) {
     return jsonResponse.object();
 }
 
+/**
+ * @brief Returns a list of the names of all the files and directories in the directory
+ *
+ * Returns a list of the names of all the files and directories in the directory,
+ * ordered according to the name and the argument filters.
+ * Returns an empty list if the directory is unreadable, does not exist, or if nothing matches the specification.
+ *
+ * @param filters List with the filters that are going to be applied to the filenames
+ * @param directory Relative path of the directory that contains the files
+ *
+ * @return A list of the names of all the files and directories
+ */
 QStringList FileIO::getFilteredFilesFromDirectory(const QStringList& filters, const QString& directory) {
 
     QDir dir(directory);
@@ -125,6 +179,15 @@ qDebug() << directory << dir.exists() << dir.absolutePath();
     return searchedFilesPath;
 }
 
+/**
+ * @brief Read from a source without changing the stored path in the FileIO instance
+ *
+ * This function is mainly used in QML, to avoid having to re-set in there the
+ * previous path in the FileIO instance.
+ *
+ * @param file Path of the file to be read
+ * @return Content of the file, or a empty string
+ */
 QString FileIO::readFromSource(const QString& file) {
     QString previous_m_source = m_source;
     setSource(file);
@@ -138,11 +201,20 @@ qDebug() << "-------------------> File source: " << file;
 //----------------------------------------------------------------------------//
 //--                           STATIC FUNCTIONS                             --//
 //----------------------------------------------------------------------------//
-/*
-bool FileIO::readConfigurationFile(QString configurationTemplate, const QString &data) {
-    return true;
-}
-*/
+
+/**
+ * @brief Writes a QMap variable into a file, using another file as base.
+ *
+ * The base file needs to have the keys of the QMap written into it, like
+ *
+ *      MyKey: {{key}}
+ *
+ * This "key" is going to be replaced by the current value of the QMap[key].
+ *
+ * @param pathConfigurationToLoad Base file to be used
+ * @param pathFileToSave Where the new file is going te be stored
+ * @param replacement The QMap used as a replacement for the keys of the base file
+ */
 void FileIO::writeConfigurationFile(const QString &pathConfigurationToLoad,
                                     const QString &pathFileToSave,
                                     const QMap<QString, QString> &replacement) {
@@ -166,6 +238,20 @@ void FileIO::writeConfigurationFile(const QString &pathConfigurationToLoad,
 
 }
 
+/**
+ * @brief Reads a configuration file and splits its content into several files
+ *
+ * Reads the configuration file created by FileIO::writeConfigurationFile, and
+ * splits its content in different files. This allows the creation of a single
+ * ".femris" that will store all the Study Case's information in one file.
+ *
+ * @param configurationTemplate Base file for the configuration (indicates where to split)
+ * @param configurationPath Where the current configuration file is
+ * @param capturedTextFilter Filter to know where to do the split
+ * @param jumpSeparationLines Should it jump the previous line?
+ *
+ * @return Whether succeeded in splitting and merging
+ */
 bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
                                     const QString &configurationPath,
                                     const QStringList &capturedTextFilter,
@@ -223,6 +309,14 @@ bool FileIO::splitConfigurationFile(const QString &configurationTemplate,
     return successInSplitingAndMerging;
 }
 
+/**
+ * @brief Removes all the temporary files
+ *
+ * The files removed are from the temp folder, and are those with the extensions
+ * `.femris.old`, `.base64`, and those which have the strings  `*_tmp_*` and
+ * `currentMatFemFile*` in their name.
+ *
+ */
 void FileIO::removeTemporaryFiles() {
 
     QDir dir(qApp->applicationDirPath() + "/temp");

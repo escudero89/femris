@@ -172,7 +172,7 @@ bool StudyCase::isReady() {
     }
 
     // We need at least some values in the fixnodes
-    isReady = m_mapOfInformation["fixnodes"].contains("fixnodes = [\r\n];");
+    isReady = !m_mapOfInformation["fixnodes"].contains("fixnodes = [\r\n];");
 
     return isReady;
 }

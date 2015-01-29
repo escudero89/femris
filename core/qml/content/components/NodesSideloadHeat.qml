@@ -86,9 +86,7 @@ Item {
 
             tooltip: qsTr("Click para seleccionar un tipo de condición de borde para éste lado");
 
-            Component.onCompleted: {
-                clicked();
-            }
+            Component.onCompleted: clicked();
 
             onClicked: {
 
@@ -100,7 +98,7 @@ Item {
                 repeater.currentIndex = index;
 
                 StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
-                Configure.emitMainSignal("fixnodesChanged");
+                StudyCaseHandler.isReady();
             }
 
             state: "dirichlet"
@@ -139,7 +137,7 @@ Item {
 
             onEditingFinished: {
                 StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
-                Configure.emitMainSignal("fixnodesChanged");
+                StudyCaseHandler.isReady();
             }
 
             onFocusChanged: {

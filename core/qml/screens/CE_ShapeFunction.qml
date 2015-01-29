@@ -48,9 +48,7 @@ ColumnLayout {
                 width: 41
 
                 onClicked: {
-                    var url = "https://github.com/escudero89/femris/wiki/Funciones-de-Forma";
-                    Qt.openUrlExternally(url);
-                    globalInfoBox.setInfoBox("<a href=" + url + ">" + url + "</a> se ha abierto en tu navegador por defecto.");
+                    globalInfoBox.loadUrlInBrowser("https://github.com/escudero89/femris/wiki/Funciones-de-Forma");
                 }
             }
         }

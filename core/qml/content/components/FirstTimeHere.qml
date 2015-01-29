@@ -100,8 +100,7 @@ ColumnLayout {
                 break;
             }
 
-            globalInfoBox.setInfoBox(qsTr("La ayuda se ha abierto en tu navegador por defecto. La url es: " + url));
-            Qt.openUrlExternally(url);
+            globalInfoBox.loadUrlInBrowser(url);
         }
     }
 

@@ -70,6 +70,19 @@ ApplicationWindow {
                 text = (reset) ? baseValue : msg;
                 resetGlobalInfoBox.start();
             }
+
+            function loadUrlInBrowser (url, internal) {
+                // If the url has a relative url (like "temp/index.html") we use
+                // one method [internal = true], otherwise the other
+                if (internal) {
+                    StudyCaseHandler.loadUrlInBrowser(url);
+                    setInfoBox("Se ha abierto <strong>" + url + "</strong> en tu navegador por defecto.");
+
+                } else {
+                    Qt.openUrlExternally(url);
+                    setInfoBox("<a href=" + url + ">" + url + "</a> se ha abierto en tu navegador por defecto.");
+                }
+            }
         }
     }
 

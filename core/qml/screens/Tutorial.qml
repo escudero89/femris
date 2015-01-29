@@ -143,8 +143,7 @@ RowLayout {
                     var url = "" + request.url;
                     if (url.indexOf("http") !== -1) {
                         request.action = WebView.IgnoreRequest;
-                        Qt.openUrlExternally(request.url);
-                        globalInfoBox.setInfoBox("<a href=" + url + ">" + url + "</a> se ha abierto en tu navegador por defecto.");
+                        globalInfoBox.loadUrlInBrowser(url);
                     }
                 }
 

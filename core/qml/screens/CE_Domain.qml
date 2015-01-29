@@ -276,15 +276,13 @@ RowLayout {
 
                 PrimaryButton {
 
-                    tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+                    tooltip: qsTr("Abrir el repaso de funciones de forma en tu navegador por defecto")
 
                     buttonStatus: "femris"
                     buttonLabel: ""
-                    iconSource: "qrc:/resources/icons/external2.png"
+                    iconSource: "qrc:/resources/icons/stats1.png"
 
-                    onClicked: {
-                        StudyCaseHandler.loadUrlInBrowser(modelWebView.urlBase);
-                    }
+                    onClicked: globalInfoBox.loadUrlInBrowser("docs/ce_shapefunction.html", true);
 
                 }
 
@@ -300,18 +298,13 @@ RowLayout {
 
                 PrimaryButton {
 
-                    property bool isReadyToCheckForFixnodes : false
-                    property bool fixnodesReady : false
-
-                    signal changedProperties()
-
                     id: continueButton
 
                     buttonLabel: "Guardar y Continuar"
                     buttonStatus: "success"
                     iconSource: "qrc:/resources/icons/save8.png"
 
-                    Layout.preferredWidth: 0.5 * parent.width
+                    Layout.fillWidth: true
 
                     enabled: false
 
@@ -320,32 +313,12 @@ RowLayout {
                         ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
                     }
 
-                    onChangedProperties: {
-                        if (isReadyToCheckForFixnodes && fixnodesReady) {
-                            enabled = true;
-                        } else {
-                            enabled = false;
-                        }
-                    }
-
                     Connections {
+
                         target : StudyCaseHandler
 
-                        onReady: {
-                            continueButton.isReadyToCheckForFixnodes = status;
-                            continueButton.changedProperties();
-                        }
-                    }
-
-                    Connections {
-                        target: Configure
-
-                        onMainSignalEmitted: {
-                            if (signalName === "fixnodesChanged") {
-                                rowParent.saveCurrentLoads();
-                                StudyCaseHandler.isReady();
-                            }
-                        }
+                        onBeforeCheckIfReady: saveCurrentLoads();
+                        onReady: continueButton.enabled = status;
                     }
 
                     Component.onCompleted: StudyCaseHandler.isReady();
@@ -355,6 +328,11 @@ RowLayout {
     }
 
     function saveCurrentLoads() {
+
+        // If jsonDomain is empty, we leave
+        if (!jsonDomain) {
+            return;
+        }
 
         // First we adjust the coordinates usign the width and height set
         var maxCoord = {
@@ -418,11 +396,6 @@ RowLayout {
         StudyCaseHandler.setSingleStudyCaseJson('sideload',  extraValues.sideload );
         StudyCaseHandler.setSingleStudyCaseJson('fixnodes',  extraValues.fixnodes );
         StudyCaseHandler.setSingleStudyCaseJson('pointload', extraValues.pointload);
-
-        // Only after we check the other validations, we check if the fixnodes are not empty
-        // If that's the case, we are ready to go
-        continueButton.fixnodesReady = (continueButton.isReadyToCheckForFixnodes && extraValues.fixnodes.length);
-        continueButton.changedProperties();
     }
 
     function saveCurrentLoadsHeat(coordinates) {
@@ -444,10 +417,13 @@ RowLayout {
             temp_ = parseFloat(temp_);
 
             var N = sideloadNodes[k].length;
-            for ( var j = 0 ; j < N - 1 ; j++ ) {
-                if (temp_state_ === "dirichlet") {
-                    fixnodes.push([ k + 1, parseFloat(temp_) ]);
-                } else {
+            if (temp_state_ === "dirichlet") {
+                for ( var j = 0 ; j < N ; j++ ) {
+                    fixnodes.push([ sideloadNodes[k][j], parseFloat(temp_) ]);
+                }
+
+            } else {
+                for ( var j = 0 ; j < N - 1 ; j++ ) {
                     sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_ ]);
                 }
             }
