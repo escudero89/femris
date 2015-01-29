@@ -3,6 +3,7 @@ var class_study_case_handler =
     [ "StudyCaseHandler", "class_study_case_handler.html#a09481700c3d1366dfe93dc86b4ae28cd", null ],
     [ "~StudyCaseHandler", "class_study_case_handler.html#a4ae60eb19d313fe2cd314ce66bf13597", null ],
     [ "adoptNewTypeStudyCaseIfNecessary", "class_study_case_handler.html#a749a212b3382571c5a0a955a3c5305b1", null ],
+    [ "beforeCheckIfReady", "class_study_case_handler.html#a74f98021a7932a5fe415c454177f6a2e", null ],
     [ "callProcess", "class_study_case_handler.html#a29ca0d41719b6532249e8314b9581647", null ],
     [ "checkSingleStudyCaseInformation", "class_study_case_handler.html#a3ab9c4f0c0f690b2108e4c5ce3dfbf43", null ],
     [ "checkSingleStudyCaseInformation", "class_study_case_handler.html#a1b76b405f7a98e16e6e2bfe2733a9d3a", null ],
