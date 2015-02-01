@@ -7,6 +7,16 @@
 #include "configure.h"
 #include "fileio.h"
 
+/**
+ * @brief Creates a new Study Case, and sets its initial configuration
+ *
+ * Sets its created and modified date, which and where its temporary source is,
+ * and the initial map of information. Finally, saves everything.
+ *
+ * @see setInitialMapOfInformation()
+ * @see saveCurrentConfiguration()
+ *
+ */
 void StudyCase::createNew() {
 
     m_created               = QDateTime::currentDateTime();
@@ -19,12 +29,12 @@ void StudyCase::createNew() {
     saveCurrentConfiguration();
 }
 
-StudyCase::~StudyCase() {
-}
+StudyCase::~StudyCase() {}
+
 /**
  * @brief Loads configuration from a file into a QMap
- * @param whereToLoad
- * @return
+ * @param whereToLoad The of the file where to load the configuration
+ * @return The QMap
  */
 QMap<QString, QString> StudyCase::loadConfiguration(const QString& whereToLoad) {
 
@@ -53,6 +63,10 @@ QMap<QString, QString> StudyCase::loadConfiguration(const QString& whereToLoad) 
     return newMapOfInformation;
 }
 
+/**
+ * @brief Saves the current QMap with all the info of the StudyCase into a file
+ * @param whereToSave Path where to save the QMap
+ */
 void StudyCase::saveCurrentConfiguration(const QString& whereToSave) {
 
     QString pathDir = qApp->applicationDirPath();
@@ -70,9 +84,13 @@ void StudyCase::saveCurrentConfiguration(const QString& whereToSave) {
 }
 
 /**
- * @brief StudyCase::exportToGid
- * @param whereToSave
- * @return
+ * @brief "Exports" in GiD format the current Study Case into a certain location.
+ *
+ * What it really does is it copies the temporary files already created by
+ * MATfem into the location given.
+ *
+ * @param whereToSave Path in where to export the files in GiD format
+ * @return Whether the exportation succeed or not
  */
 bool StudyCase::exportToGid(const QString& whereToSave) {
 
@@ -103,6 +121,17 @@ bool StudyCase::exportToGid(const QString& whereToSave) {
     return exportedFile.write(baseFile.read());
 }
 
+/**
+ * @brief Sets the initial values of the Study Case.
+ *
+ * Clears the previous stored values, and set the "default" ones. It uses
+ * the default values granted by the subclasses StudyCaseHeat and StudyCaseStructural.
+ * At the end, saves all the compressed values into a file.
+ *
+ * @see setLocalMapOfInformation()
+ * @see compressMapOfInformation()
+ *
+ */
 void StudyCase::setInitialMapOfInformation() {
 
     m_mapOfInformation.clear();
@@ -128,6 +157,12 @@ void StudyCase::setInitialMapOfInformation() {
     compressMapOfInformation();
 }
 
+/**
+ * @brief Compress the stored values in the QMap of the StudyCase and saves them.
+ *
+ * Using the `BASE64` encoding, saves all the stored values into a separated file,
+ * and also in the `.femris` file.
+ */
 void StudyCase::compressMapOfInformation() {
     QString encodedMap = "";
 
@@ -157,8 +192,8 @@ void StudyCase::compressMapOfInformation() {
 }
 
 /**
- * @brief StudyCase::isReady
- * @return
+ * @brief Checks if the Study Case is ready to be processed by MATfem
+ * @return Whether is ready or not
  */
 bool StudyCase::isReady() {
 
@@ -181,10 +216,18 @@ bool StudyCase::isReady() {
 //--                          GETTER AND SETTERS                            --//
 //----------------------------------------------------------------------------//
 
+/**
+ * @brief Gets the current QMap which stores all the information of the Study Case
+ * @return The QMap
+ */
 QMap<QString, QString> StudyCase::getMapOfInformation() {
     return m_mapOfInformation;
 }
 
+/**
+ * @brief Sets the new QMap which will store all the information of the Study Case
+ * @param newMapOfInformation New QMap for the Study Case
+ */
 void StudyCase::setMapOfInformation(QMap<QString, QString> newMapOfInformation) {
     m_mapOfInformation = newMapOfInformation;
 }

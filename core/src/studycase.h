@@ -5,6 +5,18 @@
 #include <QDateTime>
 #include <QMap>
 
+/**
+ * @brief The StudyCase stores the currently working study case, and all its variables
+ *
+ * The instances of the this class are handled by the StudyCaseHandler. As so,
+ * this class just stores all the variables required to solve a Study Case, and
+ * also to save and load `.femris` files.
+ *
+ * @see StudyCaseHeat
+ * @see StudyCaseStructural
+ * @see StudyCaseHandler
+ *
+ */
 class StudyCase
 {
 
