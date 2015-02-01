@@ -7,13 +7,16 @@
 #include "studycasestructural.h"
 #include "studycaseheat.h"
 
+/**
+ * @brief Main class that handles all the interactions with the StudyCase
+ */
 class StudyCaseHandler : public QObject
 {
     Q_OBJECT
 
 public:
     StudyCaseHandler();
-    ~StudyCaseHandler();
+    ~StudyCaseHandler() {}
 
     Q_INVOKABLE void start();
     Q_INVOKABLE bool exists();
@@ -21,7 +24,6 @@ public:
     Q_INVOKABLE void selectNewTypeStudyCase(const QString&);
     Q_INVOKABLE void adoptNewTypeStudyCaseIfNecessary();
     Q_INVOKABLE void createNewStudyCase();
-    Q_INVOKABLE void createDomainFromScriptFile();
 
     Q_INVOKABLE void saveCurrentStudyCase(QString);
     Q_INVOKABLE bool exportCurrentStudyCase(QString);
@@ -51,13 +53,8 @@ Q_SIGNALS:
     void newStudyCaseChose(const QString& studyCaseType);
     void newStudyCaseCreated();
 
-    void loadingStart();
-    void loadingDone();
-
     void loadingNewStudyCase();
     void savingCurrentStudyCase();
-
-    void callProcess();
 
     void markedAsSaved();
     void markedAsNotSaved();
@@ -65,19 +62,24 @@ Q_SIGNALS:
     void beforeCheckIfReady();
     void ready(const bool& status);
 
-private:
+protected:
 
     void markAsSaved();
-
-    bool m_isSaved;
-    QString m_lastSavedPath;
-
     QString setSingleStudyCaseJsonHelper(const QString&, const QJsonArray&);
 
+    //! Whether is already saved in an external file or not
+    bool m_isSaved;
+    //! The current location of the saved file (empty if it doesn't exists)
+    QString m_lastSavedPath;
+
+    //! Type of Study Case that is being handled
     QString m_studyCaseType;
+    //! The current Study Case that is being handled
     StudyCase *m_studyCase;
 
+    //! A QMap that stores almost the same as the current Study Case
     QMap<QString, QString> m_currentStudyCaseVariables;
+    //! A temporary QMap that only stores variables which are not going to be saved
     QMap<QString, QString> m_temporalStudyCaseVariables;
 };
 

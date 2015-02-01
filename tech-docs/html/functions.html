@@ -168,9 +168,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>callingProcess()
 : <a class="el" href="class_process_handler.html#a0860902d89d3b888743eade886e85517">ProcessHandler</a>
 </li>
-<li>callProcess()
-: <a class="el" href="class_study_case_handler.html#a29ca0d41719b6532249e8314b9581647">StudyCaseHandler</a>
-</li>
 <li>check()
 : <a class="el" href="class_configure.html#ac96f51d615ad1dfdb5d72eed338827fe">Configure</a>
 </li>
@@ -187,9 +184,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </li>
 <li>Configure()
 : <a class="el" href="class_configure.html#a3baa5bbbbe6e85dfab1c7a7b63726da3">Configure</a>
-</li>
-<li>createDomainFromScriptFile()
-: <a class="el" href="class_study_case_handler.html#a637453ebb73e48b414b8b40d99b2303a">StudyCaseHandler</a>
 </li>
 <li>createNew()
 : <a class="el" href="class_study_case.html#a1a01d5ed866902bcf3e5150ab699901e">StudyCase</a>
@@ -321,14 +315,8 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>loadConfigurationFromFile()
 : <a class="el" href="class_configure.html#a87f4bf416d2ac7455827a7ae174b3d7c">Configure</a>
 </li>
-<li>loadingDone()
-: <a class="el" href="class_study_case_handler.html#a45779eb675fa8adb3fa5589f17a567f9">StudyCaseHandler</a>
-</li>
 <li>loadingNewStudyCase()
 : <a class="el" href="class_study_case_handler.html#a7f7ced56bf2910ec8dfdd7de7a137894">StudyCaseHandler</a>
-</li>
-<li>loadingStart()
-: <a class="el" href="class_study_case_handler.html#a4dd37aa8993ffcec36e8dc2bf4827c7b">StudyCaseHandler</a>
 </li>
 <li>loadStudyCase()
 : <a class="el" href="class_study_case_handler.html#ab47941e48523cda3ca43a0fa268b7b7e">StudyCaseHandler</a>
@@ -343,8 +331,17 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>m_created
 : <a class="el" href="class_study_case.html#a2a0e13ab7da2736696ddf364788537fe">StudyCase</a>
 </li>
+<li>m_currentStudyCaseVariables
+: <a class="el" href="class_study_case_handler.html#a89d8e91b3878ca7748b56302884cbf3d">StudyCaseHandler</a>
+</li>
 <li>m_encoded
 : <a class="el" href="class_study_case.html#a8cbf4a897f3dcadb603d4269ab830e86">StudyCase</a>
+</li>
+<li>m_isSaved
+: <a class="el" href="class_study_case_handler.html#a9fb533e8294284afd720b8c74cea6420">StudyCaseHandler</a>
+</li>
+<li>m_lastSavedPath
+: <a class="el" href="class_study_case_handler.html#af6f68b2a8f832029a06b1f0bf29a9921">StudyCaseHandler</a>
 </li>
 <li>m_mapOfInformation
 : <a class="el" href="class_study_case.html#a84c0cc77a3c86fb457f0b6e6cfc485a3">StudyCase</a>
@@ -361,11 +358,23 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>m_stepOfProcessManipulation
 : <a class="el" href="class_process_handler.html#ab628ed71b312e925640ec18f25ba03a6">ProcessHandler</a>
 </li>
+<li>m_studyCase
+: <a class="el" href="class_study_case_handler.html#a14d5da48ff5bb029c501e56e7a5a503b">StudyCaseHandler</a>
+</li>
+<li>m_studyCaseType
+: <a class="el" href="class_study_case_handler.html#a2de6451ee241099a229e9f753ce39adf">StudyCaseHandler</a>
+</li>
+<li>m_temporalStudyCaseVariables
+: <a class="el" href="class_study_case_handler.html#a323ee0b8784cf20735e2956c912b5993">StudyCaseHandler</a>
+</li>
 <li>mainSignalEmitted()
 : <a class="el" href="class_configure.html#abc9e395a1ad14b5f30f5452d38cefc12">Configure</a>
 </li>
 <li>markAsNotSaved()
 : <a class="el" href="class_study_case_handler.html#ad4578376876f9ee0399fbd3c1b44cc63">StudyCaseHandler</a>
+</li>
+<li>markAsSaved()
+: <a class="el" href="class_study_case_handler.html#aeb59468b377aa5ba1a53caf4e433eb6f">StudyCaseHandler</a>
 </li>
 <li>markedAsNotSaved()
 : <a class="el" href="class_study_case_handler.html#a90e6c7a7912c418937e842a357b531d2">StudyCaseHandler</a>
@@ -484,6 +493,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>setSingleStudyCaseJson()
 : <a class="el" href="class_study_case_handler.html#a7e9ba7549a884d78ab87067e03c89620">StudyCaseHandler</a>
 </li>
+<li>setSingleStudyCaseJsonHelper()
+: <a class="el" href="class_study_case_handler.html#a41ca9c4353e19835a0d20c6b1eb24132">StudyCaseHandler</a>
+</li>
 <li>setSource()
 : <a class="el" href="class_file_i_o.html#a6b724dd694fd5a199ef5059b71571e4d">FileIO</a>
 </li>
@@ -576,7 +588,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
         <!-- start footer part -->
         <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
         <ul>
-            <li class="footer">Generated on Sun Feb 1 2015 13:23:49 for FEMRIS by
+            <li class="footer">Generated on Sun Feb 1 2015 20:43:47 for FEMRIS by
                 <a href="http://www.doxygen.org/index.html">
                 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
             </ul>

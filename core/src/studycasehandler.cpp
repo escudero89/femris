@@ -9,7 +9,8 @@
 #include <QUrl>
 
 /**
- * @brief StudyCaseHandler::StudyCaseHandler
+ * @brief When the StudyCaseHandler is created, it sets the Study Case as null,
+ * it marks it as saved, and calls start()
  */
 StudyCaseHandler::StudyCaseHandler() {
     m_studyCase = NULL;
@@ -20,13 +21,11 @@ StudyCaseHandler::StudyCaseHandler() {
 }
 
 /**
- * @brief StudyCaseHandler::~StudyCaseHandler
- */
-StudyCaseHandler::~StudyCaseHandler() {
-}
-
-/**
- * @brief StudyCaseHandler::start
+ * @brief Starts the current Study Case, and deletes the previous stats
+ *
+ * It also sets the `stepOfProcess` to `1`.
+ *
+ * @see markAsSaved()
  */
 void StudyCaseHandler::start() {
     // Delete the previous (if there is one) study case
@@ -47,15 +46,18 @@ void StudyCaseHandler::start() {
 }
 
 /**
- * @brief StudyCaseHandler::exists
+ * @brief Checks if there are a Study Case that is being currently handled
+ * @return Whether the Study Case exists or not
  */
 bool StudyCaseHandler::exists() {
     return (m_studyCase != NULL);
 }
 
 /**
- * @brief StudyCaseHandler::selectNewTypeStudyCase
- * @param studyCaseType
+ * @brief Sets the Study Case's type.
+ *
+ * @param studyCaseType The new type (`heat`, `plane-stress`, `plane-strain`).
+ * @see newStudyCaseChose()
  */
 void StudyCaseHandler::selectNewTypeStudyCase(const QString& studyCaseType) {
     m_studyCaseType = studyCaseType;
@@ -64,7 +66,13 @@ void StudyCaseHandler::selectNewTypeStudyCase(const QString& studyCaseType) {
 }
 
 /**
- * @brief StudyCaseHandler::adoptNewTypeStudyCase
+ * @brief This function is mainly used to check the internal structure of the Study Case
+ *
+ * It's call in the QML one the user change the type of the Study Case. If the
+ * type is of the different nature (e.g., heat transfer instead of structural),
+ * we create a new study case.
+ *
+ * @see createNewStudyCase()
  */
 void StudyCaseHandler::adoptNewTypeStudyCaseIfNecessary() {
 
@@ -92,7 +100,16 @@ void StudyCaseHandler::adoptNewTypeStudyCaseIfNecessary() {
 }
 
 /**
- * @brief StudyCaseHandler::createNewStudyCase
+ * @brief Creates a new Study Case
+ *
+ * It needs already stored in the StudyCaseHandler the information of the type
+ * of the Study Case to create. Otherwise, will throw an error.
+ *
+ * @see StudyCase::createNew()
+ * @see StudyCase::getMapOfInformation()
+ * @see newStudyCaseCreated()
+ *
+ * @throw Utils::throwErrorAndExit()
  */
 void StudyCaseHandler::createNewStudyCase() {
 
@@ -129,8 +146,18 @@ void StudyCaseHandler::createNewStudyCase() {
 }
 
 /**
- * @brief StudyCaseHandler::saveCurrentStudyCase
- * @param whereToSave
+ * @brief Saves the current Study Case
+ *
+ * The information is stored in a file with the extension `.femris` in a certain
+ * location given by the user.
+ *
+ * @param whereToSave The path and the name of the file to be saved. If it doesn't
+ * have the extension `.femris`, this one is added automatically.
+ *
+ * @see StudyCase::saveCurrentConfiguration()
+ *
+ * @see savingCurrentStudyCase()
+ * @see markAsSaved()
  */
 void StudyCaseHandler::saveCurrentStudyCase(QString whereToSave) {
     if (!exists()) {
@@ -150,6 +177,16 @@ void StudyCaseHandler::saveCurrentStudyCase(QString whereToSave) {
 
 }
 
+/**
+ * @brief Exports the current Study Case to be used in the post-process of gid_t
+ *
+ * This function actually saves three files. Two of them are for its direct use
+ * in the post-process of GiD (with the extensions `*.flavia.*`), and the main
+ * (with the extension `*.m`) can be used to execute MATfem over.
+ *
+ * @param whereToSave The path in which the main file is going to be saved
+ * @return Whether it was successful in exporting the files
+ */
 bool StudyCaseHandler::exportCurrentStudyCase(QString whereToSave) {
     if (!exists()) {
         return false;
@@ -165,9 +202,20 @@ bool StudyCaseHandler::exportCurrentStudyCase(QString whereToSave) {
 }
 
 /**
- * @brief StudyCaseHandler::loadStudyCase
+ * @brief Loads a Study Case from a file.
+ *
  * @param whereToLoad
  * @return bool
+ *
+ * @see start()
+ * @see createNewStudyCase()
+ *
+ * @see StudyCase::setMapOfInformation()
+ * @see StudyCase::saveCurrentConfiguration()
+ *
+ * @see loadingNewStudyCase()
+ * @see markAsSaved()
+ * @see isReady()
  */
 bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
     QMap<QString,QString> results = m_studyCase->loadConfiguration(whereToLoad);
@@ -188,8 +236,6 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
     m_studyCase->saveCurrentConfiguration();
     m_lastSavedPath = whereToLoad;
 
-    QMap<QString, QString>::const_iterator i = m_currentStudyCaseVariables.constBegin();while (i != m_currentStudyCaseVariables.constEnd()) {qDebug() << i.key() << ": " << i.value();++i;}
-
     markAsSaved();
     isReady();
 
@@ -197,29 +243,34 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
 }
 
 /**
- * @brief StudyCaseHandler::checkSingleStudyCaseInformation
- * @param variable
- * @return
+ * @brief Checks if a certain variable exists in the QMap of the Study Case
+ *
+ * @param variable The name of the variable that we are looking for
+ * @return Whether exists (true) or not (false)
  */
 bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable) {
     return m_currentStudyCaseVariables.contains(variable);
 }
 
 /**
- * @brief StudyCaseHandler::checkSingleStudyCaseInformation
- * @param variable
- * @param comparison
- * @return
+ * @brief Checks the existence and the content of a variable in the QMap of the Study Case
+ *
+ * @param variable The name of the variable that we are checking
+ * @param comparison The value we are going to compare with the currently stored in the variable
+ * @return True if the variable exists and if its value is the same as the @p comparison.
  */
 bool StudyCaseHandler::checkSingleStudyCaseInformation(const QString& variable, const QString &comparison) {
     return checkSingleStudyCaseInformation(variable) && m_currentStudyCaseVariables[variable] == comparison;
 }
 
 /**
- * @brief StudyCaseHandler::getSingleStudyCaseInformation
- * @param variable
- * @param isTemporal
- * @return
+ * @brief Gets the currently stored value in a certain variable
+ *
+ * @param variable The variable that we are trying to get its value
+ * @param isTemporal Is the variable actually is in the temporary QMap?
+ * @return The value of the variable
+ *
+ * @throw Utils::throwErrorAndExit If the variable isn't in the QMap and @p isTemporal is false
  */
 QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable, bool isTemporal) {
 
@@ -239,17 +290,20 @@ QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable,
 }
 
 /**
- * @brief StudyCaseHandler::setSingleStudyCaseInformation
- * @param variable
- * @param newVariable
- * @param isTemporal
+ * @brief Sets a value into a variable of the QMap stored in the Study Case
+ *
+ * @param variable The name of the variable that will contain the new value
+ * @param newValue The new value
+ * @param isTemporal Should we save the variable in the temporary QMap?
+ *
+ * @see markAsNotSaved() Which is only called if the new variable stored is not temporal.
  */
 void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
-                                                     const QString& newVariable,
+                                                     const QString& newValue,
                                                      bool isTemporal) {
 
     if (isTemporal) {
-        m_temporalStudyCaseVariables.insert(variable, newVariable);
+        m_temporalStudyCaseVariables.insert(variable, newValue);
         return;
     }
 
@@ -258,8 +312,8 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
     }
 
     // We only update the data if differs from the previous one recorded
-    if (m_currentStudyCaseVariables[variable] != newVariable) {
-        m_currentStudyCaseVariables[variable] = newVariable;
+    if (m_currentStudyCaseVariables[variable] != newValue) {
+        m_currentStudyCaseVariables[variable] = newValue;
         m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
 
         m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
@@ -272,18 +326,28 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
 }
 
 /**
- * @brief StudyCaseHandler::setSingleStudyCaseJson
- * @param variable
- * @param newVariable
+ * @brief Converts a QJsonArray into a QString and then saves its value in the variable
+ *
+ * @param variable The variable of the QMap which is going to store the JSON stringified
+ * @param jsonValue The JSON that we are trying to save
+ *
+ * @see setSingleStudyCaseJsonHelper()
+ *
+ * @see StudyCase::setMapOfInformation()
+ * @see StudyCase::saveCurrentConfiguration()
+ *
+ * @see markAsNotSaved()
+ *
+ * @throw Utils::throwErrorAndExit()
  */
 void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
-                                              const QJsonArray& newVariable) {
+                                              const QJsonArray& jsonValue) {
 
     if (!m_currentStudyCaseVariables.contains(variable)) {
         Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
     }
 
-    QString newJsonfyVariable = setSingleStudyCaseJsonHelper(variable, newVariable);
+    QString newJsonfyVariable = setSingleStudyCaseJsonHelper(variable, jsonValue);
 
     // We only update the data if differs from the previous one recorded
     if (m_currentStudyCaseVariables[variable] != newJsonfyVariable) {
@@ -297,10 +361,12 @@ void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
 }
 
 /**
- * @brief StudyCaseHandler::setSingleStudyCaseJsonHelper
- * @param nameVariable
- * @param jsonVariable
- * @return
+ * @brief Converts a QJsonArray (e.g., from the Javascript in QML) into a QString
+ *
+ * @param nameVariable The name of the variable (since a JSON doesn't have a name)
+ * @param jsonVariable The QJsonArray to stringify
+ *
+ * @return The JSON stringified like "nameVariable = [ ... jsonVariable ... ]"
  */
 QString StudyCaseHandler::setSingleStudyCaseJsonHelper(const QString& nameVariable,
                                                        const QJsonArray& jsonVariable) {
@@ -340,9 +406,13 @@ QString StudyCaseHandler::setSingleStudyCaseJsonHelper(const QString& nameVariab
 }
 
 /**
- * @brief StudyCaseHandler::saveAndContinue
- * @param parentStage
- * @return
+ * @brief Advances the Study Case one step further in the FEM process.
+ *
+ * This function is used in the QML, to set the current step in which the Study
+ * Case is located, and then determinate in what `ChoiceBlock` currently is.
+ *
+ * @param parentStage The name of the stage in which the Study Case was
+ * @return The number of the next step of the process
  */
 QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
 
@@ -362,18 +432,10 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
 }
 
 /**
- * @brief StudyCaseHandler::createDomainFromScriptFile
- */
-void StudyCaseHandler::createDomainFromScriptFile() {
-    emit loadingStart();
-    emit callProcess();
-    emit loadingDone();
-}
-
-/**
- * @brief StudyCaseHandler::loadUrlInBrowser
- * @param link
- * @param withoutFullPath
+ * @brief Loads a link into the default web browser of the user.
+ *
+ * @param link The path to load (it could an url or a file).
+ * @param withoutFullPath Whether it needs to add the current App path.
  */
 void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
     if (withoutFullPath) {
@@ -385,6 +447,10 @@ void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
 
 /**
  * @brief Checks if the StudyCase is ready for MATfem
+ *
+ * @see beforeCheckIfReady()
+ * @see ready()
+ * @see StudyCase::isReady()
  */
 void StudyCaseHandler::isReady() {
     emit beforeCheckIfReady();
@@ -395,26 +461,76 @@ void StudyCaseHandler::isReady() {
 //--                          GETTER AND SETTERS                            --//
 //----------------------------------------------------------------------------//
 
+/**
+ * @brief Get the current save status of the Study Case
+ * @return True if it's marked as saved, or false otherwise
+ */
 bool StudyCaseHandler::getSavedStatus() {
     return m_isSaved;
 }
 
+/**
+ * @brief Set the current Study Case as saved.
+ * @see StudyCaseHandler::markedAsSaved()
+ */
 void StudyCaseHandler::markAsSaved() {
     m_isSaved = true;
 
     emit StudyCaseHandler::markedAsSaved();
 }
 
+/**
+ * @brief Set the current Study Case as with changes that are not saved yet
+ * @see StudyCaseHandler::markedAsNotSaved()
+ */
 void StudyCaseHandler::markAsNotSaved() {
     m_isSaved = false;
 
     emit StudyCaseHandler::markedAsNotSaved();
 }
 
+/**
+ * @brief Returns the last saved path
+ * @return Last saved path (if exists, otherwise it returns empty)
+ */
 QString StudyCaseHandler::getLastSavedPath() {
     return m_lastSavedPath;
 }
 
+/**
+ * @brief Whether if the study type passed as argument is the same as the current one
+ * @param typeOfStudyCase Type of Study Case: `heat`, `plane-stress`, `plane-strain`
+ *
+ * @return Whether is the same type (true) or not (false)
+ */
 bool StudyCaseHandler::isStudyType(const QString& typeOfStudyCase) {
     return checkSingleStudyCaseInformation("typeOfStudyCase", typeOfStudyCase);
 }
+
+//----------------------------------------------------------------------------//
+//--                                SIGNALS                                 --//
+//----------------------------------------------------------------------------//
+
+//! @fn void StudyCaseHandler::newStudyCaseChose(const QString& studyCaseType)
+//! @brief A new Study Case's type has been chose
+
+//! @fn void StudyCaseHandler::newStudyCaseCreated()
+//! @brief A new Study Case has been created
+
+//! @fn void StudyCaseHandler::loadingNewStudyCase()
+//! @brief A Study Case has been loaded from a file
+
+//! @fn void StudyCaseHandler::savingCurrentStudyCase()
+//! @brief The Study Case has been stored in a file with a `.femris` extension
+
+//! @fn void StudyCaseHandler::markedAsSaved()
+//! @brief The Study Case is marked as saved (no changes are without saving)
+
+//! @fn void StudyCaseHandler::markedAsNotSaved()
+//! @brief There are some modifications in the Study Case that are not saved
+
+//! @fn void StudyCaseHandler::beforeCheckIfReady()
+//! @brief Signal emmited before checking if the Study Case is ready for MATfem
+
+//! @fn void StudyCaseHandler::ready(const bool& status)
+//! @brief The Study Case is ready for MATfem

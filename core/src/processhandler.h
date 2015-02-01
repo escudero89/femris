@@ -13,7 +13,6 @@
  * availables: MATLAB and GNU Octave. It manages their inputs and outputs, and
  * emits signals whenever there is a change in the status of the process.
  */
-
 class ProcessHandler : public QObject {
     Q_OBJECT
 

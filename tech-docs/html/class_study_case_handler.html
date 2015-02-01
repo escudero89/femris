@@ -108,11 +108,16 @@ $(document).ready(function(){initNavTree('class_study_case_handler.html','');});
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_study_case_handler-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">StudyCaseHandler Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Main class that handles all the interactions with the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a>.  
+ <a href="class_study_case_handler.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="studycasehandler_8h_source.html">studycasehandler.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -127,96 +132,131 @@ Inheritance diagram for StudyCaseHandler:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a45469c3670f0babdf0cbb6fb0c1dbe47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a45469c3670f0babdf0cbb6fb0c1dbe47">newStudyCaseChose</a> (const QString &amp;studyCaseType)</td></tr>
+<tr class="memdesc:a45469c3670f0babdf0cbb6fb0c1dbe47"><td class="mdescLeft">&#160;</td><td class="mdescRight">A new Study Case's type has been chose.  <a href="#a45469c3670f0babdf0cbb6fb0c1dbe47">More...</a><br/></td></tr>
 <tr class="separator:a45469c3670f0babdf0cbb6fb0c1dbe47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49098d876e4580f49384c91c774e64dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a49098d876e4580f49384c91c774e64dd">newStudyCaseCreated</a> ()</td></tr>
+<tr class="memdesc:a49098d876e4580f49384c91c774e64dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">A new Study Case has been created.  <a href="#a49098d876e4580f49384c91c774e64dd">More...</a><br/></td></tr>
 <tr class="separator:a49098d876e4580f49384c91c774e64dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dd37aa8993ffcec36e8dc2bf4827c7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a4dd37aa8993ffcec36e8dc2bf4827c7b">loadingStart</a> ()</td></tr>
-<tr class="separator:a4dd37aa8993ffcec36e8dc2bf4827c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45779eb675fa8adb3fa5589f17a567f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a45779eb675fa8adb3fa5589f17a567f9">loadingDone</a> ()</td></tr>
-<tr class="separator:a45779eb675fa8adb3fa5589f17a567f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f7ced56bf2910ec8dfdd7de7a137894"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a7f7ced56bf2910ec8dfdd7de7a137894">loadingNewStudyCase</a> ()</td></tr>
+<tr class="memdesc:a7f7ced56bf2910ec8dfdd7de7a137894"><td class="mdescLeft">&#160;</td><td class="mdescRight">A Study Case has been loaded from a file.  <a href="#a7f7ced56bf2910ec8dfdd7de7a137894">More...</a><br/></td></tr>
 <tr class="separator:a7f7ced56bf2910ec8dfdd7de7a137894"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad54a02d6ebeb6dd1920da1000d53726"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#aad54a02d6ebeb6dd1920da1000d53726">savingCurrentStudyCase</a> ()</td></tr>
+<tr class="memdesc:aad54a02d6ebeb6dd1920da1000d53726"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Study Case has been stored in a file with a <code>.femris</code> extension.  <a href="#aad54a02d6ebeb6dd1920da1000d53726">More...</a><br/></td></tr>
 <tr class="separator:aad54a02d6ebeb6dd1920da1000d53726"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29ca0d41719b6532249e8314b9581647"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a29ca0d41719b6532249e8314b9581647">callProcess</a> ()</td></tr>
-<tr class="separator:a29ca0d41719b6532249e8314b9581647"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7f4a35247f8ca52ed5f012a75aa172f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#af7f4a35247f8ca52ed5f012a75aa172f">markedAsSaved</a> ()</td></tr>
+<tr class="memdesc:af7f4a35247f8ca52ed5f012a75aa172f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Study Case is marked as saved (no changes are without saving)  <a href="#af7f4a35247f8ca52ed5f012a75aa172f">More...</a><br/></td></tr>
 <tr class="separator:af7f4a35247f8ca52ed5f012a75aa172f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90e6c7a7912c418937e842a357b531d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a90e6c7a7912c418937e842a357b531d2">markedAsNotSaved</a> ()</td></tr>
+<tr class="memdesc:a90e6c7a7912c418937e842a357b531d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">There are some modifications in the Study Case that are not saved.  <a href="#a90e6c7a7912c418937e842a357b531d2">More...</a><br/></td></tr>
 <tr class="separator:a90e6c7a7912c418937e842a357b531d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74f98021a7932a5fe415c454177f6a2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a74f98021a7932a5fe415c454177f6a2e">beforeCheckIfReady</a> ()</td></tr>
+<tr class="memdesc:a74f98021a7932a5fe415c454177f6a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal emmited before checking if the Study Case is ready for MATfem.  <a href="#a74f98021a7932a5fe415c454177f6a2e">More...</a><br/></td></tr>
 <tr class="separator:a74f98021a7932a5fe415c454177f6a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6c958c76c3597d38f2dc06a396ab89a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#af6c958c76c3597d38f2dc06a396ab89a">ready</a> (const bool &amp;status)</td></tr>
+<tr class="memdesc:af6c958c76c3597d38f2dc06a396ab89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Study Case is ready for MATfem.  <a href="#af6c958c76c3597d38f2dc06a396ab89a">More...</a><br/></td></tr>
 <tr class="separator:af6c958c76c3597d38f2dc06a396ab89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a09481700c3d1366dfe93dc86b4ae28cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a09481700c3d1366dfe93dc86b4ae28cd">StudyCaseHandler</a> ()</td></tr>
-<tr class="memdesc:a09481700c3d1366dfe93dc86b4ae28cd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a09481700c3d1366dfe93dc86b4ae28cd" title="StudyCaseHandler::StudyCaseHandler. ">StudyCaseHandler::StudyCaseHandler</a>.  <a href="#a09481700c3d1366dfe93dc86b4ae28cd">More...</a><br/></td></tr>
+<tr class="memdesc:a09481700c3d1366dfe93dc86b4ae28cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the <a class="el" href="class_study_case_handler.html" title="Main class that handles all the interactions with the StudyCase. ">StudyCaseHandler</a> is created, it sets the Study Case as null, it marks it as saved, and calls <a class="el" href="class_study_case_handler.html#acf18da33282e607a33a529c3ef16622d" title="Starts the current Study Case, and deletes the previous stats. ">start()</a>  <a href="#a09481700c3d1366dfe93dc86b4ae28cd">More...</a><br/></td></tr>
 <tr class="separator:a09481700c3d1366dfe93dc86b4ae28cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ae60eb19d313fe2cd314ce66bf13597"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a4ae60eb19d313fe2cd314ce66bf13597">~StudyCaseHandler</a> ()</td></tr>
-<tr class="memdesc:a4ae60eb19d313fe2cd314ce66bf13597"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a4ae60eb19d313fe2cd314ce66bf13597" title="StudyCaseHandler::~StudyCaseHandler. ">StudyCaseHandler::~StudyCaseHandler</a>.  <a href="#a4ae60eb19d313fe2cd314ce66bf13597">More...</a><br/></td></tr>
 <tr class="separator:a4ae60eb19d313fe2cd314ce66bf13597"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf18da33282e607a33a529c3ef16622d"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#acf18da33282e607a33a529c3ef16622d">start</a> ()</td></tr>
-<tr class="memdesc:acf18da33282e607a33a529c3ef16622d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#acf18da33282e607a33a529c3ef16622d" title="StudyCaseHandler::start. ">StudyCaseHandler::start</a>.  <a href="#acf18da33282e607a33a529c3ef16622d">More...</a><br/></td></tr>
+<tr class="memdesc:acf18da33282e607a33a529c3ef16622d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the current Study Case, and deletes the previous stats.  <a href="#acf18da33282e607a33a529c3ef16622d">More...</a><br/></td></tr>
 <tr class="separator:acf18da33282e607a33a529c3ef16622d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a504b9f1c7d73f6924909a5eb1be9af18"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a504b9f1c7d73f6924909a5eb1be9af18">exists</a> ()</td></tr>
-<tr class="memdesc:a504b9f1c7d73f6924909a5eb1be9af18"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a504b9f1c7d73f6924909a5eb1be9af18" title="StudyCaseHandler::exists. ">StudyCaseHandler::exists</a>.  <a href="#a504b9f1c7d73f6924909a5eb1be9af18">More...</a><br/></td></tr>
+<tr class="memdesc:a504b9f1c7d73f6924909a5eb1be9af18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if there are a Study Case that is being currently handled.  <a href="#a504b9f1c7d73f6924909a5eb1be9af18">More...</a><br/></td></tr>
 <tr class="separator:a504b9f1c7d73f6924909a5eb1be9af18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7fb7ececf96361dd10be1924145a374"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#ab7fb7ececf96361dd10be1924145a374">selectNewTypeStudyCase</a> (const QString &amp;)</td></tr>
-<tr class="memdesc:ab7fb7ececf96361dd10be1924145a374"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#ab7fb7ececf96361dd10be1924145a374" title="StudyCaseHandler::selectNewTypeStudyCase. ">StudyCaseHandler::selectNewTypeStudyCase</a>.  <a href="#ab7fb7ececf96361dd10be1924145a374">More...</a><br/></td></tr>
+<tr class="memdesc:ab7fb7ececf96361dd10be1924145a374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Study Case's type.  <a href="#ab7fb7ececf96361dd10be1924145a374">More...</a><br/></td></tr>
 <tr class="separator:ab7fb7ececf96361dd10be1924145a374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a749a212b3382571c5a0a955a3c5305b1"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a749a212b3382571c5a0a955a3c5305b1">adoptNewTypeStudyCaseIfNecessary</a> ()</td></tr>
-<tr class="memdesc:a749a212b3382571c5a0a955a3c5305b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">StudyCaseHandler::adoptNewTypeStudyCase.  <a href="#a749a212b3382571c5a0a955a3c5305b1">More...</a><br/></td></tr>
+<tr class="memdesc:a749a212b3382571c5a0a955a3c5305b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is mainly used to check the internal structure of the Study Case.  <a href="#a749a212b3382571c5a0a955a3c5305b1">More...</a><br/></td></tr>
 <tr class="separator:a749a212b3382571c5a0a955a3c5305b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e3e2822c57262617a83990eb3081a41"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a9e3e2822c57262617a83990eb3081a41">createNewStudyCase</a> ()</td></tr>
-<tr class="memdesc:a9e3e2822c57262617a83990eb3081a41"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a9e3e2822c57262617a83990eb3081a41" title="StudyCaseHandler::createNewStudyCase. ">StudyCaseHandler::createNewStudyCase</a>.  <a href="#a9e3e2822c57262617a83990eb3081a41">More...</a><br/></td></tr>
+<tr class="memdesc:a9e3e2822c57262617a83990eb3081a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new Study Case.  <a href="#a9e3e2822c57262617a83990eb3081a41">More...</a><br/></td></tr>
 <tr class="separator:a9e3e2822c57262617a83990eb3081a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a637453ebb73e48b414b8b40d99b2303a"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a637453ebb73e48b414b8b40d99b2303a">createDomainFromScriptFile</a> ()</td></tr>
-<tr class="memdesc:a637453ebb73e48b414b8b40d99b2303a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a637453ebb73e48b414b8b40d99b2303a" title="StudyCaseHandler::createDomainFromScriptFile. ">StudyCaseHandler::createDomainFromScriptFile</a>.  <a href="#a637453ebb73e48b414b8b40d99b2303a">More...</a><br/></td></tr>
-<tr class="separator:a637453ebb73e48b414b8b40d99b2303a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a855c60468b5c8c59100591c5d554ffc3"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a855c60468b5c8c59100591c5d554ffc3">saveCurrentStudyCase</a> (QString)</td></tr>
-<tr class="memdesc:a855c60468b5c8c59100591c5d554ffc3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a855c60468b5c8c59100591c5d554ffc3" title="StudyCaseHandler::saveCurrentStudyCase. ">StudyCaseHandler::saveCurrentStudyCase</a>.  <a href="#a855c60468b5c8c59100591c5d554ffc3">More...</a><br/></td></tr>
+<tr class="memdesc:a855c60468b5c8c59100591c5d554ffc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the current Study Case.  <a href="#a855c60468b5c8c59100591c5d554ffc3">More...</a><br/></td></tr>
 <tr class="separator:a855c60468b5c8c59100591c5d554ffc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae48ee5539a4414acc02a93bf54d1e6f2"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#ae48ee5539a4414acc02a93bf54d1e6f2">exportCurrentStudyCase</a> (QString)</td></tr>
+<tr class="memdesc:ae48ee5539a4414acc02a93bf54d1e6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exports the current Study Case to be used in the post-process of gid_t.  <a href="#ae48ee5539a4414acc02a93bf54d1e6f2">More...</a><br/></td></tr>
 <tr class="separator:ae48ee5539a4414acc02a93bf54d1e6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab47941e48523cda3ca43a0fa268b7b7e"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#ab47941e48523cda3ca43a0fa268b7b7e">loadStudyCase</a> (const QString &amp;)</td></tr>
-<tr class="memdesc:ab47941e48523cda3ca43a0fa268b7b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#ab47941e48523cda3ca43a0fa268b7b7e" title="StudyCaseHandler::loadStudyCase. ">StudyCaseHandler::loadStudyCase</a>.  <a href="#ab47941e48523cda3ca43a0fa268b7b7e">More...</a><br/></td></tr>
+<tr class="memdesc:ab47941e48523cda3ca43a0fa268b7b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a Study Case from a file.  <a href="#ab47941e48523cda3ca43a0fa268b7b7e">More...</a><br/></td></tr>
 <tr class="separator:ab47941e48523cda3ca43a0fa268b7b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ab9c4f0c0f690b2108e4c5ce3dfbf43"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a3ab9c4f0c0f690b2108e4c5ce3dfbf43">checkSingleStudyCaseInformation</a> (const QString &amp;)</td></tr>
-<tr class="memdesc:a3ab9c4f0c0f690b2108e4c5ce3dfbf43"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a3ab9c4f0c0f690b2108e4c5ce3dfbf43" title="StudyCaseHandler::checkSingleStudyCaseInformation. ">StudyCaseHandler::checkSingleStudyCaseInformation</a>.  <a href="#a3ab9c4f0c0f690b2108e4c5ce3dfbf43">More...</a><br/></td></tr>
+<tr class="memdesc:a3ab9c4f0c0f690b2108e4c5ce3dfbf43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a certain variable exists in the QMap of the Study Case.  <a href="#a3ab9c4f0c0f690b2108e4c5ce3dfbf43">More...</a><br/></td></tr>
 <tr class="separator:a3ab9c4f0c0f690b2108e4c5ce3dfbf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b76b405f7a98e16e6e2bfe2733a9d3a"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a1b76b405f7a98e16e6e2bfe2733a9d3a">checkSingleStudyCaseInformation</a> (const QString &amp;, const QString &amp;)</td></tr>
-<tr class="memdesc:a1b76b405f7a98e16e6e2bfe2733a9d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a3ab9c4f0c0f690b2108e4c5ce3dfbf43" title="StudyCaseHandler::checkSingleStudyCaseInformation. ">StudyCaseHandler::checkSingleStudyCaseInformation</a>.  <a href="#a1b76b405f7a98e16e6e2bfe2733a9d3a">More...</a><br/></td></tr>
+<tr class="memdesc:a1b76b405f7a98e16e6e2bfe2733a9d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the existence and the content of a variable in the QMap of the Study Case.  <a href="#a1b76b405f7a98e16e6e2bfe2733a9d3a">More...</a><br/></td></tr>
 <tr class="separator:a1b76b405f7a98e16e6e2bfe2733a9d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8ee5fd75ecffc5785e8c3eda380b596"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#aa8ee5fd75ecffc5785e8c3eda380b596">getSingleStudyCaseInformation</a> (const QString &amp;, bool=false)</td></tr>
-<tr class="memdesc:aa8ee5fd75ecffc5785e8c3eda380b596"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#aa8ee5fd75ecffc5785e8c3eda380b596" title="StudyCaseHandler::getSingleStudyCaseInformation. ">StudyCaseHandler::getSingleStudyCaseInformation</a>.  <a href="#aa8ee5fd75ecffc5785e8c3eda380b596">More...</a><br/></td></tr>
+<tr class="memdesc:aa8ee5fd75ecffc5785e8c3eda380b596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the currently stored value in a certain variable.  <a href="#aa8ee5fd75ecffc5785e8c3eda380b596">More...</a><br/></td></tr>
 <tr class="separator:aa8ee5fd75ecffc5785e8c3eda380b596"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a538680ebbb541d7c0271ff7f7d399b48"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a538680ebbb541d7c0271ff7f7d399b48">setSingleStudyCaseInformation</a> (const QString &amp;, const QString &amp;, bool=false)</td></tr>
-<tr class="memdesc:a538680ebbb541d7c0271ff7f7d399b48"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a538680ebbb541d7c0271ff7f7d399b48" title="StudyCaseHandler::setSingleStudyCaseInformation. ">StudyCaseHandler::setSingleStudyCaseInformation</a>.  <a href="#a538680ebbb541d7c0271ff7f7d399b48">More...</a><br/></td></tr>
+<tr class="memdesc:a538680ebbb541d7c0271ff7f7d399b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a value into a variable of the QMap stored in the Study Case.  <a href="#a538680ebbb541d7c0271ff7f7d399b48">More...</a><br/></td></tr>
 <tr class="separator:a538680ebbb541d7c0271ff7f7d399b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e9ba7549a884d78ab87067e03c89620"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a7e9ba7549a884d78ab87067e03c89620">setSingleStudyCaseJson</a> (const QString &amp;, const QJsonArray &amp;)</td></tr>
-<tr class="memdesc:a7e9ba7549a884d78ab87067e03c89620"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a7e9ba7549a884d78ab87067e03c89620" title="StudyCaseHandler::setSingleStudyCaseJson. ">StudyCaseHandler::setSingleStudyCaseJson</a>.  <a href="#a7e9ba7549a884d78ab87067e03c89620">More...</a><br/></td></tr>
+<tr class="memdesc:a7e9ba7549a884d78ab87067e03c89620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a QJsonArray into a QString and then saves its value in the variable.  <a href="#a7e9ba7549a884d78ab87067e03c89620">More...</a><br/></td></tr>
 <tr class="separator:a7e9ba7549a884d78ab87067e03c89620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28f59ccf839850ea715db95683aacb42"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a28f59ccf839850ea715db95683aacb42">saveAndContinue</a> (const QString &amp;)</td></tr>
-<tr class="memdesc:a28f59ccf839850ea715db95683aacb42"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a28f59ccf839850ea715db95683aacb42" title="StudyCaseHandler::saveAndContinue. ">StudyCaseHandler::saveAndContinue</a>.  <a href="#a28f59ccf839850ea715db95683aacb42">More...</a><br/></td></tr>
+<tr class="memdesc:a28f59ccf839850ea715db95683aacb42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the Study Case one step further in the FEM process.  <a href="#a28f59ccf839850ea715db95683aacb42">More...</a><br/></td></tr>
 <tr class="separator:a28f59ccf839850ea715db95683aacb42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a583c184be7385c6a211d8d546f49e4aa"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a583c184be7385c6a211d8d546f49e4aa">loadUrlInBrowser</a> (QString, bool=false)</td></tr>
-<tr class="memdesc:a583c184be7385c6a211d8d546f49e4aa"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_study_case_handler.html#a583c184be7385c6a211d8d546f49e4aa" title="StudyCaseHandler::loadUrlInBrowser. ">StudyCaseHandler::loadUrlInBrowser</a>.  <a href="#a583c184be7385c6a211d8d546f49e4aa">More...</a><br/></td></tr>
+<tr class="memdesc:a583c184be7385c6a211d8d546f49e4aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a link into the default web browser of the user.  <a href="#a583c184be7385c6a211d8d546f49e4aa">More...</a><br/></td></tr>
 <tr class="separator:a583c184be7385c6a211d8d546f49e4aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1eebd5ebcc5602751fdd44dba3070fbc"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a1eebd5ebcc5602751fdd44dba3070fbc">getSavedStatus</a> ()</td></tr>
+<tr class="memdesc:a1eebd5ebcc5602751fdd44dba3070fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current save status of the Study Case.  <a href="#a1eebd5ebcc5602751fdd44dba3070fbc">More...</a><br/></td></tr>
 <tr class="separator:a1eebd5ebcc5602751fdd44dba3070fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4578376876f9ee0399fbd3c1b44cc63"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#ad4578376876f9ee0399fbd3c1b44cc63">markAsNotSaved</a> ()</td></tr>
+<tr class="memdesc:ad4578376876f9ee0399fbd3c1b44cc63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current Study Case as with changes that are not saved yet.  <a href="#ad4578376876f9ee0399fbd3c1b44cc63">More...</a><br/></td></tr>
 <tr class="separator:ad4578376876f9ee0399fbd3c1b44cc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53d0672bd04fd2151847f61934012d6e"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a53d0672bd04fd2151847f61934012d6e">getLastSavedPath</a> ()</td></tr>
+<tr class="memdesc:a53d0672bd04fd2151847f61934012d6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the last saved path.  <a href="#a53d0672bd04fd2151847f61934012d6e">More...</a><br/></td></tr>
 <tr class="separator:a53d0672bd04fd2151847f61934012d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d629fbfabbff8285e0f6bef0c055638"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a7d629fbfabbff8285e0f6bef0c055638">isStudyType</a> (const QString &amp;)</td></tr>
+<tr class="memdesc:a7d629fbfabbff8285e0f6bef0c055638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether if the study type passed as argument is the same as the current one.  <a href="#a7d629fbfabbff8285e0f6bef0c055638">More...</a><br/></td></tr>
 <tr class="separator:a7d629fbfabbff8285e0f6bef0c055638"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a1f460f0d60cd0a1ddc5e2d2cb33cb6"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a9a1f460f0d60cd0a1ddc5e2d2cb33cb6">isReady</a> ()</td></tr>
 <tr class="memdesc:a9a1f460f0d60cd0a1ddc5e2d2cb33cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a> is ready for MATfem.  <a href="#a9a1f460f0d60cd0a1ddc5e2d2cb33cb6">More...</a><br/></td></tr>
 <tr class="separator:a9a1f460f0d60cd0a1ddc5e2d2cb33cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aeb59468b377aa5ba1a53caf4e433eb6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#aeb59468b377aa5ba1a53caf4e433eb6f">markAsSaved</a> ()</td></tr>
+<tr class="memdesc:aeb59468b377aa5ba1a53caf4e433eb6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current Study Case as saved.  <a href="#aeb59468b377aa5ba1a53caf4e433eb6f">More...</a><br/></td></tr>
+<tr class="separator:aeb59468b377aa5ba1a53caf4e433eb6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41ca9c4353e19835a0d20c6b1eb24132"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a41ca9c4353e19835a0d20c6b1eb24132">setSingleStudyCaseJsonHelper</a> (const QString &amp;, const QJsonArray &amp;)</td></tr>
+<tr class="memdesc:a41ca9c4353e19835a0d20c6b1eb24132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a QJsonArray (e.g., from the Javascript in QML) into a QString.  <a href="#a41ca9c4353e19835a0d20c6b1eb24132">More...</a><br/></td></tr>
+<tr class="separator:a41ca9c4353e19835a0d20c6b1eb24132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a9fb533e8294284afd720b8c74cea6420"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a9fb533e8294284afd720b8c74cea6420">m_isSaved</a></td></tr>
+<tr class="memdesc:a9fb533e8294284afd720b8c74cea6420"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether is already saved in an external file or not.  <a href="#a9fb533e8294284afd720b8c74cea6420">More...</a><br/></td></tr>
+<tr class="separator:a9fb533e8294284afd720b8c74cea6420"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6f68b2a8f832029a06b1f0bf29a9921"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#af6f68b2a8f832029a06b1f0bf29a9921">m_lastSavedPath</a></td></tr>
+<tr class="memdesc:af6f68b2a8f832029a06b1f0bf29a9921"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current location of the saved file (empty if it doesn't exists)  <a href="#af6f68b2a8f832029a06b1f0bf29a9921">More...</a><br/></td></tr>
+<tr class="separator:af6f68b2a8f832029a06b1f0bf29a9921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2de6451ee241099a229e9f753ce39adf"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a2de6451ee241099a229e9f753ce39adf">m_studyCaseType</a></td></tr>
+<tr class="memdesc:a2de6451ee241099a229e9f753ce39adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of Study Case that is being handled.  <a href="#a2de6451ee241099a229e9f753ce39adf">More...</a><br/></td></tr>
+<tr class="separator:a2de6451ee241099a229e9f753ce39adf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14d5da48ff5bb029c501e56e7a5a503b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_study_case.html">StudyCase</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a14d5da48ff5bb029c501e56e7a5a503b">m_studyCase</a></td></tr>
+<tr class="memdesc:a14d5da48ff5bb029c501e56e7a5a503b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current Study Case that is being handled.  <a href="#a14d5da48ff5bb029c501e56e7a5a503b">More...</a><br/></td></tr>
+<tr class="separator:a14d5da48ff5bb029c501e56e7a5a503b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89d8e91b3878ca7748b56302884cbf3d"><td class="memItemLeft" align="right" valign="top">QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a89d8e91b3878ca7748b56302884cbf3d">m_currentStudyCaseVariables</a></td></tr>
+<tr class="memdesc:a89d8e91b3878ca7748b56302884cbf3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A QMap that stores almost the same as the current Study Case.  <a href="#a89d8e91b3878ca7748b56302884cbf3d">More...</a><br/></td></tr>
+<tr class="separator:a89d8e91b3878ca7748b56302884cbf3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a323ee0b8784cf20735e2956c912b5993"><td class="memItemLeft" align="right" valign="top">QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a323ee0b8784cf20735e2956c912b5993">m_temporalStudyCaseVariables</a></td></tr>
+<tr class="memdesc:a323ee0b8784cf20735e2956c912b5993"><td class="mdescLeft">&#160;</td><td class="mdescRight">A temporary QMap that only stores variables which are not going to be saved.  <a href="#a323ee0b8784cf20735e2956c912b5993">More...</a><br/></td></tr>
+<tr class="separator:a323ee0b8784cf20735e2956c912b5993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Main class that handles all the interactions with the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a>. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a09481700c3d1366dfe93dc86b4ae28cd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -230,13 +270,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a09481700c3d1366dfe93dc86b4ae28cd" title="StudyCaseHandler::StudyCaseHandler. ">StudyCaseHandler::StudyCaseHandler</a>. </p>
+<p>When the <a class="el" href="class_study_case_handler.html" title="Main class that handles all the interactions with the StudyCase. ">StudyCaseHandler</a> is created, it sets the Study Case as null, it marks it as saved, and calls <a class="el" href="class_study_case_handler.html#acf18da33282e607a33a529c3ef16622d" title="Starts the current Study Case, and deletes the previous stats. ">start()</a> </p>
 
 </div>
 </div>
 <a class="anchor" id="a4ae60eb19d313fe2cd314ce66bf13597"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">StudyCaseHandler::~StudyCaseHandler </td>
@@ -245,9 +288,12 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p><a class="el" href="class_study_case_handler.html#a4ae60eb19d313fe2cd314ce66bf13597" title="StudyCaseHandler::~StudyCaseHandler. ">StudyCaseHandler::~StudyCaseHandler</a>. </p>
 
 </div>
 </div>
@@ -265,7 +311,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>StudyCaseHandler::adoptNewTypeStudyCase. </p>
+<p>This function is mainly used to check the internal structure of the Study Case. </p>
+<p>It's call in the QML one the user change the type of the Study Case. If the type is of the different nature (e.g., heat transfer instead of structural), we create a new study case.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#a9e3e2822c57262617a83990eb3081a41" title="Creates a new Study Case. ">createNewStudyCase()</a> </dd></dl>
 
 </div>
 </div>
@@ -290,28 +338,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a class="anchor" id="a29ca0d41719b6532249e8314b9581647"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void StudyCaseHandler::callProcess </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Signal emmited before checking if the Study Case is ready for MATfem. </p>
 
 </div>
 </div>
@@ -329,14 +356,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a3ab9c4f0c0f690b2108e4c5ce3dfbf43" title="StudyCaseHandler::checkSingleStudyCaseInformation. ">StudyCaseHandler::checkSingleStudyCaseInformation</a>. </p>
+<p>Checks if a certain variable exists in the QMap of the Study Case. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">variable</td><td></td></tr>
+    <tr><td class="paramname">variable</td><td>The name of the variable that we are looking for </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether exists (true) or not (false) </dd></dl>
 
 </div>
 </div>
@@ -364,32 +391,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a3ab9c4f0c0f690b2108e4c5ce3dfbf43" title="StudyCaseHandler::checkSingleStudyCaseInformation. ">StudyCaseHandler::checkSingleStudyCaseInformation</a>. </p>
+<p>Checks the existence and the content of a variable in the QMap of the Study Case. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">variable</td><td></td></tr>
-    <tr><td class="paramname">comparison</td><td></td></tr>
+    <tr><td class="paramname">variable</td><td>The name of the variable that we are checking </td></tr>
+    <tr><td class="paramname">comparison</td><td>The value we are going to compare with the currently stored in the variable </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a637453ebb73e48b414b8b40d99b2303a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void StudyCaseHandler::createDomainFromScriptFile </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><a class="el" href="class_study_case_handler.html#a637453ebb73e48b414b8b40d99b2303a" title="StudyCaseHandler::createDomainFromScriptFile. ">StudyCaseHandler::createDomainFromScriptFile</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the variable exists and if its value is the same as the <code>comparison</code>. </dd></dl>
 
 </div>
 </div>
@@ -406,7 +416,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a9e3e2822c57262617a83990eb3081a41" title="StudyCaseHandler::createNewStudyCase. ">StudyCaseHandler::createNewStudyCase</a>. </p>
+<p>Creates a new Study Case. </p>
+<p>It needs already stored in the <a class="el" href="class_study_case_handler.html" title="Main class that handles all the interactions with the StudyCase. ">StudyCaseHandler</a> the information of the type of the Study Case to create. Otherwise, will throw an error.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case.html#a1a01d5ed866902bcf3e5150ab699901e" title="Creates a new Study Case, and sets its initial configuration. ">StudyCase::createNew()</a> </dd>
+<dd>
+<a class="el" href="class_study_case.html#a194e2020ea463d183a64240c19cdddb9" title="Gets the current QMap which stores all the information of the Study Case. ">StudyCase::getMapOfInformation()</a> </dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#a49098d876e4580f49384c91c774e64dd" title="A new Study Case has been created. ">newStudyCaseCreated()</a></dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_utils.html#a577468f47b8acf90b7bc5f23b35afe34" title="Throw an error message and exits the app. ">Utils::throwErrorAndExit()</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -423,7 +445,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a504b9f1c7d73f6924909a5eb1be9af18" title="StudyCaseHandler::exists. ">StudyCaseHandler::exists</a>. </p>
+<p>Checks if there are a Study Case that is being currently handled. </p>
+<dl class="section return"><dt>Returns</dt><dd>Whether the Study Case exists or not </dd></dl>
 
 </div>
 </div>
@@ -441,6 +464,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Exports the current Study Case to be used in the post-process of gid_t. </p>
+<p>This function actually saves three files. Two of them are for its direct use in the post-process of GiD (with the extensions <code>*.flavia.*</code>), and the main (with the extension <code>*.m</code>) can be used to execute MATfem over.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">whereToSave</td><td>The path in which the main file is going to be saved </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether it was successful in exporting the files </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a53d0672bd04fd2151847f61934012d6e"></a>
@@ -456,6 +489,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Returns the last saved path. </p>
+<dl class="section return"><dt>Returns</dt><dd>Last saved path (if exists, otherwise it returns empty) </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a1eebd5ebcc5602751fdd44dba3070fbc"></a>
@@ -470,6 +506,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the current save status of the Study Case. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if it's marked as saved, or false otherwise </dd></dl>
 
 </div>
 </div>
@@ -497,15 +536,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#aa8ee5fd75ecffc5785e8c3eda380b596" title="StudyCaseHandler::getSingleStudyCaseInformation. ">StudyCaseHandler::getSingleStudyCaseInformation</a>. </p>
+<p>Gets the currently stored value in a certain variable. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">variable</td><td></td></tr>
-    <tr><td class="paramname">isTemporal</td><td></td></tr>
+    <tr><td class="paramname">variable</td><td>The variable that we are trying to get its value </td></tr>
+    <tr><td class="paramname">isTemporal</td><td>Is the variable actually is in the temporary QMap? </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The value of the variable</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_utils.html#a577468f47b8acf90b7bc5f23b35afe34" title="Throw an error message and exits the app. ">Utils::throwErrorAndExit</a></td><td>If the variable isn't in the QMap and <code>isTemporal</code> is false </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -523,6 +568,11 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Checks if the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a> is ready for MATfem. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#a74f98021a7932a5fe415c454177f6a2e" title="Signal emmited before checking if the Study Case is ready for MATfem. ">beforeCheckIfReady()</a> </dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#af6c958c76c3597d38f2dc06a396ab89a" title="The Study Case is ready for MATfem. ">ready()</a> </dd>
+<dd>
+<a class="el" href="class_study_case.html#a34c50b4d58d8b2306c2db8f5f31d8ecc" title="Checks if the Study Case is ready to be processed by MATfem. ">StudyCase::isReady()</a> </dd></dl>
 
 </div>
 </div>
@@ -540,28 +590,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a class="anchor" id="a45779eb675fa8adb3fa5589f17a567f9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void StudyCaseHandler::loadingDone </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Whether if the study type passed as argument is the same as the current one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">typeOfStudyCase</td><td>Type of Study Case: <code>heat</code>, <code>plane-stress</code>, <code>plane-strain</code></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether is the same type (true) or not (false) </dd></dl>
 
 </div>
 </div>
@@ -586,28 +622,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a class="anchor" id="a4dd37aa8993ffcec36e8dc2bf4827c7b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void StudyCaseHandler::loadingStart </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>A Study Case has been loaded from a file. </p>
 
 </div>
 </div>
@@ -625,14 +640,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#ab47941e48523cda3ca43a0fa268b7b7e" title="StudyCaseHandler::loadStudyCase. ">StudyCaseHandler::loadStudyCase</a>. </p>
+<p>Loads a Study Case from a file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">whereToLoad</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#acf18da33282e607a33a529c3ef16622d" title="Starts the current Study Case, and deletes the previous stats. ">start()</a> </dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#a9e3e2822c57262617a83990eb3081a41" title="Creates a new Study Case. ">createNewStudyCase()</a></dd>
+<dd>
+<a class="el" href="class_study_case.html#a922647b3ea9a67d79619a30abf5c1fb4" title="Sets the new QMap which will store all the information of the Study Case. ">StudyCase::setMapOfInformation()</a> </dd>
+<dd>
+<a class="el" href="class_study_case.html#aaa8d9364c6bcdb1653ffe2b201c3c469" title="Saves the current QMap with all the info of the StudyCase into a file. ">StudyCase::saveCurrentConfiguration()</a></dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#a7f7ced56bf2910ec8dfdd7de7a137894" title="A Study Case has been loaded from a file. ">loadingNewStudyCase()</a> </dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#aeb59468b377aa5ba1a53caf4e433eb6f" title="Set the current Study Case as saved. ">markAsSaved()</a> </dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#a9a1f460f0d60cd0a1ddc5e2d2cb33cb6" title="Checks if the StudyCase is ready for MATfem. ">isReady()</a> </dd></dl>
 
 </div>
 </div>
@@ -660,11 +688,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a583c184be7385c6a211d8d546f49e4aa" title="StudyCaseHandler::loadUrlInBrowser. ">StudyCaseHandler::loadUrlInBrowser</a>. </p>
+<p>Loads a link into the default web browser of the user. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">link</td><td></td></tr>
-    <tr><td class="paramname">withoutFullPath</td><td></td></tr>
+    <tr><td class="paramname">link</td><td>The path to load (it could an url or a file). </td></tr>
+    <tr><td class="paramname">withoutFullPath</td><td>Whether it needs to add the current App path. </td></tr>
   </table>
   </dd>
 </dl>
@@ -683,6 +711,35 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the current Study Case as with changes that are not saved yet. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#a90e6c7a7912c418937e842a357b531d2" title="There are some modifications in the Study Case that are not saved. ">StudyCaseHandler::markedAsNotSaved()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aeb59468b377aa5ba1a53caf4e433eb6f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StudyCaseHandler::markAsSaved </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the current Study Case as saved. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#af7f4a35247f8ca52ed5f012a75aa172f" title="The Study Case is marked as saved (no changes are without saving) ">StudyCaseHandler::markedAsSaved()</a> </dd></dl>
 
 </div>
 </div>
@@ -707,6 +764,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>There are some modifications in the Study Case that are not saved. </p>
+
 </div>
 </div>
 <a class="anchor" id="af7f4a35247f8ca52ed5f012a75aa172f"></a>
@@ -729,6 +788,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The Study Case is marked as saved (no changes are without saving) </p>
 
 </div>
 </div>
@@ -754,6 +815,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>A new Study Case's type has been chose. </p>
+
 </div>
 </div>
 <a class="anchor" id="a49098d876e4580f49384c91c774e64dd"></a>
@@ -776,6 +839,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>A new Study Case has been created. </p>
 
 </div>
 </div>
@@ -801,6 +866,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>The Study Case is ready for MATfem. </p>
+
 </div>
 </div>
 <a class="anchor" id="a28f59ccf839850ea715db95683aacb42"></a>
@@ -817,14 +884,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a28f59ccf839850ea715db95683aacb42" title="StudyCaseHandler::saveAndContinue. ">StudyCaseHandler::saveAndContinue</a>. </p>
+<p>Advances the Study Case one step further in the FEM process. </p>
+<p>This function is used in the QML, to set the current step in which the Study Case is located, and then determinate in what <code>ChoiceBlock</code> currently is.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">parentStage</td><td></td></tr>
+    <tr><td class="paramname">parentStage</td><td>The name of the stage in which the Study Case was </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of the next step of the process </dd></dl>
 
 </div>
 </div>
@@ -842,13 +910,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a855c60468b5c8c59100591c5d554ffc3" title="StudyCaseHandler::saveCurrentStudyCase. ">StudyCaseHandler::saveCurrentStudyCase</a>. </p>
+<p>Saves the current Study Case. </p>
+<p>The information is stored in a file with the extension <code>.femris</code> in a certain location given by the user.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">whereToSave</td><td></td></tr>
+    <tr><td class="paramname">whereToSave</td><td>The path and the name of the file to be saved. If it doesn't have the extension <code>.femris</code>, this one is added automatically.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case.html#aaa8d9364c6bcdb1653ffe2b201c3c469" title="Saves the current QMap with all the info of the StudyCase into a file. ">StudyCase::saveCurrentConfiguration()</a></dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#aad54a02d6ebeb6dd1920da1000d53726" title="The Study Case has been stored in a file with a .femris extension. ">savingCurrentStudyCase()</a> </dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#aeb59468b377aa5ba1a53caf4e433eb6f" title="Set the current Study Case as saved. ">markAsSaved()</a> </dd></dl>
 
 </div>
 </div>
@@ -873,6 +947,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>The Study Case has been stored in a file with a <code>.femris</code> extension. </p>
+
 </div>
 </div>
 <a class="anchor" id="ab7fb7ececf96361dd10be1924145a374"></a>
@@ -889,13 +965,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#ab7fb7ececf96361dd10be1924145a374" title="StudyCaseHandler::selectNewTypeStudyCase. ">StudyCaseHandler::selectNewTypeStudyCase</a>. </p>
+<p>Sets the Study Case's type. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">studyCaseType</td><td></td></tr>
+    <tr><td class="paramname">studyCaseType</td><td>The new type (<code>heat</code>, <code>plane-stress</code>, <code>plane-strain</code>). </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#a45469c3670f0babdf0cbb6fb0c1dbe47" title="A new Study Case&#39;s type has been chose. ">newStudyCaseChose()</a> </dd></dl>
 
 </div>
 </div>
@@ -913,7 +990,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>newVariable</em>, </td>
+          <td class="paramname"><em>newValue</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -929,15 +1006,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a538680ebbb541d7c0271ff7f7d399b48" title="StudyCaseHandler::setSingleStudyCaseInformation. ">StudyCaseHandler::setSingleStudyCaseInformation</a>. </p>
+<p>Sets a value into a variable of the QMap stored in the Study Case. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">variable</td><td></td></tr>
-    <tr><td class="paramname">newVariable</td><td></td></tr>
-    <tr><td class="paramname">isTemporal</td><td></td></tr>
+    <tr><td class="paramname">variable</td><td>The name of the variable that will contain the new value </td></tr>
+    <tr><td class="paramname">newValue</td><td>The new value </td></tr>
+    <tr><td class="paramname">isTemporal</td><td>Should we save the variable in the temporary QMap?</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#ad4578376876f9ee0399fbd3c1b44cc63" title="Set the current Study Case as with changes that are not saved yet. ">markAsNotSaved()</a> Which is only called if the new variable stored is not temporal. </dd></dl>
 
 </div>
 </div>
@@ -955,7 +1033,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const QJsonArray &amp;&#160;</td>
-          <td class="paramname"><em>newVariable</em>&#160;</td>
+          <td class="paramname"><em>jsonValue</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -965,14 +1043,71 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#a7e9ba7549a884d78ab87067e03c89620" title="StudyCaseHandler::setSingleStudyCaseJson. ">StudyCaseHandler::setSingleStudyCaseJson</a>. </p>
+<p>Converts a QJsonArray into a QString and then saves its value in the variable. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">variable</td><td></td></tr>
-    <tr><td class="paramname">newVariable</td><td></td></tr>
+    <tr><td class="paramname">variable</td><td>The variable of the QMap which is going to store the JSON stringified </td></tr>
+    <tr><td class="paramname">jsonValue</td><td>The JSON that we are trying to save</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#a41ca9c4353e19835a0d20c6b1eb24132" title="Converts a QJsonArray (e.g., from the Javascript in QML) into a QString. ">setSingleStudyCaseJsonHelper()</a></dd>
+<dd>
+<a class="el" href="class_study_case.html#a922647b3ea9a67d79619a30abf5c1fb4" title="Sets the new QMap which will store all the information of the Study Case. ">StudyCase::setMapOfInformation()</a> </dd>
+<dd>
+<a class="el" href="class_study_case.html#aaa8d9364c6bcdb1653ffe2b201c3c469" title="Saves the current QMap with all the info of the StudyCase into a file. ">StudyCase::saveCurrentConfiguration()</a></dd>
+<dd>
+<a class="el" href="class_study_case_handler.html#ad4578376876f9ee0399fbd3c1b44cc63" title="Set the current Study Case as with changes that are not saved yet. ">markAsNotSaved()</a></dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_utils.html#a577468f47b8acf90b7bc5f23b35afe34" title="Throw an error message and exits the app. ">Utils::throwErrorAndExit()</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a41ca9c4353e19835a0d20c6b1eb24132"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString StudyCaseHandler::setSingleStudyCaseJsonHelper </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>nameVariable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QJsonArray &amp;&#160;</td>
+          <td class="paramname"><em>jsonVariable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a QJsonArray (e.g., from the Javascript in QML) into a QString. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nameVariable</td><td>The name of the variable (since a JSON doesn't have a name) </td></tr>
+    <tr><td class="paramname">jsonVariable</td><td>The QJsonArray to stringify</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The JSON stringified like "nameVariable = [ ... jsonVariable ... ]" </dd></dl>
 
 </div>
 </div>
@@ -989,7 +1124,142 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_study_case_handler.html#acf18da33282e607a33a529c3ef16622d" title="StudyCaseHandler::start. ">StudyCaseHandler::start</a>. </p>
+<p>Starts the current Study Case, and deletes the previous stats. </p>
+<p>It also sets the <code>stepOfProcess</code> to <code>1</code>.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#aeb59468b377aa5ba1a53caf4e433eb6f" title="Set the current Study Case as saved. ">markAsSaved()</a> </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a89d8e91b3878ca7748b56302884cbf3d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QMap&lt;QString, QString&gt; StudyCaseHandler::m_currentStudyCaseVariables</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A QMap that stores almost the same as the current Study Case. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9fb533e8294284afd720b8c74cea6420"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool StudyCaseHandler::m_isSaved</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether is already saved in an external file or not. </p>
+
+</div>
+</div>
+<a class="anchor" id="af6f68b2a8f832029a06b1f0bf29a9921"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString StudyCaseHandler::m_lastSavedPath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The current location of the saved file (empty if it doesn't exists) </p>
+
+</div>
+</div>
+<a class="anchor" id="a14d5da48ff5bb029c501e56e7a5a503b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_study_case.html">StudyCase</a>* StudyCaseHandler::m_studyCase</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The current Study Case that is being handled. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2de6451ee241099a229e9f753ce39adf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString StudyCaseHandler::m_studyCaseType</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Type of Study Case that is being handled. </p>
+
+</div>
+</div>
+<a class="anchor" id="a323ee0b8784cf20735e2956c912b5993"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QMap&lt;QString, QString&gt; StudyCaseHandler::m_temporalStudyCaseVariables</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A temporary QMap that only stores variables which are not going to be saved. </p>
 
 </div>
 </div>
@@ -1006,7 +1276,7 @@ Public Member Functions</h2></td></tr>
         <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
         <ul>
             <li class="navelem"><a class="el" href="class_study_case_handler.html">StudyCaseHandler</a></li>
-            <li class="footer">Generated on Sun Feb 1 2015 13:23:49 for FEMRIS by
+            <li class="footer">Generated on Sun Feb 1 2015 20:43:47 for FEMRIS by
                 <a href="http://www.doxygen.org/index.html">
                 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
             </ul>

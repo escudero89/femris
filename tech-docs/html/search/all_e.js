@@ -12,6 +12,7 @@ var searchData=
   ['setmapofinformation',['setMapOfInformation',['../class_study_case.html#a922647b3ea9a67d79619a30abf5c1fb4',1,'StudyCase']]],
   ['setsinglestudycaseinformation',['setSingleStudyCaseInformation',['../class_study_case_handler.html#a538680ebbb541d7c0271ff7f7d399b48',1,'StudyCaseHandler']]],
   ['setsinglestudycasejson',['setSingleStudyCaseJson',['../class_study_case_handler.html#a7e9ba7549a884d78ab87067e03c89620',1,'StudyCaseHandler']]],
+  ['setsinglestudycasejsonhelper',['setSingleStudyCaseJsonHelper',['../class_study_case_handler.html#a41ca9c4353e19835a0d20c6b1eb24132',1,'StudyCaseHandler']]],
   ['setsource',['setSource',['../class_file_i_o.html#a6b724dd694fd5a199ef5059b71571e4d',1,'FileIO']]],
   ['source',['source',['../class_file_i_o.html#ad4467aa6c50748ac1e7076d25dcd33cc',1,'FileIO::source()'],['../class_file_i_o.html#afe6b5b71889cebdb14ccb41e288e9403',1,'FileIO::source() const ']]],
   ['sourcechanged',['sourceChanged',['../class_file_i_o.html#aab79f3d0c7789652a0eb996d72b84580',1,'FileIO']]],

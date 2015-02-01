@@ -10,7 +10,6 @@
         <file>content/CE_RightBlock.qml</file>
         <file>content/MiddleTutorialBox.qml</file>
         <file>content/smallBoxes/ModelElectionSBox.qml</file>
-        <file>content/smallBoxes/VariablesSBox.qml</file>
         <file>content/smallBoxes/TutorialSBox.qml</file>
         <file>content/smallBoxes/CodeSBox.qml</file>
         <file>content/smallBoxes/PropertiesAssignationSBox.qml</file>
