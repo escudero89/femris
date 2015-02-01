@@ -4,7 +4,11 @@
 #include <QXmlDefaultHandler>
 #include <QXmlAttributes>
 
+/**
+ * @brief This class helps to handle the proccessing of the configuration files in XML
+ */
 class FemrisXmlContentHandler : public QXmlDefaultHandler {
+
 public:
     FemrisXmlContentHandler():QXmlDefaultHandler() {}
     ~FemrisXmlContentHandler() {}

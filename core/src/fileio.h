@@ -11,7 +11,6 @@
  * The FileIO handles all the control over the external files. It reads/writes
  * all the files of the app, and also it's in charge of removing the temporary
  * files once the app finishes.
- *
  */
 class FileIO : public QObject {
     Q_OBJECT

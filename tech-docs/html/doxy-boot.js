@@ -39,6 +39,7 @@ $( document ).ready(function() {
     $(".memitem").addClass("panel panel-default");
     $(".memproto").addClass("panel-heading");
     $(".memdoc").addClass("panel-body");
+
     $("span.mlabel").addClass("label label-info");
 
     $("table.memberdecls").addClass("table");

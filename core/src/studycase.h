@@ -17,8 +17,7 @@
  * @see StudyCaseHandler
  *
  */
-class StudyCase
-{
+class StudyCase {
 
 public:
 
@@ -35,23 +34,26 @@ public:
     void compressMapOfInformation();
 
     bool isReady();
+
     virtual bool checkIfReady() { return false; }
 
     virtual void setLocalMapOfInformation() {}
     virtual void saveLocalCurrentConfiguration() {}
 
-    // Getters and setters
     QMap<QString, QString> getMapOfInformation();
     void setMapOfInformation(QMap<QString, QString>);
 
 protected:
 
+    //! Path where the temporary file which stores the StudyCase is.
     QString m_source;
+    //! Encoded QMap with all the info of the Study Case
     QString m_encoded;
 
     QDateTime m_created;
     QDateTime m_modified;
 
+    //! The QMap that stores almost all the information of the StudyCase
     QMap<QString, QString> m_mapOfInformation;
 
 };

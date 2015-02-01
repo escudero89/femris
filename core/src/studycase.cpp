@@ -231,3 +231,16 @@ QMap<QString, QString> StudyCase::getMapOfInformation() {
 void StudyCase::setMapOfInformation(QMap<QString, QString> newMapOfInformation) {
     m_mapOfInformation = newMapOfInformation;
 }
+
+//----------------------------------------------------------------------------//
+//--                                VIRTUAL                                 --//
+//----------------------------------------------------------------------------//
+
+//! @fn bool StudyCase::checkIfReady()
+//! @brief Check if it's ready to be processed in MATfem
+
+//! @fn void StudyCase::setLocalMapOfInformation()
+//! @brief Complement of StudyCase::setInitialMapOfInformation()
+
+//! @fn void StudyCase::saveLocalCurrentConfiguration()
+//! @brief Complement of StudyCase::saveCurrentConfiguration()
