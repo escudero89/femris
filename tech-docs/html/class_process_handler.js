@@ -5,7 +5,6 @@ var class_process_handler =
     [ "callingMatlab", "class_process_handler.html#ac39ec9c71c42fbe91fc8218160ce7c6e", null ],
     [ "callingOctave", "class_process_handler.html#afbacf549577263948198018a1e4e6455", null ],
     [ "callingProcess", "class_process_handler.html#a0860902d89d3b888743eade886e85517", null ],
-    [ "cppSlot", "class_process_handler.html#ae159e0bd26819262946123ad667a3237", null ],
     [ "errorInProcess", "class_process_handler.html#a62c40b838c9cdd41185bcc61d07de250", null ],
     [ "executeInterpreter", "class_process_handler.html#ad50d4b0e31d33e90e1e3bd9ffd93fc0a", null ],
     [ "exitingProcess", "class_process_handler.html#ad8e7ce3d500bd382405c035739eac3e7", null ],
@@ -19,5 +18,7 @@ var class_process_handler =
     [ "processWrote", "class_process_handler.html#a523810d5fde7359bbc14b8ea004cc607", null ],
     [ "readingInProcess", "class_process_handler.html#acbbb3895018e7896f0e10a2b22d3c3d9", null ],
     [ "resultMessage", "class_process_handler.html#a313bf59558ce68bcf03dd2ce30fefd1f", null ],
-    [ "writingInProcess", "class_process_handler.html#acec65a5f53485e866556b18008f23f47", null ]
+    [ "writingInProcess", "class_process_handler.html#acec65a5f53485e866556b18008f23f47", null ],
+    [ "m_process", "class_process_handler.html#a69bda79ab34e45aeab6f766383135758", null ],
+    [ "m_stepOfProcessManipulation", "class_process_handler.html#ab628ed71b312e925640ec18f25ba03a6", null ]
 ];
