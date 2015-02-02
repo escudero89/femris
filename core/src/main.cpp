@@ -50,9 +50,6 @@ int main(int argc, char *argv[]) {
     configure = Configure::getInstance();
     configure->loadConfiguration(qApp->applicationDirPath() + "/settings.xml");
 
-    QObject::connect(&studyCaseHandler, SIGNAL(callProcess()),
-                     &processHandler, SLOT(callingMatlab()));
-
     // We make sure those instance are accessible from QML
     engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);
     engine.rootContext()->setContextProperty("ProcessHandler", &processHandler);
