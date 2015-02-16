@@ -91,6 +91,8 @@
               </li>
               <li><a href="#getColorFromInterpolation"><i class="alert alert-info"></i><span>getColorFromInterpolation</span></a>
               </li>
+              <li><a href="#Utils"><i class="alert alert-success"></i><span>Utils</span></a>
+              </li>
             </ul>
           </div>
         </div>
@@ -246,64 +248,25 @@
    var alphaValue = exists(alpha) ? (', ' + alpha) : '';
 
    return typeSchema + '(' + huePos + ', 100%, 65%' + alphaValue + ')';
-}
+}</code></pre>
+          <section id="Utils">
+            <h1>Utils</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>Utils</span>
+            </p>
+          </section>
+          <div class="description"><p>Here we have two functions: <code>parseNumber</code>, which returns a number in a format<br />like <code>10 =&gt; 1.0000e+1</code>. Then <code>setCurrentValues</code> uses the previous function to set<br />the value in the HTML of <code>currentValue</code>, which stores the current value represented<br />by the node above the mouse of the user.</p> </div>
+          <pre><code class="language-javascript">var Utils = {
+    parseNumber : function (number) {
+        return parseFloat(number).toExponential(4);
+    },
 
-
-var Utils = {
-   parseNumber : function (number) {
-       return parseFloat(number).toExponential(4);
-   },
-
-   setCurrentValue : function (value) {
-       this.$currentValue = $(&quot;span#currentValue&quot;);
-       this.$currentValue.html(this.parseNumber(value));
-   }
-};
-
-
-var Queue = (function(){
-
-   function Queue() {};
-
-   Queue.prototype.running = false;
-
-   Queue.prototype.queue = [];
-
-   Queue.prototype.add_function = function(callback) {
-       var _this = this;
-       //add callback to the queue
-       this.queue.push(function(){
-           var finished = callback();
-           if(typeof finished === &quot;undefined&quot; || finished) {
-              //  if callback returns `false`, then you have to
-              //  call `next` somewhere in the callback
-              _this.next();
-           }
-       });
-
-       if(!this.running) {
-           // if nothing is running, then start the engines!
-           this.next();
-       }
-
-       return this; // for chaining fun!
-   };
-
-   Queue.prototype.next = function(){
-       this.running = false;
-       //get the first element off the queue
-       var shift = this.queue.shift();
-
-       if(shift) {
-           this.running = true;
-           console.log('#', shift);
-           setTimeout(shift(), 5);
-       }
-   };
-
-   return Queue;
-
-})();</code></pre>
+    setCurrentValue : function (value) {
+        this.$currentValue = $(&quot;span#currentValue&quot;);
+        this.$currentValue.html(this.parseNumber(value));
+    }
+};</code></pre>
         </div>
       </div>
     </div>

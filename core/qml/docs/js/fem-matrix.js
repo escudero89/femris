@@ -80,7 +80,7 @@ var globalMatrixObject = {
      * Colorise a cell (both stroke and fill). If it is inside a matrix, colorise
      * regarding if it has values or not inside (by checking the ielem)
      *
-     * @param {Two.Cell()} - The element cell (it could be probably a Two.makeRectangle)
+     * @param {Two.Cell()} twoCell - The element cell (it could be probably a Two.makeRectangle)
      * @param {bool} isCellDifferentFromZero - Indicates if it's empty or not
      * @return {Two.Cell} - The element cell
      */
@@ -201,6 +201,17 @@ var globalMatrixObject = {
         return groupVector;
     },
 
+    /**
+     * Draws the background of the entire matrix shown in `ce_results`. What's
+     * the idea here? If we've had made one cell for each empty cell, the result
+     * is kind of laggy (because the are lots of empty cells). So, to avoid doing
+     * that, we made a big rectangle that covers all the background of each
+     * white cell (which are those with values in it).
+     *
+     * @param  {Object} data         Information used to set the origins of the rectangle
+     * @param  {Object} boundingRect Information with the sizes of the background rectangle
+     * @return {Two.Object()}        The rectangle as a Two.Object()
+     */
     drawBackground : function (data, boundingRect) {
 
         var twoBackground = this.TwoMatrix.makePolygon(
@@ -221,13 +232,15 @@ var globalMatrixObject = {
     },
 
     /**
+     * Initializes this object and mainly all the `ce_results` view.
      *
-    *
+     * @param {string} baseSVG Name of the SVG identifier
+     * @param {string} baseSVG Name of the SVG dummy identifier, to use as a  temporary SVG
      * @param {number[]} xnode - Position of the nodes (i.e., [[x1,y1], ..., [xN,yN]])
      * @param {number[]} ielem - Nodes in the element (i.e., [[xnode1,  ..., xnode4], ...)
      */
     setMatrixDrawing : function (baseSVG, baseSVGdummy, xnode, ielem) {
-        
+
         if (this.TwoMatrix) {
             return this.group;
         }
@@ -261,8 +274,8 @@ var globalMatrixObject = {
         };
 
         this.cellDataVectorF = {
-            'iniPosX' : 
-                ( this.cellDataMatrix.iniPosX + this.cellDataMatrix.sideCell * xnode.length + 
+            'iniPosX' :
+                ( this.cellDataMatrix.iniPosX + this.cellDataMatrix.sideCell * xnode.length +
                   this.cellDataVectorPhi.iniPosX ) * 0.5,
             'iniPosY' : this.cellDataMatrix.iniPosY,
             'sideCell': this.cellDataMatrix.sideCell
@@ -288,11 +301,13 @@ var globalMatrixObject = {
         this.TwoMatrix.update();
 
         this.updatePan();
-        this.setModals();
 
         return this.group;
     },
 
+    /**
+     * Updates the SVG by adding controls to it (such as zoom and pan).
+     */
     updatePan : function() {
         svgPanZoom('#draw-matrix svg', {
             panEnabled: true,
@@ -311,7 +326,5 @@ var globalMatrixObject = {
             onPan: function(){}
         });
     },
-
-    setModals : function() { return true; }
 
 };

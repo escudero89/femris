@@ -1,10 +1,19 @@
-$('#panel-right input').keypress(function (e) {
+function updateRightGraph() {
+    if (jQuery("[role='tablist'] .active a").attr("href") === "#shapefunction") {
+        updateShapeFunction();
+    } else {
+        updateGraph();
+    }
+}
+
+$('#rightPanelInputs input').keypress(function (e) {
   if (e.which == 13) {
-    updateGraph();
+    updateShapeFunction();
     e.preventDefault();
     return false;    //<---- Add this line
   }
 });
+
 
 function equationParser(equation) {
     return Parser.parse(equation);
@@ -156,7 +165,7 @@ function getInputsFromUpdate() {
 
     var input = {
         innerNodesValues : innerNodesValues,
-        quantityOfNodes : $("#quantityOfNodes").val()
+        quantityOfNodes : parseInt($("#quantityOfNodes input:checked").val())
     };
 
     return input;
@@ -272,6 +281,7 @@ function updateShapeFunctionHelper() {
 
         // And finally we draw the function
         drawShapeFunction(board, N, positionsForPolynomial, kFunction, elementColor);
+
     }
 
 }
@@ -298,8 +308,8 @@ function updateGraphHelper() {
     var X_MIN = parseFloat( $("input#domainFrom").val() );
     var X_MAX = parseFloat( $("input#domainTo").val() );
 
-    var QUANTITY_OF_ELEMENTS = $("#quantityOfElements").val();
-    var QUANTITY_OF_NODES = $("#quantityOfNodes").val();
+    var QUANTITY_OF_ELEMENTS = parseInt($("#quantityOfElements input:checked").val());
+    var QUANTITY_OF_NODES = parseInt($("#quantityOfNodes input:checked").val());
 
     var BASE_FUNCTION = {
         equation : $("#baseFunction").val(),
@@ -574,8 +584,9 @@ function updateGraphHelper() {
     }
 
     errorRMS = Math.sqrt(errorRMS/nErrorRms);
+    rootMeanSquare = (errorRMS >= 0) ? Math.round(errorRMS * 10000) / 100 + "%" : "Sin definir";
 
-    $("#errorValue").html("Root Mean Square: " + Math.round(errorRMS * 10000) / 100 + "%");
+    $("#errorValue").html("Root Mean Square: " + rootMeanSquare);
 
     var kPoint = 0;
 

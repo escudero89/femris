@@ -291,7 +291,7 @@
 % MAT-femcCal 1.2  - MAT-femCal is a learning tool for undestanding
 %                    the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% EXAMPLE SELECTED = example5.json
+% EXAMPLE SELECTED = example4.json
 %
 %  Material Properties
 %
@@ -305,9 +305,10 @@
 global coordinates
 coordinates = [
     0,    0 ;
-    0.5,    -0.5 ;
-    0.5,    0.5 ;
-    1,    0 ;
+    0,    -0.5 ;
+    0.5,    0 ;
+    0,    0.5 ;
+    -0.5,    0 ;
 ];
 
 %
@@ -315,16 +316,18 @@ coordinates = [
 %
 global elements
 elements = [
-    2,    1,    3 ;
-    2,    3,    4 ;
+    1,    2,    3 ;
+    1,    3,    4 ;
+    1,    4,    5 ;
+    1,    5,    2 ;
 ];
 
 %
 % Fixed Nodes
 %
 fixnodes = [
-    1,    10 ;
     2,    10 ;
+    3,    10 ;
 ];
 
 %
@@ -337,6 +340,7 @@ pointload = [
 % Uniform Side loads
 %
 sideload = [
+    3,    4,    -10 ;
 ];
 </pre>
                                                     </div>

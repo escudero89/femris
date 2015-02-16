@@ -73,7 +73,7 @@ function getValuesColorised(toColor, nodes) {
     if (!$.isArray(toColor) || !$.isArray(nodes)) {
         throw new Error("getValuesColorised(): The args must be an array.");
     }
-console.log(nodes);
+
     // We made a double loop, to cover all the cols and rols related to the indexs
     for ( k = 0; k < nodes.length; k++ ) {
         for ( j = 0; j < nodes.length; j++ ) {

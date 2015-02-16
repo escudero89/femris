@@ -66,7 +66,14 @@
     return typeSchema + '(' + huePos + ', 100%, 65%' + alphaValue + ')';
 }
 
-
+/**
+ * Here we have two functions: `parseNumber`, which returns a number in a format
+ * like `10 => 1.0000e+1`. Then `setCurrentValues` uses the previous function to set
+ * the value in the HTML of `currentValue`, which stores the current value represented
+ * by the node above the mouse of the user.
+ *
+ * @type {Object}
+ */
 var Utils = {
     parseNumber : function (number) {
         return parseFloat(number).toExponential(4);
@@ -77,48 +84,3 @@ var Utils = {
         this.$currentValue.html(this.parseNumber(value));
     }
 };
-
-
-var Queue = (function(){
-
-    function Queue() {};
-
-    Queue.prototype.running = false;
-
-    Queue.prototype.queue = [];
-
-    Queue.prototype.add_function = function(callback) {
-        var _this = this;
-        //add callback to the queue
-        this.queue.push(function(){
-            var finished = callback();
-            if(typeof finished === "undefined" || finished) {
-               //  if callback returns `false`, then you have to
-               //  call `next` somewhere in the callback
-               _this.next();
-            }
-        });
-
-        if(!this.running) {
-            // if nothing is running, then start the engines!
-            this.next();
-        }
-
-        return this; // for chaining fun!
-    };
-
-    Queue.prototype.next = function(){
-        this.running = false;
-        //get the first element off the queue
-        var shift = this.queue.shift();
-
-        if(shift) {
-            this.running = true;
-            console.log('#', shift);
-            setTimeout(shift(), 5);
-        }
-    };
-
-    return Queue;
-
-})();

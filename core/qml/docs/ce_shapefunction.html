@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html lang="es">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -25,8 +25,10 @@
     .list-unstyled > li {padding: 0.3em inherit;}
     .popover { width: 200px;}
 </style>
+
 <body style="background:#ddd">
 
+    <!-- Loader -->
     <div id="loader">
         <img class="img-responsive img-center" src="img/loader-inverse.gif"/>
         <span style="bottom:10px; left:10px; position:absolute;">Cargando...</span>
@@ -34,6 +36,7 @@
 
     <div class="container-fluid" id="mainShapeFunction" style="opacity:0">
 
+        <!-- Menu Bar -->
         <div class="navbar-sm">
             <div class="navbar-primary">
                 <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
@@ -47,13 +50,18 @@
                             <span class="alert-warning form-control text-right" id="errorValue" data-toggle="tooltip" data-placement="bottom" title="Valor cuadrático medio presente en la función f(x) siendo aproximada por las funciones de forma elegidas.">Root Mean Square: 00.00%</span>
                         </div>
                     </form>
-
+                    <form class="navbar-form navbar-left" role="search" style="margin:0;">
+                        <ul class="nav navbar-nav" role="tablist">
+                            <li role="presentation" class="active"><a href="#shapefunction" aria-controls="shapefunction" role="tab" data-toggle="tab">Función de Forma</a></li>
+                            <li role="presentation"><a href="#approximation" aria-controls="approximation" role="tab" data-toggle="tab">Aproximación</a></li>
+                        </ul>
+                    </form>
                     <form class="navbar-form navbar-right" style="margin:3px">
-                        <button class="btn btn-default" type="button" onclick="updateGraph()" title="Actualizar gráfico">
-                            <span class="glyphicon glyphicon-floppy-disk"></span>
+                        <button id="updateGraphButton" class="btn btn-primary" type="button" onclick="updateRightGraph()" title="Actualizar gráfico">
+                        <span class="glyphicon glyphicon-refresh"></span>
                         </button>
                         <button class="btn btn-info" type="button" data-toggle="modal" data-target="#modalInfo" title="Más información">
-                            <span class="glyphicon glyphicon-info-sign"></span>
+                        <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
                         <a class="btn btn-femris" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Funciones-de-Forma">
                             <span class="glyphicon glyphicon-question-sign"></span>
@@ -63,267 +71,324 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top:10px">
+        <div class="separator" style="height:10px; width:100%;"></div>
 
-            <div class="col-sm-5">
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Customization -->
+            <div role="tabpanel" class="tab-pane active" id="shapefunction">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="panel-left" class="panel panel-default" style="height:90vh; overflow-y:auto">
+                            <div class="panel-body col-sm-6">
 
-                <div id="panel-left" class="panel panel-default" style="height:90vh; overflow-y:auto">
-                    <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12" onchange="updateShapeFunction()">
 
-                        <div class="form-group">
-                            <div id="singleShapeFunction" class="jxgbox w100p" style="height:34vh" ></div>
-                        </div>
+                                        <div class="form-group" onchange="updateShapeFunction()">
+                                            <label>Elige un tipo de <strong>Función de Forma</strong></label>
+                                            <div class="radio" id="shapeFunctionChose">
 
-                        <div class="row">
-                            <div class="col-md-6" onchange="updateShapeFunction()">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="lagrange" checked>
+                                                    Lagrange
+                                                </label>
+
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="custom">
+                                                    Personalizada
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Cantidad de nodos por elemento</label>
+
+                                            <div id="quantityOfNodes" class="form-control">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioNodes" id="inlineRadio2" value="2" checked> 2
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioNodes" id="inlineRadio3" value="3"> 3
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioNodes" id="inlineRadio4" value="4"> 4
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioNodes" id="inlineRadio5" value="5"> 5
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Cantidad de elementos</label>
+
+                                            <div id="quantityOfElements" class="form-control">
+                                                <label class="radio-inline"><input type="radio" name="inlineRadioElements" id="inlineRadio1" value="1" checked>1</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12" role="form">
+                                        <label>Datos de la función <tt>f(x)</tt> a aproximar</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">f(x)</div>
+                                            <input class="form-control" id="baseFunction" value="7*sin(x)^2"/>
+                                            <div class="input-group-addon" style="padding: 0 4px;">
+                                                <button type="button" class="btn btn-xs" data-trigger="focus" data-toggle="popover" data-html="true" data-placement="auto" title="Elegir función predefinida" data-content="
+                                                <ul class='list-unstyled list-group'>
+                                                    <li><a class='list-group-item' href='#'>7*sin(x)^2</a></li>
+                                                    <li><a class='list-group-item' href='#'>x^3 + 4 * x^2 + x + 3</a></li>
+                                                    <li><a class='list-group-item' href='#'>1 + exp(-x)</a></li>
+                                                    <li><a class='list-group-item' href='#'>2 * sin(10 * x * PI)</a></li>
+                                                    <li><a class='list-group-item' href='#'>sin(x) + cos(x)</a></li>
+                                                    <li><a class='list-group-item' href='#'>x^(3/2) / (1 + x)</a></li>
+                                                    <li><a class='list-group-item' href='#'>2/(1 + exp(-x)) - 1</a></li>
+                                                </ul>
+                                                ">
+                                                <span class="glyphicon glyphicon-save"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                x
+                                                <sub>0</sub>
+                                            </div>
+                                            <input class="form-control w100p" id="domainFrom" value="0"/>
+                                            <div class="input-group-addon">
+                                                x
+                                                <sub>f</sub>
+                                            </div>
+                                            <input class="form-control" id="domainTo" value="2"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                y
+                                                <sub>0</sub>
+                                            </div>
+                                            <input class="form-control" id="rangeFrom" placeholder="auto"/>
+                                            <div class="input-group-addon">
+                                                y
+                                                <sub>f</sub>
+                                            </div>
+                                            <input class="form-control" id="rangeTo" placeholder="auto"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body col-sm-6" id="rightPanelInputs">
+
                                 <div class="form-group">
-                                    <label>Cantidad de nodos por elemento</label>
-                                    <select id="quantityOfNodes" class="form-control">
-                                        <option>2</option>
-                                        <option selected="selected">3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
+                                    <div id="singleShapeFunction" class="jxgbox w100p" style="height:34vh" ></div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Cantidad de elementos</label>
-                                    <select id="quantityOfElements" class="form-control">
-                                        <option selected="selected">1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>5</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                        <option>13</option>
-                                        <option>14</option>
-                                        <option>15</option>
-                                        <option>16</option>
-                                        <option>17</option>
-                                        <option>18</option>
-                                        <option>19</option>
-                                        <option>20</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group" onchange="updateShapeFunction()">
-                            <label>Elige un tipo de Función de Forma</label>
-                            <div class="radio" id="shapeFunctionChose">
-                                <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="lagrange" checked>Lagrange</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="custom">Personalizada</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group" onchange="updateShapeFunction()">
-                            <label>Posición de nodos internos y Funciones de Forma</label>
-
-                            <div class="row" id="innerNodes">
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            X <sub>2</sub>
+                                    <label>Posición de nodos internos y Funciones de Forma</label>
+                                    <div class="row" id="innerNodes">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    X <sub>2</sub>
+                                                </div>
+                                                <input class="form-control" size="5" type="number" step="0.01" min="0" max="1" placeholder="0.25"/>
+                                            </div>
                                         </div>
-                                        <input class="form-control" size="5" type="number" step="0.01" min="0" max="1" placeholder="0.25"/>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            X <sub>3</sub>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    X <sub>3</sub>
+                                                </div>
+                                                <input class="form-control" type="number" maxlength="5" step="0.01" min="0" max="1" placeholder="0.50" />
+                                            </div>
                                         </div>
-                                        <input class="form-control" type="number" maxlength="5" step="0.01" min="0" max="1" placeholder="0.50" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            X
-                                            <sub>4</sub>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    X
+                                                    <sub>4</sub>
+                                                </div>
+                                                <input class="form-control" type="number" maxlength="5" step="0.01" min="0" max="1" placeholder="0.75" />
+                                            </div>
                                         </div>
-                                        <input class="form-control" type="number" maxlength="5" step="0.01" min="0" max="1" placeholder="0.75" />
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div id="shapeFunctions" onchange="updateShapeFunction()">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        N
-                                        <sub>1</sub>
+                                <div id="shapeFunctions">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>1</sub>
+                                            </div>
+                                            <input class="form-control" id="N1" value="" type="text" disabled />
+                                        </div>
                                     </div>
-                                    <input class="form-control" id="N1" value="" type="text" disabled />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        N
-                                        <sub>2</sub>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>2</sub>
+                                            </div>
+                                            <input class="form-control" id="N2" value="" disabled />
+                                        </div>
                                     </div>
-                                    <input class="form-control" id="N2" value="" disabled />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        N
-                                        <sub>3</sub>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>3</sub>
+                                            </div>
+                                            <input class="form-control" id="N3" value="" disabled />
+                                        </div>
                                     </div>
-                                    <input class="form-control" id="N3" value="" disabled />
-                                </div>
-                            </div>
-                            <div class="form-group hidden">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        N
-                                        <sub>4</sub>
+                                    <div class="form-group hidden">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>4</sub>
+                                            </div>
+                                            <input class="form-control" id="N4" value="" disabled />
+                                        </div>
                                     </div>
-                                    <input class="form-control" id="N4" value="" disabled />
-                                </div>
-                            </div>
-                            <div class="form-group hidden">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        N
-                                        <sub>5</sub>
+                                    <div class="form-group hidden">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>5</sub>
+                                            </div>
+                                            <input class="form-control" id="N5" value="" disabled />
+                                        </div>
                                     </div>
-                                    <input class="form-control" id="N5" value="" disabled />
                                 </div>
-                            </div>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-7">
-                <div id="panel-right" class="panel panel-default"  style="height:90vh; overflow-y:scroll;">
-                    <div class="panel-body">
-                        <div id="box" class="" style="width:100%; height:42vh;"></div>
-                        <hr>
-                        <div id="boxShapeFunctions" class="" style="width:100%; height:30vh;"></div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="form-group col-md-5" role="form">
-                                <div class="input-group">
-                                    <div class="input-group-addon">f(x)</div>
-                                    <input class="form-control" id="baseFunction" value="7*sin(x)^2"/>
-                                    <div class="input-group-addon" style="padding: 0 4px;">
-                                        <button type="button" class="btn btn-xs" data-trigger="focus" data-toggle="popover" data-html="true" data-placement="auto" title="Elegir función predefinida" data-content="
-                                        <ul class='list-unstyled list-group'>
-                                            <li><a class='list-group-item' href='#'>7*sin(x)^2</a></li>
-                                            <li><a class='list-group-item' href='#'>x^3 + 4 * x^2 + x + 3</a></li>
-                                            <li><a class='list-group-item' href='#'>1 + exp(-x)</a></li>
-                                            <li><a class='list-group-item' href='#'>2 * sin(10 * x * PI)</a></li>
-                                            <li><a class='list-group-item' href='#'>sin(x) + cos(x)</a></li>
-                                            <li><a class='list-group-item' href='#'>x^(3/2) / (1 + x)</a></li>
-                                            <li><a class='list-group-item' href='#'>2/(1 + exp(-x)) - 1</a></li>
-                                        </ul>
-                                        ">
-                                        <span class="glyphicon glyphicon-save"></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    x
-                                    <sub>0</sub>
-                                </div>
-                                <input class="form-control w100p" id="domainFrom" value="0"/>
-                                <div class="input-group-addon">
-                                    x
-                                    <sub>f</sub>
-                                </div>
-                                <input class="form-control" id="domainTo" value="2"/>
-
-                                <div class="input-group-addon">
-                                    y
-                                    <sub>0</sub>
-                                </div>
-                                <input class="form-control" id="rangeFrom" placeholder="auto"/>
-                                <div class="input-group-addon">
-                                    y
-                                    <sub>f</sub>
-                                </div>
-                                <input class="form-control" id="rangeTo" placeholder="auto"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-1">
-                            <div class="btn-group pull-right">
-                                <button class="btn btn-primary" onclick="updateGraph()" title="Actualizar gráfico">
-                                    <span class="glyphicon glyphicon-refresh"></span>
-                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:90%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
+            <!-- Results -->
+            <div role="tabpanel" class="tab-pane" id="approximation">
+                <div class="col-sm-12">
+                    <div id="panel-right" class="panel panel-default"  style="height:90vh; overflow-y:hidden;">
+                        <div class="panel-body">
+                            <div id="box" class="" style="width:100%; height:52vh;"></div>
+                            <hr>
+                            <div id="boxShapeFunctions" class="" style="width:100%; height:30vh;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div> <!-- End Tab Panel -->
+    </div> <!-- End Container -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:90%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div>
-            <div class="modal-body">
-        <pre>
-            Function    Description
-            sin(x)  Sine of x (x is in radians)
-            cos(x)  Cosine of x (x is in radians)
-            tan(x)  Tangent of x (x is… well, you know)
-            asin(x) Arc sine of x (in radians)
-            acos(x) Arc cosine of x (in radians)
-            atan(x) Arc tangent of x (in radians)
-            sqrt(x) Square root of x. Result is NaN (Not a Number) if x is negative.
-            log(x)  Natural logarithm of x (not base-10). It’s log instead of ln because that’s what JavaScript calls it.
-            abs(x)  Absolute value (magnatude) of x
-            ceil(x) Ceiling of x — the smallest integer that’s >= x.
-            floor(x)    Floor of x — the largest integer that’s <= x
-            round(x)    X, rounded to the nearest integer, using “gradeschool rounding”.
-            exp(x)  ex (exponential/antilogarithm function with base e)
-            random(n)   Get a random number in the range [0, n). If n is zero, or not provided, it defaults to 1.
-            fac(n)  n! (factorial of n: “n * (n-1) * (n-2) * … * 2 * 1″)
-            min(a,b,…)  Get the smallest (“minimum”) number in the list
-            max(a,b,…)  Get the largest (“maximum”) number in the list
-            pyt(a, b)   Pythagorean function, i.e. the c in “c2 = a2 + b2“
-            pow(x, y)   xy. This is exactly the same as “x^y”. It’s just provided since it’s in the Math object from JavaScript
-            atan2(y, x) arc tangent of x/y. i.e. the angle between (0, 0) and (x, y) in radians.
-        </pre>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Información Extra</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Las siguientes funciones están disponibles para ser usadas como parte de la función base <strong>f(x)</strong>:</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal">
+                                <dt>sin(x)</dt>
+                                <dd>Seno de x (x en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>cos(x)</dt>
+                                <dd>Coseno de x (x en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>tan(x)</dt>
+                                <dd>Tangente de x (x en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>asin(x)</dt>
+                                <dd>Arcoseno de x (en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>acos(x)</dt>
+                                <dd>Arcocoseno de x (en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>atan(x)</dt>
+                                <dd>Arcotangente de x (en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>sqrt(x)</dt>
+                                <dd>Raíz de x (x debe ser positiva).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>log(x)</dt>
+                                <dd>Algoritmo <b>natural</b> de x.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>abs(x)</dt>
+                                <dd>Valor absoluto de x.</dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal">
+                                <dt>ceil(x)</dt>
+                                <dd>Techo de x - el menor entero que satisface >= x.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>floor(x)</dt>
+                                <dd>Suelo de x — el mayor entero que satisface <= x.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>round(x)</dt>
+                                <dd>Redondear x al entero más cercano.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>exp(x)</dt>
+                                <dd>Elevar e a la x (antilogaritmo natural).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>min(a,b,…)</dt>
+                                <dd>Obtener el menor valor de la lista.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>max(a,b,…)</dt>
+                                <dd>Obtener el mayor valor de la lista.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>pow(x, y)</dt>
+                                <dd>Alternativa de colocar x^y.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>atan2(y, x)</dt>
+                                <dd>Arcotangente de x/y, es decir, el ángulo entre (0, 0) y (x, y) en radianes.</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/third-party/jquery-1.11.1.min.js"></script>
@@ -339,16 +404,29 @@
 
 jQuery(document).ready(function() {
 
+    // Append more options to the quantity of elements
+    for (var kQuantity = 2 ; kQuantity <= 10 ; kQuantity++ ) {
+
+        var inlineRadio = "inlineRadio" + kQuantity;
+
+        $("#quantityOfElements").append(
+            '<label class="radio-inline">' +
+            '<input type="radio" name="inlineRadioElements" id="' + inlineRadio + '" value="' + kQuantity + '">' +
+            kQuantity + '</label>'
+        );
+    }
+
     function showShapeFunction() {
         jQuery("#loader").fadeOut(function() {
             jQuery("#mainShapeFunction").css({'opacity':0}).animate({'opacity':1});
          });
     };
 
+
     setTimeout(function() {
         updateShapeFunction(true);
         setTimeout(function() {
-            updateGraph(true);
+            //updateGraph(true);
             setTimeout(function() {
                 showShapeFunction();
             }, 5);
@@ -358,17 +436,20 @@ jQuery(document).ready(function() {
     jQuery('[data-toggle="tooltip"]').tooltip();
 
     jQuery('[data-toggle="popover"]').popover().on('shown.bs.popover', function () {
-            var $baseFunction = jQuery("#baseFunction");
-            jQuery('.list-unstyled > li > a').on('click', function() {
-                $baseFunction.val(jQuery(this).html());
-                updateGraph();
-            });
+        var $baseFunction = jQuery("#baseFunction");
+        jQuery('.list-unstyled > li > a').on('click', function() {
+            $baseFunction.val(jQuery(this).html());
+            //updateGraph();
         });
+    });
 
-    // If the window changes its size, we reload the graphs
-    jQuery(window).resize(function() {
-        updateShapeFunction();
-        updateGraph();
+    var alreadyUpdatedMainGraph = false;
+
+    jQuery("[role='tablist'] a").on('click', function() {
+        if (jQuery(this).attr("href") === "#approximation" &&!alreadyUpdatedMainGraph) {
+            updateGraph();
+            alreadyUpdatedMainGraph = true;
+        }
     });
 
 });

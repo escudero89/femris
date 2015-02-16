@@ -141,7 +141,7 @@ RowLayout {
 
                 onNavigationRequested: {
                     var url = "" + request.url;
-                    if (url.indexOf("http") !== -1) {
+                    if (url.indexOf("http") === 0) {
                         request.action = WebView.IgnoreRequest;
                         globalInfoBox.loadUrlInBrowser(url);
                     }
@@ -178,9 +178,9 @@ RowLayout {
 
                     if (previous_url === url_stringed) {
                         return;
-                    } else {
-                        previous_url = url_stringed;
                     }
+
+                    previous_url = url_stringed;
 
                     // These are for those that we don't to wrap with the layout
                     if (rowParent.currentUrlForTutorial[0] === '$') {
@@ -190,7 +190,6 @@ RowLayout {
                     } else {
 
                         if (rowParent.currentUrlForTutorial.search("http") !== -1) {
-                            StudyCaseHandler.loadUrlInBrowser(rowParent.currentUrlForTutorial, true);
                             rowParent.currentUrlForTutorial = "docs/view/external.html";
                         }
 
@@ -215,8 +214,8 @@ RowLayout {
             Text {
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
-                anchors.leftMargin: 10
                 anchors.bottomMargin: 10
+                anchors.leftMargin: 10
 
                 text: (currentWebView.loading) ? qsTr("Cargando (" + currentWebView.loadProgress + "%)...") : ""
             }
