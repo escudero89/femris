@@ -57,7 +57,117 @@
 </head>
 <body>
 
-    {{=include(view)}}
+    <!-- Loader for the front view -->
+
+    <div id="loader">
+        <img class="img-responsive img-center" src="img/loader-inverse.gif"/>
+        <span style="top:10px; left:10px; position:absolute;">Cargando...</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container-fluid" id="mainShapeFunction" style="opacity:0">
+        <div class="row">
+
+            <!-- View Inclusion -->
+            {{=include(view)}}
+
+            <!-- FOOTBAR -->
+            <div class="navbar-sm">
+                <div class="navbar-primary">
+                    <nav class="navbar navbar-fixed-bottom navbar-inverse" role="navigation">
+                        <!-- Left Side -->
+                        <ul class="nav navbar-nav" style="cursor:default">
+                            <li>
+                                <a data-toggle="tooltip" title="El valor actual resaltado en los elementos se obtiene de promediar los valores de cada uno de los nodos que lo conforman.">
+                                    Valor actual:
+                                    <span id="currentValue">0.0000e+0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    M&iacute;n:
+                                    <span id="minValue"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    Max:
+                                    <span id="maxValue"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- Right Side -->
+                        <form class="navbar-form navbar-right" role="search">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Cambiar mapa de colores">
+                                        <span class="glyphicon glyphicon-leaf"></span>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul name="color-schemes" class="dropdown-menu visualization" role="menu">
+                                        <li name="monochromatic">
+                                            <a href>
+                                                Blanco y Negro
+                                            </a>
+                                        </li>
+                                        <li name="monochromatic-cyan">
+                                            <a href>
+                                                Cyan Monocromático
+                                            </a>
+                                        </li>
+                                        <li name="cyan-orange">
+                                            <a href>
+                                                Cyan a Naranja
+                                            </a>
+                                        </li>
+                                        <li name="monochromatic-blue">
+                                            <a href>
+                                                Azul Monocromático
+                                            </a>
+                                        </li>
+                                        <li name="blue-red">
+                                            <a href>
+                                                Azul a Rojo
+                                            </a>
+                                        </li>
+                                        <li name="rainbow" class="active">
+                                            <a href>
+                                                Arcoiris
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </form>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+Cyan
+    <!-- MODAL MAIN MATRIX -->
+    <div class="modal fade" id="modalStiffnessMatrix" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:90%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Cerrar</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Matriz de Rigidez Global
+                        <small>Los elementos `-` indican valores nulos (0).</small>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="output">...</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/third-party/jquery-1.11.1.min.js"></script>
@@ -94,6 +204,8 @@
             $("#loader").fadeOut(function() {
                 $("#mainShapeFunction").css({'opacity':0}).animate({'opacity':1});
             });
+
+            enableChangeColorScheme();
         });
     });
     </script>

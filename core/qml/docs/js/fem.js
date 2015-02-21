@@ -2,6 +2,19 @@
 var G_COLOR_NODE_HIGH = "#d9534f";
 var G_COLOR_ELEM_HIGH = "#d9534f";
 
+function enableChangeColorScheme() {
+    $("ul[name='color-schemes'] a").click(function(e) {
+        e.preventDefault();
+        var colorScheme = $(this).parent().attr("name");
+
+        G_CURRENT_COLOR_SCHEME = colorScheme;
+        domainObject.changeColorDueToValues();
+
+        $("ul[name='color-schemes'] li").removeClass('active');
+        $(this).parent().addClass('active');
+    });
+}
+
 function toggleColumns() {
     var $left = $('#leftColumnResults');
     var $right = $('#rightColumnResults');
@@ -261,7 +274,7 @@ $(document).ready(function() {
 
     domainObject.makeElements(G_XNODE, G_IELEM, options);
 
-    $(".visualization li").on('click', function(e) {
+    $("nav.navbar-fixed-top .visualization li").on('click', function(e) {
         var $this = $(this);
 
         $(".visualization li").removeClass("active");

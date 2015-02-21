@@ -102,9 +102,11 @@ function transformCoordinates(xnode, factorOfDeformation) {
         }
     }
 
+    var max_width_figure = G_SHAPES_WIDTH - 100;
+
     // Then we calculate the maximum width of SVG and with that we set the scale factor
-    alpha = 8 / 10 * ( G_SHAPES_WIDTH / ( x_max - x_min ) );
-    beta  = G_SHAPES_WIDTH / 10 * ( 1 - 8 * x_min / ( x_max - x_min ) );
+    alpha = 8 / 10 * ( max_width_figure / ( x_max - x_min ) );
+    beta  = max_width_figure / 10 * ( 1 - 8 * x_min / ( x_max - x_min ) );
 
     var new_xnode = [];
 
@@ -133,6 +135,8 @@ function transformCoordinates(xnode, factorOfDeformation) {
 var domainObject = {
 
     two                             : false,
+    twoScale                        : false,
+
     xnode                           : false,
     ielem                           : false,
     currentValuesToColorise         : false,
@@ -145,6 +149,49 @@ var domainObject = {
     resetCanvas : function() {
         $("#draw-shapes-dummy").html('<g></g>');
         $("#draw-shapes").html('<div class="two-container w100p" style="height: 90vh;"></div>');
+    },
+
+    drawScale : function() {
+
+        this.twoScale = new Two.Group();
+
+        var min_X = G_SHAPES_WIDTH - 90;
+        var min_Y = 20;
+
+        var width = 10;
+
+        var N_blocks = this.xnode.length;
+
+        var blockHeight = this.options.localParamsTextSVG["font-size"] * 2;
+
+        for ( kBlock = 0; kBlock < N_blocks ; kBlock++ ) {
+
+            var y_start = min_Y + blockHeight * kBlock;
+            var y_end = y_start + blockHeight;
+
+            twoBlock = this.two.makePolygon(
+                min_X, y_start,
+                min_X + width, y_start,
+                min_X + width, y_end,
+                min_X, y_end);
+
+            twoBlock.fill = getColorFromInterpolation(kBlock, 0, N_blocks);
+
+            var gamma = kBlock / ( N_blocks - 1 );
+            twoBlock.representedValue = (1 - gamma) * this.options.minValue + gamma * this.options.maxValue;
+
+            paramsTextSVG = this.options.localParamsTextSVG;
+
+            paramsTextSVG.x = min_X + width + 10;
+            paramsTextSVG.y = y_start + blockHeight * 0.5 + paramsTextSVG["font-size"] * 0.5;
+            paramsTextSVG["text-anchor"] = "left";
+
+            addElementToSVG(getTextSVG(Utils.parseNumber(twoBlock.representedValue), paramsTextSVG));
+
+            this.twoScale.add(twoBlock);
+        }
+
+        this.two.add(this.twoScale);
     },
 
     drawElement : function (k, isTriangle) {
@@ -312,19 +359,22 @@ var domainObject = {
      */
     changeColorDueToValues : function(options) {
 
+        // We change first the scale
+        this.drawScale();
+
         // We update our previous values
-        this.currentValuesToColorise = options.valuesToColorise;
-        this.options = options;
+        this.options = assignIfNecessary(options,  this.options);
+        this.currentValuesToColorise = this.options.valuesToColorise;
 
         // To use this inside jQuery's function we need to do this
-        local = this;
+        self = this;
 
         $.each(this.groupNode.children, function(idx, twoNode) {
-            twoNode.currentValue = options.valuesToColorise[twoNode.ielem];
+            twoNode.currentValue = self.options.valuesToColorise[twoNode.ielem];
             twoNode.fill = getColorFromInterpolation(
                 twoNode.currentValue,
-                options.minValue,
-                options.maxValue);
+                self.options.minValue,
+                self.options.maxValue);
 
             twoNode.fill_original = twoNode.fill;
         });
@@ -339,17 +389,17 @@ var domainObject = {
             var currentValueInterpolated = 0;
 
             for ( var j = 0; j < twoElem.ielem.length ; j++ ) {
-                xy_gravity_center.x += local.xnode[ twoElem.ielem[j] - 1 ][0];
-                xy_gravity_center.y += local.xnode[ twoElem.ielem[j] - 1 ][1];
+                xy_gravity_center.x += self.xnode[ twoElem.ielem[j] - 1 ][0];
+                xy_gravity_center.y += self.xnode[ twoElem.ielem[j] - 1 ][1];
 
-                currentValueInterpolated += local.currentValuesToColorise[ twoElem.ielem[j] - 1 ];
+                currentValueInterpolated += self.currentValuesToColorise[ twoElem.ielem[j] - 1 ];
             }
 
             twoElem.currentValue = currentValueInterpolated / twoElem.ielem.length;
             twoElem.fill = getColorFromInterpolation(
                 twoElem.currentValue,
-                options.minValue,
-                options.maxValue);
+                self.options.minValue,
+                self.options.maxValue);
 
             twoElem.fill_original = twoElem.fill;
         });
@@ -395,6 +445,9 @@ var domainObject = {
 
         this.group = { 'elems' : this.groupElem, 'nodes' : this.groupNode };
 
+        // Add the scale
+        this.drawScale();
+
         // Don't forget to tell two to render everything to the screen
         this.two.update();
 
@@ -418,5 +471,23 @@ var domainObject = {
             beforePan: function(){},
             onPan: function(){}
         });
+
+        /*
+        self = this;
+
+        $(this.twoScale._renderer.elem.children)
+            .css('cursor', 'pointer')
+            .on('mouseenter', function(e) {
+
+            var fillValue = $(this).attr('fill');
+
+            $.each(self.twoScale.children, function(idx, twoBlock) {
+                if (fillValue === twoBlock.fill) {
+                    console.log(twoBlock.representedValue);
+
+                    return false;
+                }
+            });
+        });*/
     }
 };
