@@ -83,6 +83,7 @@ function transformCoordinates(xnode, factorOfDeformation) {
     var x_max = x_min;          // maximum x coordinate
 
     var y_max = xnode[0][1];
+    var y_min_pixel = false;
 
     var k;                      // counter
 
@@ -97,7 +98,7 @@ function transformCoordinates(xnode, factorOfDeformation) {
             x_max = xnode[k][0];
         }
 
-        if (xnode[k][0] > y_max) {
+        if (xnode[k][1] > y_max) {
             y_max = xnode[k][1];
         }
     }
@@ -121,11 +122,16 @@ function transformCoordinates(xnode, factorOfDeformation) {
             new_xnode[k][0] = xnode[k][0];
             new_xnode[k][1] = y_max - xnode[k][1];
         }
-
         new_xnode[k][0] = new_xnode[k][0] * alpha + beta;
         new_xnode[k][1] = new_xnode[k][1] * alpha + beta;
 
-        new_xnode[k][1] += G_HEIGHT_NAVBAR;
+        if (y_min_pixel > new_xnode[k][1] || !y_min_pixel) {
+            y_min_pixel = new_xnode[k][1];
+        }
+    }
+
+    for ( k = 0 ; k < new_xnode.length ; k++ ) {
+        new_xnode[k][1] += G_HEIGHT_NAVBAR - y_min_pixel;
     }
 
     return new_xnode;

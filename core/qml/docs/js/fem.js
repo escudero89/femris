@@ -2,6 +2,8 @@
 var G_COLOR_NODE_HIGH = "#d9534f";
 var G_COLOR_ELEM_HIGH = "#d9534f";
 
+var G_CURRENT_PANEL_STATE = "default";
+
 function enableChangeColorScheme() {
     $("ul[name='color-schemes'] a").click(function(e) {
         e.preventDefault();
@@ -15,21 +17,72 @@ function enableChangeColorScheme() {
     });
 }
 
-function toggleColumns() {
-    var $left = $('#leftColumnResults');
-    var $right = $('#rightColumnResults');
+function togglePanels(runAgain) {
 
-    // Is NOT being shown the grid
-    if ($left.hasClass('hidden')) {
-        $left.removeClass('hidden');
-        $right.removeClass('col-xs-12');
-        $right.addClass('col-xs-6');
+    var leftPanel = $("div#leftColumnResults");
+    var rightPanel = $("div#rightColumnResults");
 
-    } else {
-        $left.addClass('hidden');
-        $right.removeClass('col-xs-6');
-        $right.addClass('col-xs-12');
+    var colDefault = "col-xs-6";
+
+    var colBig = "col-xs-9";
+    var colSmall = "col-xs-3";
+
+    var colHuge = "col-xs-12";
+    var colNone = "hide";
+
+    // First we set the next value
+    switch (G_CURRENT_PANEL_STATE) {
+        case "big-left": G_CURRENT_PANEL_STATE = "huge-left"; break;
+        case "huge-left": G_CURRENT_PANEL_STATE = "big-right"; break;
+        case "big-right": G_CURRENT_PANEL_STATE = "huge-right"; break;
+        case "huge-right": G_CURRENT_PANEL_STATE = "default"; break;
+        default: G_CURRENT_PANEL_STATE = "big-left";
     }
+
+    // Then we set the changes
+    switch (G_CURRENT_PANEL_STATE) {
+
+        case "big-left":
+            leftPanel.removeClass(colDefault);
+            leftPanel.addClass(colBig);
+
+            rightPanel.removeClass(colDefault);
+            rightPanel.addClass(colSmall);
+            break;
+
+        case "huge-left":
+            leftPanel.removeClass(colBig);
+            leftPanel.addClass(colHuge);
+
+            rightPanel.removeClass(colSmall);
+            rightPanel.addClass(colNone);
+            break;
+
+        case "big-right":
+            leftPanel.removeClass(colHuge);
+            leftPanel.addClass(colSmall);
+
+            rightPanel.removeClass(colNone);
+            rightPanel.addClass(colBig);
+            break;
+
+        case "huge-right":
+            leftPanel.removeClass(colSmall);
+            leftPanel.addClass(colNone);
+
+            rightPanel.removeClass(colBig);
+            rightPanel.addClass(colHuge);
+            break;
+
+        default:
+            leftPanel.removeClass(colNone);
+            leftPanel.addClass(colDefault);
+
+            rightPanel.removeClass(colHuge);
+            rightPanel.addClass(colDefault);
+
+    }
+
 }
 
 function toggleViews(setElementalView) {
@@ -254,62 +307,6 @@ function getOptions(xnode, ielem, params) {
     return params;
 }
 
-
-$(document).ready(function() {
-    var $body = $(".row");
-    $body.html($body.html().replace(/{{femris}}/g, "<span class='femris'><tt>FEMRIS</tt></span>"));
-
-
-    var params = {
-        valuesToColorise : getSingleColFromCurrentDomain('displacements', eval($("ul[name='displacements'] > li.active").attr("name")))
-    };
-
-    params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;
-
-    // We transform the original coordinates so they can fit better in the SVG
-    G_XNODE = transformCoordinates(G_XNODE);
-    G_XNODE_ORIGINAL = G_CURRENT_DOMAIN.coordinates;
-
-    options = getOptions(G_XNODE, G_IELEM, params);
-
-    domainObject.makeElements(G_XNODE, G_IELEM, options);
-
-    $("nav.navbar-fixed-top .visualization li").on('click', function(e) {
-        var $this = $(this);
-
-        $(".visualization li").removeClass("active");
-        $this.addClass("active");
-
-        var whichVariable = $this.parent().attr('name');
-        var indexColumn = $this.attr('name');
-
-        if (indexColumn.search(',') > 0) {
-            indexColumn = eval(indexColumn);
-        }
-
-        params = {
-            valuesToColorise : getSingleColFromCurrentDomain(whichVariable, indexColumn)
-        };
-
-        params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;
-
-        options = getOptions(G_XNODE, G_IELEM, params);
-        domainObject.changeColorDueToValues(options);
-    });
-
-    drawCurrentMatrix(domainObject.two, domainObject.group);
-
-    // If the window changes its size, we reload the page
-    $(window).resize(function() {
-        //document.location.reload();
-    });
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
-
-    globalElementalMatrixObject.initialize(G_CURRENT_ELEMENTAL_DATA);
-});
-
-
 function coloriseDueToMouse(groupSystem, currentElem, isEntering) {
 
     isEntering = assignIfNecessary(isEntering, false);
@@ -375,3 +372,58 @@ function discolorDueToMouseHelper(currentElem, currentCell, clearAll) {
     }
 
 }
+
+$(document).ready(function() {
+    var $body = $(".row");
+    $body.html($body.html().replace(/{{femris}}/g, "<span class='femris'><tt>FEMRIS</tt></span>"));
+
+
+    var params = {
+        valuesToColorise : getSingleColFromCurrentDomain('displacements', eval($("ul[name='displacements'] > li.active").attr("name")))
+    };
+
+    params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;
+
+    // We transform the original coordinates so they can fit better in the SVG
+    G_XNODE = transformCoordinates(G_XNODE);
+    G_XNODE_ORIGINAL = G_CURRENT_DOMAIN.coordinates;
+
+    options = getOptions(G_XNODE, G_IELEM, params);
+
+    domainObject.makeElements(G_XNODE, G_IELEM, options);
+
+    $("nav.navbar-fixed-top .visualization li").on('click', function(e) {
+        var $this = $(this);
+
+        $(".visualization li").removeClass("active");
+        $this.addClass("active");
+
+        var whichVariable = $this.parent().attr('name');
+        var indexColumn = $this.attr('name');
+
+        if (indexColumn.search(',') > 0) {
+            indexColumn = eval(indexColumn);
+        }
+
+        params = {
+            valuesToColorise : getSingleColFromCurrentDomain(whichVariable, indexColumn)
+        };
+
+        params.valuesToColorise = (params.valuesToColorise.length > 0) ? params.valuesToColorise : false;
+
+        options = getOptions(G_XNODE, G_IELEM, params);
+        domainObject.changeColorDueToValues(options);
+    });
+
+    drawCurrentMatrix(domainObject.two, domainObject.group);
+
+    // If the window changes its size, we reload the page
+    $(window).resize(function() {
+        //document.location.reload();
+    });
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+    globalElementalMatrixObject.initialize(G_CURRENT_ELEMENTAL_DATA);
+});
+

@@ -23,7 +23,7 @@ ColumnLayout {
 
     FlickableRepeaterHeader {
         objectHeader.text :
-            qsTr("Condiciones de borde (nodales)") +
+            qsTr("Restricciones nodales") +
             "<br /><small style='color:" + Style.color.content + "'>" +
             "<em>" + qsTr("Número de nodos: ") + repeater.count + "</em></small>"
 

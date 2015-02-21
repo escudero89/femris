@@ -157,9 +157,6 @@
                 <button type="button" id="buttonToggleViews" class="btn btn-success" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
                     <span class="glyphicon glyphicon-th-large"></span>
                 </button>
-                <button type="button" class="btn btn-success" title="Mostrar u ocultar grilla" onclick="toggleColumns();">
-                    <span class="glyphicon glyphicon-resize-horizontal"></span>
-                </button>
                 <a class="btn btn-femris" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Resultados#structural">
                     <span class="glyphicon glyphicon-question-sign"></span>
                 </a>
@@ -365,11 +362,11 @@
 % MAT-fem 1.3  - MAT-fem is a learning tool for undestanding
 %                the Finite Element Method with MATLAB and GiD
 %=======================================================================
-% EXAMPLE SELECTED = example1.json
+% EXAMPLE SELECTED = example2.json
 %
 %  Material Properties
 %
-  young = 2700000 ;
+  young = 270000 ;
   poiss = 0.2 ;
   denss = 1 ;
   pstrs = 1 ;
@@ -380,15 +377,12 @@
 %
 global coordinates
 coordinates = [
-    0,    0 ;
-    1,    0 ;
-    2,    0 ;
+    -0.5,    -0.5 ;
+    0,    -0.5 ;
+    0.5,    -0.5 ;
+    0.5,    0.5 ;
     0,    0.5 ;
-    1,    0.5 ;
-    2,    0.5 ;
-    0,    1 ;
-    1,    1 ;
-    2,    1 ;
+    -0.5,    0.5 ;
 ];
 
 %
@@ -396,10 +390,8 @@ coordinates = [
 %
 global elements
 elements = [
-    1,    4,    5,    2 ;
-    2,    5,    6,    3 ;
-    4,    7,    8,    5 ;
-    5,    8,    9,    6 ;
+    1,    2,    5,    6 ;
+    2,    3,    4,    5 ;
 ];
 
 %
@@ -422,12 +414,6 @@ pointload = [
 sideload = [
     1,    2,    500,    500 ;
     2,    3,    500,    500 ;
-    1,    4,    500,    500 ;
-    4,    7,    500,    500 ;
-    7,    8,    -500,    -500 ;
-    8,    9,    -500,    -500 ;
-    3,    6,    -500,    -500 ;
-    6,    9,    -500,    -500 ;
 ];
 </pre>
                                             </div>
@@ -1004,7 +990,14 @@ Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);
                             </li>
                         </ul>
                         <!-- Right Side -->
-                        <form class="navbar-form navbar-right" role="search">
+                        <form class="navbar-form navbar-right" role="search" style="margin:0">
+                            <ul class="nav navbar-nav">
+                                <li style="margin:3px; padding:0;">
+                                    <button type="button" class="btn btn-success" title="Cambiar visualización de paneles" onclick="togglePanels();">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                </li>
+                            </ul>
                             <ul class="nav navbar-nav">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Cambiar mapa de colores">
@@ -1051,7 +1044,7 @@ Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);
             </div>
         </div>
     </div>
-Cyan
+
     <!-- MODAL MAIN MATRIX -->
     <div class="modal fade" id="modalStiffnessMatrix" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="width:90%">

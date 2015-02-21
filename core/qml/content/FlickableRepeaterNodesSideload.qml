@@ -24,7 +24,7 @@ ColumnLayout {
 
     FlickableRepeaterHeader {
         objectHeader.text :
-            qsTr("Condiciones de borde (en lados)") +
+            qsTr("Condiciones de borde") +
             "<br /><small style='color:" + Style.color.content + "'>" +
             "<em>" + qsTr("Número de lados: ") + repeater.count + "</em></small>"
 

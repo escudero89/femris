@@ -97,7 +97,14 @@
                             </li>
                         </ul>
                         <!-- Right Side -->
-                        <form class="navbar-form navbar-right" role="search">
+                        <form class="navbar-form navbar-right" role="search" style="margin:0">
+                            <ul class="nav navbar-nav">
+                                <li style="margin:3px; padding:0;">
+                                    <button type="button" class="btn btn-success" title="Cambiar visualización de paneles" onclick="togglePanels();">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                </li>
+                            </ul>
                             <ul class="nav navbar-nav">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Cambiar mapa de colores">
@@ -144,7 +151,7 @@
             </div>
         </div>
     </div>
-Cyan
+
     <!-- MODAL MAIN MATRIX -->
     <div class="modal fade" id="modalStiffnessMatrix" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="width:90%">
