@@ -33,3 +33,4 @@ core/temp/
 *.femris.old
 *.femris.bak
 *.fuse_hidden*
+linux-64/
