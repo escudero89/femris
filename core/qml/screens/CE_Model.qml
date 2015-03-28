@@ -2,8 +2,7 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.3
 
-//import QtWebEngine 1.0
-import QtWebKit 3.0
+import QtWebEngine 1.0
 
 import "../docs"
 import "../content"
@@ -45,7 +44,7 @@ RowLayout {
             Layout.fillWidth: true
             Layout.columnSpan: 3
 
-            WebView {
+            WebEngineView {
 
                 signal newUrlBase(string newUrl)
                 property string urlBase : "docs/ce_model/index.html"

@@ -2,6 +2,8 @@ TEMPLATE = app
 
 QT += qml quick widgets xml webengine
 
+CONFIG += resources_big
+
 SOURCES += \
     src/main.cpp \
     src/fileio.cpp \
@@ -17,7 +19,6 @@ SOURCES += \
 RESOURCES += \
     qml/resources.qrc \
     qml/qml.qrc \
-    qml/MathJax.qrc \
     qml/third-party.qrc \
     qml/docs-resources.qrc \
     qml/docs.qrc \
