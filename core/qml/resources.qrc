@@ -772,5 +772,6 @@
         <file>resources/images/splash-screen.png</file>
         <file>resources/icons/black/GiD.png</file>
         <file>resources/icons/GiD.png</file>
+        <file>resources/images/model/tutorial.png</file>
     </qresource>
 </RCC>

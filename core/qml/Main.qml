@@ -124,6 +124,12 @@ ApplicationWindow {
         }
     }
 
+    // Current Screen Info
+    CurrentScreenInfo {
+
+    }
+
+
     Loader  {
         anchors.fill: parent
 
