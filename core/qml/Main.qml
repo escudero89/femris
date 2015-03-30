@@ -126,9 +126,11 @@ ApplicationWindow {
 
     // Current Screen Info
     CurrentScreenInfo {
+        id: csiModal
+        visible: false
 
+        z: globalLoader.z + 10000;
     }
-
 
     Loader  {
         anchors.fill: parent
@@ -212,6 +214,7 @@ ApplicationWindow {
         }
 
         mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+
     }
 
     function doOnClose() {
@@ -241,5 +244,7 @@ ApplicationWindow {
 
         globalLoader.visible = false;
         globalLoader.setSource("screens/" + section + ".qml");
+
+        csiModal.open(section);
     }
 }

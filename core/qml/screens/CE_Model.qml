@@ -48,6 +48,8 @@ GridLayout {
 
     RowLayout {
 
+        id: rlModel
+
         Layout.maximumWidth: {
             var scaledWidth = globalLoader.width - globalLoader.width / 20 - leftContentRectangle.width;
             return Math.min(900, scaledWidth);
@@ -80,6 +82,8 @@ GridLayout {
             ChoiceBlock {
 
                 id: cbModel
+
+                Layout.maximumWidth: rlModel.width / listModelProblem.count
 
                 header.text: title
                 textArea.text: Content.overall[content]
@@ -123,48 +127,16 @@ GridLayout {
                     onAnotherOneChosed: state = "default";
                 }
 
+                Component.onCompleted: {
+                    if (StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase") &&
+                        StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase", soCalled)) {
+
+                        state = "selected";
+                    }
+                }
+
             }
         }
-/*
-        ChoiceBlock {
-            header.text: "CALOR"
-            textArea.text: Content.overall.model
-
-            image.source : "qrc:/resources/images/overall/model.png"
-
-            button.buttonLabel: "Elegir"
-            button.onClicked : {
-                StudyCaseHandler.selectNewTypeStudyCase("heat");
-                button.buttonStatus =  "femris";
-            }
-            button.iconSource: "qrc:/resources/icons/function.png"
-
-        }
-
-        ChoiceBlock {
-            header.text: "TENSIÓN"
-            textArea.text: Content.overall.domain
-
-            image.source : "qrc:/resources/images/overall/domain.png"
-
-            button.buttonLabel: "Elegir"
-            button.onClicked : mainWindow.switchSection("CE_Domain")
-            button.iconSource: "qrc:/resources/icons/keyboard50.png"
-
-        }
-
-        ChoiceBlock {
-            header.text: "DEFORMACIÓN"
-            textArea.text: Content.overall.shape_functions
-
-            image.source : "qrc:/resources/images/overall/shape_function.png"
-
-            button.buttonLabel: "Elegir"
-            button.onClicked : mainWindow.switchSection("CE_ShapeFunction")
-            button.iconSource: "qrc:/resources/icons/stats1.png"
-
-        }
-*/
     }
 
     FooterButtons {
@@ -182,138 +154,3 @@ GridLayout {
         }
     }
 }
-
-
-/*
-RowLayout {
-
-    property string parentStage : objectName
-
-    id: rowParent
-    objectName: "CE_Model"
-
-    spacing: 0
-
-    LeftContentBox {
-        id: leftContentRectangle
-
-        color: Style.color.content_emphasized
-        Layout.fillHeight: true
-        Layout.preferredWidth: parent.width * 0.20
-
-        parentStage : "CE_Model"
-    }
-
-    GridLayout {
-
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-
-        columnSpacing: 0
-        rowSpacing: 0
-
-        rows: 2
-        columns: 3
-
-        Item {
-
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            Layout.columnSpan: 3
-
-
-            WebEngineView {
-
-                signal newUrlBase(string newUrl)
-                property string urlBase : "docs/ce_model/index.html"
-
-                id: modelWebView
-                visible: false
-
-                anchors.fill: parent
-
-                url: fileApplicationDirPath + "/" + urlBase
-
-                onNewUrlBase: {
-                    urlBase = newUrl;
-                    url = fileApplicationDirPath + "/" + urlBase;
-                }
-
-                onLoadingChanged: visible = (!loading && loadProgress === 100) ? true : false;
-
-            }
-
-            Text {
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 10
-                anchors.bottomMargin: 10
-
-                text: (modelWebView.loading) ? qsTr("Cargando (" + modelWebView.loadProgress + "%)...") : ""
-                color:  Style.color.background;
-            }
-
-        }
-
-        PrimaryButton {
-
-            tooltip: qsTr("Abrir esta página en tu navegador por defecto")
-
-            buttonStatus: "femris"
-            buttonLabel: ""
-            iconSource: "qrc:/resources/icons/external2.png"
-
-            onClicked: globalInfoBox.loadUrlInBrowser(modelWebView.urlBase, true);
-
-        }
-
-        PrimaryButton {
-            buttonLabel: "Vista General"
-            buttonStatus: "primary"
-            iconSource: "qrc:/resources/icons/four29.png"
-
-            onClicked : mainWindow.switchSection("CE_Overall")
-
-            Layout.fillWidth: true
-        }
-
-        PrimaryButton {
-
-            signal continueStep();
-
-            id: continueButton
-
-            buttonLabel: "Guardar y Continuar"
-            buttonStatus: "disabled"
-            iconSource: "qrc:/resources/icons/save8.png"
-
-            Layout.fillWidth: true
-
-            Connections {
-                target: StudyCaseHandler
-
-                onNewStudyCaseChose: {
-                    modelWebView.newUrlBase("docs/ce_model/" + studyCaseType + ".html");
-                    continueButton.buttonStatus = "success";
-                }
-            }
-
-            Connections {
-                target: Configure
-
-                onMainSignalEmitted: {
-                    if (signalName === "continueStep()") {
-                        continueButton.continueStep();
-                    }
-                }
-            }
-
-            onClicked: continueStep();
-
-            onContinueStep: {
-                mainWindow.saveAndContinue(parentStage);
-            }
-        }
-    }
-}
-*/
