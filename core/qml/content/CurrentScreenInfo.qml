@@ -24,7 +24,8 @@ Item {
 
         var stepsToConsider = [
                     'CE_Overall',
-                    "CE_Model"
+                    'CE_Model',
+                    'CE_Domain'
                 ];
 
         if (! (stepsToConsider.indexOf(section) >= 0) ) {
@@ -32,7 +33,8 @@ Item {
         }
 
         currentSection = section;
-        visible =  true;
+            visible =  true;
+
     }
 
     onClose: {
@@ -62,28 +64,24 @@ Item {
             anchors.bottomMargin: 10
         }
 
-        ColumnLayout {
+        Image {
             anchors.fill: parent
-
-            Image {
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-
-                source: "qrc:/resources/images/current_screen_info/" + currentSection + ".png"
-
-                fillMode: Image.PreserveAspectFit
-            }
-
-            PrimaryButton {
-                Layout.alignment: Qt.AlignBottom | Qt.AlignRight
-
-                text: "Entendido"
-
-                buttonStatus: "white"
-                iconSource: "qrc:/resources/icons/black/correct8.png"
-
-                onClicked: rCurrentScreenInfo.close()
-            }
+            source: "qrc:/resources/images/current_screen_info/" + currentSection + ".png"
+            fillMode: Image.PreserveAspectFit
         }
+
+        PrimaryButton {
+
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            text: "Entendido"
+
+            buttonStatus: "white"
+            iconSource: "qrc:/resources/icons/black/correct8.png"
+
+            onClicked: rCurrentScreenInfo.close()
+        }
+
     }
 }

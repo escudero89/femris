@@ -44,20 +44,6 @@ Rectangle {
 
             parentStage : leftContentBox.parentStage
         }
-/*
-        Rectangle {
-            color: Style.color.complement
-
-            Layout.minimumHeight: parent.height * 0.15
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-
-            Layout.alignment: Qt.AlignTop
-
-            ModelElectionSBox { visible : { return parentStage === 'CE_Model' } }
-
-            visible : { return parentStage === 'CE_Model' }
-        }*/
 
         PropertiesAssignationSBox { visible : parentStage === 'CE_Domain'; }
 

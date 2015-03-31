@@ -43,11 +43,19 @@ RowLayout {
                 Layout.preferredHeight: parent.height * 0.6
 
                 flickableDirection: Flickable.HorizontalFlick
+                boundsBehavior: Flickable.StopAtBounds
 
                 Layout.fillWidth: true
 
                 contentWidth: gridViewDomain.height * gridViewDomain.count
                 clip: true
+
+                // Only show the scrollbars when the view is moving.
+                states: State {
+                    name: "ShowBars"
+                    when: flickableExamples.movingHorizontally
+                    PropertyChanges { target: sbHorizontalExamples; opacity: 1 }
+                }
 
                 GridView {
 
@@ -57,7 +65,7 @@ RowLayout {
 
                     boundsBehavior: Flickable.StopAtBounds
 
-                    cellWidth: height / 1.1
+                    cellWidth: height
                     cellHeight: cellWidth
 
                     highlight: Rectangle {
@@ -163,7 +171,7 @@ RowLayout {
                                 }
 
                                 // We just load the conditions for the first component
-                                if (index === gridViewDomain.currentIndex) {
+                                if (gridViewDomain.currentIndex === index) {
                                     gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
                                     //rowParent.saveCurrentLoads();
                                 }
@@ -227,8 +235,25 @@ RowLayout {
 
                         sideLoadContainer.objectRepeater.visible = true;
                         nodesContainer.objectRepeater.visible = true;
+
                     }
+
                 }
+
+            }
+
+            // Attach scrollbars to the right of the view.
+            ScrollBar {
+                id: sbHorizontalExamples
+                Layout.preferredWidth: flickableExamples.width
+                Layout.preferredHeight: 12
+
+                opacity: 0.1
+                orientation: Qt.Horizontal
+                position: flickableExamples.visibleArea.xPosition
+                pageSize: flickableExamples.visibleArea.widthRatio
+
+                Behavior on opacity { NumberAnimation {} }
             }
 
             Rectangle {

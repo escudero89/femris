@@ -774,5 +774,6 @@
         <file>resources/icons/GiD.png</file>
         <file>resources/images/current_screen_info/CE_Model.png</file>
         <file>resources/images/current_screen_info/CE_Overall.png</file>
+        <file>resources/images/current_screen_info/CE_Domain.png</file>
     </qresource>
 </RCC>
