@@ -14,7 +14,6 @@ ApplicationWindow {
     signal finishedLoading();
 
     id: mainWindow
-    visible: true
 
     width: 800
     height: 600
@@ -22,7 +21,8 @@ ApplicationWindow {
     minimumWidth: 800
     minimumHeight: 600
 
-    // visibility: "Maximized"
+    //visibility: parseInt(Configure.read("lastWindowsSize"))
+    onVisibilityChanged: Configure.write("lastWindowsSize", visibility)
 
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 

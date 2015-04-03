@@ -91,5 +91,8 @@ global elements
 %
 {{sideload}}
 
+%%==============|| STUDY CASE Base64-result ||==============>>>>>>>>>>>>
+{{results-encoded}}
+
 %%==============|| STUDY CASE Base64-encode ||==============>>>>>>>>>>>>
 {{encoded}}

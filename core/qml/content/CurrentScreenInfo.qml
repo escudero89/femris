@@ -10,6 +10,8 @@ Item {
 
     property string currentSection : "CE_Model"
 
+    property variant alreadyShownInThisInstance : []
+
     id: rCurrentScreenInfo
 
     anchors.fill: parent
@@ -22,31 +24,50 @@ Item {
 
     onOpen: {
 
+        // If the configuration is off, we don't show any screen
+        if (Configure.check("showScreenInfo", "false")) {
+            return;
+        }
+
         var stepsToConsider = [
                     'CE_Overall',
                     'CE_Model',
-                    'CE_Domain'
+                    'CE_Domain',
+                    'CE_ShapeFunction',
+                    'CE_Results'
                 ];
 
+        // Exists the screen for this step?
         if (! (stepsToConsider.indexOf(section) >= 0) ) {
             return;
         }
 
+        // If we already have shown this screen, we don't show it again in the same instance
+        if (alreadyShownInThisInstance.indexOf(section) >= 0) {
+            return;
+        }
+
+        // Then we made the selection
         currentSection = section;
-            visible =  true;
+        alreadyShownInThisInstance.push(section);
+
+        visible =  true;
+        naFadeIn.start();
 
     }
 
     onClose: {
-        visible = false;
+        naFadeOut.start();
     }
 
     Rectangle {
 
+        id: rInfoScreen
+
         anchors.fill: parent
 
         color: Style.color.background
-        opacity: 0.99
+        opacity: 0
 
         MouseArea {
             anchors.fill: parent
@@ -80,8 +101,41 @@ Item {
             buttonStatus: "white"
             iconSource: "qrc:/resources/icons/black/correct8.png"
 
-            onClicked: rCurrentScreenInfo.close()
+            onClicked: {
+                rCurrentScreenInfo.close()
+            }
         }
 
+        onOpacityChanged: visible = (opacity === 0) ? false : true
+
     }
+
+    NumberAnimation {
+
+        id: naFadeIn
+        running: false
+
+        target: rInfoScreen
+
+        property: "opacity"
+
+        to: 0.99
+        duration: 0
+
+    }
+
+    NumberAnimation {
+
+        id: naFadeOut
+        running: false
+
+        target: rInfoScreen
+
+        property: "opacity"
+
+        to: 0
+        duration: 700
+
+    }
+
 }

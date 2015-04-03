@@ -181,6 +181,8 @@ Item {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
+                spacing: 10
+
                 //--------------------------------------------------------------
                 Text {
                     Layout.fillWidth: true
@@ -290,6 +292,14 @@ Item {
                         checked: ( Configure.read("interpreter") === "octave" )
                     }
                 }
+
+                CheckBox {
+                    text: qsTr("Ver pantallas de ayuda antes de cada etapa.")
+                    checked: Configure.check("showScreenInfo", "true") ? true : false
+
+                    onClicked: Configure.write("showScreenInfo", checked)
+                }
+
             }
 
             Rectangle {
