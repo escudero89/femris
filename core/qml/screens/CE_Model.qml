@@ -42,7 +42,6 @@ GridLayout {
 
         parentStage : "CE_Model"
 
-
         Layout.rowSpan: 2
     }
 
@@ -50,16 +49,12 @@ GridLayout {
 
         id: rlModel
 
-        Layout.maximumWidth: {
-            var scaledWidth = globalLoader.width - globalLoader.width / 20 - leftContentRectangle.width;
-            return Math.min(900, scaledWidth);
-        }
-
-        Layout.maximumHeight: globalLoader.height - globalLoader.height / 20 - fbOverall.height;
+        Layout.maximumWidth: globalLoader.width - 2 * spacing - leftContentRectangle.width;
+        Layout.maximumHeight: globalLoader.height - 2 * spacing - fbOverall.height;
 
         Layout.alignment: Qt.AlignCenter;
 
-        spacing: 2
+        spacing: 5
 
         Repeater {
 
@@ -71,12 +66,12 @@ GridLayout {
                 id: listModelProblem
                 ListElement{
                     title: "Transp. de Calor";
-                    content: "model";
+                    content: "heat";
                     soCalled: "heat"
                 }
 
-                ListElement{ title: "Tensión plana"        ; content: "domain"; soCalled: "plane-stress" }
-                ListElement{ title: "Deformación plana"    ; content: "shape_functions"; soCalled: "plane-strain" }
+                ListElement{ title: "Tensión plana"        ; content: "stress"; soCalled: "plane-stress" }
+                ListElement{ title: "Deformación plana"    ; content: "strain"; soCalled: "plane-strain" }
             }
 
             ChoiceBlock {
@@ -86,11 +81,11 @@ GridLayout {
                 Layout.maximumWidth: rlModel.width / listModelProblem.count
 
                 header.text: title
-                textArea.text: Content.overall[content]
-
-                image.source : "qrc:/resources/images/overall/domain.png"
+                textArea.text: Content.model[content]
 
                 button.iconSource: "qrc:/resources/icons/keyboard50.png"
+
+                image.visible: false;
 
                 button.onClicked : {
                     rModel.anotherOneChosed();

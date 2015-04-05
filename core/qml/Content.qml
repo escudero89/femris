@@ -17,7 +17,9 @@ QtObject {
     property variant alert     : splitContent("alert")
     property variant firstTime : splitContent("firstTime")
     property variant initial   : splitContent("initial")
+    property variant model     : splitContent("model")
     property variant overall   : splitContent("overall")
+
 
     function splitContent(fileName) {
         var content = CurrentFileIO.readFromSource(baseDir + fileName + ".html");

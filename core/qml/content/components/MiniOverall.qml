@@ -7,60 +7,138 @@ import "../smallBoxes"
 import "../"
 import "."
 
-Row {
+RowLayout {
 
-    id: rowLayout
+    signal mouseEntered()
+    signal mouseExited()
+
+    property int originalHeight
 
     property string parentStage : ""
+    property int stepOnStudyCase : parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
 
-    property int stepOnStudyCase : {
-        return parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
+    id: rlMiniOverall
+
+    spacing: 0
+
+    visible: (parentStage !== "") ? true : false
+
+    onStepOnStudyCaseChanged: rMiniChoiceBlock.stepOnStudyCaseChanged()
+
+    onMouseEntered : {
+        rlMiniOverall.state = "hovered";
+        rMiniChoiceBlock.setInfoBox();
     }
 
-    MiniChoiceBlock {
-        height: width * 1.5
-        width: rowLayout.width / 4
-
-        image.source : "qrc:/resources/images/overall/model.png"
-        blockStatus : (stepOnStudyCase > 1) ? "used" : "default";
-
-        currentStepName : "Elegir Modelo Físico"
-        isCurrent: parentStage === "CE_Model"
-
-        Component.onCompleted: console.log(parentStage)
+    onMouseExited: {
+        rlMiniOverall.state = "normal";
     }
-    MiniChoiceBlock {
-        height: width * 1.5
-        width: rowLayout.width / 4
 
-        image.source : "qrc:/resources/images/overall/domain.png"
-        blockStatus :
-            (stepOnStudyCase > 2) ? "used" :
-            (stepOnStudyCase == 2) ? "default" : "disabled";
+    state: "normal"
 
-        currentStepName : "Crear Dominio"
-        isCurrent: parentStage === "CE_Domain"
-    }
-    MiniChoiceBlock {
-        height: width * 1.5
-        width: rowLayout.width / 4
+    states: [
+        State {
+            name: "normal"
 
-        image.source : "qrc:/resources/images/overall/shape_function.png"
-        blockStatus :
-            (stepOnStudyCase > 3) ? "used" :
-            (stepOnStudyCase == 3) ? "default" : "disabled";
+            PropertyChanges {
+                target: rlMiniOverall
 
-        currentStepName : "Repasar Funciones de Forma"
-        isCurrent: parentStage === "CE_ShapeFunction"
-    }
-    MiniChoiceBlock {
-        height: width * 1.5
-        width: rowLayout.width / 4
+                height: originalHeight
+                opacity: 0.2
+            }
+        },
+        State {
+            name: "hovered"
 
-        image.source : "qrc:/resources/images/overall/results.png"
-        blockStatus : (stepOnStudyCase == 4) ? "default" : "disabled";
+            PropertyChanges {
+                target: rlMiniOverall
 
-        currentStepName : "Ver Resultados"
-        isCurrent: parentStage === "CE_Results"
+                height: originalHeight * 5
+                opacity: 1.0
+            }
+        }
+    ]
+
+    Behavior on height { NumberAnimation { duration: 500; easing.type: Easing.InOutQuad; } }
+    Behavior on opacity { NumberAnimation { duration: 500; easing.type: Easing.InOutQuad; } }
+
+    Repeater {
+
+        signal setInfoBox()
+        signal stepOnStudyCaseChanged()
+
+        id: rMiniChoiceBlock
+
+        model: ListModel {
+
+            id: lmMiniChoiceBlock
+
+            ListElement {
+                stage: "CE_Model"
+
+                stepName: "Elegir Modelo Físico"
+                imageSource: "model"
+
+                thisBlockStatus: 1
+            }
+            ListElement {
+                stage: "CE_Domain"
+
+                stepName: "Crear Dominio"
+                imageSource: "domain"
+
+                thisBlockStatus: 2
+
+            }
+            ListElement {
+                stage: "CE_ShapeFunction"
+
+                stepName: "Repasar Funciones de Forma"
+                imageSource: "shape_function"
+
+                thisBlockStatus: 3
+            }
+            ListElement {
+                stage: "CE_Results"
+
+                stepName: "Ver Resultados"
+                imageSource: "results"
+
+                thisBlockStatus: 4
+            }
+        }
+
+
+        delegate: MiniChoiceBlock {
+
+            id: mcbThis
+
+            Layout.preferredHeight: width
+            Layout.preferredWidth: rlMiniOverall.width / 4
+
+            image.source : "qrc:/resources/images/overall/" + imageSource + ".png"
+
+            blockStatus:
+                (stepOnStudyCase > thisBlockStatus) ? "used" :
+                (stepOnStudyCase == thisBlockStatus) ? "default" : "disabled";
+
+            currentStepName : stepName
+            isCurrent: parentStage === stage
+
+            Connections {
+                target: rMiniChoiceBlock
+                onSetInfoBox: {
+                    if (isCurrent) {
+                        Configure.emitMainSignal("setInfoBox", qsTr("<em>Etapa Actual:</em> ") +  stepName)
+                    }
+                }
+                onStepOnStudyCaseChanged: {
+                    /*blockStatus =
+                        (stepOnStudyCase > thisBlockStatus) ? "used" :
+                        (stepOnStudyCase == thisBlockStatus) ? "default" : "disabled";*/
+                }
+            }
+        }
+
     }
 }

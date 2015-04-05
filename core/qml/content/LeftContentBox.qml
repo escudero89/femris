@@ -36,15 +36,6 @@ Rectangle {
 
         spacing: 10
 
-        MiniOverall {
-            Layout.preferredHeight: parent.width * 3 / 8
-            Layout.fillWidth: true
-
-            Layout.alignment: Qt.AlignTop
-
-            parentStage : leftContentBox.parentStage
-        }
-
         PropertiesAssignationSBox { visible : parentStage === 'CE_Domain'; }
 
         Rectangle {
