@@ -128,15 +128,11 @@ RowLayout {
             Connections {
                 target: rMiniChoiceBlock
                 onSetInfoBox: {
-                    if (isCurrent) {
+                    if (blockStatus === "default") {
                         Configure.emitMainSignal("setInfoBox", qsTr("<em>Etapa Actual:</em> ") +  stepName)
                     }
                 }
-                onStepOnStudyCaseChanged: {
-                    /*blockStatus =
-                        (stepOnStudyCase > thisBlockStatus) ? "used" :
-                        (stepOnStudyCase == thisBlockStatus) ? "default" : "disabled";*/
-                }
+                onStepOnStudyCaseChanged: {}
             }
         }
 
