@@ -83,8 +83,6 @@ GridLayout {
                 header.text: title
                 textArea.text: Content.model[content]
 
-                button.iconSource: "qrc:/resources/icons/keyboard50.png"
-
                 image.visible: false;
 
                 button.onClicked : {
@@ -101,7 +99,8 @@ GridLayout {
                         PropertyChanges {
                             target: cbModel
                             button.buttonLabel: "Elegir"
-                            button.buttonStatus: "info";
+                            button.buttonStatus: "info"
+                            button.iconSource: "qrc:/resources/icons/check29.png"
                         }
                     },
                     State {
@@ -110,7 +109,8 @@ GridLayout {
                         PropertyChanges {
                             target: cbModel
                             button.buttonLabel: "Elegido"
-                            button.buttonStatus: "femris";
+                            button.buttonStatus: "femris"
+                            button.iconSource: "qrc:/resources/icons/check31.png"
                         }
 
                     }

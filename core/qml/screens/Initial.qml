@@ -55,10 +55,7 @@ RowLayout {
                 button.buttonStatus: "femris"
                 button.iconSource: "qrc:/resources/icons/file27.png"
 
-                button.onClicked : {
-                    StudyCaseHandler.start();
-                    mainWindow.switchSection("CE_Overall");
-                }
+                button.onClicked : Configure.emitMainSignal("dialogs.anotherFileBeforeLoader.open()")
 
                 image.source: "qrc:/resources/images/femris_new.png"
             }

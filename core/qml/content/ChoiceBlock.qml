@@ -105,7 +105,7 @@ ColumnLayout {
                 text: qsTr("<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>")
                 textFormat: TextEdit.RichText
 
-                font.pixelSize: Math.max(parent.width / 15, 12)
+                font.pixelSize: Math.min(Math.max(parent.width / 15, 12), 18)
 
                 Layout.fillHeight: true
                 Layout.fillWidth: true

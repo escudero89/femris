@@ -173,9 +173,10 @@ ApplicationWindow {
     }
 
     Loader  {
-        anchors.fill: parent
 
         id: globalLoader
+
+        anchors.fill: parent
 
         // We wait until the children are loaded to start
         asynchronous: true
@@ -214,12 +215,35 @@ ApplicationWindow {
         target: Configure
 
         onMainSignalEmitted: {
-            if (signalName === "dialogs.load.open()") {
-                dialogs.load.folder = '';
-                dialogs.load.open();
-            } else if (signalName === "setInfoBox") {
-                globalInfoBox.setInfoBox(args);
-            }
+
+            switch (signalName) {
+
+                case "dialogs.anotherFileBeforeLoader.open()":
+                    if (StudyCaseHandler.exists() && !StudyCaseHandler.getSavedStatus()) {
+                        dialogs.anotherFileAlreadyOpened.parentStage = "";
+                        dialogs.anotherFileAlreadyOpened.open();
+                    } else {
+                        StudyCaseHandler.start();
+                        mainWindow.switchSection("CE_Overall");
+                    }
+                    break;
+
+                case "dialogs.load.open()":
+
+                    // Check first if another file is already open
+                    if (StudyCaseHandler.exists() && !StudyCaseHandler.getSavedStatus()) {
+                        dialogs.anotherFileBeforeLoader.open();
+                    } else {
+                        dialogs.load.folder = '';
+                        dialogs.load.open();
+                    }
+
+                    break;
+
+                case "setInfoBox":
+                    globalInfoBox.setInfoBox(args);
+                    break;
+                }
         }
     }
 

@@ -8,81 +8,108 @@ import QtQuick.Dialogs 1.2
 import "../"
 import "../content"
 
-RowLayout {
+Item {
 
-    id: parentLayout
-    objectName: "CE_Overall"
+    anchors.fill: parent
 
-    property int stepOnStudyCase : {
-        console.log("stepOfProcess: ", StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
-        return parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
-    }
+    PrimaryButton {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: 0
 
-    anchors.fill: globalLoader
+        buttonLabel: ""
+        buttonStatus: "white"
+        iconSource: "qrc:/resources/icons/black/eye50.png"
 
-    anchors.topMargin: globalLoader.width / 40 ; anchors.bottomMargin: globalLoader.width / 40
-    anchors.leftMargin: globalLoader.width / 20 ; anchors.rightMargin: globalLoader.width / 20
+        width: Math.max(parent.width / 40, 30)
+
+        buttonText.onClicked: mainWindow.switchSection("Initial")
+        buttonText.tooltip: qsTr("Ir a Menu Principal")
+     }
 
     RowLayout {
 
-        Layout.maximumWidth: 1400
+        id: rlOverall
+        objectName: "CE_Overall"
+
+        property int stepOnStudyCase : parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
+
+        anchors.fill: parent
+
+        anchors.topMargin: parent.width / 40 ; anchors.bottomMargin: parent.width / 40
+        anchors.leftMargin: parent.width / 20 ; anchors.rightMargin: parent.width / 20
 
         spacing: 2
 
-        ChoiceBlock {
-            header.text: "MODELO FÍSICO"
-            textArea.text: Content.overall.model
+        Repeater {
 
-            image.source : "qrc:/resources/images/overall/model.png"
+            id: rChoiceBlock
 
-            button.buttonLabel: "Elegir"
-            button.onClicked : mainWindow.switchSection("CE_Model")
-            button.iconSource: "qrc:/resources/icons/function.png"
+            model: ListModel {
 
-            blockStatus : (stepOnStudyCase > 1) ? "used" : "default";
-        }
+                id: lmChoiceBlock
 
-        ChoiceBlock {
-            header.text: "DOMINIO"
-            textArea.text: Content.overall.domain
+                ListElement {
+                    stage: "CE_Model"
 
-            image.source : "qrc:/resources/images/overall/domain.png"
+                    header: "MODELO FÍSICO"
+                    imageSource: "model"
+                    iconSource: "qrc:/resources/icons/function.png"
 
-            button.buttonLabel: "Crear"
-            button.onClicked : mainWindow.switchSection("CE_Domain")
-            button.iconSource: "qrc:/resources/icons/keyboard50.png"
+                    thisBlockStatus: 1
+                }
+                ListElement {
+                    stage: "CE_Domain"
 
-            blockStatus :
-                (stepOnStudyCase > 2) ? "used" :
-                                        (stepOnStudyCase == 2) ? "default" : "disabled";
-        }
+                    header: "DOMINIO"
+                    imageSource: "domain"
+                    iconSource: "qrc:/resources/icons/keyboard50.png"
 
-        ChoiceBlock {
-            header.text: "FUNC. DE FORMA"
-            textArea.text: Content.overall.shape_functions
+                    thisBlockStatus: 2
 
-            image.source : "qrc:/resources/images/overall/shape_function.png"
+                }
+                ListElement {
+                    stage: "CE_ShapeFunction"
 
-            button.buttonLabel: "Repasar"
-            button.onClicked : mainWindow.switchSection("CE_ShapeFunction")
-            button.iconSource: "qrc:/resources/icons/stats1.png"
+                    header: "FUNC. DE FORMA"
+                    imageSource: "shape_function"
+                    iconSource: "qrc:/resources/icons/stats1.png"
 
-            blockStatus :
-                (stepOnStudyCase > 3) ? "used" :
-                                        (stepOnStudyCase == 3) ? "default" : "disabled";
-        }
+                    thisBlockStatus: 3
+                }
+                ListElement {
+                    stage: "CE_Results"
 
-        ChoiceBlock {
-            header.text: "RESULTADOS"
-            textArea.text: Content.overall.results
+                    header: "RESULTADOS"
+                    imageSource: "results"
+                    iconSource: "qrc:/resources/icons/calculator70.png"
 
-            image.source : "qrc:/resources/images/overall/results.png"
+                    thisBlockStatus: 4
+                }
+            }
 
-            button.buttonLabel: "Ver"
-            button.onClicked : mainWindow.switchSection("CE_Results")
-            button.iconSource: "qrc:/resources/icons/calculator70.png"
+            delegate: ChoiceBlock {
 
-            blockStatus : (stepOnStudyCase == 4) ? "default" : "disabled";
+                id: mcbThis
+
+                Layout.preferredWidth: ( rlOverall.width - (lmChoiceBlock.count - 1) * rlOverall.spacing ) / lmChoiceBlock.count
+
+                header.text: "MODELO FÍSICO"
+                textArea.text: Content.overall[imageSource]
+
+                image.source : "qrc:/resources/images/overall/" + imageSource + ".png"
+
+                button.buttonLabel: "Elegir"
+                button.onClicked : mainWindow.switchSection(stage)
+                button.iconSource: iconSource
+
+                blockStatus:
+                    (rlOverall.stepOnStudyCase > thisBlockStatus) ? "used" :
+                    (rlOverall.stepOnStudyCase == thisBlockStatus) ? "default" : "disabled";
+
+            }
         }
     }
+
 }
+
