@@ -6,298 +6,54 @@ import "../docs"
 import "../content"
 import "../"
 
-RowLayout {
+Item {
 
-    property variant jsonDomain : null
+    anchors.fill: parent
 
-    id: rowParent
-    objectName: "CE_Domain"
+    RowLayout {
 
-    spacing: 0
+        property variant jsonDomain : null
 
-    LeftContentBox {
-        id: leftContentRectangle
+        id: rowParent
+        objectName: "CE_Domain"
 
-        color: Style.color.content_emphasized
-        Layout.fillHeight: true
-        Layout.preferredWidth: parent.width * 0.20
+        anchors.fill: parent
 
-        parentStage : rowParent.objectName
-    }
+        spacing: 0
 
-    Rectangle {
+        LeftContentBox {
+            id: leftContentRectangle
 
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+            color: Style.color.content_emphasized
+            Layout.fillHeight: true
+            Layout.preferredWidth: parent.width * 0.20
 
-        color: "white"
+            parentStage : rowParent.objectName
+        }
 
         ColumnLayout {
 
-            anchors.fill: parent
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
-            Flickable {
-
-                id: flickableExamples
-
-                Layout.preferredHeight: parent.height * 0.6
-
-                flickableDirection: Flickable.HorizontalFlick
-                boundsBehavior: Flickable.StopAtBounds
-
+            DomainExamples {
+                Layout.maximumHeight: parent.height * 0.6
                 Layout.fillWidth: true
-
-                contentWidth: gridViewDomain.height * gridViewDomain.count
-                clip: true
-
-                // Only show the scrollbars when the view is moving.
-                states: State {
-                    name: "ShowBars"
-                    when: flickableExamples.movingHorizontally
-                    PropertyChanges { target: sbHorizontalExamples; opacity: 1 }
-                }
-
-                GridView {
-
-                    id: gridViewDomain
-
-                    anchors.fill : parent
-
-                    boundsBehavior: Flickable.StopAtBounds
-
-                    cellWidth: height
-                    cellHeight: cellWidth
-
-                    highlight: Rectangle {
-                        color: Style.color.femris;
-                        radius: 5
-                        opacity: 0.03
-
-                        z: 1000
-                    }
-
-                    focus: true
-
-                    currentIndex: 0
-
-                    delegate: Component {
-
-                        Rectangle {
-                            id: wrapper
-
-                            width: gridViewDomain.cellWidth
-                            height: gridViewDomain.height
-
-                            color: 'transparent'
-
-                            ColumnLayout {
-
-                                height: parent.height
-                                width: parent.width
-
-                                Image {
-                                    id: exampleImage
-
-                                    source: (name !== "empty") ? portrait : "qrc:/resources/images/square_shadow.png"
-
-                                    Layout.preferredHeight: parent.height * 0.95
-                                    Layout.preferredWidth: parent.width * 0.95
-                                    Layout.alignment: Qt.AlignCenter
-
-                                    fillMode: Image.PreserveAspectFit
-                                    smooth: true
-
-                                    opacity: (gridViewDomain.currentIndex === index) ? 1 : 0.3
-                                    state: (gridViewDomain.currentIndex === index) ? "selected" : "default"
-
-                                    Behavior on scale {
-                                        NumberAnimation {}
-                                    }
-
-                                    states: [
-                                        State {
-                                            name: "selected"
-                                            PropertyChanges {
-                                                target : exampleImage
-                                                scale : 1
-                                            }
-                                        },
-                                        State {
-                                            name: "default"
-                                            PropertyChanges {
-                                                target : exampleImage
-                                                scale : 0.8
-                                            }
-                                        }
-                                    ]
-                                }
-
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-
-                                onClicked: {
-                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
-                                }
-
-                                onDoubleClicked: {
-
-                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
-
-                                    if (flickableExamples.Layout.preferredHeight !== flickableExamples.parent.height) {
-                                        flickableExamples.contentX = gridViewDomain.currentIndex * gridViewDomain.cellWidth * (flickableExamples.parent.height / flickableExamples.Layout.preferredHeight);
-                                        flickableExamples.Layout.preferredHeight = flickableExamples.parent.height;
-
-                                    } else {
-                                        flickableExamples.contentX = gridViewDomain.currentIndex * gridViewDomain.cellWidth * 0.6;
-                                        flickableExamples.Layout.preferredHeight = flickableExamples.parent.height * 0.6;
-                                    }
-
-                                }
-
-                                Connections {
-                                    target: CurrentFileIO
-
-                                    onError: {
-                                        console.log(msg);
-                                    }
-                                }
-                            }
-
-                            Component.onCompleted: {
-                                if (listModelExamples.count === 1) {
-                                    gridViewDomain.fillExamples();
-                                }
-
-                                // We just load the conditions for the first component
-                                if (gridViewDomain.currentIndex === index) {
-                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
-                                    //rowParent.saveCurrentLoads();
-                                }
-                            }
-                        }
-                    }
-
-                    model: ListModel {
-                        id: listModelExamples
-
-                        ListElement {
-                            name: 'empty'
-                            portrait: 'empty'
-                            exampleFile: 'empty'
-                        }
-                    }
-
-                    function fillExamples() {
-
-                        listModelExamples.clear();
-                        var examples = CurrentFileIO.getFilteredFilesFromDirectory(["example*.json"], applicationDirPath + '/docs/examples');
-
-                        for ( var k = 1 ; k <= examples.length ; k++ ) {
-                            var ex = examples[k - 1];
-                            var newModel = {
-                                "name": "Example " + k,
-                                "portrait": fileApplicationDirPath + "/docs/examples/" + ex.substring(ex.search(/example\d/), ex.search(".json")) + ".png",
-                                "exampleFile": ex.substring(ex.search(/example\d/))
-                            };
-
-                            listModelExamples.append(newModel);
-
-                            if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
-                                var exampleName = StudyCaseHandler.getSingleStudyCaseInformation("exampleName");
-                                if (newModel.exampleFile === exampleName) {
-                                    currentIndex = k - 1;
-                                }
-                            }
-                        }
-
-                    }
-
-                    function fillSideLoadAndFixedNodes(newIndex, exampleFile) {
-
-                        // Loading new data
-                        gridViewDomain.currentIndex = newIndex;
-
-                        CurrentFileIO.setSource(fileApplicationDirPath + '/docs/examples/' + exampleFile);
-
-                        jsonDomain = CurrentFileIO.getVarFromJsonString(CurrentFileIO.read());
-
-                        sideLoadContainer.objectRepeater.model = jsonDomain["sideloadNodes"].length;
-                        nodesContainer.objectRepeater.model = jsonDomain["coordinates"].length;
-
-                        sideLoadContainer.jsonDomain = jsonDomain;
-                        nodesContainer.jsonDomain = jsonDomain;
-
-                        if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
-                            StudyCaseHandler.setSingleStudyCaseInformation("exampleName", exampleFile);
-                        }
-
-                        sideLoadContainer.objectRepeater.visible = true;
-                        nodesContainer.objectRepeater.visible = true;
-
-                    }
-
-                }
-
-            }
-
-            // Attach scrollbars to the right of the view.
-            ScrollBar {
-                id: sbHorizontalExamples
-                Layout.preferredWidth: flickableExamples.width
-                Layout.preferredHeight: 12
-
-                opacity: 0.1
-                orientation: Qt.Horizontal
-                position: flickableExamples.visibleArea.xPosition
-                pageSize: flickableExamples.visibleArea.widthRatio
-
-                Behavior on opacity { NumberAnimation {} }
             }
 
             Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 3
-
-                color: Style.color.complement
-                opacity: 0.3
-            }
-
-            GridLayout {
-
-                property alias sideLoadContainer : sideLoadContainer
-                property alias nodesContainer    : nodesContainer
-
-                columns : StudyCaseHandler.isStudyType("heat") ? 1 : 2
-                rows : 2
-
-                columnSpacing: 0
-
                 Layout.fillHeight: true
-                Layout.preferredWidth : parent.width
-
-                FlickableRepeaterNodesSideload {
-                    id: sideLoadContainer
-
-                    Layout.preferredWidth : parent.width / 2
-                }
-
-                FlickableRepeaterNodes {
-                    id: nodesContainer
-                    jsonDomain: rowParent.jsonDomain
-
-                    Layout.preferredWidth : parent.width / 2
-
-                    visible: !StudyCaseHandler.isStudyType("heat");
-                }
+                Layout.fillWidth: true
             }
 
             RowLayout {
 
-                spacing: 0
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+
+                Layout.alignment: Qt.AlignBottom
+
+                spacing: 0
 
                 PrimaryButton {
 
@@ -350,8 +106,329 @@ RowLayout {
                 }
             }
         }
+
+/*
+    ColumnLayout {
+
+        anchors.fill: parent
+
+        Flickable {
+
+            id: flickableExamples
+
+            Layout.preferredHeight: parent.height * 0.6
+
+            flickableDirection: Flickable.HorizontalFlick
+            boundsBehavior: Flickable.StopAtBounds
+
+            Layout.fillWidth: true
+
+            contentWidth: gridViewDomain.height * gridViewDomain.count
+            clip: true
+
+            // Only show the scrollbars when the view is moving.
+            states: State {
+                name: "ShowBars"
+                when: flickableExamples.movingHorizontally
+                PropertyChanges { target: sbHorizontalExamples; opacity: 1 }
+            }
+
+            GridView {
+
+                id: gridViewDomain
+
+                anchors.fill : parent
+
+                boundsBehavior: Flickable.StopAtBounds
+
+                cellWidth: height
+                cellHeight: cellWidth
+
+                highlight: Rectangle {
+                    color: Style.color.femris;
+                    radius: 5
+                    opacity: 0.03
+
+                    z: 1000
+                }
+
+                focus: true
+
+                currentIndex: 0
+
+                delegate: Component {
+
+                    Rectangle {
+                        id: wrapper
+
+                        width: gridViewDomain.cellWidth
+                        height: gridViewDomain.height
+
+                        color: 'transparent'
+
+                        ColumnLayout {
+
+                            height: parent.height
+                            width: parent.width
+
+                            Image {
+                                id: exampleImage
+
+                                source: (name !== "empty") ? portrait : "qrc:/resources/images/square_shadow.png"
+
+                                Layout.preferredHeight: parent.height * 0.95
+                                Layout.preferredWidth: parent.width * 0.95
+                                Layout.alignment: Qt.AlignCenter
+
+                                fillMode: Image.PreserveAspectFit
+                                smooth: true
+
+                                opacity: (gridViewDomain.currentIndex === index) ? 1 : 0.3
+                                state: (gridViewDomain.currentIndex === index) ? "selected" : "default"
+
+                                Behavior on scale {
+                                    NumberAnimation {}
+                                }
+
+                                states: [
+                                    State {
+                                        name: "selected"
+                                        PropertyChanges {
+                                            target : exampleImage
+                                            scale : 1
+                                        }
+                                    },
+                                    State {
+                                        name: "default"
+                                        PropertyChanges {
+                                            target : exampleImage
+                                            scale : 0.8
+                                        }
+                                    }
+                                ]
+                            }
+
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+
+                            onClicked: {
+                                gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
+                            }
+
+                            onDoubleClicked: {
+
+                                gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
+
+                                if (flickableExamples.Layout.preferredHeight !== flickableExamples.parent.height) {
+                                    flickableExamples.contentX = gridViewDomain.currentIndex * gridViewDomain.cellWidth * (flickableExamples.parent.height / flickableExamples.Layout.preferredHeight);
+                                    flickableExamples.Layout.preferredHeight = flickableExamples.parent.height;
+
+                                } else {
+                                    flickableExamples.contentX = gridViewDomain.currentIndex * gridViewDomain.cellWidth * 0.6;
+                                    flickableExamples.Layout.preferredHeight = flickableExamples.parent.height * 0.6;
+                                }
+
+                            }
+
+                            Connections {
+                                target: CurrentFileIO
+
+                                onError: {
+                                    console.log(msg);
+                                }
+                            }
+                        }
+
+                        Component.onCompleted: {
+                            if (listModelExamples.count === 1) {
+                                gridViewDomain.fillExamples();
+                            }
+
+                            // We just load the conditions for the first component
+                            if (gridViewDomain.currentIndex === index) {
+                                gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
+                                //rowParent.saveCurrentLoads();
+                            }
+                        }
+                    }
+                }
+
+                model: ListModel {
+                    id: listModelExamples
+
+                    ListElement {
+                        name: 'empty'
+                        portrait: 'empty'
+                        exampleFile: 'empty'
+                    }
+                }
+
+                function fillExamples() {
+
+                    listModelExamples.clear();
+                    var examples = CurrentFileIO.getFilteredFilesFromDirectory(["example*.json"], applicationDirPath + '/docs/examples');
+
+                    for ( var k = 1 ; k <= examples.length ; k++ ) {
+                        var ex = examples[k - 1];
+                        var newModel = {
+                            "name": "Example " + k,
+                            "portrait": fileApplicationDirPath + "/docs/examples/" + ex.substring(ex.search(/example\d/), ex.search(".json")) + ".png",
+                            "exampleFile": ex.substring(ex.search(/example\d/))
+                        };
+
+                        listModelExamples.append(newModel);
+
+                        if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
+                            var exampleName = StudyCaseHandler.getSingleStudyCaseInformation("exampleName");
+                            if (newModel.exampleFile === exampleName) {
+                                currentIndex = k - 1;
+                            }
+                        }
+                    }
+
+                }
+
+                function fillSideLoadAndFixedNodes(newIndex, exampleFile) {
+
+                    // Loading new data
+                    gridViewDomain.currentIndex = newIndex;
+
+                    CurrentFileIO.setSource(fileApplicationDirPath + '/docs/examples/' + exampleFile);
+
+                    jsonDomain = CurrentFileIO.getVarFromJsonString(CurrentFileIO.read());
+
+                    sideLoadContainer.objectRepeater.model = jsonDomain["sideloadNodes"].length;
+                    //nodesContainer.objectRepeater.model = jsonDomain["coordinates"].length;
+
+                    sideLoadContainer.jsonDomain = jsonDomain;
+                    //nodesContainer.jsonDomain = jsonDomain;
+
+                    if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
+                        StudyCaseHandler.setSingleStudyCaseInformation("exampleName", exampleFile);
+                    }
+
+                    sideLoadContainer.objectRepeater.visible = true;
+//                        nodesContainer.objectRepeater.visible = true;
+
+                }
+
+            }
+
+        }
+
+        // Attach scrollbars to the right of the view.
+        ScrollBar {
+            id: sbHorizontalExamples
+            Layout.preferredWidth: flickableExamples.width
+            Layout.preferredHeight: 12
+
+            opacity: 0.1
+            orientation: Qt.Horizontal
+            position: flickableExamples.visibleArea.xPosition
+            pageSize: flickableExamples.visibleArea.widthRatio
+
+            Behavior on opacity { NumberAnimation {} }
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 3
+
+            color: Style.color.complement
+            opacity: 0.3
+        }
+
+
+//        GridLayout {
+
+//            property alias sideLoadContainer : sideLoadContainer
+//            //property alias nodesContainer    : nodesContainer
+
+//            columns : StudyCaseHandler.isStudyType("heat") ? 1 : 2
+//            rows : 2
+
+//            columnSpacing: 0
+
+//            Layout.fillHeight: true
+//            Layout.preferredWidth : parent.width
+
+//            FlickableRepeaterNodesSideload {
+//                id: sideLoadContainer
+
+//                Layout.preferredWidth : parent.width / 2
+//            }
+
+//            FlickableRepeaterNodes {
+//                id: nodesContainer
+//                jsonDomain: rowParent.jsonDomain
+
+//                Layout.preferredWidth : parent.width / 2
+
+//                visible: !StudyCaseHandler.isStudyType("heat");
+//            }
+//        }
+
+        RowLayout {
+
+            spacing: 0
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            PrimaryButton {
+
+                tooltip: qsTr("Abrir el repaso de funciones de forma en tu navegador por defecto")
+
+                buttonStatus: "femris"
+                buttonLabel: ""
+                iconSource: "qrc:/resources/icons/stats1.png"
+
+                onClicked: globalInfoBox.loadUrlInBrowser("docs/ce_shapefunction.html", true);
+
+            }
+
+            PrimaryButton {
+                buttonLabel: "Vista General"
+                buttonStatus: "primary"
+                iconSource: "qrc:/resources/icons/four29.png"
+
+                onClicked : mainWindow.switchSection("CE_Overall")
+
+                Layout.fillWidth: true
+            }
+
+            PrimaryButton {
+
+                id: continueButton
+
+                buttonLabel: "Guardar y Continuar"
+                buttonStatus: "success"
+                iconSource: "qrc:/resources/icons/save8.png"
+
+                Layout.fillWidth: true
+
+                enabled: false
+
+                onClicked: {
+                    rowParent.saveCurrentLoads();
+                    ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
+                }
+
+                Connections {
+
+                    target : StudyCaseHandler
+
+                    onBeforeCheckIfReady: saveCurrentLoads();
+                    onReady: continueButton.enabled = status;
+                }
+
+                Component.onCompleted: StudyCaseHandler.isReady();
+            }
+        }
     }
 
+*/
     function saveCurrentLoads() {
 
         // If jsonDomain is empty, we leave
@@ -532,4 +609,6 @@ RowLayout {
             saveCurrentLoads();
         }
     }
+}
+
 }

@@ -72,6 +72,44 @@ ColumnLayout {
 
             model: 0
 
+            delegate: Item {
+
+                property int index: model.index
+
+                Component.onCompleted: {
+                    if (StudyCaseHandler.isStudyType("heat")) {
+                        nssRow.visible = false;
+
+                        nshRow.visible = true;
+                        nshRow.index = index
+                        nshRow.loadPreviousValues();
+
+                    } else {
+                        nshRow.visible = false;
+
+                        nssRow.visible = true;
+                        nssRow.index = index
+                        nssRow.loadPreviousValues();
+                    }
+                }
+
+                NodesSideloadHeat {
+                    id: nshRow
+                    visible: true
+
+                    previousFixNodesValues: repeater.previousFixNodesValues;
+                    previousSideloadValues: repeater.previousSideloadValues;
+                }
+
+                NodesSideloadStructural {
+                    id: nssRow
+                    visible: false
+
+                    previousSideloadValues: repeater.previousSideloadValues;
+                }
+
+            }
+            /*
             delegate: Component {
 
                 Loader {
@@ -106,7 +144,7 @@ ColumnLayout {
                     }
                 }
             }
-
+*/
             Component.onCompleted: {
                 previousSideloadValues = eval(StudyCaseHandler
                                               .getSingleStudyCaseInformation("sideload")

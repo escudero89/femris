@@ -38,14 +38,6 @@ Rectangle {
 
         PropertiesAssignationSBox { visible : parentStage === 'CE_Domain'; }
 
-        Rectangle {
-            color: "transparent"
-            Layout.preferredHeight: columnLayout1.height * 0.02
-            Layout.fillWidth: true
-
-            visible : parentStage === 'CE_Domain';
-        }
-
         FirstTimeHere {
             parentStage : leftContentBox.parentStage
 
