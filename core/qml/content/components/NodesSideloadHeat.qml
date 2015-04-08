@@ -9,21 +9,23 @@ import "."
 
 Item {
 
+    property variant jsonDomain;
+
     property variant previousSideloadValues;
     property variant previousFixNodesValues;
+
     property int index : 0
+    property int currentIndex : 0
 
     signal loadPreviousValues();
+    signal rowModifiedCurrentIndex();
 
     id: cellContent
-
-    width: repeater.cellWidth
-    height: repeater.cellHeight
 
     Rectangle {
         anchors.fill: parent
 
-        color: (index === repeater.currentIndex) ?
+        color: (index === currentIndex) ?
                    Style.color.femris :
                    ((index % 2 === 0) ?
                         Style.color.background_highlight :
@@ -46,16 +48,18 @@ Item {
 
         Text {
             Layout.fillWidth: true
-            text: qsTr(textRow + "[" + tooltip.text + "]")
+            text: qsTr("Lado [" + tooltip.text + "]")
 
             MyToolTip {
                 id: tooltip
 
-                text: (!jsonDomain["sideloadNodes"]) ?
-                          "" :
-                          (!jsonDomain["sideloadNodes"][index]) ?
-                              "" :
-                              jsonDomain["sideloadNodes"][index].join('-')
+                text: {
+                    if (jsonDomain && jsonDomain["sideloadNodes"] && jsonDomain["sideloadNodes"][index]) {
+                        return jsonDomain["sideloadNodes"][index].join('-');
+                    }
+
+                    return "";
+                }
 
                 z: cellContent.z + 100
             }
@@ -95,7 +99,7 @@ Item {
                 case "dirichlet" : buttonNodeController.state = "neumann"   ; break;
                 }
 
-                repeater.currentIndex = index;
+                rowModifiedCurrentIndex();
 
                 StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
                 StudyCaseHandler.isReady();
@@ -136,13 +140,13 @@ Item {
             placeholderText: (buttonNodeController.state === "dirichlet") ? "[ºC]" : "[W/m]"
 
             onEditingFinished: {
-                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
+                StudyCaseHandler.setSingleStudyCaseInformation("sideload" + (index + 1), text, true);
                 StudyCaseHandler.isReady();
             }
 
             onFocusChanged: {
-                if (focus === true && repeater.currentIndex !== index) {
-                    repeater.currentIndex = index;
+                if (focus === true && currentIndex !== index) {
+                    rowModifiedCurrentIndex();
                     focus = true;
                 }
             }

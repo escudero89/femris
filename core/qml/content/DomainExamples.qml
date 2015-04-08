@@ -5,105 +5,108 @@ import "../"
 
 ColumnLayout {
 
-    Rectangle {
+    signal jsonDataLoaded(variant jsonData);
+    id: rExamples
 
-        id: rExamples
+    ListView {
 
-        color: Style.color.content_emphasized
-        Layout.fillHeight: true ; Layout.fillWidth: true
+        id: lvExamples
 
-        ListView {
+        flickableDirection: Flickable.HorizontalFlick
+        flickDeceleration: 150
+        maximumFlickVelocity: 300
 
-            id: lvExamples
+        clip: true
+        orientation: ListView.Horizontal
 
-            flickableDirection: Flickable.HorizontalFlick
-            flickDeceleration: 150
-            maximumFlickVelocity: 300
+        Layout.preferredHeight: parent.height
+        Layout.preferredWidth: parent.width
+        focus: true
 
-            clip: true
-            orientation: ListView.Horizontal
+        spacing: 5
 
-            anchors.fill: parent
-            focus: true
+        currentIndex: -1
 
-            spacing: 5
+        model: ListModel {
+            id: lmExamples
+        }
 
-            model: ListModel {
-                id: lmExamples
+        delegate: Item {
+
+            height: rExamples.height
+            width: rExamples.height
+
+            Rectangle {
+                anchors.fill: parent
             }
 
-            delegate: Item {
+            Image {
+                anchors.margins: parent.width * 0.05
 
-                height: rExamples.height
-                width: rExamples.height
+                anchors.fill: parent
+                source: portrait
 
-                Rectangle {
-                    anchors.fill: parent
-                }
+                fillMode: Image.PreserveAspectFit
+                smooth: true
+            }
 
-                Image {
-                    anchors.margins: parent.width * 0.05
+            Rectangle {
+                anchors.fill: parent
+                opacity: 0.2
 
-                    anchors.fill: parent
-                    source: portrait
-
-                    fillMode: Image.PreserveAspectFit
-                    smooth: true
-                }
-
-                Rectangle {
-                    anchors.fill: parent
-                    opacity: 0.2
-
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "transparent" }
-                        GradientStop { position: 1.0; color: Style.color.comment }
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: lvExamples.currentIndex = index
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "transparent" }
+                    GradientStop { position: 1.0; color: Style.color.comment }
                 }
             }
 
-            highlight: Rectangle {
-                height: parent.height; width: height;
+            MouseArea {
+                anchors.fill: parent
 
-                color: Style.color.femris
-                opacity: 0.1
+                onClicked: {
+                    lvExamples.currentIndex = index
+                    fillSideLoadAndFixedNodes(index, exampleFile);
 
-                z: 10000
-            }
-
-            header: Rectangle { width: 10; height: rExamples.height; color: Style.color.complement_highlight; }
-            footer: Rectangle { width: 10; height: rExamples.height; color: Style.color.complement_highlight; }
-
-            Component.onCompleted: {
-
-                var examples = CurrentFileIO.getFilteredFilesFromDirectory(["example*.json"], applicationDirPath + '/docs/examples');
-
-                lmExamples.clear();
-
-                for ( var k = 1 ; k <= examples.length ; k++ ) {
-
-                    var ex = examples[k - 1];
-                    var newModel = {
-                        "name": "Example " + k,
-                        "portrait": fileApplicationDirPath + "/docs/examples/" + ex.substring(ex.search(/example\d/), ex.search(".json")) + ".png",
-                        "exampleFile": ex.substring(ex.search(/example\d/))
-                    };
-
-                    lmExamples.append(newModel);
                 }
             }
+        }
 
-            // Only show the scrollbars when the view is moving.
-            states: State {
-                name: "ShowBars"
-                when: lvExamples.movingHorizontally
-                PropertyChanges { target: sbHorizontalExamples; opacity: 1 }
+        highlight: Rectangle {
+            height: parent.height; width: height;
+
+            color: Style.color.femris
+            opacity: 0.1
+
+            z: 10000
+        }
+
+        header: Rectangle { width: 10; height: rExamples.height; color: Style.color.complement_highlight; }
+        footer: Rectangle { width: 10; height: rExamples.height; color: Style.color.complement_highlight; }
+
+        Component.onCompleted: {
+
+            var examples = CurrentFileIO.getFilteredFilesFromDirectory(["example*.json"], applicationDirPath + '/docs/examples');
+
+            lmExamples.clear();
+
+            for ( var k = 1 ; k <= examples.length ; k++ ) {
+
+                var ex = examples[k - 1];
+                var newModel = {
+                    "name": "Example " + k,
+                    "portrait": fileApplicationDirPath + "/docs/examples/" + ex.substring(ex.search(/example\d/), ex.search(".json")) + ".png",
+                    "exampleFile": ex.substring(ex.search(/example\d/))
+                };
+
+                lmExamples.append(newModel);
             }
+        }
+
+        // Only show the scrollbars when the view is moving.
+        states: State {
+            name: "ShowBars"
+            when: lvExamples.movingHorizontally
+            PropertyChanges { target: sbHorizontalExamples; opacity: 1 }
         }
     }
 
@@ -121,5 +124,17 @@ ColumnLayout {
         pageSize: lvExamples.visibleArea.widthRatio
 
         Behavior on opacity { NumberAnimation {} }
+    }
+
+    function fillSideLoadAndFixedNodes(newIndex, exampleFile) {
+
+        CurrentFileIO.setSource(fileApplicationDirPath + '/docs/examples/' + exampleFile);
+
+        jsonDataLoaded(CurrentFileIO.getVarFromJsonString(CurrentFileIO.read()));
+
+        if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
+            StudyCaseHandler.setSingleStudyCaseInformation("exampleName", exampleFile);
+        }
+
     }
 }
