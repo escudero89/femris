@@ -8,4 +8,11 @@
         <item setting="lastAccessDate" value="datetime" />
         <item setting="lastExitDate" value="datetime" />
         <item setting="crashed" value="false" />
+
+        <item setting="lastWindowsSize" value="4" />
+
+        <!-- TODO -->
+        <item setting="lastVisitedPath" value="null" />
+        <item setting="showScreenInfo" value="true" />
+
     </Configuration>

@@ -2,21 +2,36 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.3
 
-//import QtWebEngine 1.0
-import QtWebKit 3.0
+import QtWebEngine 1.0
 
 import "../docs"
 import "../content"
+import "../content/modals"
 import "../"
 
-RowLayout {
+import QtQuick 2.4
+import QtQuick.Controls 1.3
+import QtQuick.Controls.Styles 1.2
+import QtQuick.Layouts 1.1
 
-    property string parentStage : objectName
+import QtQuick.Dialogs 1.2
 
-    id: rowParent
+import "../"
+import "../content"
+import "../content/components"
+
+GridLayout {
+
+    id: parentLayout
     objectName: "CE_Model"
 
-    spacing: 0
+    anchors.fill: globalLoader
+
+    columns: 2
+    rows: 2
+
+    columnSpacing: 0
+    rowSpacing: 0
 
     LeftContentBox {
         id: leftContentRectangle
@@ -26,115 +41,110 @@ RowLayout {
         Layout.preferredWidth: parent.width * 0.20
 
         parentStage : "CE_Model"
+
+        Layout.rowSpan: 2
     }
 
-    GridLayout {
+    RowLayout {
 
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+        id: rlModel
 
-        columnSpacing: 0
-        rowSpacing: 0
+        Layout.maximumWidth: globalLoader.width - 2 * spacing - leftContentRectangle.width;
+        Layout.maximumHeight: globalLoader.height - 2 * spacing - fbOverall.height;
 
-        rows: 2
-        columns: 3
+        Layout.alignment: Qt.AlignCenter;
 
-        Item {
+        spacing: 5
 
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            Layout.columnSpan: 3
+        Repeater {
 
-            WebView {
+            id: rModel
 
-                signal newUrlBase(string newUrl)
-                property string urlBase : "docs/ce_model/index.html"
+            signal anotherOneChosed()
 
-                id: modelWebView
-                visible: false
-
-                anchors.fill: parent
-
-                url: fileApplicationDirPath + "/" + urlBase
-
-                onNewUrlBase: {
-                    urlBase = newUrl;
-                    url = fileApplicationDirPath + "/" + urlBase;
+            model: ListModel {
+                id: listModelProblem
+                ListElement{
+                    title: "Transp. de Calor";
+                    content: "heat";
+                    soCalled: "heat"
                 }
 
-                onLoadingChanged: visible = (!loading && loadProgress === 100) ? true : false;
-
+                ListElement{ title: "Tensión plana"        ; content: "stress"; soCalled: "plane-stress" }
+                ListElement{ title: "Deformación plana"    ; content: "strain"; soCalled: "plane-strain" }
             }
 
-            Text {
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 10
-                anchors.bottomMargin: 10
+            ChoiceBlock {
 
-                text: (modelWebView.loading) ? qsTr("Cargando (" + modelWebView.loadProgress + "%)...") : ""
-                color:  Style.color.background;
-            }
+                id: cbModel
 
-        }
+                Layout.maximumWidth: rlModel.width / listModelProblem.count
 
-        PrimaryButton {
+                header.text: title
+                textArea.text: Content.model[content]
 
-            tooltip: qsTr("Abrir esta página en tu navegador por defecto")
+                image.visible: false;
 
-            buttonStatus: "femris"
-            buttonLabel: ""
-            iconSource: "qrc:/resources/icons/external2.png"
-
-            onClicked: globalInfoBox.loadUrlInBrowser(modelWebView.urlBase, true);
-
-        }
-
-        PrimaryButton {
-            buttonLabel: "Vista General"
-            buttonStatus: "primary"
-            iconSource: "qrc:/resources/icons/four29.png"
-
-            onClicked : mainWindow.switchSection("CE_Overall")
-
-            Layout.fillWidth: true
-        }
-
-        PrimaryButton {
-
-            signal continueStep();
-
-            id: continueButton
-
-            buttonLabel: "Guardar y Continuar"
-            buttonStatus: "disabled"
-            iconSource: "qrc:/resources/icons/save8.png"
-
-            Layout.fillWidth: true
-
-            Connections {
-                target: StudyCaseHandler
-
-                onNewStudyCaseChose: {
-                    modelWebView.newUrlBase("docs/ce_model/" + studyCaseType + ".html");
-                    continueButton.buttonStatus = "success";
+                button.onClicked : {
+                    rModel.anotherOneChosed();
+                    state = "selected";
+                    StudyCaseHandler.selectNewTypeStudyCase(soCalled);
                 }
-            }
 
-            Connections {
-                target: Configure
+                state: "default"
+                states: [
+                    State {
+                        name: "default"
 
-                onMainSignalEmitted: {
-                    if (signalName === "continueStep()") {
-                        continueButton.continueStep();
+                        PropertyChanges {
+                            target: cbModel
+                            button.buttonLabel: "Elegir"
+                            button.buttonStatus: "info"
+                            button.iconSource: "qrc:/resources/icons/check29.png"
+                        }
+                    },
+                    State {
+                        name: "selected"
+
+                        PropertyChanges {
+                            target: cbModel
+                            button.buttonLabel: "Elegido"
+                            button.buttonStatus: "femris"
+                            button.iconSource: "qrc:/resources/icons/check31.png"
+                        }
+
+                    }
+                ]
+
+                Connections {
+                    target: rModel
+
+                    onAnotherOneChosed: state = "default";
+                }
+
+                Component.onCompleted: {
+                    if (StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase") &&
+                        StudyCaseHandler.checkSingleStudyCaseInformation("typeOfStudyCase", soCalled)) {
+
+                        state = "selected";
                     }
                 }
+
             }
+        }
+    }
 
-            onClicked: continueStep();
+    FooterButtons {
+        id: fbOverall
+        fromWhere: parentLayout.objectName
 
-            onContinueStep: {
-                mainWindow.saveAndContinue(parentStage);
+        enableContinue: false
+
+        Connections {
+            target: StudyCaseHandler
+
+            onNewStudyCaseChose: {
+                fbOverall.enableContinue = true;
             }
         }
     }

@@ -36,36 +36,7 @@ Rectangle {
 
         spacing: 10
 
-        MiniOverall {
-            Layout.preferredHeight: parent.width * 3 / 8
-            Layout.fillWidth: true
-
-            Layout.alignment: Qt.AlignTop
-
-            parentStage : leftContentBox.parentStage
-        }
-
-        Rectangle {
-            color: Style.color.complement
-
-            Layout.minimumHeight: parent.height * 0.15
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-
-            Layout.alignment: Qt.AlignTop
-
-            ModelElectionSBox { visible : { return parentStage === 'CE_Model' } }
-
-            visible : { return parentStage === 'CE_Model' }
-        }
-
-        PropertiesAssignationSBox { visible : { return parentStage === 'CE_Domain'; } }
-
-        Rectangle {
-            color: "transparent"
-            Layout.preferredHeight: columnLayout1.height * 0.02
-            Layout.fillWidth: true
-        }
+        PropertiesAssignationSBox { visible : parentStage === 'CE_Domain'; }
 
         FirstTimeHere {
             parentStage : leftContentBox.parentStage

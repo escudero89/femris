@@ -14,10 +14,18 @@ QtObject {
     property string initialScreen : "screens/Initial.qml"
 
     property var myMainWindow: Main {
-        visible: false
+        visibility: "Hidden"
     }
 
     property var splashWindow: Splash {
-        onTimeout: { myMainWindow.visible = true; myMainWindow.finishedLoading(); }
+        onTimeout: {
+            myMainWindow.visibility = parseInt(Configure.read("lastWindowsSize"));
+
+            if (myMainWindow.visibility === 0) {
+                myMainWindow.visibility = 2;
+            }
+
+            myMainWindow.finishedLoading();
+        }
     }
 }

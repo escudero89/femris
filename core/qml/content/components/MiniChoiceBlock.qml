@@ -74,10 +74,4 @@ Rectangle {
         opacity: 0.1
     }
 
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-
-        onEntered: Configure.emitMainSignal("setInfoBox", qsTr("<em>Etapa:</em> " + currentStepName))
-    }
 }

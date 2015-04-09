@@ -10,7 +10,9 @@ import "."
 RowLayout {
 
     property string fromWhere : ""
-    property string urlBase   : "docs/ce_shapefunction.html"
+    property string urlBase   : ""
+
+    property bool enableContinue : true
 
     Layout.fillWidth: true
     spacing: 0
@@ -25,6 +27,8 @@ RowLayout {
         onClicked: {
             StudyCaseHandler.loadUrlInBrowser(urlBase);
         }
+
+        visible: (urlBase.length > 0) ? true : false
     }
 
     PrimaryButton {
@@ -53,7 +57,7 @@ RowLayout {
 
     PrimaryButton {
         buttonLabel: "Guardar y Continuar"
-        buttonStatus: "success"
+        buttonStatus: enableContinue ? "success" : "disabled"
         iconSource: "qrc:/resources/icons/save8.png"
 
         Layout.fillWidth: true

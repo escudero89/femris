@@ -11,6 +11,7 @@ Item {
     property alias save                      : femrisSaver
     property alias exportAs                  : femrisExporter
     property alias anotherFileAlreadyOpened  : anotherFileAlreadyOpenedDialog
+    property alias anotherFileBeforeLoader   : anotherFileAlreadyOpenedBeforeLoader
 
     anchors.fill: parent
 
@@ -81,17 +82,42 @@ Item {
 
         onRejected: anotherFileAlreadyOpenedDialog.close();
         onDiscard: {
-            if (parentStage === "CE_Model") {
-                StudyCaseHandler.adoptNewTypeStudyCaseIfNecessary();
-            }
+            // If we are calling from the NEW button (in Initial)
+            if (parentStage === "") {
+                StudyCaseHandler.start();
+                mainWindow.switchSection("CE_Overall");
 
-            mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+            // Or in another section
+            } else {
+                if (parentStage === "CE_Model") {
+                    StudyCaseHandler.adoptNewTypeStudyCaseIfNecessary();
+                }
+                mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+            }
         }
         onAccepted: {
             femrisSaver.parentStage = parentStage;
             femrisSaver.open();
             anotherFileAlreadyOpenedDialog.close();
         }
+
+        visible: false
+    }
+
+    MessageDialog {
+
+        property string parentStage : ""
+
+        id: anotherFileAlreadyOpenedBeforeLoader
+        title: anotherFileAlreadyOpenedDialog.title
+        text: anotherFileAlreadyOpenedDialog.text
+
+        icon: StandardIcon.Warning
+        standardButtons : StandardButton.Save | StandardButton.Cancel | StandardButton.Discard
+
+        onRejected: anotherFileAlreadyOpenedDialog.close()
+        onDiscard: femrisLoader.open()
+        onAccepted: femrisSaver.open()
 
         visible: false
     }

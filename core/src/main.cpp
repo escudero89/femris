@@ -23,7 +23,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
-//#include <QtWebEngine/qtwebengineglobal.h>
+#include <QtWebEngine/qtwebengineglobal.h>
 
 #include <QObject>
 #include <QDebug>
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
-    //QtWebEngine::initialize();
+    QtWebEngine::initialize();
 
     qmlRegisterType<FileIO>("FileIO", 1, 0, "FileIO");
 

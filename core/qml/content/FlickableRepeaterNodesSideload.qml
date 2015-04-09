@@ -9,24 +9,24 @@ import "../screens"
 import "../"
 import "."
 
-import "smallBoxes"
 import "components"
 
 ColumnLayout {
 
-    property alias objectRepeater: repeater
-
-    property string textRow : "Lado "
-
-    property string textInformation : "sideload"
-
+    property int amountOfLoadedElements : 0
     property variant jsonDomain : null
+
+    property alias gvRows : gvRows
+
+    signal finishedLoading()
+
+    id: clRows
 
     FlickableRepeaterHeader {
         objectHeader.text :
             qsTr("Condiciones de borde") +
             "<br /><small style='color:" + Style.color.content + "'>" +
-            "<em>" + qsTr("Número de lados: ") + repeater.count + "</em></small>"
+            "<em>" + qsTr("Número de lados: ") + gvRows.count + "</em></small>"
 
         Layout.fillHeight: true
         Layout.preferredWidth: parent.width
@@ -35,21 +35,21 @@ ColumnLayout {
     RowLayout {
 
         Layout.fillHeight: true
-        Layout.preferredWidth: parent.width
-
-        spacing: 0
+        Layout.preferredWidth: clRows.width
 
         GridView {
 
             property variant previousSideloadValues;
             property variant previousFixNodesValues;
 
-            id: repeater
+            signal clearModel();
+
+            id: gvRows
 
             clip: true
 
             Layout.fillHeight: true
-            Layout.fillWidth: true
+            Layout.preferredWidth: parent.width
 
             cellHeight: 40
             cellWidth: width;
@@ -60,54 +60,84 @@ ColumnLayout {
             // Only show the scrollbars when the view is moving.
             states: State {
                 name: "ShowBars"
-                when: repeater.movingVertically
-                PropertyChanges { target: verticalScrollBar; opacity: 1 }
+                when: gvRows.movingVertically
+                PropertyChanges { target: sbRows; opacity: 1 }
             }
 
             transitions: Transition {
                 NumberAnimation { properties: "opacity"; duration: 400 }
             }
 
+            highlight: Rectangle {
+                height : gvRows.cellHeight
+                width: gvRows.width
+                color: Style.color.femris
+
+                opacity: 0.4
+            }
+
             focus: true
 
             model: 0
 
-            delegate: Component {
+            delegate: RowLayout {
 
-                Loader {
+                id: iRow
 
-                    property int index: model.index
+                property variant objectRow;
 
-                    asynchronous: true
-                    sourceComponent : StudyCaseHandler.isStudyType("heat") ?
-                                          nodesHeatComponent :
-                                          nodesStructuralComponent
+                height : gvRows.cellHeight
+                width: gvRows.cellWidth
 
-                    visible: status == Loader.Ready
+                Component.onCompleted: {
 
-                    onLoaded: {
-                        item.index = index
-                        item.loadPreviousValues();
+                    var params = {
+                        "Layout.preferredHeight": gvRows.cellHeight,
+                        "Layout.fillWidth": true,
+
+                        "previousSideloadValues": gvRows.previousSideloadValues,
+                        "previousFixNodesValues": gvRows.previousFixNodesValues,
+
+                        "jsonDomain": clRows.jsonDomain,
+
+                        "index": index,
+                        "currentIndex": gvRows.currentIndex
+                    };
+
+                    var componentFile = "";
+
+                    // Check which file to load
+                    if ( StudyCaseHandler.isStudyType('heat') ) {
+                        componentFile = "../content/components/NodesSideloadHeat.qml";
+                    } else {
+                        componentFile = "../content/components/NodesSideloadStructural.qml";
                     }
 
-                    Component {
-                        id: nodesHeatComponent
-                        NodesSideloadHeat {
-                            previousFixNodesValues: repeater.previousFixNodesValues;
-                            previousSideloadValues: repeater.previousSideloadValues;
-                        }
-                    }
+                    var component = Qt.createComponent(componentFile);
+                    objectRow = component.createObject(iRow, params);
 
-                    Component {
-                        id: nodesStructuralComponent
-                        NodesSideloadStructural {
-                            previousSideloadValues: repeater.previousSideloadValues;
-                        }
-                    }
+                    // Connects with the signal in the object
+                    objectRow.rowModifiedCurrentIndex.connect(function() {
+                        gvRows.currentIndex = index;
+                    });
+
+                    // For notifying loading
+                    objectRow.Component.completed.connect(function() {
+                        clRows.amountOfLoadedElements++;
+                    });
+
                 }
+
+                Connections {
+                    target: gvRows
+                    onClearModel: objectRow.destroy();
+                    onWidthChanged: width = gvRows.width;
+                }
+
             }
 
             Component.onCompleted: {
+
                 previousSideloadValues = eval(StudyCaseHandler
                                               .getSingleStudyCaseInformation("sideload")
                                               .replace(/;/g, ",")
@@ -129,14 +159,21 @@ ColumnLayout {
 
         // Attach scrollbars to the right of the view.
         ScrollBar {
-            id: verticalScrollBar
+            id: sbRows
             Layout.preferredWidth: 12
-            Layout.preferredHeight: repeater.height - 12
+            Layout.preferredHeight: gvRows.height - 12
 
             opacity: 0
             orientation: Qt.Vertical
-            position: repeater.visibleArea.yPosition
-            pageSize: repeater.visibleArea.heightRatio
+            position: gvRows.visibleArea.yPosition
+            pageSize: gvRows.visibleArea.heightRatio
+        }
+    }
+
+    onAmountOfLoadedElementsChanged: {
+        if ( gvRows.count > 0 && gvRows.count === amountOfLoadedElements ) {
+            finishedLoading();
+            amountOfLoadedElements = 0;
         }
     }
 }

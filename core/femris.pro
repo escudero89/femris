@@ -1,10 +1,8 @@
 TEMPLATE = app
 
-QT += qml quick widgets webkit xml webkitwidgets network
+QT += qml quick widgets xml webengine
 
-qtHaveModule(webengine) {
-    QT += webengine
-}
+CONFIG += resources_big
 
 SOURCES += \
     src/main.cpp \
@@ -21,7 +19,6 @@ SOURCES += \
 RESOURCES += \
     qml/resources.qrc \
     qml/qml.qrc \
-    qml/MathJax.qrc \
     qml/third-party.qrc \
     qml/docs-resources.qrc \
     qml/docs.qrc \

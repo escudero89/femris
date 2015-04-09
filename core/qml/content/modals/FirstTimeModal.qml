@@ -181,6 +181,8 @@ Item {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
+                spacing: 10
+
                 //--------------------------------------------------------------
                 Text {
                     Layout.fillWidth: true
@@ -235,9 +237,7 @@ Item {
                         buttonStatus: "white"
                         iconSource: "qrc:/resources/icons/black/search19.png"
 
-                        onClicked: {
-                            searchDialog.open();
-                        }
+                        onClicked: searchDialog.open();
                     }
 
                     FileDialog {
@@ -290,6 +290,13 @@ Item {
                         checked: ( Configure.read("interpreter") === "octave" )
                     }
                 }
+
+                CheckBox {
+                    id: cbShowScreenInfo
+                    text: qsTr("Ver pantallas de ayuda antes de cada etapa.")
+                    checked: Configure.check("showScreenInfo", "true") ? true : false
+                }
+
             }
 
             Rectangle {
@@ -306,13 +313,19 @@ Item {
                 Layout.alignment: Qt.AlignRight
 
                 PrimaryButton {
-                    buttonLabel: "Cerrar"
-                    iconSource: "qrc:/resources/icons/black/cross41.png"
+                    buttonLabel: "Cancelar"
+                    iconSource: "qrc:/resources/icons/ban.png"
 
-                    buttonStatus: "white"
+                    buttonStatus: "danger"
 
                     onClicked: {
                         firstTimeModal.visible = false;
+
+                        // Restore defaults
+                        searchResult.text = (Configure.read("interpreterPath") !== "null") ? Configure.read("interpreterPath") : "";
+                        radioMatlab.checked = ( Configure.read("interpreter") === "matlab" );
+                        radioOctave.checked = ( Configure.read("interpreter") === "octave" );
+                        cbShowScreenInfo.checked = Configure.check("showScreenInfo", "true") ? true : false;
                     }
                 }
 
@@ -334,6 +347,7 @@ Item {
 
                         Configure.write("interpreterPath", searchResult.text);
                         Configure.write("firstTime", "true");
+                        Configure.write("showScreenInfo", cbShowScreenInfo.checked);
                     }
                 }
             }

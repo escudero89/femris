@@ -2,8 +2,7 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.3
 
-//import QtWebEngine 1.0
-import QtWebKit 3.0
+import QtWebEngine 1.0
 
 import FileIO 1.0
 
@@ -115,6 +114,7 @@ RowLayout {
             Component.onCompleted: oldMouseX = ocultarIndice.x
         }
     }
+
     Rectangle {
 
         color: Style.color.background
@@ -127,8 +127,7 @@ RowLayout {
             height: parent.height
             width: parent.width
             spacing: 0
-            //WebEngineView {
-            WebView {
+            WebEngineView {
 
                 property string previous_url : ""
 
@@ -139,13 +138,14 @@ RowLayout {
 
                 visible: false
 
+                /*
                 onNavigationRequested: {
                     var url = "" + request.url;
                     if (url.indexOf("http") === 0) {
-                        request.action = WebView.IgnoreRequest;
+                        //request.action = WebEngine.IgnoreRequest;
                         globalInfoBox.loadUrlInBrowser(url);
                     }
-                }
+                }*/
 
                 // We load the layout and the view, and put the info in the WebView
                 FileIO {
@@ -186,7 +186,7 @@ RowLayout {
                     if (rowParent.currentUrlForTutorial[0] === '$') {
                         currentWebView.url = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
 
-                        // Source that we want to wrap with the layout
+                    // Source that we want to wrap with the layout
                     } else {
 
                         if (rowParent.currentUrlForTutorial.search("http") !== -1) {
@@ -220,17 +220,6 @@ RowLayout {
                 text: (currentWebView.loading) ? qsTr("Cargando (" + currentWebView.loadProgress + "%)...") : ""
             }
 
-            // Attach scrollbars to the right of the view.
-            ScrollBar {
-                id: currentWebViewScrollBar
-                Layout.preferredWidth: 10
-                Layout.preferredHeight: currentWebView.height - 12
-
-                opacity: 0.7
-                orientation: Qt.Vertical
-                position: currentWebView.visibleArea.yPosition
-                pageSize: currentWebView.visibleArea.heightRatio
-            }
         }
 
     }

@@ -11,6 +11,10 @@ ColumnLayout {
     property alias button : primaryButton
     property alias image : imageChoiceBlock
 
+    property alias rBody : rBody
+
+    property color forceThisColor
+
     property string blockStatus : "default";        // default, used, disabled
 
     implicitWidth: 200
@@ -18,7 +22,7 @@ ColumnLayout {
     spacing: 0
 
     Rectangle {
-        id: rectangle1
+        id: rHeader
 
         Layout.fillWidth: true
         Layout.preferredHeight: width / 5
@@ -41,7 +45,7 @@ ColumnLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
-            font.pixelSize: rectangle1.height / 2
+            font.pixelSize: rHeader.height / 2
             font.bold: true
 
             color: Style.color.background_highlight
@@ -50,6 +54,8 @@ ColumnLayout {
     }
 
     Rectangle {
+
+        id: rBody
 
         Layout.fillHeight: true
         Layout.fillWidth: true
@@ -76,7 +82,7 @@ ColumnLayout {
             Image {
                 id: imageChoiceBlock
 
-                Layout.preferredHeight: width
+                Layout.preferredHeight: (source !== "") ? width : 0
 
                 Layout.fillWidth: true
                 Layout.maximumWidth: parent.width / 1.5
@@ -90,6 +96,7 @@ ColumnLayout {
                 smooth: true
 
                 fillMode: Image.PreserveAspectFit
+
             }
 
             TextArea {
@@ -98,7 +105,7 @@ ColumnLayout {
                 text: qsTr("<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>")
                 textFormat: TextEdit.RichText
 
-                font.pixelSize: Math.max(parent.width / 15, 12)
+                font.pixelSize: Math.min(Math.max(parent.width / 15, 12), 18)
 
                 Layout.fillHeight: true
                 Layout.fillWidth: true

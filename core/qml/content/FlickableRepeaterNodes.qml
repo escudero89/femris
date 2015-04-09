@@ -13,19 +13,20 @@ import "components"
 
 ColumnLayout {
 
-    property alias objectRepeater: repeater
-
-    property string textRow : "Nodo #"
-
-    property string textInformation : "pointload"
-
+    property int amountOfLoadedElements : 0
     property variant jsonDomain : null
+
+    property alias gvRows: gvRows
+
+    signal finishedLoading()
+
+    id: clRows
 
     FlickableRepeaterHeader {
         objectHeader.text :
             qsTr("Restricciones nodales") +
             "<br /><small style='color:" + Style.color.content + "'>" +
-            "<em>" + qsTr("Número de nodos: ") + repeater.count + "</em></small>"
+            "<em>" + qsTr("Número de nodos: ") + gvRows.count + "</em></small>"
 
         Layout.fillHeight: true
         Layout.preferredWidth: parent.width
@@ -34,21 +35,21 @@ ColumnLayout {
     RowLayout {
 
         Layout.fillHeight: true
-        Layout.preferredWidth: parent.width
-
-        spacing: 0
+        Layout.preferredWidth: clRows.width
 
         GridView {
 
-            property variant previousFixNodesValues;
             property variant previousPointLoadValues;
+            property variant previousFixNodesValues;
 
-            id: repeater
+            signal clearModel();
+
+            id: gvRows
 
             clip: true
 
             Layout.fillHeight: true
-            Layout.fillWidth: true
+            Layout.preferredWidth: parent.width
 
             cellHeight: 40
             cellWidth: width;
@@ -59,59 +60,83 @@ ColumnLayout {
             // Only show the scrollbars when the view is moving.
             states: State {
                 name: "ShowBars"
-                when: repeater.movingVertically
-                PropertyChanges { target: verticalScrollBar; opacity: 1 }
+                when: gvRows.movingVertically
+                PropertyChanges { target: sbRows; opacity: 1 }
             }
 
             transitions: Transition {
                 NumberAnimation { properties: "opacity"; duration: 400 }
             }
 
+            highlight: Rectangle {
+                height : gvRows.cellHeight
+                width: gvRows.width
+                color: Style.color.femris
+
+                opacity: 0.4
+            }
+
             focus: true
 
             model: 0
 
-            delegate: Component {
+            delegate: RowLayout {
 
-                Loader {
-                    asynchronous: true
-                    sourceComponent : StudyCaseHandler.isStudyType("heat") ?
-                                          nodesHeatComponent :
-                                          nodesStructuralComponent
+                id: iRow
 
-                    visible: status == Loader.Ready
+                property variant objectRow;
 
-                    onLoaded: {
-                        item.index = index
-                        item.loadPreviousValues();
+                height : gvRows.cellHeight
+                width: gvRows.cellWidth
+
+                Component.onCompleted: {
+
+                    var params = {
+                        "Layout.preferredHeight": gvRows.cellHeight,
+                        "Layout.fillWidth": true,
+
+                        "previousPointLoadValues": gvRows.previousPointLoadValues,
+                        "previousFixNodesValues": gvRows.previousFixNodesValues,
+
+                        "jsonDomain": clRows.jsonDomain,
+
+                        "index": index,
+                        "currentIndex": gvRows.currentIndex
+                    };
+
+                    var componentFile = "";
+
+                    // Check which file to load
+                    if ( StudyCaseHandler.isStudyType('heat') ) {
+                        componentFile = "../content/components/NodesHeat.qml";
+                    } else {
+                        componentFile = "../content/components/NodesStructural.qml";
                     }
 
-                    Component {
-                        id: nodesHeatComponent
-                        NodesHeat {
-                            previousFixNodesValues: repeater.previousFixNodesValues;
-                            previousPointLoadValues: repeater.previousPointLoadValues;
-                        }
-                    }
+                    var component = Qt.createComponent(componentFile);
+                    objectRow = component.createObject(iRow, params);
 
-                    Component {
-                        id: nodesStructuralComponent
-                        NodesStructural {
-                            previousFixNodesValues: repeater.previousFixNodesValues;
-                            previousPointLoadValues: repeater.previousPointLoadValues;
-                        }
-                    }
+                    // Connects with the signal in the object
+                    objectRow.rowModifiedCurrentIndex.connect(function() {
+                        gvRows.currentIndex = index;
+                    });
+
+                    // For notifying loading
+                    objectRow.Component.completed.connect(function() {
+                        clRows.amountOfLoadedElements++;
+                    });
+
                 }
+
+                Connections {
+                    target: gvRows
+                    onClearModel: { objectRow.destroy(); }
+                    onWidthChanged: width = gvRows.width;
+                }
+
             }
 
             Component.onCompleted: {
-                previousFixNodesValues = eval(StudyCaseHandler
-                                              .getSingleStudyCaseInformation("fixnodes")
-                                              .replace(/;/g, ",")
-                                              .replace("],", "];")
-                                              .replace("=", "")
-                                              .replace("fixnodes", "")
-                                              .trim());
 
                 previousPointLoadValues = eval(StudyCaseHandler
                                                .getSingleStudyCaseInformation("pointload")
@@ -120,19 +145,34 @@ ColumnLayout {
                                                .replace("=", "")
                                                .replace("pointload", "")
                                                .trim());
+
+                previousFixNodesValues = eval(StudyCaseHandler
+                                              .getSingleStudyCaseInformation("fixnodes")
+                                              .replace(/;/g, ",")
+                                              .replace("],", "];")
+                                              .replace("=", "")
+                                              .replace("fixnodes", "")
+                                              .trim());
             }
         }
 
         // Attach scrollbars to the right of the view.
         ScrollBar {
-            id: verticalScrollBar
+            id: sbRows
             Layout.preferredWidth: 12
-            Layout.preferredHeight: repeater.height - 12
+            Layout.preferredHeight: gvRows.height - 12
 
             opacity: 0
             orientation: Qt.Vertical
-            position: repeater.visibleArea.yPosition
-            pageSize: repeater.visibleArea.heightRatio
+            position: gvRows.visibleArea.yPosition
+            pageSize: gvRows.visibleArea.heightRatio
+        }
+    }
+
+    onAmountOfLoadedElementsChanged: {
+        if ( gvRows.count > 0 && gvRows.count === amountOfLoadedElements ) {
+            finishedLoading();
+            amountOfLoadedElements = 0;
         }
     }
 }

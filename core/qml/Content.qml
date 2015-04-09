@@ -8,7 +8,7 @@ import "custom.js" as Custom
 QtObject {
 
     property string appName: "FEMRIS"
-    property string version: "0.9.0"
+    property string version: "0.9.2"
 
     property string baseDir : applicationDirPath + "/docs/inner/"
 
@@ -17,7 +17,9 @@ QtObject {
     property variant alert     : splitContent("alert")
     property variant firstTime : splitContent("firstTime")
     property variant initial   : splitContent("initial")
+    property variant model     : splitContent("model")
     property variant overall   : splitContent("overall")
+
 
     function splitContent(fileName) {
         var content = CurrentFileIO.readFromSource(baseDir + fileName + ".html");

@@ -7,6 +7,7 @@ import QtQuick.Dialogs 1.2
 
 import "."
 import "content"
+import "content/components"
 import "screens"
 
 ApplicationWindow {
@@ -14,7 +15,6 @@ ApplicationWindow {
     signal finishedLoading();
 
     id: mainWindow
-    visible: true
 
     width: 800
     height: 600
@@ -22,11 +22,11 @@ ApplicationWindow {
     minimumWidth: 800
     minimumHeight: 600
 
-    // visibility: "Maximized"
+    onVisibilityChanged: Configure.write("lastWindowsSize", visibility)
 
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
-    property string initialScreen : "screens/Initial.qml"
+    property string initialScreen : "screens/CE_Model.qml"
 
     menuBar: TopMenuBar {
         onWhichMenu: {
@@ -50,41 +50,81 @@ ApplicationWindow {
         }
     }
 
-    statusBar: StatusBar {
-        Text {
-            property string baseValue : qsTr("")
+    statusBar: Item {
 
-            id: globalInfoBox
-            horizontalAlignment: Text.AlignRight
+        id: iStatusBar
 
-            text: baseValue
-            textFormat: Text.RichText
+        height: sbStatusBar.height
+        width: mainWindow.width
 
-            Timer {
-                id: resetGlobalInfoBox
-                interval: 5000; running: false;
-                onTriggered: globalInfoBox.text = globalInfoBox.baseValue
+        StatusBar {
+
+            id: sbStatusBar
+
+            Text {
+                property string baseValue : qsTr("")
+
+                id: globalInfoBox
+                horizontalAlignment: Text.AlignLeft
+
+                text: baseValue
+                textFormat: Text.RichText
+
+                Layout.fillWidth: true
+
+                Timer {
+                    id: resetGlobalInfoBox
+                    interval: 5000; running: false;
+                    onTriggered: globalInfoBox.text = globalInfoBox.baseValue
+                }
+
+                function setInfoBox (msg, reset) {
+                    text = (reset) ? baseValue : msg;
+                    resetGlobalInfoBox.start();
+                }
+
+                function loadUrlInBrowser (url, internal) {
+                    // If the url has a relative url (like "temp/index.html") we use
+                    // one method [internal = true], otherwise the other
+                    if (internal) {
+                        StudyCaseHandler.loadUrlInBrowser(url);
+                        setInfoBox("Se ha abierto <strong>" + url + "</strong> en tu navegador por defecto.");
+
+                    } else {
+                        Qt.openUrlExternally(url);
+                        setInfoBox("<a href=" + url + ">" + url + "</a> se ha abierto en tu navegador por defecto.");
+                    }
+                }
             }
 
-            function setInfoBox (msg, reset) {
-                text = (reset) ? baseValue : msg;
-                resetGlobalInfoBox.start();
-            }
+            MiniOverall {
 
-            function loadUrlInBrowser (url, internal) {
-                // If the url has a relative url (like "temp/index.html") we use
-                // one method [internal = true], otherwise the other
-                if (internal) {
-                    StudyCaseHandler.loadUrlInBrowser(url);
-                    setInfoBox("Se ha abierto <strong>" + url + "</strong> en tu navegador por defecto.");
+                id: moStatus
 
-                } else {
-                    Qt.openUrlExternally(url);
-                    setInfoBox("<a href=" + url + ">" + url + "</a> se ha abierto en tu navegador por defecto.");
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+
+                originalHeight: iStatusBar.height - 5
+                width: height * 4
+
+                z: 9500
+
+                parentStage: ""
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: moStatus.mouseEntered();
+                    onExited: moStatus.mouseExited();
                 }
             }
         }
     }
+
+
 
     // Para el fondo
     Rectangle {
@@ -124,10 +164,19 @@ ApplicationWindow {
         }
     }
 
+    // Current Screen Info
+    CurrentScreenInfo {
+        id: csiModal
+        visible: false
+
+        z: globalLoader.z + 10000;
+    }
+
     Loader  {
-        anchors.fill: parent
 
         id: globalLoader
+
+        anchors.fill: parent
 
         // We wait until the children are loaded to start
         asynchronous: true
@@ -166,12 +215,35 @@ ApplicationWindow {
         target: Configure
 
         onMainSignalEmitted: {
-            if (signalName === "dialogs.load.open()") {
-                dialogs.load.folder = '';
-                dialogs.load.open();
-            } else if (signalName === "setInfoBox") {
-                globalInfoBox.setInfoBox(args);
-            }
+
+            switch (signalName) {
+
+                case "dialogs.anotherFileBeforeLoader.open()":
+                    if (StudyCaseHandler.exists() && !StudyCaseHandler.getSavedStatus()) {
+                        dialogs.anotherFileAlreadyOpened.parentStage = "";
+                        dialogs.anotherFileAlreadyOpened.open();
+                    } else {
+                        StudyCaseHandler.start();
+                        mainWindow.switchSection("CE_Overall");
+                    }
+                    break;
+
+                case "dialogs.load.open()":
+
+                    // Check first if another file is already open
+                    if (StudyCaseHandler.exists() && !StudyCaseHandler.getSavedStatus()) {
+                        dialogs.anotherFileBeforeLoader.open();
+                    } else {
+                        dialogs.load.folder = '';
+                        dialogs.load.open();
+                    }
+
+                    break;
+
+                case "setInfoBox":
+                    globalInfoBox.setInfoBox(args);
+                    break;
+                }
         }
     }
 
@@ -206,6 +278,8 @@ ApplicationWindow {
         }
 
         mainWindow.switchSection(StudyCaseHandler.saveAndContinue(parentStage));
+        moStatus.stepOnStudyCase = parseInt(StudyCaseHandler.getSingleStudyCaseInformation("stepOfProcess"));
+
     }
 
     function doOnClose() {
@@ -220,13 +294,23 @@ ApplicationWindow {
 
     // This function manages the switch between screens
     function switchSection(section) {
+
+        moStatus.parentStage = "";
+
         switch (section) {
         case "Tutorial":
             break;
 
-        default :
+        case "CE_Model":
+        case "CE_Domain":
+        case "CE_ShapeFunction":
+        case "CE_Results":
+            moStatus.parentStage = section;
             StudyCaseHandler.setSingleStudyCaseInformation("tutorialReturnTo", section, true);
             break;
+
+        default :
+            StudyCaseHandler.setSingleStudyCaseInformation("tutorialReturnTo", section, true);
         }
 
         globalInfoBox.setInfoBox("Cargando...");
@@ -235,5 +319,7 @@ ApplicationWindow {
 
         globalLoader.visible = false;
         globalLoader.setSource("screens/" + section + ".qml");
+
+        csiModal.open(section);
     }
 }

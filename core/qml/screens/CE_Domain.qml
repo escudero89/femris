@@ -6,273 +6,225 @@ import "../docs"
 import "../content"
 import "../"
 
-RowLayout {
+import "../content/components"
 
-    property variant jsonDomain : null
+Rectangle {
+    id: rectangle1
 
-    id: rowParent
-    objectName: "CE_Domain"
+    anchors.fill: parent
 
-    spacing: 0
-
-    LeftContentBox {
-        id: leftContentRectangle
-
-        color: Style.color.content_emphasized
-        Layout.fillHeight: true
-        Layout.preferredWidth: parent.width * 0.20
-
-        parentStage : rowParent.objectName
+    gradient: Gradient {
+        GradientStop { position: 0.0; color: Style.color.background_highlight }
+        GradientStop { position: 1.0; color: Style.color.background }
     }
 
     Rectangle {
+        id: rLoading
 
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+        width: 90
+        height: 24
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        anchors.right: parent.right
+        anchors.rightMargin: 20
 
-        color: "white"
+        color: Style.color.complement
+
+        z: 5000
+
+        opacity: 0
+
+        Text {
+            id: tLoading
+
+            text: qsTr("Cargando...")
+            style: Text.Normal
+            font.italic: true
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.fill: parent
+            font.pixelSize:12
+
+            color: Style.color.background_highlight
+        }
+
+        Behavior on opacity { NumberAnimation { duration: 200 } }
+
+    }
+
+    RowLayout {
+
+        property variant jsonDomain : {null}
+
+        id: rlDomain
+        objectName: "CE_Domain"
+
+        anchors.fill: parent
+
+        spacing: 0
+
+        LeftContentBox {
+            id: leftContentRectangle
+
+            color: Style.color.content_emphasized
+            Layout.preferredHeight: parent.height
+            Layout.preferredWidth: parent.width * 0.20
+
+            parentStage : rlDomain.objectName
+        }
+
+        onWidthChanged: clMainDomain.width = width * 0.80;
 
         ColumnLayout {
 
-            anchors.fill: parent
+            id: clMainDomain
 
-            Flickable {
+            Layout.preferredHeight: parent.height
+            Layout.fillWidth: true
 
-                id: flickableExamples
+            Behavior on opacity { NumberAnimation {} }
 
-                Layout.preferredHeight: parent.height * 0.6
-
-                flickableDirection: Flickable.HorizontalFlick
+            DomainExamples {
+                id: deExamples
 
                 Layout.fillWidth: true
 
-                contentWidth: gridViewDomain.height * gridViewDomain.count
-                clip: true
+                onJsonDataLoaded: {
+                    rlDomain.jsonDomain = jsonData;
 
-                GridView {
+                    // Sides
+                    frnsRows.loading = true;
+                    frnsRows.gvRows.clearModel();
+                    frnsRows.gvRows.model = 0;
+                    frnsRows.gvRows.model = rlDomain.jsonDomain["sideloadNodes"].length;
 
-                    id: gridViewDomain
-
-                    anchors.fill : parent
-
-                    boundsBehavior: Flickable.StopAtBounds
-
-                    cellWidth: height / 1.1
-                    cellHeight: cellWidth
-
-                    highlight: Rectangle {
-                        color: Style.color.femris;
-                        radius: 5
-                        opacity: 0.03
-
-                        z: 1000
+                    // Nodes
+                    if (!StudyCaseHandler.isStudyType('heat')) {
+                        frnRows.loading = true;
+                        frnRows.gvRows.clearModel();
+                        frnRows.gvRows.model = 0;
+                        frnRows.gvRows.model = rlDomain.jsonDomain["coordinates"].length;
                     }
 
-                    focus: true
-
-                    currentIndex: 0
-
-                    delegate: Component {
-
-                        Rectangle {
-                            id: wrapper
-
-                            width: gridViewDomain.cellWidth
-                            height: gridViewDomain.height
-
-                            color: 'transparent'
-
-                            ColumnLayout {
-
-                                height: parent.height
-                                width: parent.width
-
-                                Image {
-                                    id: exampleImage
-
-                                    source: (name !== "empty") ? portrait : "qrc:/resources/images/square_shadow.png"
-
-                                    Layout.preferredHeight: parent.height * 0.95
-                                    Layout.preferredWidth: parent.width * 0.95
-                                    Layout.alignment: Qt.AlignCenter
-
-                                    fillMode: Image.PreserveAspectFit
-                                    smooth: true
-
-                                    opacity: (gridViewDomain.currentIndex === index) ? 1 : 0.3
-                                    state: (gridViewDomain.currentIndex === index) ? "selected" : "default"
-
-                                    Behavior on scale {
-                                        NumberAnimation {}
-                                    }
-
-                                    states: [
-                                        State {
-                                            name: "selected"
-                                            PropertyChanges {
-                                                target : exampleImage
-                                                scale : 1
-                                            }
-                                        },
-                                        State {
-                                            name: "default"
-                                            PropertyChanges {
-                                                target : exampleImage
-                                                scale : 0.8
-                                            }
-                                        }
-                                    ]
-                                }
-
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-
-                                onClicked: {
-                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
-                                }
-
-                                onDoubleClicked: {
-
-                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
-
-                                    if (flickableExamples.Layout.preferredHeight !== flickableExamples.parent.height) {
-                                        flickableExamples.contentX = gridViewDomain.currentIndex * gridViewDomain.cellWidth * (flickableExamples.parent.height / flickableExamples.Layout.preferredHeight);
-                                        flickableExamples.Layout.preferredHeight = flickableExamples.parent.height;
-
-                                    } else {
-                                        flickableExamples.contentX = gridViewDomain.currentIndex * gridViewDomain.cellWidth * 0.6;
-                                        flickableExamples.Layout.preferredHeight = flickableExamples.parent.height * 0.6;
-                                    }
-
-                                }
-
-                                Connections {
-                                    target: CurrentFileIO
-
-                                    onError: {
-                                        console.log(msg);
-                                    }
-                                }
-                            }
-
-                            Component.onCompleted: {
-                                if (listModelExamples.count === 1) {
-                                    gridViewDomain.fillExamples();
-                                }
-
-                                // We just load the conditions for the first component
-                                if (index === gridViewDomain.currentIndex) {
-                                    gridViewDomain.fillSideLoadAndFixedNodes(index, exampleFile);
-                                    //rowParent.saveCurrentLoads();
-                                }
-                            }
-                        }
-                    }
-
-                    model: ListModel {
-                        id: listModelExamples
-
-                        ListElement {
-                            name: 'empty'
-                            portrait: 'empty'
-                            exampleFile: 'empty'
-                        }
-                    }
-
-                    function fillExamples() {
-
-                        listModelExamples.clear();
-                        var examples = CurrentFileIO.getFilteredFilesFromDirectory(["example*.json"], applicationDirPath + '/docs/examples');
-
-                        for ( var k = 1 ; k <= examples.length ; k++ ) {
-                            var ex = examples[k - 1];
-                            var newModel = {
-                                "name": "Example " + k,
-                                "portrait": fileApplicationDirPath + "/docs/examples/" + ex.substring(ex.search(/example\d/), ex.search(".json")) + ".png",
-                                "exampleFile": ex.substring(ex.search(/example\d/))
-                            };
-
-                            listModelExamples.append(newModel);
-
-                            if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
-                                var exampleName = StudyCaseHandler.getSingleStudyCaseInformation("exampleName");
-                                if (newModel.exampleFile === exampleName) {
-                                    currentIndex = k - 1;
-                                }
-                            }
-                        }
-
-                    }
-
-                    function fillSideLoadAndFixedNodes(newIndex, exampleFile) {
-
-                        // Loading new data
-                        gridViewDomain.currentIndex = newIndex;
-
-                        CurrentFileIO.setSource(fileApplicationDirPath + '/docs/examples/' + exampleFile);
-
-                        jsonDomain = CurrentFileIO.getVarFromJsonString(CurrentFileIO.read());
-
-                        sideLoadContainer.objectRepeater.model = jsonDomain["sideloadNodes"].length;
-                        nodesContainer.objectRepeater.model = jsonDomain["coordinates"].length;
-
-                        sideLoadContainer.jsonDomain = jsonDomain;
-                        nodesContainer.jsonDomain = jsonDomain;
-
-                        if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
-                            StudyCaseHandler.setSingleStudyCaseInformation("exampleName", exampleFile);
-                        }
-
-                        sideLoadContainer.objectRepeater.visible = true;
-                        nodesContainer.objectRepeater.visible = true;
+                    if (deExamples.state !== "normal") {
+                        clMainDomain.opacity = 0;
+                        tExamples.start();
                     }
                 }
+
+                Timer {
+                    id: tExamples
+                    interval: 500; running: false;
+                    onTriggered: deExamples.state = "normal";
+
+                }
+
+                state: "maximized"
+
+                states: [
+                    State {
+                        name: "maximized"
+
+                        PropertyChanges {
+                            target: deExamples
+                            Layout.preferredHeight: clMainDomain.height * 0.8;
+                        }
+                    },
+                    State {
+                        name: "normal"
+
+                        PropertyChanges {
+                            target: deExamples
+                            Layout.preferredHeight: clMainDomain.height * 0.6;
+                        }
+
+                        PropertyChanges { target: rTip;         visible: false; }
+                        PropertyChanges { target: frnsRows;       visible: true; }
+                        PropertyChanges { target: frnRows;       visible: !StudyCaseHandler.isStudyType('heat'); }
+                        PropertyChanges { target: clMainDomain; opacity: 1.0 }
+                    }
+                ]
+
             }
 
             Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 3
+                id: rTip
 
-                color: Style.color.complement
-                opacity: 0.3
+                Layout.preferredHeight: tTipHeader.height * 2
+                Layout.preferredWidth: parent.width
+
+                color: Style.color.info
+
+                Text {
+                    id: tTipHeader
+
+                    textFormat: Text.RichText
+
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Style.color.background_highlight
+
+                    text: qsTr("<em>Para comenzar, seleccione uno de los dominios de ejemplo de la galería de arriba.</em>")
+                }
+
             }
 
-            GridLayout {
+            RowLayout {
 
-                property alias sideLoadContainer : sideLoadContainer
-                property alias nodesContainer    : nodesContainer
-
-                columns : StudyCaseHandler.isStudyType("heat") ? 1 : 2
-                rows : 2
-
-                columnSpacing: 0
-
+                Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.preferredWidth : parent.width
 
                 FlickableRepeaterNodesSideload {
-                    id: sideLoadContainer
 
-                    Layout.preferredWidth : parent.width / 2
+                    property bool loading : false
+
+                    id: frnsRows
+
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: parent.width
+
+                    jsonDomain: rlDomain.jsonDomain
+
+                    visible: false
+
+                    onFinishedLoading: frnsRows.loading = false;
+
                 }
 
                 FlickableRepeaterNodes {
-                    id: nodesContainer
-                    jsonDomain: rowParent.jsonDomain
 
-                    Layout.preferredWidth : parent.width / 2
+                    property bool loading : false
 
-                    visible: !StudyCaseHandler.isStudyType("heat");
+                    id: frnRows
+
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: parent.width
+
+                    jsonDomain: rlDomain.jsonDomain
+
+                    visible: false
+
+                    onFinishedLoading: frnRows.loading = false;
+
+                }
+
+                states: State {
+                    name: "show"
+                    when: frnRows.loading || frnsRows.loading
+                    PropertyChanges { target: rLoading; opacity: 1 }
                 }
             }
 
             RowLayout {
 
-                spacing: 0
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+
+                Layout.alignment: Qt.AlignBottom
+
+                spacing: 0
 
                 PrimaryButton {
 
@@ -309,7 +261,7 @@ RowLayout {
                     enabled: false
 
                     onClicked: {
-                        rowParent.saveCurrentLoads();
+                        rlDomain.saveCurrentLoads();
                         ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
                     }
 
@@ -317,7 +269,7 @@ RowLayout {
 
                         target : StudyCaseHandler
 
-                        onBeforeCheckIfReady: saveCurrentLoads();
+                        onBeforeCheckIfReady: rlDomain.saveCurrentLoads();
                         onReady: continueButton.enabled = status;
                     }
 
@@ -325,186 +277,187 @@ RowLayout {
                 }
             }
         }
-    }
 
-    function saveCurrentLoads() {
+        function saveCurrentLoads() {
 
-        // If jsonDomain is empty, we leave
-        if (!jsonDomain) {
-            return;
-        }
-
-        // First we adjust the coordinates usign the width and height set
-        var maxCoord = {
-            x : jsonDomain['coordinates'][0][0],
-            y : jsonDomain['coordinates'][0][1]
-        }
-
-        var minCoord = {
-            x :jsonDomain['coordinates'][0][0],
-            y :jsonDomain['coordinates'][0][1]
-        }
-
-        var scaleFactor = {
-            width  : StudyCaseHandler.getSingleStudyCaseInformation('gridWidth'),
-            height : StudyCaseHandler.getSingleStudyCaseInformation('gridHeight')
-        }
-
-        scaleFactor.width = (scaleFactor.width !== '') ? parseFloat(scaleFactor.width) : 1;
-        scaleFactor.height = (scaleFactor.height !== '') ? parseFloat(scaleFactor.height) : 1;
-
-        // For normalizing
-        for ( var k = 0 ; k < jsonDomain['coordinates'].length ; k++ ) {
-            if (jsonDomain['coordinates'][k][0] > maxCoord.x) {
-                maxCoord.x = jsonDomain['coordinates'][k][0];
-
-            } else if (jsonDomain['coordinates'][k][0] < minCoord.x) {
-                minCoord.x = jsonDomain['coordinates'][k][0];
+            // If jsonDomain is empty, we leave
+            if (!jsonDomain) {
+                return;
             }
 
-            if (jsonDomain['coordinates'][k][1] > maxCoord.y) {
-                maxCoord.y = jsonDomain['coordinates'][k][1];
-
-            } else if (jsonDomain['coordinates'][k][1] < minCoord.y) {
-                minCoord.y = jsonDomain['coordinates'][k][1];
-            }
-        }
-
-        var coordinates = jsonDomain['coordinates'];
-
-        for ( k = 0 ; k < coordinates.length ; k++ ) {
-            coordinates[k][0] *= scaleFactor.width / ( maxCoord.x - minCoord.x );
-            coordinates[k][1] *= scaleFactor.height / ( maxCoord.y - minCoord.y );
-        }
-
-        // Then we set the sideload, pointload and fixnodes according to the type of study case
-        var extraValues = {
-            fixnodes : [],
-            sideload : [],
-            pointload : []
-        };
-
-        if (StudyCaseHandler.isStudyType("heat")) {
-            extraValues = saveCurrentLoadsHeat(coordinates);
-        } else {
-            extraValues = saveCurrentLoadsStructural(coordinates);
-        }
-
-        // And finally we save all the values
-        StudyCaseHandler.setSingleStudyCaseJson('coordinates', coordinates);
-        StudyCaseHandler.setSingleStudyCaseJson('elements', jsonDomain['elements']);
-        StudyCaseHandler.setSingleStudyCaseJson('sideload',  extraValues.sideload );
-        StudyCaseHandler.setSingleStudyCaseJson('fixnodes',  extraValues.fixnodes );
-        StudyCaseHandler.setSingleStudyCaseJson('pointload', extraValues.pointload);
-    }
-
-    function saveCurrentLoadsHeat(coordinates) {
-
-        /// SIDELOAD (neumann) & FIXNODES (dirichet)
-
-        var sideloadNodes = jsonDomain['sideloadNodes'];
-        var sideload = [];
-        var fixnodes = [];
-
-        for ( var k = 0 ; k < sideloadNodes.length ; k++ ) {
-            var temp_ = StudyCaseHandler.getSingleStudyCaseInformation('sideload' + ( k + 1 ), true);
-            var temp_state_ = StudyCaseHandler.getSingleStudyCaseInformation('condition-state' + ( k + 1 ), true);
-
-            if (temp_ === '') {
-                continue;
+            // First we adjust the coordinates usign the width and height set
+            var maxCoord = {
+                x : jsonDomain['coordinates'][0][0],
+                y : jsonDomain['coordinates'][0][1]
             }
 
-            temp_ = parseFloat(temp_);
+            var minCoord = {
+                x :jsonDomain['coordinates'][0][0],
+                y :jsonDomain['coordinates'][0][1]
+            }
 
-            var N = sideloadNodes[k].length;
-            if (temp_state_ === "dirichlet") {
-                for ( var j = 0 ; j < N ; j++ ) {
-                    fixnodes.push([ sideloadNodes[k][j], parseFloat(temp_) ]);
+            var scaleFactor = {
+                width  : StudyCaseHandler.getSingleStudyCaseInformation('gridWidth'),
+                height : StudyCaseHandler.getSingleStudyCaseInformation('gridHeight')
+            }
+
+            scaleFactor.width = (scaleFactor.width !== '') ? parseFloat(scaleFactor.width) : 1;
+            scaleFactor.height = (scaleFactor.height !== '') ? parseFloat(scaleFactor.height) : 1;
+
+            // For normalizing
+            for ( var k = 0 ; k < jsonDomain['coordinates'].length ; k++ ) {
+                if (jsonDomain['coordinates'][k][0] > maxCoord.x) {
+                    maxCoord.x = jsonDomain['coordinates'][k][0];
+
+                } else if (jsonDomain['coordinates'][k][0] < minCoord.x) {
+                    minCoord.x = jsonDomain['coordinates'][k][0];
                 }
 
+                if (jsonDomain['coordinates'][k][1] > maxCoord.y) {
+                    maxCoord.y = jsonDomain['coordinates'][k][1];
+
+                } else if (jsonDomain['coordinates'][k][1] < minCoord.y) {
+                    minCoord.y = jsonDomain['coordinates'][k][1];
+                }
+            }
+
+            var coordinates = jsonDomain['coordinates'];
+
+            for ( k = 0 ; k < coordinates.length ; k++ ) {
+                coordinates[k][0] *= scaleFactor.width / ( maxCoord.x - minCoord.x );
+                coordinates[k][1] *= scaleFactor.height / ( maxCoord.y - minCoord.y );
+            }
+
+            // Then we set the sideload, pointload and fixnodes according to the type of study case
+            var extraValues = {
+                fixnodes : [],
+                sideload : [],
+                pointload : []
+            };
+
+            if (StudyCaseHandler.isStudyType("heat")) {
+                extraValues = saveCurrentLoadsHeat(coordinates);
             } else {
-                for ( var j = 0 ; j < N - 1 ; j++ ) {
-                    sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_ ]);
-                }
+                extraValues = saveCurrentLoadsStructural(coordinates);
             }
+
+            // And finally we save all the values
+            StudyCaseHandler.setSingleStudyCaseJson('coordinates', coordinates);
+            StudyCaseHandler.setSingleStudyCaseJson('elements', jsonDomain['elements']);
+            StudyCaseHandler.setSingleStudyCaseJson('sideload',  extraValues.sideload );
+            StudyCaseHandler.setSingleStudyCaseJson('fixnodes',  extraValues.fixnodes );
+            StudyCaseHandler.setSingleStudyCaseJson('pointload', extraValues.pointload);
         }
 
-        return {
-            fixnodes : fixnodes,
-            sideload : sideload,
-            pointload: []
-        };
-    }
+        function saveCurrentLoadsHeat(coordinates) {
 
-    function saveCurrentLoadsStructural(coordinates) {
+            /// SIDELOAD (neumann) & FIXNODES (dirichet)
 
-        /// SIDELOAD
+            var sideloadNodes = jsonDomain['sideloadNodes'];
+            var sideload = [];
+            var fixnodes = [];
 
-        var sideloadNodes = jsonDomain['sideloadNodes'];
-        var sideload = [];
+            for ( var k = 0 ; k < sideloadNodes.length ; k++ ) {
+                var temp_ = StudyCaseHandler.getSingleStudyCaseInformation('sideload' + ( k + 1 ), true);
+                var temp_state_ = StudyCaseHandler.getSingleStudyCaseInformation('condition-state' + ( k + 1 ), true);
 
-        for ( var k = 0 ; k < sideloadNodes.length ; k++ ) {
-            var temp_x = StudyCaseHandler.getSingleStudyCaseInformation('sideloadx' + ( k + 1 ), true);
-            var temp_y = StudyCaseHandler.getSingleStudyCaseInformation('sideloady' + ( k + 1 ), true);
+                if (temp_ === '') {
+                    continue;
+                }
 
-            if (temp_x !== '' || temp_y !== '') {
-
-                temp_x = (temp_x === '') ? 0.0 : parseFloat(temp_x);
-                temp_y = (temp_y === '') ? 0.0 : parseFloat(temp_y);
+                temp_ = parseFloat(temp_);
 
                 var N = sideloadNodes[k].length;
-                for ( var j = 0 ; j < N - 1 ; j++ ) {
-                    // The nodes from the edges only take 1/2 of the sideload. Instead,
-                    // the nodes in between took the full sideload
-                    if (j === 0 || j === N - 2) {
-                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_x / 2.0, temp_y / 2.0 ]);
-                    } else {
-                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_x, temp_y ]);
+                if (temp_state_ === "dirichlet") {
+                    for ( var j = 0 ; j < N ; j++ ) {
+                        fixnodes.push([ sideloadNodes[k][j], parseFloat(temp_) ]);
+                    }
+
+                } else {
+                    for ( var j = 0 ; j < N - 1 ; j++ ) {
+                        sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_ ]);
                     }
                 }
             }
+
+            return {
+                fixnodes : fixnodes,
+                sideload : sideload,
+                pointload: []
+            };
         }
 
-        /// POINTLOAD & FIXNODES
+        function saveCurrentLoadsStructural(coordinates) {
 
-        var pointload = [];
-        var fixnodes = [];
+            /// SIDELOAD
 
-        for ( k = 0 ; k < coordinates.length ; k++ ) {
-            temp_x = StudyCaseHandler.getSingleStudyCaseInformation('pointloadx' + ( k + 1 ), true);
-            temp_y = StudyCaseHandler.getSingleStudyCaseInformation('pointloady' + ( k + 1 ), true);
+            var sideloadNodes = jsonDomain['sideloadNodes'];
+            var sideload = [];
 
-            if (temp_x !== '') {
-                if (temp_x !== qsTr('fijado')) {
-                    pointload.push([ k + 1, 1, parseFloat(temp_x) ]);
+            for ( var k = 0 ; k < sideloadNodes.length ; k++ ) {
+                var temp_x = StudyCaseHandler.getSingleStudyCaseInformation('sideloadx' + ( k + 1 ), true);
+                var temp_y = StudyCaseHandler.getSingleStudyCaseInformation('sideloady' + ( k + 1 ), true);
 
-                } else {
-                    fixnodes.push([ k + 1, 1, 0.0 ]);
+                if (temp_x !== '' || temp_y !== '') {
+
+                    temp_x = (temp_x === '') ? 0.0 : parseFloat(temp_x);
+                    temp_y = (temp_y === '') ? 0.0 : parseFloat(temp_y);
+
+                    var N = sideloadNodes[k].length;
+                    for ( var j = 0 ; j < N - 1 ; j++ ) {
+                        // The nodes from the edges only take 1/2 of the sideload. Instead,
+                        // the nodes in between took the full sideload
+                        if (j === 0 || j === N - 2) {
+                            sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_x / 2.0, temp_y / 2.0 ]);
+                        } else {
+                            sideload.push([ sideloadNodes[k][j], sideloadNodes[k][j + 1], temp_x, temp_y ]);
+                        }
+                    }
                 }
             }
 
-            if (temp_y !== '') {
-                if (temp_y !== qsTr('fijado')) {
-                    pointload.push([ k + 1, 2, parseFloat(temp_y) ]);
+            /// POINTLOAD & FIXNODES
 
-                } else {
-                    fixnodes.push([ k + 1, 2, 0.0 ]);
+            var pointload = [];
+            var fixnodes = [];
+
+            for ( k = 0 ; k < coordinates.length ; k++ ) {
+                temp_x = StudyCaseHandler.getSingleStudyCaseInformation('pointloadx' + ( k + 1 ), true);
+                temp_y = StudyCaseHandler.getSingleStudyCaseInformation('pointloady' + ( k + 1 ), true);
+
+                if (temp_x !== '') {
+                    if (temp_x !== qsTr('fijado')) {
+                        pointload.push([ k + 1, 1, parseFloat(temp_x) ]);
+
+                    } else {
+                        fixnodes.push([ k + 1, 1, 0.0 ]);
+                    }
+                }
+
+                if (temp_y !== '') {
+                    if (temp_y !== qsTr('fijado')) {
+                        pointload.push([ k + 1, 2, parseFloat(temp_y) ]);
+
+                    } else {
+                        fixnodes.push([ k + 1, 2, 0.0 ]);
+                    }
                 }
             }
-        }
 
-        return {
-            fixnodes : fixnodes,
-            sideload : sideload,
-            pointload : pointload
-        };
+            return {
+                fixnodes : fixnodes,
+                sideload : sideload,
+                pointload : pointload
+            };
+        }
     }
 
     Connections {
         target: StudyCaseHandler
 
         onSavingCurrentStudyCase: {
-            saveCurrentLoads();
+            rlDomain.saveCurrentLoads();
         }
     }
+
 }

@@ -31,5 +31,7 @@
         <file>content/modals/FirstTimeModal.qml</file>
         <file>content/modals/LoadingModal.qml</file>
         <file>content/Dialogs.qml</file>
+        <file>content/CurrentScreenInfo.qml</file>
+        <file>content/DomainExamples.qml</file>
     </qresource>
 </RCC>

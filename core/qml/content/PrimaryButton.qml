@@ -12,6 +12,8 @@ Button {
     property alias buttonLabel : button.text
     property string buttonStatus : "default"
 
+    property color textColor : Style.color.background_highlight
+
     enabled: (buttonStatus !== 'disabled')
 
     implicitHeight: 30
@@ -36,7 +38,7 @@ Button {
                     switch (buttonStatus) {
                         case "white":
                             finalColor = Style.color.background;
-                            text.color = Style.color.complement;
+                            button.textColor = Style.color.complement;
                             break;
 
                         case "black":
@@ -114,7 +116,7 @@ Button {
                     font.pixelSize: button.height * .4
                     wrapMode: Text.WordWrap
 
-                    color: button.enabled ? Style.color.background_highlight : Style.color.comment
+                    color: button.enabled ? button.textColor : Style.color.comment
 
                     verticalAlignment: Text.AlignVCenter
 
