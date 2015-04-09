@@ -9,12 +9,47 @@ import "../"
 import "../content/components"
 
 Rectangle {
+    id: rectangle1
 
     anchors.fill: parent
 
     gradient: Gradient {
         GradientStop { position: 0.0; color: Style.color.background_highlight }
         GradientStop { position: 1.0; color: Style.color.background }
+    }
+
+    Rectangle {
+        id: rLoading
+
+        width: 90
+        height: 24
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+
+        color: Style.color.complement
+
+        z: 5000
+
+        opacity: 0
+
+        Text {
+            id: tLoading
+
+            text: qsTr("Cargando...")
+            style: Text.Normal
+            font.italic: true
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.fill: parent
+            font.pixelSize:12
+
+            color: Style.color.background_highlight
+        }
+
+        Behavior on opacity { NumberAnimation { duration: 200 } }
+
     }
 
     RowLayout {
@@ -57,9 +92,19 @@ Rectangle {
                 onJsonDataLoaded: {
                     rlDomain.jsonDomain = jsonData;
 
-                    gvRows.clearModel();
-                    gvRows.model = 0;
-                    gvRows.model = rlDomain.jsonDomain["sideloadNodes"].length;
+                    // Sides
+                    frnsRows.loading = true;
+                    frnsRows.gvRows.clearModel();
+                    frnsRows.gvRows.model = 0;
+                    frnsRows.gvRows.model = rlDomain.jsonDomain["sideloadNodes"].length;
+
+                    // Nodes
+                    if (!StudyCaseHandler.isStudyType('heat')) {
+                        frnRows.loading = true;
+                        frnRows.gvRows.clearModel();
+                        frnRows.gvRows.model = 0;
+                        frnRows.gvRows.model = rlDomain.jsonDomain["coordinates"].length;
+                    }
 
                     if (deExamples.state !== "normal") {
                         clMainDomain.opacity = 0;
@@ -94,7 +139,8 @@ Rectangle {
                         }
 
                         PropertyChanges { target: rTip;         visible: false; }
-                        PropertyChanges { target: clRows;       visible: true; }
+                        PropertyChanges { target: frnsRows;       visible: true; }
+                        PropertyChanges { target: frnRows;       visible: !StudyCaseHandler.isStudyType('heat'); }
                         PropertyChanges { target: clMainDomain; opacity: 1.0 }
                     }
                 ]
@@ -125,139 +171,51 @@ Rectangle {
 
             }
 
-            ColumnLayout {
+            RowLayout {
 
-                id: clRows
-
+                Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.preferredWidth: parent.width
 
-                visible: false
+                FlickableRepeaterNodesSideload {
 
-                FlickableRepeaterHeader {
-                    objectHeader.text :
-                        qsTr("Condiciones de borde") +
-                        "<br /><small style='color:" + Style.color.content + "'>" +
-                        "<em>" + qsTr("Número de lados: ") + gvRows.count + "</em></small>"
+                    property bool loading : false
+
+                    id: frnsRows
 
                     Layout.fillHeight: true
                     Layout.preferredWidth: parent.width
+
+                    jsonDomain: rlDomain.jsonDomain
+
+                    visible: false
+
+                    onFinishedLoading: frnsRows.loading = false;
+
                 }
 
-                RowLayout {
+                FlickableRepeaterNodes {
+
+                    property bool loading : false
+
+                    id: frnRows
 
                     Layout.fillHeight: true
-                    Layout.preferredWidth: clMainDomain.width
+                    Layout.preferredWidth: parent.width
 
-                    GridView {
+                    jsonDomain: rlDomain.jsonDomain
 
-                        property variant previousSideloadValues;
-                        property variant previousFixNodesValues;
+                    visible: false
 
-                        signal clearModel();
+                    onFinishedLoading: frnRows.loading = false;
 
-                        id: gvRows
+                }
 
-                        clip: true
-
-                        Layout.fillHeight: true
-                        Layout.preferredWidth: parent.width
-
-                        cellHeight: 40
-                        cellWidth: width;
-
-                        flickableDirection: Flickable.VerticalFlick
-                        boundsBehavior: Flickable.StopAtBounds
-
-                        // Only show the scrollbars when the view is moving.
-                        states: State {
-                            name: "ShowBars"
-                            when: gvRows.movingVertically
-                            PropertyChanges { target: sbRows; opacity: 1 }
-                        }
-
-                        transitions: Transition {
-                            NumberAnimation { properties: "opacity"; duration: 400 }
-                        }
-
-                        focus: true
-
-                        model: 0
-
-                        delegate: RowLayout {
-
-                            id: iRow
-
-                            property variant objectRow;
-
-                            height : gvRows.cellHeight
-                            width: gvRows.cellWidth
-
-                            Component.onCompleted: {
-
-                                var params = {
-                                    "Layout.preferredHeight": gvRows.cellHeight,
-                                    "Layout.fillWidth": true,
-
-                                    "previousSideloadValues": gvRows.previousSideloadValues,
-                                    "previousFixNodesValues": gvRows.previousFixNodesValues,
-
-                                    "jsonDomain": rlDomain.jsonDomain,
-
-                                    "index": index,
-                                    "currentIndex": gvRows.currentIndex,
-                                    "onRowModifiedCurrentIndex": gvRows.currentIndex = index
-                                };
-
-                                var component = Qt.createComponent("../content/components/NodesSideloadHeat.qml");
-                                objectRow = component.createObject(iRow, params);
-
-                            }
-
-                            Connections {
-                                target: gvRows
-                                onClearModel: objectRow.destroy();
-                                onWidthChanged: width = gvRows.width;
-                            }
-
-                        }
-
-
-                        Component.onCompleted: {
-
-                            previousSideloadValues = eval(StudyCaseHandler
-                                                          .getSingleStudyCaseInformation("sideload")
-                                                          .replace(/;/g, ",")
-                                                          .replace("],", "];")
-                                                          .replace("=", "")
-                                                          .replace("sideload", "")
-                                                          .trim());
-
-                            previousFixNodesValues = eval(StudyCaseHandler
-                                                          .getSingleStudyCaseInformation("fixnodes")
-                                                          .replace(/;/g, ",")
-                                                          .replace("],", "];")
-                                                          .replace("=", "")
-                                                          .replace("fixnodes", "")
-                                                          .trim());
-
-                        }
-                    }
-
-                    // Attach scrollbars to the right of the view.
-                    ScrollBar {
-                        id: sbRows
-                        Layout.preferredWidth: 12
-                        Layout.preferredHeight: gvRows.height - 12
-
-                        opacity: 0
-                        orientation: Qt.Vertical
-                        position: gvRows.visibleArea.yPosition
-                        pageSize: gvRows.visibleArea.heightRatio
-                    }
+                states: State {
+                    name: "show"
+                    when: frnRows.loading || frnsRows.loading
+                    PropertyChanges { target: rLoading; opacity: 1 }
                 }
             }
-
 
             RowLayout {
 

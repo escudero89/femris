@@ -9,32 +9,24 @@ import "."
 
 Item {
 
+    property variant jsonDomain;
+
     property variant previousFixNodesValues;
     property variant previousPointLoadValues;
 
     property int index : 0
+    property int currentIndex : 0
 
     signal loadPreviousValues();
+    signal rowModifiedCurrentIndex();
 
     id: cellContent
 
-    width: repeater.cellWidth
-    height: repeater.cellHeight
-
     Rectangle {
         anchors.fill: parent
+        color: ((index % 2 === 0) ? Style.color.background_highlight : Style.color.background) ;
 
-        color: (index === repeater.currentIndex) ?
-                   Style.color.femris :
-                   ((index % 2 === 0) ?
-                        Style.color.background_highlight :
-                        Style.color.background) ;
-
-        opacity: 0.3
-
-        Behavior on color {
-            ColorAnimation {}
-        }
+        opacity: 0.7
     }
 
     RowLayout {
@@ -47,14 +39,12 @@ Item {
 
         Text {
             Layout.fillWidth: true
-            text: qsTr(textRow + (index + 1))
+            text: qsTr("Nodo #" + (index + 1))
         }
 
 
         Button {
-            property bool isEnabled :
-                ( jsonDomain.sideloadNodes.join().search(index + 1) !== -1) ?
-                    true : false
+            property bool isEnabled : ( jsonDomain.sideloadNodes.join().search(index + 1) !== -1)
 
             property string fixnodeIcon : "open94"
 
@@ -74,9 +64,9 @@ Item {
                 case "dirichlet" : buttonNodeController.state = "neumann"   ; break;
                 }
 
-                repeater.currentIndex = index;
+                rowModifiedCurrentIndex();
 
-                StudyCaseHandler.setSingleStudyCaseInformation(textInformation + "-state" + (index + 1), buttonNodeController.state, true);
+                StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
             }
 
             state: "dirichlet"
@@ -113,11 +103,11 @@ Item {
             Layout.preferredWidth: parent.width * 0.4
             placeholderText: (buttonNodeController.state === "dirichlet") ? "[ºC]" : "[W]"
 
-            onEditingFinished: StudyCaseHandler.setSingleStudyCaseInformation(textInformation + (index + 1), text, true);
+            onEditingFinished: StudyCaseHandler.setSingleStudyCaseInformation("pointload" + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && repeater.currentIndex !== index) {
-                    repeater.currentIndex = index;
+                    rowModifiedCurrentIndex();
                     focus = true;
                 }
             }

@@ -24,18 +24,9 @@ Item {
 
     Rectangle {
         anchors.fill: parent
+        color: ((index % 2 === 0) ? Style.color.background_highlight : Style.color.background) ;
 
-        color: (index === currentIndex) ?
-                   Style.color.femris :
-                   ((index % 2 === 0) ?
-                        Style.color.background_highlight :
-                        Style.color.background) ;
-
-        opacity: 0.3
-
-        Behavior on color {
-            ColorAnimation {}
-        }
+        opacity: 0.7
     }
 
     RowLayout {
@@ -53,13 +44,11 @@ Item {
             MyToolTip {
                 id: tooltip
 
-                text: {
-                    if (jsonDomain && jsonDomain["sideloadNodes"] && jsonDomain["sideloadNodes"][index]) {
-                        return jsonDomain["sideloadNodes"][index].join('-');
-                    }
-
-                    return "";
-                }
+                text: (!jsonDomain["sideloadNodes"]) ?
+                          "" :
+                          (!jsonDomain["sideloadNodes"][index]) ?
+                              "" :
+                              jsonDomain["sideloadNodes"][index].join(', ');
 
                 z: cellContent.z + 100
             }
