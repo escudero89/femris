@@ -11,13 +11,9 @@ Item {
 
     property variant jsonDomain;
 
-    property variant previousFixNodesValues;
-    property variant previousPointLoadValues;
-
     property int index : 0
     property int currentIndex : 0
 
-    signal loadPreviousValues();
     signal rowModifiedCurrentIndex();
 
     id: cellContent
@@ -68,6 +64,7 @@ Item {
                 }
 
                 rowModifiedCurrentIndex();
+                StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
                 StudyCaseHandler.isReady();
             }
 
@@ -168,46 +165,22 @@ Item {
         }
     }
 
-    onLoadPreviousValues: {
+    Component.onCompleted: {
 
-        var nChecks = previousFixNodesValues.length / 3;
+        var xPointloadValue = StudyCaseHandler.getSingleStudyCaseInformation("pointloadx" + (index + 1), true);
+        var yPointloadValue = StudyCaseHandler.getSingleStudyCaseInformation("pointloady" + (index + 1), true);
+        var stateValue     = StudyCaseHandler.getSingleStudyCaseInformation("condition-state" + (index + 1), true);
 
-        for ( var k = 0 ; k < nChecks; k++ ) {
-            var currentFixNode = [
-                previousFixNodesValues[k * ( nChecks - 1)],
-                previousFixNodesValues[k * ( nChecks - 1) + 1],
-                previousFixNodesValues[k * ( nChecks - 1) + 2]
-            ];
-
-            if (currentFixNode[0] === (index + 1)) {
-                if (parseInt(currentFixNode[1]) === 1) {
-                    buttonNodeController.state =
-                            ((buttonNodeController.state === "y-fijo") ? "xy-fijo" : "x-fijo");
-                } else {
-                    buttonNodeController.state =
-                            ((buttonNodeController.state === "x-fijo") ? "xy-fijo" : "y-fijo");
-                }
-            }
+        if ( xPointloadValue ) {
+            xTextField.text = xPointloadValue;
         }
 
-        //--------------------------------------------------
+        if ( yPointloadValue ) {
+            yTextField.text = yPointloadValue;
+        }
 
-        nChecks = previousPointLoadValues.length / 3;
-
-        for ( k = 0 ; k < nChecks; k++ ) {
-            var currentPointLoad = [
-                previousPointLoadValues[k * ( nChecks - 1)],
-                previousPointLoadValues[k * ( nChecks - 1) + 1],
-                previousPointLoadValues[k * ( nChecks - 1) + 2]
-            ];
-
-            if (currentPointLoad[0] === (index + 1)) {
-                if (currentPointLoad[1] === 1) {
-                    xTextField.text = currentPointLoad[2];
-                } else {
-                    yTextField.text = currentPointLoad[2];
-                }
-            }
+        if ( stateValue ) {
+            buttonNodeController.state = stateValue;
         }
     }
 

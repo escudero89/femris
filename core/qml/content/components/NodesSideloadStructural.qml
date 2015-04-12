@@ -11,13 +11,9 @@ Item {
 
     property variant jsonDomain;
 
-    property variant previousSideloadValues;
-
-
     property int index : 0
     property int currentIndex : 0
 
-    signal loadPreviousValues();
     signal rowModifiedCurrentIndex();
 
     id: cellContent
@@ -57,13 +53,8 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
 
-                onEntered: {
-                    tooltip.show();
-                }
-
-                onExited: {
-                    tooltip.hide();
-                }
+                onEntered: tooltip.show()
+                onExited: tooltip.hide()
             }
         }
 
@@ -94,7 +85,6 @@ Item {
                     state : buttonNodeController.state
                 };
 
-                Configure.emitMainSignal("NodesChanged", JSON.stringify(changes));
                 Configure.emitMainSignal("NodesSideloadChanged", JSON.stringify(changes));
             }
 
@@ -179,23 +169,17 @@ Item {
 
     }
 
-    onLoadPreviousValues: {
+    Component.onCompleted: {
 
-        var currentSide = jsonDomain["sideloadNodes"][index];
-        var nSideLoad = previousSideloadValues.length / 4;
+        var sideloadValueX = StudyCaseHandler.getSingleStudyCaseInformation("sideloadx" + (index + 1), true);
+        var sideloadValueY = StudyCaseHandler.getSingleStudyCaseInformation("sideloady" + (index + 1), true);
 
-        for ( var k = 0 ; k < nSideLoad; k++ ) {
-            var currentLoad = [
-                        previousSideloadValues[k * ( nSideLoad - 1)],
-                        previousSideloadValues[k * ( nSideLoad - 1) + 1],
-                        previousSideloadValues[k * ( nSideLoad - 1) + 2],
-                        previousSideloadValues[k * ( nSideLoad - 1) + 3]
-                    ];
+        if ( sideloadValueX ) {
+            textFieldSideloadX.text = sideloadValueX;
+        }
 
-            if (currentSide.indexOf(currentLoad[0]) !== -1 && currentSide.indexOf(currentLoad[1]) !== -1) {
-                textFieldSideloadX.text = currentLoad[2];
-                textFieldSideloadY.text = currentLoad[3];
-            }
+        if ( sideloadValueY ) {
+            textFieldSideloadY.text = sideloadValueY;
         }
     }
 }

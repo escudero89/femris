@@ -41,20 +41,21 @@ public:
     virtual void saveLocalCurrentConfiguration() {}
 
     QMap<QString, QString> getMapOfInformation();
-    void setMapOfInformation(QMap<QString, QString>);
+    void setMapOfInformation(QMap<QString, QString>, QMap<QString, QString>);
 
 protected:
 
     //! Path where the temporary file which stores the StudyCase is.
     QString m_source;
-    //! Encoded QMap with all the info of the Study Case
-    QString m_encoded;
 
     QDateTime m_created;
     QDateTime m_modified;
 
     //! The QMap that stores almost all the information of the StudyCase
     QMap<QString, QString> m_mapOfInformation;
+
+    //! As m_mapOfInformation, except that stores information that will be stored only encoded
+    QMap<QString, QString> m_extraInformation;
 
 };
 

@@ -23,7 +23,6 @@ void StudyCase::createNew() {
     m_modified              = m_created;
 
     m_source                = "/temp/" + m_created.toString("yyyyMMdd-hhmmss") + ".femris.old";
-    m_encoded               = "";
 
     setInitialMapOfInformation();
     saveCurrentConfiguration();
@@ -51,14 +50,7 @@ QMap<QString, QString> StudyCase::loadConfiguration(const QString& whereToLoad) 
     encodedInfo.replace("\r\n", "");
     encodedInfo.replace("\n", "");
 
-    QString decodedInfo = Utils::base64_decode(encodedInfo);
-    QStringList blocksOfInfo = decodedInfo.split(Utils::endSeparator, QString::SkipEmptyParts);
-    QMap<QString, QString> newMapOfInformation;
-
-    for (int i = 0; i < blocksOfInfo.size(); i++) {
-        QStringList keyAndValue = blocksOfInfo.at(i).split(Utils::midSeparator);
-        newMapOfInformation[ keyAndValue[0] ] = keyAndValue[1];
-    }
+    QMap<QString, QString> newMapOfInformation = Utils::stringToQMap(Utils::base64_decode(encodedInfo));
 
     return newMapOfInformation;
 }
@@ -135,6 +127,7 @@ bool StudyCase::exportToGid(const QString& whereToSave) {
 void StudyCase::setInitialMapOfInformation() {
 
     m_mapOfInformation.clear();
+    m_extraInformation.clear();
 
     m_mapOfInformation["typeOfStudyCase"]        = "false";
     m_mapOfInformation["exampleName"]            = "false";
@@ -154,6 +147,8 @@ void StudyCase::setInitialMapOfInformation() {
     m_mapOfInformation["pointload"]             = "pointload = [\r\n];" ;
     m_mapOfInformation["sideload"]              = "sideload = [\r\n];" ;
 
+    m_mapOfInformation["extraInformation"]      = "";
+
     compressMapOfInformation();
 }
 
@@ -164,31 +159,12 @@ void StudyCase::setInitialMapOfInformation() {
  * and also in the `.femris` file.
  */
 void StudyCase::compressMapOfInformation() {
-    QString encodedMap = "";
 
-    QMapIterator<QString, QString> i(m_mapOfInformation);
-    while (i.hasNext()) {
-        i.next();
+    // First we encode the extraInformation (so it can be saved later in the file)
+    m_mapOfInformation["extraInformation"] = Utils::qMapToString(m_extraInformation);
 
-        if (i.key() == "encoded") {
-            continue;
-        }
-
-        QString val = i.value().isEmpty() ? "false" : i.value();
-
-        encodedMap += i.key() + Utils::midSeparator + val + Utils::endSeparator;
-    }
-
-    m_encoded = Utils::base64_encode(encodedMap);
-
-    for ( int k = 1 ; k <= m_encoded.size() ; k++ ) {
-        // Every 80 characters we put a breakline
-        if (k%80 == 0) {
-            m_encoded.insert(k - 1, "\r\n");
-        }
-    }
-
-    m_mapOfInformation["encoded"] = m_encoded;
+    // Then we encode the map of information
+    m_mapOfInformation["encoded"] = Utils::qMapToString(m_mapOfInformation);
 }
 
 /**
@@ -227,9 +203,15 @@ QMap<QString, QString> StudyCase::getMapOfInformation() {
 /**
  * @brief Sets the new QMap which will store all the information of the Study Case
  * @param newMapOfInformation New QMap for the Study Case
+ * @param newExtraInformation New QMap with extra information about the StudyCase
  */
-void StudyCase::setMapOfInformation(QMap<QString, QString> newMapOfInformation) {
+void StudyCase::setMapOfInformation(
+        QMap<QString, QString> newMapOfInformation,
+        QMap<QString, QString> newExtraInformation) {
+
     m_mapOfInformation = newMapOfInformation;
+    m_extraInformation = newExtraInformation;
+
 }
 
 //----------------------------------------------------------------------------//

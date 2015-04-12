@@ -39,9 +39,6 @@ ColumnLayout {
 
         GridView {
 
-            property variant previousSideloadValues;
-            property variant previousFixNodesValues;
-
             signal clearModel();
 
             id: gvRows
@@ -49,7 +46,7 @@ ColumnLayout {
             clip: true
 
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width
+            Layout.preferredWidth: parent.width - sbRows.width
 
             cellHeight: 40
             cellWidth: width;
@@ -95,9 +92,6 @@ ColumnLayout {
                         "Layout.preferredHeight": gvRows.cellHeight,
                         "Layout.fillWidth": true,
 
-                        "previousSideloadValues": gvRows.previousSideloadValues,
-                        "previousFixNodesValues": gvRows.previousFixNodesValues,
-
                         "jsonDomain": clRows.jsonDomain,
 
                         "index": index,
@@ -136,25 +130,6 @@ ColumnLayout {
 
             }
 
-            Component.onCompleted: {
-
-                previousSideloadValues = eval(StudyCaseHandler
-                                              .getSingleStudyCaseInformation("sideload")
-                                              .replace(/;/g, ",")
-                                              .replace("],", "];")
-                                              .replace("=", "")
-                                              .replace("sideload", "")
-                                              .trim());
-
-                previousFixNodesValues = eval(StudyCaseHandler
-                                              .getSingleStudyCaseInformation("fixnodes")
-                                              .replace(/;/g, ",")
-                                              .replace("],", "];")
-                                              .replace("=", "")
-                                              .replace("fixnodes", "")
-                                              .trim());
-
-            }
         }
 
         // Attach scrollbars to the right of the view.

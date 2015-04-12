@@ -75,6 +75,17 @@ Rectangle {
                 height: variablesTextField.height * 1.2
                 color: (index % 2 === 0) ? Style.color.complement :  Style.color.complement_highlight;
 
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        Configure.emitMainSignal("setInfoBox", "<em>Info:</em> " + mathInfo);
+
+                        (unit) ? tooltTipText.show() : false;
+                    }
+                }
+
                 RowLayout {
 
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -96,16 +107,6 @@ Rectangle {
                             color: Style.color.background
                         }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-
-                            onEntered: {
-                                Configure.emitMainSignal("setInfoBox", "<em>Info:</em> " + mathInfo);
-                                (unit) ? tooltTipText.show() : false;
-                            }
-                        }
-
                         MyToolTip {
                             id: tooltTipText
                             text: (unit) ? unit : "";
@@ -117,6 +118,7 @@ Rectangle {
 
                     TextField {
                         property bool isReady : false
+                        property bool hasError : false
 
                         id: variablesTextField
 
@@ -151,7 +153,19 @@ Rectangle {
                                 StudyCaseHandler.setSingleStudyCaseInformation(variableTemp, text, true);
                             }
 
-                            isReady = true;
+                            var data = text * 1.0;
+                            console.log(data);
+
+                            // If there is a minvalue, we check for it. Same with maxValue
+                            if ( true ) {
+                                isReady = true;
+                                hasError = false;
+
+                            } else {
+                                isReady = false;
+                                hasError = true;
+                            }
+
                         }
 
                         onTextChanged: isReady = false;
@@ -170,7 +184,12 @@ Rectangle {
                                 radius: 2
                                 implicitWidth: 100
                                 implicitHeight: 24
-                                border.color: (variablesTextField.isReady) ? Style.color.success : Style.color.content
+                                border.color: {
+                                    if (variablesTextField.hasError) {
+                                        return Style.color.danger;
+                                    }
+                                    return (variablesTextField.isReady) ? Style.color.success : Style.color.content
+                                }
                                 border.width: 1
 
                                 color: Style.color.complement
@@ -231,6 +250,7 @@ Rectangle {
                 mathInfo: 'El valor del Coeficiente de Poisson debe ser mayor o igual que 0, pero menor a 0.5'
                 name: 'Coeficiente de Poisson'
                 variable: 'poissonCoefficient'
+                unit: "[&middot;]"
             }
 
             ListElement {

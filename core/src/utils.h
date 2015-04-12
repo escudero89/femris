@@ -2,6 +2,7 @@
 #define UTILS_H
 
 #include <QString>
+#include <QMap>
 
 /**
  * @brief The Utils class.
@@ -19,6 +20,9 @@ public:
 
     static QString base64_encode(const QString&);
     static QString base64_decode(const QString&);
+
+    static QString qMapToString(const QMap<QString, QString>);
+    static QMap<QString, QString> stringToQMap(const QString);
 
     static QString midSeparator; ///< Used to decode/encode @see StudyCase::loadConfiguration
     static QString endSeparator; ///< Used to decode/encode @see StudyCase::loadConfiguration

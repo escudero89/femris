@@ -19,7 +19,7 @@ ColumnLayout {
         clip: true
         orientation: ListView.Horizontal
 
-        Layout.preferredHeight: parent.height
+        Layout.preferredHeight: parent.height - sbHorizontalExamples.height
         Layout.preferredWidth: parent.width
         focus: true
 
@@ -62,12 +62,7 @@ ColumnLayout {
 
             MouseArea {
                 anchors.fill: parent
-
-                onClicked: {
-                    lvExamples.currentIndex = index
-                    fillSideLoadAndFixedNodes(index, exampleFile);
-
-                }
+                onClicked: fillSideLoadAndFixedNodes(index, exampleFile)
             }
         }
 
@@ -80,8 +75,8 @@ ColumnLayout {
             z: 10000
         }
 
-        header: Rectangle { width: 10; height: rExamples.height; color: Style.color.complement_highlight; }
-        footer: Rectangle { width: 10; height: rExamples.height; color: Style.color.complement_highlight; }
+        header: Rectangle { width: 10; height: rExamples.height; color: Style.color.content_emphasized; }
+        footer: Rectangle { width: 10; height: rExamples.height; color: Style.color.content_emphasized; }
 
         Component.onCompleted: {
 
@@ -89,17 +84,40 @@ ColumnLayout {
 
             lmExamples.clear();
 
+            // We get the previous example saved, if exists
+            var previousExampleFile = false;
+            var selectThisExample = -1;
+
+            if (StudyCaseHandler.checkSingleStudyCaseInformation("exampleName")) {
+                 previousExampleFile = StudyCaseHandler.getSingleStudyCaseInformation("exampleName");
+            }
+
+            // Loads all the elements of the model
             for ( var k = 1 ; k <= examples.length ; k++ ) {
 
                 var ex = examples[k - 1];
+
+                var exampleFile = ex.substring(ex.search(/example\d/));
+
                 var newModel = {
                     "name": "Example " + k,
                     "portrait": fileApplicationDirPath + "/docs/examples/" + ex.substring(ex.search(/example\d/), ex.search(".json")) + ".png",
-                    "exampleFile": ex.substring(ex.search(/example\d/))
+                    "exampleFile": exampleFile
                 };
 
                 lmExamples.append(newModel);
+
+                // If it's the same, we are going to select this file
+                if (previousExampleFile && previousExampleFile === exampleFile) {
+                    selectThisExample = k - 1; // True index
+                }
             }
+
+            if ( selectThisExample >= 0 ) {
+                fillSideLoadAndFixedNodes(selectThisExample, previousExampleFile);
+                lvExamples.positionViewAtIndex(selectThisExample, ListView.Center);
+            }
+
         }
 
         // Only show the scrollbars when the view is moving.
@@ -108,6 +126,7 @@ ColumnLayout {
             when: lvExamples.movingHorizontally
             PropertyChanges { target: sbHorizontalExamples; opacity: 1 }
         }
+
     }
 
     // Attach scrollbars to the right of the view.
@@ -127,6 +146,8 @@ ColumnLayout {
     }
 
     function fillSideLoadAndFixedNodes(newIndex, exampleFile) {
+
+        lvExamples.currentIndex = newIndex;
 
         CurrentFileIO.setSource(fileApplicationDirPath + '/docs/examples/' + exampleFile);
 

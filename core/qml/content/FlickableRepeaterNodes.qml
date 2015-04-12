@@ -39,9 +39,6 @@ ColumnLayout {
 
         GridView {
 
-            property variant previousPointLoadValues;
-            property variant previousFixNodesValues;
-
             signal clearModel();
 
             id: gvRows
@@ -49,7 +46,7 @@ ColumnLayout {
             clip: true
 
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width
+            Layout.preferredWidth: parent.width - sbRows.width
 
             cellHeight: 40
             cellWidth: width;
@@ -134,25 +131,6 @@ ColumnLayout {
                     onWidthChanged: width = gvRows.width;
                 }
 
-            }
-
-            Component.onCompleted: {
-
-                previousPointLoadValues = eval(StudyCaseHandler
-                                               .getSingleStudyCaseInformation("pointload")
-                                               .replace(/;/g, ",")
-                                               .replace("],", "];")
-                                               .replace("=", "")
-                                               .replace("pointload", "")
-                                               .trim());
-
-                previousFixNodesValues = eval(StudyCaseHandler
-                                              .getSingleStudyCaseInformation("fixnodes")
-                                              .replace(/;/g, ",")
-                                              .replace("],", "];")
-                                              .replace("=", "")
-                                              .replace("fixnodes", "")
-                                              .trim());
             }
         }
 

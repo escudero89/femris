@@ -11,13 +11,9 @@ Item {
 
     property variant jsonDomain;
 
-    property variant previousFixNodesValues;
-    property variant previousPointLoadValues;
-
     property int index : 0
     property int currentIndex : 0
 
-    signal loadPreviousValues();
     signal rowModifiedCurrentIndex();
 
     id: cellContent
@@ -65,8 +61,8 @@ Item {
                 }
 
                 rowModifiedCurrentIndex();
-
                 StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
+                StudyCaseHandler.isReady();
             }
 
             state: "dirichlet"
@@ -115,36 +111,17 @@ Item {
 
     }
 
-    onLoadPreviousValues: {
+    Component.onCompleted: {
 
-        var nChecks = previousFixNodesValues.length / 2;
+        var pointloadValue = StudyCaseHandler.getSingleStudyCaseInformation("pointload" + (index + 1), true);
+        var stateValue     = StudyCaseHandler.getSingleStudyCaseInformation("condition-state" + (index + 1), true);
 
-        for ( var k = 0 ; k < nChecks; k++ ) {
-            var currentFixNode = [
-                previousFixNodesValues[k * ( nChecks - 1)],
-                previousFixNodesValues[k * ( nChecks - 1) + 1]
-            ];
-
-            if (currentFixNode[0] === (index + 1)) {
-                buttonNodeController.state = "dirichlet";
-                heatTextField.text = currentFixNode[1];
-            }
+        if ( pointloadValue ) {
+            heatTextField.text = pointloadValue;
         }
 
-        //--------------------------------------------------
-
-        nChecks = previousPointLoadValues.length / 2;
-
-        for ( k = 0 ; k < nChecks; k++ ) {
-            var currentPointLoad = [
-                previousPointLoadValues[k * ( nChecks - 1)],
-                previousPointLoadValues[k * ( nChecks - 1) + 1]
-            ];
-
-            if (currentPointLoad[0] === (index + 1)) {
-                buttonNodeController.state = "neumann";
-                heatTextField.text = currentFixNode[1];
-            }
+        if ( stateValue ) {
+            buttonNodeController.state = stateValue;
         }
     }
 

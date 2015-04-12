@@ -45,3 +45,5 @@ HEADERS += \
     src/studycaseheat.h
 
 RC_ICONS = rc/logo.ico
+
+QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01

@@ -110,6 +110,7 @@ Rectangle {
                         clMainDomain.opacity = 0;
                         tExamples.start();
                     }
+
                 }
 
                 Timer {

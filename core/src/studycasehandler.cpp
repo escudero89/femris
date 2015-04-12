@@ -232,7 +232,14 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
     createNewStudyCase();
 
     m_currentStudyCaseVariables = results;
-    m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+
+    // Extra information
+    if (results.contains("extraInformation")) {
+        QString decodedExtraInfo = Utils::base64_decode(results["extraInformation"]);
+        m_temporalStudyCaseVariables = Utils::stringToQMap(decodedExtraInfo);
+    }
+
+    m_studyCase->setMapOfInformation(m_currentStudyCaseVariables, m_temporalStudyCaseVariables);
     m_studyCase->saveCurrentConfiguration();
     m_lastSavedPath = whereToLoad;
 
@@ -278,10 +285,8 @@ QString StudyCaseHandler::getSingleStudyCaseInformation(const QString& variable,
         Utils::throwErrorAndExit("StudyCaseHandler::getSingleStudyCaseInformation(): unknown variable " + variable);
     }
 
-    if (isTemporal) {
-        if (!m_temporalStudyCaseVariables.contains(variable)) {
-            m_temporalStudyCaseVariables.insert(variable, "");
-        }
+    if (isTemporal && !m_temporalStudyCaseVariables.contains(variable)) {
+        m_temporalStudyCaseVariables.insert(variable, "");
     }
 
     return (isTemporal) ?
@@ -304,25 +309,27 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
 
     if (isTemporal) {
         m_temporalStudyCaseVariables.insert(variable, newValue);
-        return;
+
+    } else {
+
+        if (!m_currentStudyCaseVariables.contains(variable)) {
+            Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
+        }
+
+        // We only update the data if differs from the previous one recorded
+        if (m_currentStudyCaseVariables[variable] != newValue) {
+            m_currentStudyCaseVariables[variable] = newValue;
+            m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
+
+            markAsNotSaved();
+            isReady();
+        }
+
     }
 
-    if (!m_currentStudyCaseVariables.contains(variable)) {
-        Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
-    }
+    m_studyCase->setMapOfInformation(m_currentStudyCaseVariables, m_temporalStudyCaseVariables);
+    m_studyCase->saveCurrentConfiguration();
 
-    // We only update the data if differs from the previous one recorded
-    if (m_currentStudyCaseVariables[variable] != newValue) {
-        m_currentStudyCaseVariables[variable] = newValue;
-        m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
-
-        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
-        m_studyCase->saveCurrentConfiguration();
-
-        markAsNotSaved();
-
-        isReady();
-    }
 }
 
 /**
@@ -353,7 +360,7 @@ void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
     if (m_currentStudyCaseVariables[variable] != newJsonfyVariable) {
         m_currentStudyCaseVariables[variable] = newJsonfyVariable;
 
-        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables, m_temporalStudyCaseVariables);
         m_studyCase->saveCurrentConfiguration();
 
         markAsNotSaved();

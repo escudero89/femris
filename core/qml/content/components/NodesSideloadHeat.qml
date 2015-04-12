@@ -11,13 +11,9 @@ Item {
 
     property variant jsonDomain;
 
-    property variant previousSideloadValues;
-    property variant previousFixNodesValues;
-
     property int index : 0
     property int currentIndex : 0
 
-    signal loadPreviousValues();
     signal rowModifiedCurrentIndex();
 
     id: cellContent
@@ -57,13 +53,8 @@ Item {
                 anchors.fill: parent
                 hoverEnabled: true
 
-                onEntered: {
-                    tooltip.show();
-                }
-
-                onExited: {
-                    tooltip.hide();
-                }
+                onEntered: tooltip.show()
+                onExited: tooltip.hide()
             }
         }
 
@@ -79,8 +70,6 @@ Item {
 
             tooltip: qsTr("Click para seleccionar un tipo de condición de borde para éste lado");
 
-            Component.onCompleted: clicked();
-
             onClicked: {
 
                 switch(buttonNodeController.state) {
@@ -89,7 +78,6 @@ Item {
                 }
 
                 rowModifiedCurrentIndex();
-
                 StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
                 StudyCaseHandler.isReady();
             }
@@ -142,37 +130,17 @@ Item {
         }
     }
 
-    onLoadPreviousValues: {
+    Component.onCompleted: {
 
-        var currentSide = jsonDomain["sideloadNodes"][index];
-        var nSideLoad = previousSideloadValues.length / 3;
+        var sideloadValue = StudyCaseHandler.getSingleStudyCaseInformation("sideload" + (index + 1), true);
+        var stateValue    = StudyCaseHandler.getSingleStudyCaseInformation("condition-state" + (index + 1), true);
 
-        for ( var k = 0 ; k < nSideLoad; k++ ) {
-            var currentLoad = [
-                        previousSideloadValues[k * ( nSideLoad - 1)],
-                        previousSideloadValues[k * ( nSideLoad - 1) + 1],
-                        previousSideloadValues[k * ( nSideLoad - 1) + 2]
-                    ];
-
-            if (currentSide.indexOf(currentLoad[0]) !== -1 && currentSide.indexOf(currentLoad[1]) !== -1) {
-                textFieldSideload.text = currentLoad[2];
-            }
+        if ( sideloadValue ) {
+            textFieldSideload.text = sideloadValue;
         }
 
-        //--------------------------------------------------
-
-        var nChecks = previousFixNodesValues.length / 2;
-
-        for ( var k = 0 ; k < nChecks; k++ ) {
-            var currentFixNode = [
-                previousFixNodesValues[k * ( nChecks - 1)],
-                previousFixNodesValues[k * ( nChecks - 1) + 1]
-            ];
-
-            if (currentFixNode[0] === (index + 1)) {
-                buttonNodeController.state = "dirichlet";
-                textFieldSideload.text = currentFixNode[1];
-            }
+        if ( stateValue ) {
+            buttonNodeController.state = stateValue;
         }
     }
 }
