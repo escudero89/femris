@@ -8,8 +8,8 @@ FEMRIS es un programa educativo diseñado para el aprendizaje del [Método de El
 
 Versión
 ----
-+ *0.9*
- + Fase beta (actualización: **14 de Diciembre de 2014**).
++ *0.9.2*
+ + Fase pre-release (actualización: **9 de Marzo de 2015**).
 
 Licencia
 ----
