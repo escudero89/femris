@@ -46,6 +46,9 @@ public:
     Q_INVOKABLE bool isStudyType(const QString&);
     Q_INVOKABLE void isReady();
 
+    Q_INVOKABLE bool checkRule(const QString, const QString);
+    Q_INVOKABLE QString getRuleMessage(const QString, const QString);
+
 public Q_SLOTS:
 
 Q_SIGNALS:

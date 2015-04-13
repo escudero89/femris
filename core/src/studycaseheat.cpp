@@ -5,6 +5,19 @@
 #include "fileio.h"
 
 StudyCaseHeat::StudyCaseHeat() {
+
+    Validator kx;
+    Validator ky;
+
+    kx.addRule("greaterThan", 0.0);
+    kx.addRule("notEmpty");
+
+    ky.addRule("greaterThan", 0.0);
+    ky.addRule("notEmpty");
+
+    m_validates.insert("kx", kx);
+    m_validates.insert("ky", ky);
+
 }
 
 /**

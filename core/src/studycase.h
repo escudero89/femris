@@ -5,6 +5,8 @@
 #include <QDateTime>
 #include <QMap>
 
+#include "validator.h"
+
 /**
  * @brief The StudyCase stores the currently working study case, and all its variables
  *
@@ -21,7 +23,7 @@ class StudyCase {
 
 public:
 
-    StudyCase() {}
+    StudyCase();
     virtual ~StudyCase();
 
     void createNew();
@@ -34,6 +36,8 @@ public:
     void compressMapOfInformation();
 
     bool isReady();
+    bool checkRule(const QString, const QString, QString&);
+    QString getRuleMessage(const QString, const QString);
 
     virtual bool checkIfReady() { return false; }
 
@@ -56,6 +60,9 @@ protected:
 
     //! As m_mapOfInformation, except that stores information that will be stored only encoded
     QMap<QString, QString> m_extraInformation;
+
+    //! The validation rules for the Study Case are stored here
+    QMap<QString, Validator> m_validates;
 
 };
 

@@ -178,6 +178,27 @@ void StudyCaseHandler::saveCurrentStudyCase(QString whereToSave) {
 }
 
 /**
+ * @brief Checks if a rule is being passed or not in the study case
+ * @param rule The rule to be check
+ * @param currentValue The value for comparison
+ * @return True if passed, false otherwise
+ */
+bool StudyCaseHandler::checkRule(const QString rule, const QString currentValue) {
+    return m_studyCase->checkRule(rule, currentValue, QString());
+}
+
+/**
+ * @brief Returns the message associated with a certain rule of the study case
+ * @param rule The rule we are looking for
+ * @param currentValue The value for comparison
+ * @return The related message
+ */
+QString StudyCaseHandler::getRuleMessage(const QString rule, const QString currentValue) {
+    QString failedRule;
+    m_studyCase->checkRule(rule, currentValue, failedRule);
+    return m_studyCase->getRuleMessage(rule, failedRule);
+}
+/**
  * @brief Exports the current Study Case to be used in the post-process of gid_t
  *
  * This function actually saves three files. Two of them are for its direct use

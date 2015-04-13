@@ -23,6 +23,7 @@ public:
     void saveLocalCurrentConfiguration();
 
     bool checkIfReady();
+
 };
 
 #endif // STUDYCASEHEAT_H

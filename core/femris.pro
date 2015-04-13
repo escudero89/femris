@@ -14,7 +14,8 @@ SOURCES += \
     src/studycasestructural.cpp \
     src/configure.cpp \
     src/femrisxmlcontenthandler.cpp \
-    src/studycaseheat.cpp
+    src/studycaseheat.cpp \
+    src/validator.cpp
 
 RESOURCES += \
     qml/resources.qrc \
@@ -42,8 +43,10 @@ HEADERS += \
     src/processhandler.h \
     src/studycasehandler.h \
     src/configure.h \
-    src/studycaseheat.h
+    src/studycaseheat.h \
+    src/validator.h
 
 RC_ICONS = rc/logo.ico
 
-QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+# 5.01 for 32 bits, 5.02 for 64 bits (Windows XP)
+QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02

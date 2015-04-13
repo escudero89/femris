@@ -154,16 +154,21 @@ Rectangle {
                             }
 
                             var data = text * 1.0;
-                            console.log(data);
 
                             // If there is a minvalue, we check for it. Same with maxValue
-                            if ( true ) {
+                            if ( StudyCaseHandler.checkRule(variable, text) ) {
                                 isReady = true;
                                 hasError = false;
 
                             } else {
                                 isReady = false;
                                 hasError = true;
+
+                                Configure.emitMainSignal(
+                                            "setInfoBox",
+                                            "<span style='color:" + Style.color.danger + "'>" +
+                                            "<strong>" + math + " invalido:</strong> " +
+                                            StudyCaseHandler.getRuleMessage(variable, text));
                             }
 
                         }

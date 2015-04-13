@@ -1,11 +1,31 @@
 #include "studycase.h"
-#include "utils.h"
 
 #include <QApplication>
 #include <QDebug>
 
 #include "configure.h"
 #include "fileio.h"
+#include "utils.h"
+
+StudyCase::StudyCase() {
+
+    Validator gridHeight;
+    Validator gridWidth;
+    Validator fixnodes;
+
+    gridHeight.addRule("greaterThan", 0.0);
+    gridHeight.addRule("notEmpty");
+
+    gridWidth.addRule("greaterThan", 0.0);
+    gridWidth.addRule("notEmpty");
+
+    fixnodes.addRuleMustContain("fixnodes = [\r\n];");
+
+    m_validates.insert("gridHeight", gridHeight);
+    m_validates.insert("gridWidth", gridWidth);
+    m_validates.insert("gridWidth", fixnodes);
+
+}
 
 /**
  * @brief Creates a new Study Case, and sets its initial configuration
@@ -186,6 +206,25 @@ bool StudyCase::isReady() {
     isReady = !m_mapOfInformation["fixnodes"].contains("fixnodes = [\r\n];");
 
     return isReady;
+}
+
+/**
+ * @brief Checks if a rule is being passed or not
+ * @param rule The rule to be check
+ * @param currentValue The value for comparison
+ * @return True if passed, false otherwise
+ */
+bool StudyCase::checkRule(const QString rule, const QString currentValue, QString &failedRule) {
+    return m_validates[rule].validate(currentValue, failedRule);
+}
+
+/**
+ * @brief Returns the message associated with a certain rule
+ * @param rule The rule we are looking for
+ * @return The related message
+ */
+QString StudyCase::getRuleMessage(const QString rule, const QString failedRule) {
+    return m_validates[rule].getRuleMessage(failedRule);
 }
 
 //----------------------------------------------------------------------------//

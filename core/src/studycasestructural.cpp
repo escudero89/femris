@@ -6,6 +6,30 @@
 #include "fileio.h"
 
 StudyCaseStructural::StudyCaseStructural() {
+
+    Validator youngModulus;
+    Validator poissonCoefficient;
+    Validator densityOfDomain;
+    Validator thickOfDomain;
+
+    youngModulus.addRule("greaterThan", 0.0);
+    youngModulus.addRule("notEmpty");
+
+    poissonCoefficient.addRule("greaterThanOrEqualTo", 0.0);
+    poissonCoefficient.addRule("lessThan", 0.5);
+    poissonCoefficient.addRule("notEmpty");
+
+    densityOfDomain.addRule("greaterThan", 0.0);
+    densityOfDomain.addRule("notEmpty");
+
+    thickOfDomain.addRule("greaterThan", 0.0);
+    thickOfDomain.addRule("notEmpty");
+
+    m_validates.insert("youngModulus", youngModulus);
+    m_validates.insert("poissonCoefficient", poissonCoefficient);
+    m_validates.insert("densityOfDomain", densityOfDomain);
+    m_validates.insert("thickOfDomain", thickOfDomain);
+
 }
 
 /**

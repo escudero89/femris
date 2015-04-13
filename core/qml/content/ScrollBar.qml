@@ -55,7 +55,7 @@ Item {
     // orientation can be either Qt.Vertical or Qt.Horizontal
     property real position
     property real pageSize
-    property variant orientation : Qt.Vertical
+    property real orientation : Qt.Vertical
 
     // A light, semi-transparent background
     Rectangle {
