@@ -7,24 +7,26 @@
 
 class Validator {
 public:
-    Validator();
+    Validator(const QString = "default");
     ~Validator();
 
     void addRule(const QString, double = 0.0, QString = "default");
-    void addRuleMustContain(const QString);
+    void addRuleMustNotContain(const QString);
 
-    bool validate(const QString, QString&);
+    bool validate(const QString, QString&) const;
 
-    bool checkRule(const QString, const QString);
+    bool checkRule(const QString, const QString) const;
     QString getRuleMessage(const QString rule);
 
-    bool checkGreaterThan(const QString, const double);
-    bool checkGreaterThanOrEqualTo(const QString, const double);
-    bool checkLessThan(const QString, const double);
-    bool checkLessThanOrEqualTo(const QString, const double);
-    bool checkNotEmpty(const QString);
+    bool checkGreaterThan(const QString, const double) const;
+    bool checkGreaterThanOrEqualTo(const QString, const double) const;
+    bool checkLessThan(const QString, const double) const;
+    bool checkLessThanOrEqualTo(const QString, const double) const;
+    bool checkNotEmpty(const QString) const;
 
 protected:
+
+    QString m_name;
 
     QMap<QString, QString> m_validatesCustom;
 

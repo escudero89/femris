@@ -6,8 +6,9 @@
 
 StudyCaseHeat::StudyCaseHeat() {
 
-    Validator kx;
-    Validator ky;
+    Validator kx("k<sub>x</sub>");
+    Validator ky("k<sub>y</sub>");
+    Validator fixnodes("al menos una condici&oacute;n de Dirichlet");
 
     kx.addRule("greaterThan", 0.0);
     kx.addRule("notEmpty");
@@ -15,8 +16,11 @@ StudyCaseHeat::StudyCaseHeat() {
     ky.addRule("greaterThan", 0.0);
     ky.addRule("notEmpty");
 
+    fixnodes.addRuleMustNotContain("fixnodes = [\r\n];");
+
     m_validates.insert("kx", kx);
     m_validates.insert("ky", ky);
+    m_validates.insert("fixnodes", fixnodes);
 
 }
 

@@ -476,13 +476,23 @@ void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
 /**
  * @brief Checks if the StudyCase is ready for MATfem
  *
- * @see beforeCheckIfReady()
+ * @return Whether is ready or not
+ *
  * @see ready()
  * @see StudyCase::isReady()
  */
-void StudyCaseHandler::isReady() {
-    emit beforeCheckIfReady();
-    emit ready(m_studyCase->isReady());
+bool StudyCaseHandler::isReady() {
+
+    QString failedField;
+    QString failedRule;
+
+    bool check = m_studyCase->isReady(failedField, failedRule);
+
+    if (!check) {
+        emit fail(m_studyCase->getRuleMessage(failedField, failedRule));
+    }
+
+    return check;
 }
 
 //----------------------------------------------------------------------------//
@@ -557,8 +567,5 @@ bool StudyCaseHandler::isStudyType(const QString& typeOfStudyCase) {
 //! @fn void StudyCaseHandler::markedAsNotSaved()
 //! @brief There are some modifications in the Study Case that are not saved
 
-//! @fn void StudyCaseHandler::beforeCheckIfReady()
-//! @brief Signal emmited before checking if the Study Case is ready for MATfem
-
-//! @fn void StudyCaseHandler::ready(const bool& status)
-//! @brief The Study Case is ready for MATfem
+//! @fn void StudyCaseHandler::fail(const QString& failedRuleMessage)
+//! @brief The Study Case failed to be ready for MATfem

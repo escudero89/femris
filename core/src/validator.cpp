@@ -4,8 +4,8 @@
 
 #include <QString>
 
-Validator::Validator() {
-
+Validator::Validator(const QString name) {
+    m_name = name;
 }
 
 Validator::~Validator() {
@@ -15,6 +15,7 @@ Validator::~Validator() {
 /**
  * @brief Validator::addRule
  * @param rule
+ * @param name
  * @param comparison
  * @param message
  */
@@ -26,15 +27,18 @@ void Validator::addRule(const QString rule, double comparison, QString message) 
 }
 
 /**
- * @brief Validator::addRuleMustContain
+ * @brief Validator::addRuleMustNotContain
+ * @param name
  * @param comparison
  */
-void Validator::addRuleMustContain(const QString comparison) {
-    m_validatesCustom.insert("mustContain", comparison);
-    m_validationFields.append("mustContain");
+void Validator::addRuleMustNotContain(const QString comparison) {
+    QString rule = "mustNotContain";
+
+    m_validatesCustom.insert(rule, comparison);
+    m_validationFields.append(rule);
 }
 
-bool Validator::validate(const QString currentValue, QString &failedRule) {
+bool Validator::validate(const QString currentValue, QString &failedRule) const {
 
     for (int kField = 0; kField < m_validationFields.size(); kField++) {
         if ( checkRule(m_validationFields.at(kField), currentValue) == false ) {
@@ -55,7 +59,7 @@ bool Validator::validate(const QString currentValue, QString &failedRule) {
  * @param currentValue
  * @return
  */
-bool Validator::checkRule(const QString rule, const QString currentValue) {
+bool Validator::checkRule(const QString rule, const QString currentValue) const {
 
     // If it hasn't the rule, returns true
     if (!m_validationFields.contains(rule)) {
@@ -84,8 +88,8 @@ bool Validator::checkRule(const QString rule, const QString currentValue) {
         check = checkNotEmpty(currentValue);
     }
 
-    if (rule == "mustContain") {
-        check = currentValue.contains(m_validatesCustom["mustContain"]);
+    if (rule == "mustNotContain") {
+        check = !currentValue.contains(m_validatesCustom["mustNotContain"]);
     }
 
     // If some rule was enable, but the value is false, we return false
@@ -103,26 +107,26 @@ bool Validator::checkRule(const QString rule, const QString currentValue) {
  */
 QString Validator::getRuleMessage(const QString rule) {
 
-    QString message = "regla sin definir";
+    QString message = QString("regla %1 sin definir").arg(rule);
 
     if (rule == "greaterThan") {
-        message = "El valor debe ser mayor que " + QString::number( m_validatesDouble["greaterThan"] );
+        message = QString("El valor de %1 debe ser mayor que %2").arg(m_name).arg(QString::number( m_validatesDouble[rule] ) );
     }
 
     if (rule == "greaterThanOrEqualTo") {
-        message = "El valor debe ser mayor o igual que " + QString::number( m_validatesDouble["greaterThanOrEqualTo"] );
+        message = QString("El valor de %1 debe ser mayor o igual que %2").arg(m_name).arg(QString::number( m_validatesDouble[rule] ) );
     }
 
     if (rule == "lessThan") {
-        message = "El valor debe ser menor que " + QString::number( m_validatesDouble["lessThan"] );
+        message = QString("El valor de %1 debe ser menor que %2").arg(m_name).arg(QString::number( m_validatesDouble[rule] ) );
     }
 
     if (rule == "lessThanOrEqualTo") {
-        message = "El valor debe ser menor o igual que " + QString::number( m_validatesDouble["lessThanOrEqualTo"] );
+        message = QString("El valor de %1 debe ser menor o igual que %2").arg(m_name).arg(QString::number( m_validatesDouble[rule] ) );
     }
 
-    if (rule == "notEmpty") {
-        message = "El valor no puede ser vacío";
+    if (rule == "notEmpty" || rule == "mustNotContain") {
+        message = QString("El valor de %1 no puede estar vacío").arg(m_name);
     }
 
     return message;
@@ -133,7 +137,7 @@ QString Validator::getRuleMessage(const QString rule) {
  * @brief Validator::checkGreaterThan
  * @return
  */
-bool Validator::checkGreaterThan(const QString rule, const double currentValue) {
+bool Validator::checkGreaterThan(const QString rule, const double currentValue) const {
     return currentValue > m_validatesDouble[rule];
 }
 
@@ -141,7 +145,7 @@ bool Validator::checkGreaterThan(const QString rule, const double currentValue) 
  * @brief Validator::checkGreaterThan
  * @return
  */
-bool Validator::checkGreaterThanOrEqualTo(const QString rule, const double currentValue) {
+bool Validator::checkGreaterThanOrEqualTo(const QString rule, const double currentValue) const {
     return currentValue >= m_validatesDouble[rule];
 }
 
@@ -149,7 +153,7 @@ bool Validator::checkGreaterThanOrEqualTo(const QString rule, const double curre
  * @brief Validator::checkGreaterThan
  * @return
  */
-bool Validator::checkLessThan(const QString rule, const double currentValue) {
+bool Validator::checkLessThan(const QString rule, const double currentValue) const {
     return currentValue < m_validatesDouble[rule];
 }
 
@@ -157,7 +161,7 @@ bool Validator::checkLessThan(const QString rule, const double currentValue) {
  * @brief Validator::checkGreaterThan
  * @return
  */
-bool Validator::checkLessThanOrEqualTo(const QString rule, const double currentValue) {
+bool Validator::checkLessThanOrEqualTo(const QString rule, const double currentValue) const {
     return currentValue <= m_validatesDouble[rule];
 }
 
@@ -165,6 +169,6 @@ bool Validator::checkLessThanOrEqualTo(const QString rule, const double currentV
  * @brief Validator::checkGreaterThan
  * @return
  */
-bool Validator::checkNotEmpty(const QString currentValue) {
+bool Validator::checkNotEmpty(const QString currentValue) const {
     return !currentValue.isEmpty();
 }

@@ -7,10 +7,11 @@
 
 StudyCaseStructural::StudyCaseStructural() {
 
-    Validator youngModulus;
-    Validator poissonCoefficient;
-    Validator densityOfDomain;
-    Validator thickOfDomain;
+    Validator youngModulus("E");
+    Validator poissonCoefficient("&nu;");
+    Validator densityOfDomain("&rho;");
+    Validator thickOfDomain("t");
+    Validator fixnodes("al menos un nodo fijo");
 
     youngModulus.addRule("greaterThan", 0.0);
     youngModulus.addRule("notEmpty");
@@ -25,10 +26,13 @@ StudyCaseStructural::StudyCaseStructural() {
     thickOfDomain.addRule("greaterThan", 0.0);
     thickOfDomain.addRule("notEmpty");
 
+    fixnodes.addRuleMustNotContain("fixnodes = [\r\n];");
+
     m_validates.insert("youngModulus", youngModulus);
     m_validates.insert("poissonCoefficient", poissonCoefficient);
     m_validates.insert("densityOfDomain", densityOfDomain);
     m_validates.insert("thickOfDomain", thickOfDomain);
+    m_validates.insert("fixnodes", fixnodes);
 
 }
 

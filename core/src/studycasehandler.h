@@ -44,7 +44,7 @@ public:
     Q_INVOKABLE void markAsNotSaved();
     Q_INVOKABLE QString getLastSavedPath();
     Q_INVOKABLE bool isStudyType(const QString&);
-    Q_INVOKABLE void isReady();
+    Q_INVOKABLE bool isReady();
 
     Q_INVOKABLE bool checkRule(const QString, const QString);
     Q_INVOKABLE QString getRuleMessage(const QString, const QString);
@@ -62,8 +62,7 @@ Q_SIGNALS:
     void markedAsSaved();
     void markedAsNotSaved();
 
-    void beforeCheckIfReady();
-    void ready(const bool& status);
+    void fail(const QString& failedRuleMessage);
 
 protected:
 

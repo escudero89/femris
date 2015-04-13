@@ -168,7 +168,7 @@ Rectangle {
                                             "setInfoBox",
                                             "<span style='color:" + Style.color.danger + "'>" +
                                             "<strong>" + math + " invalido:</strong> " +
-                                            StudyCaseHandler.getRuleMessage(variable, text));
+                                            StudyCaseHandler.getRuleMessage(variable, text) + ".");
                             }
 
                         }

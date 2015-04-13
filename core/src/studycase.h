@@ -35,7 +35,7 @@ public:
     void setInitialMapOfInformation();
     void compressMapOfInformation();
 
-    bool isReady();
+    bool isReady(QString&, QString&);
     bool checkRule(const QString, const QString, QString&);
     QString getRuleMessage(const QString, const QString);
 

@@ -259,19 +259,23 @@ Rectangle {
 
                     Layout.fillWidth: true
 
-                    enabled: false
-
                     onClicked: {
                         rlDomain.saveCurrentLoads();
-                        ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
+
+                        if (StudyCaseHandler.isReady()) {
+                            ProcessHandler.executeInterpreter(StudyCaseHandler.getSingleStudyCaseInformation("typeOfStudyCase"));
+                        }
                     }
 
                     Connections {
 
                         target : StudyCaseHandler
 
-                        onBeforeCheckIfReady: rlDomain.saveCurrentLoads();
-                        onReady: continueButton.enabled = status;
+                        onFail: Configure.emitMainSignal(
+                                    "setInfoBox",
+                                    "<span style='color:" + Style.color.danger + "'>" +
+                                    "<strong>No se puede procesar el Caso de Estudio:</strong> " +
+                                    failedRuleMessage + ".");
                     }
 
                     Component.onCompleted: StudyCaseHandler.isReady();

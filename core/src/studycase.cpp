@@ -9,9 +9,8 @@
 
 StudyCase::StudyCase() {
 
-    Validator gridHeight;
-    Validator gridWidth;
-    Validator fixnodes;
+    Validator gridHeight("altura del dominio");
+    Validator gridWidth("ancho del dominio");
 
     gridHeight.addRule("greaterThan", 0.0);
     gridHeight.addRule("notEmpty");
@@ -19,11 +18,8 @@ StudyCase::StudyCase() {
     gridWidth.addRule("greaterThan", 0.0);
     gridWidth.addRule("notEmpty");
 
-    fixnodes.addRuleMustContain("fixnodes = [\r\n];");
-
     m_validates.insert("gridHeight", gridHeight);
     m_validates.insert("gridWidth", gridWidth);
-    m_validates.insert("gridWidth", fixnodes);
 
 }
 
@@ -189,21 +185,26 @@ void StudyCase::compressMapOfInformation() {
 
 /**
  * @brief Checks if the Study Case is ready to be processed by MATfem
+ * @param failedRule Which field failed first
+ * @param failedRule Which rule failed first
  * @return Whether is ready or not
  */
-bool StudyCase::isReady() {
+bool StudyCase::isReady(QString &failedField, QString &failedRule) {
 
-    bool isReady = checkIfReady();
+    bool isReady = false;
 
-    if ( (!isReady) ||
-         ( (m_mapOfInformation["gridHeight"].toDouble()) == 0.0 ||
-           (m_mapOfInformation["gridWidth"].toDouble())  == 0.0 ) ) {
+    QMapIterator<QString, Validator> i(m_validates);
 
-        return false;
+    while (i.hasNext()) {
+        i.next();
+
+        isReady = i.value().validate(m_mapOfInformation[i.key()], failedRule);
+
+        if (isReady == false) {
+            failedField = i.key();
+            break;
+        }
     }
-
-    // We need at least some values in the fixnodes
-    isReady = !m_mapOfInformation["fixnodes"].contains("fixnodes = [\r\n];");
 
     return isReady;
 }
