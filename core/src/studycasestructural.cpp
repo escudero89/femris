@@ -20,7 +20,7 @@ StudyCaseStructural::StudyCaseStructural() {
     poissonCoefficient.addRule("lessThan", 0.5);
     poissonCoefficient.addRule("notEmpty");
 
-    densityOfDomain.addRule("greaterThan", 0.0);
+    densityOfDomain.addRule("greaterThanOrEqualTo", 0.0);
     densityOfDomain.addRule("notEmpty");
 
     thickOfDomain.addRule("greaterThan", 0.0);

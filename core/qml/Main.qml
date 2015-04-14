@@ -26,7 +26,7 @@ ApplicationWindow {
 
     title: qsTr("FEMRIS - Finite Element Method leaRnIng Software")
 
-    property string initialScreen : "screens/CE_Model.qml"
+    property string initialScreen : "screens/Initial.qml"
 
     menuBar: TopMenuBar {
         onWhichMenu: {

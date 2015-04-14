@@ -45,7 +45,8 @@ public:
     virtual void saveLocalCurrentConfiguration() {}
 
     QMap<QString, QString> getMapOfInformation();
-    void setMapOfInformation(QMap<QString, QString>, QMap<QString, QString>);
+    void setMapOfInformation(QMap<QString, QString>);
+    void setExtraInformation(QMap<QString, QString>);
 
 protected:
 

@@ -41,6 +41,7 @@ void StudyCaseHandler::start() {
     currentStudyCaseVariables["stepOfProcess"] = "1";
 
     m_currentStudyCaseVariables = currentStudyCaseVariables;
+    m_temporalStudyCaseVariables = QMap<QString, QString> ();
 
     markAsSaved();
 }
@@ -134,6 +135,7 @@ void StudyCaseHandler::createNewStudyCase() {
 
     m_studyCase->createNew();
     m_currentStudyCaseVariables = m_studyCase->getMapOfInformation();
+    m_temporalStudyCaseVariables = QMap<QString, QString> ();
 
     // Extra parameter for structural (1 for plane stress, 0 for plane strain)
     if (m_studyCaseType == "plane-stress" || m_studyCaseType == "plane-strain") {
@@ -260,7 +262,9 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
         m_temporalStudyCaseVariables = Utils::stringToQMap(decodedExtraInfo);
     }
 
-    m_studyCase->setMapOfInformation(m_currentStudyCaseVariables, m_temporalStudyCaseVariables);
+    m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+    m_studyCase->setExtraInformation(m_temporalStudyCaseVariables);
+
     m_studyCase->saveCurrentConfiguration();
     m_lastSavedPath = whereToLoad;
 
@@ -329,27 +333,42 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
                                                      bool isTemporal) {
 
     if (isTemporal) {
-        m_temporalStudyCaseVariables.insert(variable, newValue);
 
-    } else {
+        bool saveCurrentConfiguration = false;
 
-        if (!m_currentStudyCaseVariables.contains(variable)) {
-            Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
+        if (!m_temporalStudyCaseVariables.contains(variable)) {
+            m_temporalStudyCaseVariables.insert(variable, newValue);
+            saveCurrentConfiguration = true;
         }
 
-        // We only update the data if differs from the previous one recorded
-        if (m_currentStudyCaseVariables[variable] != newValue) {
-            m_currentStudyCaseVariables[variable] = newValue;
-            m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
-
-            markAsNotSaved();
-            isReady();
+        if (m_temporalStudyCaseVariables[variable] != newValue) {
+            m_temporalStudyCaseVariables[variable] = newValue;
+            saveCurrentConfiguration = true;
         }
 
+        if (saveCurrentConfiguration && exists()) {
+            m_studyCase->setExtraInformation(m_temporalStudyCaseVariables);
+            m_studyCase->saveCurrentConfiguration();
+        }
+
+        return;
     }
 
-    m_studyCase->setMapOfInformation(m_currentStudyCaseVariables, m_temporalStudyCaseVariables);
-    m_studyCase->saveCurrentConfiguration();
+    if (!m_currentStudyCaseVariables.contains(variable)) {
+        Utils::throwErrorAndExit("StudyCaseHandler::setSingleStudyCaseInformation(): unknown variable " + variable);
+    }
+
+    // We only update the data if differs from the previous one recorded
+    if (m_currentStudyCaseVariables[variable] != newValue) {
+        m_currentStudyCaseVariables[variable] = newValue;
+        m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
+
+        markAsNotSaved();
+        isReady();
+
+        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
+        m_studyCase->saveCurrentConfiguration();
+    }
 
 }
 
@@ -381,7 +400,7 @@ void StudyCaseHandler::setSingleStudyCaseJson(const QString& variable,
     if (m_currentStudyCaseVariables[variable] != newJsonfyVariable) {
         m_currentStudyCaseVariables[variable] = newJsonfyVariable;
 
-        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables, m_temporalStudyCaseVariables);
+        m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
         m_studyCase->saveCurrentConfiguration();
 
         markAsNotSaved();

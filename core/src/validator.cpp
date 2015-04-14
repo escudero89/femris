@@ -4,6 +4,10 @@
 
 #include <QString>
 
+/**
+ * @brief Constructor of the Class. It needs the name of the field for the messages.
+ * @param name Of the field we are validating
+ */
 Validator::Validator(const QString name) {
     m_name = name;
 }
@@ -13,23 +17,20 @@ Validator::~Validator() {
 }
 
 /**
- * @brief Validator::addRule
- * @param rule
- * @param name
- * @param comparison
- * @param message
+ * @brief Adds a single rule with a numeric value for comparison into the validator.
+ *
+ * @param rule Name of the rule we are adding
+ * @param comparison Numeric value for the rule to compare with
  */
-void Validator::addRule(const QString rule, double comparison, QString message) {
+void Validator::addRule(const QString rule, double comparison) {
     m_validatesDouble.insert(rule, comparison);
-    m_validatesMessage.insert(rule, message);
 
     m_validationFields.append(rule);
 }
 
 /**
- * @brief Validator::addRuleMustNotContain
- * @param name
- * @param comparison
+ * @brief Adds a rule that requires that the field must not contain a certain value
+ * @param comparison The value that it must not contain
  */
 void Validator::addRuleMustNotContain(const QString comparison) {
     QString rule = "mustNotContain";
@@ -38,6 +39,12 @@ void Validator::addRuleMustNotContain(const QString comparison) {
     m_validationFields.append(rule);
 }
 
+/**
+ * @brief Loop  through all the rules, checking them all.
+ * @param currentValue The value used against our comparison
+ * @param failedRule A reference value, filled with the failed rule (if exists)
+ * @return True if there wasn't any failed rule, false otherwise
+ */
 bool Validator::validate(const QString currentValue, QString &failedRule) const {
 
     for (int kField = 0; kField < m_validationFields.size(); kField++) {
@@ -54,10 +61,11 @@ bool Validator::validate(const QString currentValue, QString &failedRule) const 
 }
 
 /**
- * @brief Validator::checkRule
- * @param rule
- * @param currentValue
- * @return
+ * @brief Checks a single rule
+ * @param rule Rule we are checking
+ * @param currentValue The value we are comparing with the one stored in the rule
+ *
+ * @return True if the rule didn't fail, false otherwise
  */
 bool Validator::checkRule(const QString rule, const QString currentValue) const {
 
@@ -69,19 +77,19 @@ bool Validator::checkRule(const QString rule, const QString currentValue) const 
     bool check = false;
 
     if (rule == "greaterThan") {
-        check = checkGreaterThan(rule, currentValue.toDouble());
+        check = checkGreaterThan(currentValue.toDouble());
     }
 
     if (rule == "greaterThanOrEqualTo") {
-        check = checkGreaterThanOrEqualTo(rule, currentValue.toDouble());
+        check = checkGreaterThanOrEqualTo(currentValue.toDouble());
     }
 
     if (rule == "lessThan") {
-        check = checkLessThan(rule, currentValue.toDouble());
+        check = checkLessThan(currentValue.toDouble());
     }
 
     if (rule == "lessThanOrEqualTo") {
-        check = checkLessThanOrEqualTo(rule, currentValue.toDouble());
+        check = checkLessThanOrEqualTo(currentValue.toDouble());
     }
 
     if (rule == "notEmpty") {
@@ -101,9 +109,9 @@ bool Validator::checkRule(const QString rule, const QString currentValue) const 
 }
 
 /**
- * @brief Validator::getRuleMessage
- * @param rule
- * @return
+ * @brief Gets the message for a single failed rule
+ * @param rule The rule that has fail
+ * @return The message for the failed rule
  */
 QString Validator::getRuleMessage(const QString rule) {
 
@@ -134,40 +142,45 @@ QString Validator::getRuleMessage(const QString rule) {
 }
 
 /**
- * @brief Validator::checkGreaterThan
- * @return
+ * @brief Checks that the current value is > than the stored
+ * @param currentValue The value we need to check
+ * @return True if it's >, false otherwise
  */
-bool Validator::checkGreaterThan(const QString rule, const double currentValue) const {
-    return currentValue > m_validatesDouble[rule];
+bool Validator::checkGreaterThan(const double currentValue) const {
+    return currentValue > m_validatesDouble["greaterThan"];
 }
 
 /**
- * @brief Validator::checkGreaterThan
- * @return
+ * @brief Checks that the current value is >= than the stored
+ * @param currentValue The value we need to check
+ * @return True if it's >=, false otherwise
  */
-bool Validator::checkGreaterThanOrEqualTo(const QString rule, const double currentValue) const {
-    return currentValue >= m_validatesDouble[rule];
+bool Validator::checkGreaterThanOrEqualTo(const double currentValue) const {
+    return currentValue >= m_validatesDouble["greaterThanOrEqualTo"];
 }
 
 /**
- * @brief Validator::checkGreaterThan
- * @return
+ * @brief Checks that the current value is < than the stored
+ * @param currentValue The value we need to check
+ * @return True if it's <, false otherwise
  */
-bool Validator::checkLessThan(const QString rule, const double currentValue) const {
-    return currentValue < m_validatesDouble[rule];
+bool Validator::checkLessThan(const double currentValue) const {
+    return currentValue < m_validatesDouble["lessThan"];
 }
 
 /**
- * @brief Validator::checkGreaterThan
- * @return
+ * @brief Checks that the current value is <= than the stored
+ * @param currentValue The value we need to check
+ * @return True if it's <=, false otherwise
  */
-bool Validator::checkLessThanOrEqualTo(const QString rule, const double currentValue) const {
-    return currentValue <= m_validatesDouble[rule];
+bool Validator::checkLessThanOrEqualTo(const double currentValue) const {
+    return currentValue <= m_validatesDouble["lessThanOrEqualTo"];
 }
 
 /**
- * @brief Validator::checkGreaterThan
- * @return
+ * @brief Checks that the current value is not empty
+ * @param currentValue The value we need to check
+ * @return True if it's empty, false otherwise
  */
 bool Validator::checkNotEmpty(const QString currentValue) const {
     return !currentValue.isEmpty();

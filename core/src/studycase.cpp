@@ -243,15 +243,17 @@ QMap<QString, QString> StudyCase::getMapOfInformation() {
 /**
  * @brief Sets the new QMap which will store all the information of the Study Case
  * @param newMapOfInformation New QMap for the Study Case
- * @param newExtraInformation New QMap with extra information about the StudyCase
  */
-void StudyCase::setMapOfInformation(
-        QMap<QString, QString> newMapOfInformation,
-        QMap<QString, QString> newExtraInformation) {
-
+void StudyCase::setMapOfInformation(QMap<QString, QString> newMapOfInformation) {
     m_mapOfInformation = newMapOfInformation;
-    m_extraInformation = newExtraInformation;
+}
 
+/**
+ * @brief Sets the QMap which will store all the extra information of the Study Case
+ * @param newMapOfInformation QMap with the new extra information about the SC
+ */
+void StudyCase::setExtraInformation(QMap<QString, QString> newExtraInformation) {
+    m_extraInformation = newExtraInformation;
 }
 
 //----------------------------------------------------------------------------//
