@@ -38,37 +38,56 @@
 
         <!-- Menu Bar -->
         <div class="navbar-sm">
-            <div class="navbar-primary">
-                <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-                    <form class="navbar-form navbar-left" role="search" style="margin:3px">
+        <div class="navbar-primary">
+        <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-brand" href style="padding:3px">
                         <div id="miniLoader" class="form-group">
                             <div class="form-control" style="background-color:transparent;  padding: 0; margin:0;">
                                 <img class="img-responsive" src="img/loader.gif" alt="Cargando" title="Cargando..." width="26" style="background-color:transparent; padding: 3px 0; margin: 0 7px; opacity: 0;"/>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left" role="search" style="margin:3px">
                         <div class="form-group">
                             <span class="alert-warning form-control text-right" id="errorValue" data-toggle="tooltip" data-placement="bottom" title="Valor cuadrático medio presente en la función f(x) siendo aproximada por las funciones de forma elegidas.">Root Mean Square: 00.00%</span>
                         </div>
                     </form>
                     <form class="navbar-form navbar-left" role="search" style="margin:0;">
                         <ul class="nav navbar-nav" role="tablist">
-                            <li role="presentation" class="active"><a href="#shapefunction" aria-controls="shapefunction" role="tab" data-toggle="tab">Función de Forma</a></li>
-                            <li role="presentation"><a href="#approximation" aria-controls="approximation" role="tab" data-toggle="tab">Aproximación</a></li>
+                            <li role="presentation" class="active">
+                                <a href="#shapefunction" aria-controls="shapefunction" role="tab" data-toggle="tab">Función de Forma</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#approximation" aria-controls="approximation" role="tab" data-toggle="tab">Aproximación</a>
+                            </li>
                         </ul>
                     </form>
                     <form class="navbar-form navbar-right" style="margin:3px">
                         <button id="updateGraphButton" class="btn btn-primary" type="button" onclick="updateRightGraph()" title="Actualizar gráfico">
-                        <span class="glyphicon glyphicon-refresh"></span>
+                            <span class="glyphicon glyphicon-refresh"></span>
                         </button>
                         <button class="btn btn-info" type="button" data-toggle="modal" data-target="#modalInfo" title="Más información">
-                        <span class="glyphicon glyphicon-info-sign"></span>
+                            <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
                         <a class="btn btn-femris" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Funciones-de-Forma">
                             <span class="glyphicon glyphicon-question-sign"></span>
                         </a>
                     </form>
-                </nav>
+                </div>
             </div>
+        </nav>
+        </div>
         </div>
 
         <div class="separator" style="height:10px; width:100%;"></div>

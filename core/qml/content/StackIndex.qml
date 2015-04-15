@@ -80,6 +80,11 @@ StackView {
                         // Informamos a IndexLayout que cargue la nueva pagina
                         indexLayout.loader(myCurrent.page);
                     }
+
+                    // If it's external, we also called the browser
+                    if (isExternal) {
+                        Qt.openUrlExternally(page);
+                    }
                 }
 
                 Component.onCompleted: {

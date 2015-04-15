@@ -485,11 +485,11 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
  * @param withoutFullPath Whether it needs to add the current App path.
  */
 void StudyCaseHandler::loadUrlInBrowser(QString link, bool withoutFullPath) {
-    if (withoutFullPath) {
-        QDesktopServices::openUrl(QUrl(link));
-    } else {
-        QDesktopServices::openUrl(QUrl(Configure::read("fileApplicationDirPath") + link));
+    if (!withoutFullPath) {
+        link = Configure::read("fileApplicationDirPath") + link;
     }
+
+    QDesktopServices::openUrl(QUrl(link));
 }
 
 /**

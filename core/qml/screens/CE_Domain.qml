@@ -278,7 +278,6 @@ Rectangle {
                                     failedRuleMessage + ".");
                     }
 
-                    Component.onCompleted: StudyCaseHandler.isReady();
                 }
             }
         }

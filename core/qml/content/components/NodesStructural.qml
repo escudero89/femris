@@ -65,7 +65,6 @@ Item {
 
                 rowModifiedCurrentIndex();
                 StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
-                StudyCaseHandler.isReady();
             }
 
             state: "libre"
@@ -132,10 +131,7 @@ Item {
             Layout.preferredWidth: parent.width / 4
             placeholderText: "x_" + ( index + 1 ) + " [N]"
 
-            onTextChanged: {
-                StudyCaseHandler.setSingleStudyCaseInformation("pointloadx" + (index + 1), text, true);
-                StudyCaseHandler.isReady();
-            }
+            onTextChanged: StudyCaseHandler.setSingleStudyCaseInformation("pointloadx" + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && currentIndex !== index) {
@@ -151,10 +147,7 @@ Item {
             Layout.preferredWidth: parent.width / 4
             placeholderText: "y_" + ( index + 1 ) + " [N]"
 
-            onTextChanged: {
-                StudyCaseHandler.setSingleStudyCaseInformation("pointloady" + (index + 1), text, true);
-                StudyCaseHandler.isReady();
-            }
+            onTextChanged: StudyCaseHandler.setSingleStudyCaseInformation("pointloady" + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && currentIndex !== index) {
@@ -182,6 +175,7 @@ Item {
         if ( stateValue ) {
             buttonNodeController.state = stateValue;
         }
+
     }
 
     Connections {

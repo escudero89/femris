@@ -134,10 +134,7 @@ Item {
             Layout.preferredWidth: parent.width / 4
             placeholderText: "x_" + ( index + 1 ) + " [N/m]"
 
-            onEditingFinished: {
-                StudyCaseHandler.setSingleStudyCaseInformation("sideloadx" + (index + 1), text, true);
-                StudyCaseHandler.isReady();
-            }
+            onEditingFinished: StudyCaseHandler.setSingleStudyCaseInformation("sideloadx" + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && currentIndex !== index) {
@@ -154,10 +151,7 @@ Item {
             Layout.preferredWidth: parent.width / 4
             placeholderText: "y_" + ( index + 1 ) + " [N/m]"
 
-            onEditingFinished: {
-                StudyCaseHandler.setSingleStudyCaseInformation("sideloady" + (index + 1), text, true);
-                StudyCaseHandler.isReady();
-            }
+            onEditingFinished: StudyCaseHandler.setSingleStudyCaseInformation("sideloady" + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && currentIndex !== index) {

@@ -26,8 +26,9 @@ var globalElementalMatrixObject = {
  * @param  {String} tag  Tag to be used in _tag
  * @return {String}      Wrapped text
  */
-    wrapInTag : function (text, tag) {
-        return "\\begin{" + tag + "}" + text + "\\end{" + tag + "}";
+    wrapInTag : function (text, tag, extraArg) {
+        extraArg = assignIfNecessary(extraArg, ' ');
+        return "\\begin{" + tag + "}" + extraArg + text + "\\end{" + tag + "}";
     },
 
 /**

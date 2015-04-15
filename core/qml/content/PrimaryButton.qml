@@ -102,6 +102,7 @@ Button {
                     height: button.height * .5
                     fillMode: Image.PreserveAspectFit // Image should shrink if button is too small, depends on QTBUG-14957
                 }
+
                 Text {
 
                     property string originalText

@@ -166,7 +166,7 @@ var domainObject = {
 
         var width = 10;
 
-        var N_blocks = this.xnode.length;
+        var N_blocks = Math.max(Math.ceil(this.xnode.length / 2), 7);
 
         var blockHeight = this.options.localParamsTextSVG["font-size"] * 2;
 
@@ -463,7 +463,7 @@ var domainObject = {
 
         svgPanZoom(drawShapes, {
             panEnabled: true,
-            controlIconsEnabled: true,
+            controlIconsEnabled: false,
             zoomEnabled: true,
             dblClickZoomEnabled: false,
             zoomScaleSensitivity: 0.2,
@@ -477,23 +477,5 @@ var domainObject = {
             beforePan: function(){},
             onPan: function(){}
         });
-
-        /*
-        self = this;
-
-        $(this.twoScale._renderer.elem.children)
-            .css('cursor', 'pointer')
-            .on('mouseenter', function(e) {
-
-            var fillValue = $(this).attr('fill');
-
-            $.each(self.twoScale.children, function(idx, twoBlock) {
-                if (fillValue === twoBlock.fill) {
-                    console.log(twoBlock.representedValue);
-
-                    return false;
-                }
-            });
-        });*/
     }
 };

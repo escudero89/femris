@@ -62,7 +62,6 @@ Item {
 
                 rowModifiedCurrentIndex();
                 StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
-                StudyCaseHandler.isReady();
             }
 
             state: "dirichlet"
@@ -123,6 +122,7 @@ Item {
         if ( stateValue ) {
             buttonNodeController.state = stateValue;
         }
+
     }
 
     Connections {

@@ -41,7 +41,7 @@ ColumnLayout {
                 anchors.top: parent.top
                 anchors.topMargin: 3
                 anchors.right: parent.right
-                anchors.rightMargin: 18
+                anchors.rightMargin: 3
 
                 height: 35
                 width: 41

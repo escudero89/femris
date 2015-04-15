@@ -92,11 +92,7 @@ ColumnLayout {
             Layout.fillWidth: true
 
             onClicked: {
-                if (StudyCaseHandler.exists()) {
-
-                } else {
-                    mainWindow.switchSection(StudyCaseHandler.getSingleStudyCaseInformation("tutorialReturnTo", true));
-                }
+                mainWindow.switchSection(StudyCaseHandler.getSingleStudyCaseInformation("tutorialReturnTo", true));
             }
         }
 

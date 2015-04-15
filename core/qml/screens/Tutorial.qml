@@ -127,6 +127,7 @@ RowLayout {
             height: parent.height
             width: parent.width
             spacing: 0
+
             WebEngineView {
 
                 property string previous_url : ""
@@ -137,15 +138,6 @@ RowLayout {
                 Layout.fillHeight: true
 
                 visible: false
-
-                /*
-                onNavigationRequested: {
-                    var url = "" + request.url;
-                    if (url.indexOf("http") === 0) {
-                        //request.action = WebEngine.IgnoreRequest;
-                        globalInfoBox.loadUrlInBrowser(url);
-                    }
-                }*/
 
                 // We load the layout and the view, and put the info in the WebView
                 FileIO {

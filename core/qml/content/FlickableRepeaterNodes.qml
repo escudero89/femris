@@ -119,9 +119,7 @@ ColumnLayout {
                     });
 
                     // For notifying loading
-                    objectRow.Component.completed.connect(function() {
-                        clRows.amountOfLoadedElements++;
-                    });
+                    clRows.amountOfLoadedElements++;
 
                 }
 

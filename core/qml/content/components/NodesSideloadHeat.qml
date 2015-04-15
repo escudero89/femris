@@ -79,7 +79,6 @@ Item {
 
                 rowModifiedCurrentIndex();
                 StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true);
-                StudyCaseHandler.isReady();
             }
 
             state: "dirichlet"
@@ -116,10 +115,7 @@ Item {
             Layout.preferredWidth: parent.width * 0.4
             placeholderText: (buttonNodeController.state === "dirichlet") ? "[ºC]" : "[W/m]"
 
-            onEditingFinished: {
-                StudyCaseHandler.setSingleStudyCaseInformation("sideload" + (index + 1), text, true);
-                StudyCaseHandler.isReady();
-            }
+            onEditingFinished: StudyCaseHandler.setSingleStudyCaseInformation("sideload" + (index + 1), text, true);
 
             onFocusChanged: {
                 if (focus === true && currentIndex !== index) {

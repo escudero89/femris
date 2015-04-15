@@ -259,36 +259,28 @@ var globalMatrixObject = {
 
         this.matrixWidth = parseInt(this.$drawMatrix.css("width"));
 
-        this.sideCell = (this.matrixWidth * 0.9 / ( xnode.length + 3 )) * .9;
+        this.sideCell = (this.matrixWidth * 0.9 / ( xnode.length + 2 )) * .9;
 
         this.cellDataMatrix = {
             'iniPosX' : this.matrixWidth * 0.08,
-            'iniPosY' : this.matrixWidth * 0.08 + G_HEIGHT_NAVBAR,
+            'iniPosY' : this.matrixWidth * 0.08,
             'sideCell': this.sideCell
         };
 
         this.cellDataVectorPhi = {
-            'iniPosX' : this.matrixWidth - this.matrixWidth * 0.08 + this.cellDataMatrix.sideCell,
-            'iniPosY' : this.cellDataMatrix.iniPosY,
-            'sideCell': this.cellDataMatrix.sideCell
-        };
-
-        this.cellDataVectorF = {
             'iniPosX' :
                 ( this.cellDataMatrix.iniPosX + this.cellDataMatrix.sideCell * xnode.length +
-                  this.cellDataVectorPhi.iniPosX ) * 0.5,
+                  (1 - 0.08) * this.matrixWidth + this.cellDataMatrix.sideCell ) * 0.5,
             'iniPosY' : this.cellDataMatrix.iniPosY,
             'sideCell': this.cellDataMatrix.sideCell
         };
 
         this.groupMatrix    = this.drawMatrix(this.cellDataMatrix);
         this.groupVectorPhi = this.drawVector(this.cellDataVectorPhi);
-        this.groupVectorF   = this.drawVector(this.cellDataVectorF);
 
         this.group = {
             'groupMatrix'    : this.groupMatrix,
-            'groupVectorPhi' : this.groupVectorPhi,
-            'groupVectorF'   : this.groupVectorF,
+            'groupVectorPhi' : this.groupVectorPhi
         };
 
         this.TwoMatrix.add(this.drawBackground(this.cellDataMatrix, this.groupMatrix.getBoundingClientRect(true)));
@@ -296,7 +288,6 @@ var globalMatrixObject = {
         this.TwoMatrix.add(this.groupMatrix);
 
         this.TwoMatrix.add(this.groupVectorPhi);
-        this.TwoMatrix.add(this.groupVectorF);
 
         this.TwoMatrix.update();
 
@@ -309,9 +300,9 @@ var globalMatrixObject = {
      * Updates the SVG by adding controls to it (such as zoom and pan).
      */
     updatePan : function() {
-        svgPanZoom('#draw-matrix svg', {
+        var svgPanZoomObject = svgPanZoom('#draw-matrix svg', {
             panEnabled: true,
-            controlIconsEnabled: true,
+            controlIconsEnabled: false,
             zoomEnabled: true,
             dblClickZoomEnabled: false,
             zoomScaleSensitivity: 0.2,
@@ -325,6 +316,9 @@ var globalMatrixObject = {
             beforePan: function(){},
             onPan: function(){}
         });
+
+        svgPanZoomObject.center();
+        svgPanZoomObject.zoomBy(0.99);
     },
 
 };

@@ -23,7 +23,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
-#include <QtWebEngine/qtwebengineglobal.h>
+#include <QtWebEngine/QtWebEngine>
 
 #include <QObject>
 #include <QDebug>
