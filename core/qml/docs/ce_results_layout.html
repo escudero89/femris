@@ -100,21 +100,21 @@
                         <form class="navbar-form navbar-right" role="search" style="margin:0">
                           <ul class="nav navbar-nav">
                                 <li style="margin:3px; padding:0;">
-                                    <button type="button" class="btn btn-info" title="Mostrar/Ocultar Escala" onclick="toggleScale();">
+                                    <button type="button" class="btn btn-info btn-tooltip-up" title="Mostrar/Ocultar Escala" onclick="toggleScale();">
                                         <span class="glyphicon glyphicon-flag"></span>
                                     </button>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav">
                                 <li style="margin:3px; padding:0;">
-                                    <button type="button" class="btn btn-success" title="Cambiar visualización de paneles" onclick="togglePanels();">
+                                    <button type="button" class="btn btn-success btn-tooltip-up" title="Cambiar visualización de paneles" onclick="togglePanels();">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                     </button>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Cambiar mapa de colores">
+                                    <a href="#" class="dropdown-toggle btn-tooltip-up" data-toggle="dropdown" title="Cambiar mapa de colores">
                                         <span class="glyphicon glyphicon-leaf"></span>
                                         <span class="caret"></span>
                                     </a>
@@ -213,6 +213,10 @@
         $(document).ready(function() {
             $("[data-toggle=popover]").popover();
             $("[data-toggle=tooltip]").tooltip();
+
+            $(".btn-tooltip-up").tooltip({placement: 'top'});
+            $(".btn-tooltip-down").tooltip({placement: 'bottom'});
+
             highlightMATLABCode({tagCode: false, tagPre: true, className: 'matlab-code'});
 
             $("#loader").fadeOut(function() {

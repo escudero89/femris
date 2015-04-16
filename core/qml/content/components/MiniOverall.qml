@@ -137,8 +137,6 @@ RowLayout {
                     blockStatus =
                             (newStep > thisBlockStatus) ? "used" :
                             (newStep === thisBlockStatus) ? "default" : "disabled";
-
-                    console.log(newStep,"newStep");
                 }
             }
         }

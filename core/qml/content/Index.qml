@@ -9,7 +9,7 @@ import "../"
 // Index
 ColumnLayout {
 
-    property string urlPath : "docs/current.html"
+    property string urlPath : fileApplicationDirPath + "/docs/current.html"
 
     id: indexLayout
 
@@ -103,7 +103,7 @@ ColumnLayout {
 
             Layout.fillWidth: true
 
-            onClicked: StudyCaseHandler.loadUrlInBrowser(urlPath, true);
+            onClicked: globalInfoBox.loadUrlInBrowser(urlPath);
         }
     }
 }

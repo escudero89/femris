@@ -41,9 +41,9 @@ ColumnLayout {
                 anchors.top: parent.top
                 anchors.topMargin: 3
                 anchors.right: parent.right
-                anchors.rightMargin: 3
+                anchors.rightMargin: StudyCaseHandler.isStudyType('heat') ? 18 : 3
 
-                height: 35
+                height: 39
                 width: 41
 
                 onClicked: {

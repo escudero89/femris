@@ -19,6 +19,8 @@ RowLayout {
 
     spacing: 0
 
+    onCurrentUrlForTutorialChanged: currentWebView.changeContent()
+
     Index {
 
         property double originalMaximumWidth : rowParent.width * 0.3
@@ -32,10 +34,7 @@ RowLayout {
 
         state: "NORMAL"
 
-        onLoader : {
-            rowParent.currentUrlForTutorial = url;
-            currentWebView.url = url;
-        }
+        onLoader : rowParent.currentUrlForTutorial = url;
 
         states: [
             State {
@@ -118,101 +117,111 @@ RowLayout {
     Rectangle {
 
         color: Style.color.background
-        //width: rowParent.width - indiceContenido.width
+
         Layout.fillWidth: true
         Layout.fillHeight: true
 
-        RowLayout {
+        WebEngineView {
 
-            height: parent.height
-            width: parent.width
-            spacing: 0
+            signal changeContent()
 
-            WebEngineView {
+            property string previous_url : ""
 
-                property string previous_url : ""
+            id: currentWebView
 
-                id: currentWebView
+            anchors.fill: parent
 
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+            visible: false
 
-                visible: false
-
-                // We load the layout and the view, and put the info in the WebView
-                FileIO {
-                    id: io_layout
-                    source: fileApplicationDirPath + "/docs/layout.html"
-                    onError: console.log(msg)
-                }
-
-                FileIO {
-                    id: io_view
-                    onError: console.log(msg)
-                }
-
-                FileIO {
-                    id: io_current
-                    source: fileApplicationDirPath + "/docs/current.html"
-                    onError: console.log(msg)
-                }
-
-                Component.onCompleted: {
-                    visible = true;
-
-                    rowParent.layoutForTutorial = io_layout.read();
-                    rowParent.currentUrlForTutorial = "docs/view/femris_inicio_tutorial.html";
-                    currentWebView.url = fileApplicationDirPath + "/docs/current.html";
-                }
-
-                onUrlChanged: {
-                    var url_stringed = String(url);
-
-                    if (previous_url === url_stringed) {
-                        return;
-                    }
-
-                    previous_url = url_stringed;
-
-                    // These are for those that we don't to wrap with the layout
-                    if (rowParent.currentUrlForTutorial[0] === '$') {
-                        currentWebView.url = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
-
-                    // Source that we want to wrap with the layout
-                    } else {
-
-                        if (rowParent.currentUrlForTutorial.search("http") !== -1) {
-                            rowParent.currentUrlForTutorial = "docs/view/external.html";
-                        }
-
-                        var viewPath = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial;
-
-                        io_view.setSource(viewPath);
-                        var layout  = rowParent.layoutForTutorial;
-                        var view = io_view.read();
-
-                        layout = layout.replace("{{=include(view)}}", view);
-                        io_current.write(layout);
-
-                        currentWebView.url = fileApplicationDirPath + "/docs/current.html";
-
-                        // Direct link to a website
-                    }
-
-                    indiceContenido.urlPath = currentWebView.url;
-                }
+            // We load the layout and the view, and put the info in the WebView
+            FileIO {
+                id: io_layout
+                source: fileApplicationDirPath + "/docs/layout.html"
+                onError: console.log(msg)
             }
 
-            Text {
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 10
-                anchors.leftMargin: 10
-
-                text: (currentWebView.loading) ? qsTr("Cargando (" + currentWebView.loadProgress + "%)...") : ""
+            FileIO {
+                id: io_view
+                onError: console.log(msg)
             }
 
+            FileIO {
+                id: io_current
+                source: fileApplicationDirPath + "/docs/current.html"
+                onError: console.log(msg)
+            }
+
+            Component.onCompleted: rowParent.layoutForTutorial = io_layout.read();
+
+            onLoadingChanged: visible = !loading
+
+            onChangeContent: updateCurrentHtml();
+
+            onUrlChanged: indiceContenido.urlPath = url;
+
+            function updateCurrentHtml() {
+
+                // These are for those that we don't to wrap with the layout
+                if (rowParent.currentUrlForTutorial[0] === '$') {
+                    currentWebView.url = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial.substr(1);
+                    console.log("shapeshapeshape");
+                    return;
+                }
+
+                // Source that we want to wrap with the layout
+
+                // For external pages, let's load them directly in the browser of the user instead of here
+                if (rowParent.currentUrlForTutorial.search("http") !== -1) {
+                    tOpenUrlExternal.goHere = rowParent.currentUrlForTutorial;
+                    tOpenUrlExternal.start();
+                    rowParent.currentUrlForTutorial = "docs/view/external.html";
+                }
+
+                wrapDocWithLayout();
+
+                currentWebView.url = fileApplicationDirPath + "/docs/current.html";
+            }
+
+            function wrapDocWithLayout() {
+
+                var viewPath = fileApplicationDirPath + "/" + rowParent.currentUrlForTutorial;
+
+                io_view.setSource(viewPath);
+                var layout  = rowParent.layoutForTutorial;
+                var view = io_view.read();
+
+                layout = layout.replace("{{=include(view)}}", view);
+                io_current.write(layout);
+
+            }
+        }
+
+        Text {
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            anchors.leftMargin: 10
+
+            text: (currentWebView.loading) ? qsTr("Cargando (" + currentWebView.loadProgress + "%)...") : ""
+        }
+
+        Timer {
+            property url goHere
+
+            id: tOpenUrlExternal
+
+            interval: 500
+            running: false
+            repeat: true
+            onTriggered: {
+                if (currentWebView.loadProgress === 100) {
+                    globalInfoBox.loadUrlInBrowser(goHere);
+                    tOpenUrlExternal.stop();
+                }
+            }
         }
 
     }
+
+
 }

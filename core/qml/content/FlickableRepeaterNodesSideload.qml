@@ -22,7 +22,7 @@ ColumnLayout {
 
     id: clRows
 
-    width: parent.width / 2
+    width: StudyCaseHandler.isStudyType('heat') ? parent.width : ( parent.width / 2 )
 
     FlickableRepeaterHeader {
         objectHeader.text :

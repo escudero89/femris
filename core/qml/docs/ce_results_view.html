@@ -74,19 +74,19 @@
                 <div class="form-group">
                     <input id="changeFactorOfDeformation" type="number" placeholder="Factor de escala" class="form-control" />
                 </div>
-                <button type="button" class="btn btn-danger" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
+                <button type="button" class="btn btn-danger btn-tooltip-down" title="Visualizar deformaci&oacute;n" onclick="domainObject.changeFactorOfDeformation(G_XNODE_ORIGINAL, jQuery('#changeFactorOfDeformation').val());">
                     <span class="glyphicon glyphicon-eye-open"></span>
                 </button>
             </form>
 
             <form class="navbar-form navbar-right" role="search" style="margin:3px; padding:0;">
-                <button type="button" class="btn btn-info" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
+                <button type="button" class="btn btn-info btn-tooltip-down" title="Ver matriz de rigidez global" onclick="viewGlobalStiffnessMatrix()">
                     <span class="glyphicon glyphicon-th"></span>
                 </button>
-                <button type="button" id="buttonToggleViews" class="btn btn-success" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
+                <button type="button" id="buttonToggleViews" class="btn btn-success btn-tooltip-down" title="Alternar entre vistas elementales" onclick="toggleViews();" disabled>
                     <span class="glyphicon glyphicon-th-large"></span>
                 </button>
-                <a class="btn btn-femris" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Resultados#structural">
+                <a class="btn btn-femris btn-tooltip-down" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Resultados#structural">
                     <span class="glyphicon glyphicon-question-sign"></span>
                 </a>
             </form>

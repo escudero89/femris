@@ -50,7 +50,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="navbar-brand" href style="padding:3px">
-                        <div id="miniLoader" class="form-group">
+                        <div id="miniLoader" class="form-group" data-toggle="tooltip" data-placement="bottom" title="Estado de la carga de la página.">
                             <div class="form-control" style="background-color:transparent;  padding: 0; margin:0;">
                                 <img class="img-responsive" src="img/loader.gif" alt="Cargando" title="Cargando..." width="26" style="background-color:transparent; padding: 3px 0; margin: 0 7px; opacity: 0;"/>
                             </div>
@@ -65,22 +65,22 @@
                     </form>
                     <form class="navbar-form navbar-left" role="search" style="margin:0;">
                         <ul class="nav navbar-nav" role="tablist">
-                            <li role="presentation" class="active">
+                            <li role="presentation" class="active" data-toggle="tooltip" data-placement="bottom" title="Selecciona aquí las funciones de forma para aproximar una cierta f(x).">
                                 <a href="#shapefunction" aria-controls="shapefunction" role="tab" data-toggle="tab">Función de Forma</a>
                             </li>
-                            <li role="presentation">
+                            <li role="presentation" data-toggle="tooltip" data-placement="bottom" title="Aquí puedes ver como la función f(x) elegida ha sido aproximada mediante las funciones de formas determinadas.">
                                 <a href="#approximation" aria-controls="approximation" role="tab" data-toggle="tab">Aproximación</a>
                             </li>
                         </ul>
                     </form>
                     <form class="navbar-form navbar-right" style="margin:3px">
-                        <button id="updateGraphButton" class="btn btn-primary" type="button" onclick="updateRightGraph()" title="Actualizar gráfico">
+                        <button id="updateGraphButton" class="btn btn-primary" type="button" onclick="updateRightGraph()" title="Actualizar gráfico en la pestaña actual." data-toggle="tooltip" data-placement="bottom">
                             <span class="glyphicon glyphicon-refresh"></span>
                         </button>
-                        <button class="btn btn-info" type="button" data-toggle="modal" data-target="#modalInfo" title="Más información">
+                        <button class="btn btn-info" type="button" data-toggle="modal" data-tooltip="tooltip" data-target="#modalInfo" title="Más funciones útiles para usar en el campo de f(x)." data-placement="bottom">
                             <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
-                        <a class="btn btn-femris" target="_blank" title="Ver ayuda online" href="https://github.com/escudero89/femris/wiki/Funciones-de-Forma">
+                        <a class="btn btn-femris" target="_blank" title="Ver ayuda online"  data-toggle="tooltip" data-placement="bottom" href="https://github.com/escudero89/femris/wiki/Funciones-de-Forma">
                             <span class="glyphicon glyphicon-question-sign"></span>
                         </a>
                     </form>
@@ -458,6 +458,7 @@ jQuery(document).ready(function() {
     }, 5);
 
     jQuery('[data-toggle="tooltip"]').tooltip();
+    jQuery('[data-tooltip="tooltip"]').tooltip();
 
     jQuery('[data-toggle="popover"]').popover().on('shown.bs.popover', function () {
         var $baseFunction = jQuery("#baseFunction");
