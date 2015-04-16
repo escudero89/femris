@@ -168,11 +168,11 @@ Item {
         var sideloadValueX = StudyCaseHandler.getSingleStudyCaseInformation("sideloadx" + (index + 1), true);
         var sideloadValueY = StudyCaseHandler.getSingleStudyCaseInformation("sideloady" + (index + 1), true);
 
-        if ( sideloadValueX ) {
+        if ( sideloadValueX && sideloadValueX !== "false" ) {
             textFieldSideloadX.text = sideloadValueX;
         }
 
-        if ( sideloadValueY ) {
+        if ( sideloadValueY && sideloadValueY !== "false" ) {
             textFieldSideloadY.text = sideloadValueY;
         }
     }

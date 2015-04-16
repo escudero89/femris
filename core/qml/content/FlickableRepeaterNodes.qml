@@ -22,6 +22,8 @@ ColumnLayout {
 
     id: clRows
 
+    width: parent.width / 2
+
     FlickableRepeaterHeader {
         objectHeader.text :
             qsTr("Restricciones nodales") +
@@ -46,7 +48,7 @@ ColumnLayout {
             clip: true
 
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width - sbRows.width
+            Layout.preferredWidth: parent.width - sbRows.width * 1.5
 
             cellHeight: 40
             cellWidth: width;

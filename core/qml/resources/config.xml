@@ -10,9 +10,8 @@
         <item setting="crashed" value="false" />
 
         <item setting="lastWindowsSize" value="4" />
+        <item setting="lastVisitedPath" value="" />
 
-        <!-- TODO -->
-        <item setting="lastVisitedPath" value="null" />
         <item setting="showScreenInfo" value="true" />
 
     </Configuration>

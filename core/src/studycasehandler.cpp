@@ -8,13 +8,16 @@
 #include <QJsonArray>
 #include <QUrl>
 
+#include <QDir>
+#include <QFileInfo>
+
 /**
  * @brief When the StudyCaseHandler is created, it sets the Study Case as null,
  * it marks it as saved, and calls start()
  */
 StudyCaseHandler::StudyCaseHandler() {
     m_studyCase = NULL;
-    m_lastSavedPath = "";
+    m_lastSavedPath = Configure::read("lastVisitedPath");
 
     markAsSaved();
     start();
@@ -33,7 +36,7 @@ void StudyCaseHandler::start() {
         delete m_studyCase;
         m_studyCase = NULL;
 
-        m_lastSavedPath = "";
+        m_lastSavedPath = Configure::read("lastVisitedPath");
     }
 
     // We initialize the StudyCaseHandler with some information
@@ -175,7 +178,7 @@ void StudyCaseHandler::saveCurrentStudyCase(QString whereToSave) {
     m_studyCase->saveCurrentConfiguration(whereToSave);
     markAsSaved();
 
-    m_lastSavedPath = whereToSave;
+    setLastSavedPath(whereToSave);
 
 }
 
@@ -266,10 +269,11 @@ bool StudyCaseHandler::loadStudyCase(const QString& whereToLoad) {
     m_studyCase->setExtraInformation(m_temporalStudyCaseVariables);
 
     m_studyCase->saveCurrentConfiguration();
-    m_lastSavedPath = whereToLoad;
+    setLastSavedPath(whereToLoad);
 
     markAsSaved();
-    isReady();
+
+    emit stepOfProcessChanged(m_currentStudyCaseVariables["stepOfProcess"].toInt());
 
     return true;
 }
@@ -364,7 +368,6 @@ void StudyCaseHandler::setSingleStudyCaseInformation(const QString& variable,
         m_currentStudyCaseVariables["modified"] = (QDateTime::currentDateTime()).toString();
 
         markAsNotSaved();
-        isReady();
 
         m_studyCase->setMapOfInformation(m_currentStudyCaseVariables);
         m_studyCase->saveCurrentConfiguration();
@@ -475,6 +478,8 @@ QString StudyCaseHandler::saveAndContinue(const QString &parentStage) {
 
     setSingleStudyCaseInformation("stepOfProcess", QString::number(nextStepOfProcess));
 
+    emit stepOfProcessChanged(nextStepOfProcess);
+
     return stagesList.at(nextStepOfProcess);
 }
 
@@ -555,6 +560,17 @@ QString StudyCaseHandler::getLastSavedPath() {
 }
 
 /**
+ * @brief Returns the last saved path
+ * @return Last saved path (if exists, otherwise it returns empty)
+ */
+void StudyCaseHandler::setLastSavedPath(const QString& newPath) {
+    QDir folder = QFileInfo(newPath).absolutePath();
+    Configure::write("lastVisitedPath", folder.currentPath());
+
+    m_lastSavedPath = newPath;
+}
+
+/**
  * @brief Whether if the study type passed as argument is the same as the current one
  * @param typeOfStudyCase Type of Study Case: `heat`, `plane-stress`, `plane-strain`
  *
@@ -588,3 +604,6 @@ bool StudyCaseHandler::isStudyType(const QString& typeOfStudyCase) {
 
 //! @fn void StudyCaseHandler::fail(const QString& failedRuleMessage)
 //! @brief The Study Case failed to be ready for MATfem
+
+//! @fn void StudyCaseHandler::stepOfProcessChanged(unsigned int newStep)
+//! @brief The Step of the Process in the StudyCaseHandler has changed

@@ -49,6 +49,8 @@ public:
     Q_INVOKABLE bool checkRule(const QString, const QString);
     Q_INVOKABLE QString getRuleMessage(const QString, const QString);
 
+    void setLastSavedPath(const QString& newPath);
+
 public Q_SLOTS:
 
 Q_SIGNALS:
@@ -63,6 +65,8 @@ Q_SIGNALS:
     void markedAsNotSaved();
 
     void fail(const QString& failedRuleMessage);
+
+    void stepOfProcessChanged(unsigned int newStep);
 
 protected:
 

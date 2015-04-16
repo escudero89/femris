@@ -22,6 +22,8 @@ ColumnLayout {
 
     id: clRows
 
+    width: parent.width / 2
+
     FlickableRepeaterHeader {
         objectHeader.text :
             qsTr("Condiciones de borde") +
@@ -29,7 +31,7 @@ ColumnLayout {
             "<em>" + qsTr("Número de lados: ") + gvRows.count + "</em></small>"
 
         Layout.fillHeight: true
-        Layout.preferredWidth: parent.width
+        Layout.preferredWidth: clRows.width
     }
 
     RowLayout {
@@ -46,7 +48,7 @@ ColumnLayout {
             clip: true
 
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width - sbRows.width
+            Layout.preferredWidth: parent.width - sbRows.width * 1.5
 
             cellHeight: 40
             cellWidth: width;

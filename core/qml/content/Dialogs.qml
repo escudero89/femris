@@ -125,6 +125,7 @@ Item {
     FileDialog {
         id: femrisLoader
         title: "Por favor seleccione un archivo de FEMRIS"
+        folder: Qt.resolvedUrl(Configure.read("lastVisitedPath"))
 
         property bool markAsSaved : true;
 
@@ -151,6 +152,7 @@ Item {
 
         id: femrisSaver
         title: "Guardar Caso de Estudio como..."
+        folder: Qt.resolvedUrl(Configure.read("lastVisitedPath"))
 
         nameFilters: [ "Archivos de FEMRIS (*.femris)", "Todos los archivos (*)" ]
 
@@ -176,6 +178,7 @@ Item {
 
         id: femrisExporter
         title: "Exportar Caso de Estudio como..."
+        folder: Qt.resolvedUrl(Configure.read("lastVisitedPath"))
 
         nameFilters: [ "Archivos de resultados de MATfem (*.m)", "Todos los archivos (*)" ]
 

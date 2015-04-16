@@ -33,7 +33,7 @@
         imageFont:null,
 
         TeX: {
-            MAXBUFFER : 20 * 1024, // the double of the normal amount
+            MAXBUFFER : 20 * 1024, // four times the normal amount
             extensions: ["color.js"]
         },
 
@@ -141,7 +141,7 @@
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-form navbar-left" role="search" style="margin:3px; padding:0;">
+            <form class="navbar-form navbar-left" role="search" style="margin:3px; padding:0;" onsubmit="return false;">
                 <div class="form-group">
                     <input id="changeFactorOfDeformation" type="number" placeholder="Factor de escala" class="form-control" />
                 </div>
@@ -1005,6 +1005,13 @@ Strnod = Stress_v1_3(dmat,poiss,thick,pstrs,u);
                         </ul>
                         <!-- Right Side -->
                         <form class="navbar-form navbar-right" role="search" style="margin:0">
+                          <ul class="nav navbar-nav">
+                                <li style="margin:3px; padding:0;">
+                                    <button type="button" class="btn btn-info" title="Mostrar/Ocultar Escala" onclick="toggleScale();">
+                                        <span class="glyphicon glyphicon-flag"></span>
+                                    </button>
+                                </li>
+                            </ul>
                             <ul class="nav navbar-nav">
                                 <li style="margin:3px; padding:0;">
                                     <button type="button" class="btn btn-success" title="Cambiar visualización de paneles" onclick="togglePanels();">

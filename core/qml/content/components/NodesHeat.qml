@@ -115,11 +115,11 @@ Item {
         var pointloadValue = StudyCaseHandler.getSingleStudyCaseInformation("pointload" + (index + 1), true);
         var stateValue     = StudyCaseHandler.getSingleStudyCaseInformation("condition-state" + (index + 1), true);
 
-        if ( pointloadValue ) {
+        if ( pointloadValue && pointloadValue !== "false" ) {
             heatTextField.text = pointloadValue;
         }
 
-        if ( stateValue ) {
+        if ( stateValue && stateValue !== "false" ) {
             buttonNodeController.state = stateValue;
         }
 

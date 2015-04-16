@@ -63,6 +63,8 @@ Rectangle {
 
         spacing: 0
 
+        onWidthChanged: clMainDomain.width = width * 0.80;
+
         LeftContentBox {
             id: leftContentRectangle
 
@@ -72,8 +74,6 @@ Rectangle {
 
             parentStage : rlDomain.objectName
         }
-
-        onWidthChanged: clMainDomain.width = width * 0.80;
 
         ColumnLayout {
 
@@ -85,9 +85,10 @@ Rectangle {
             Behavior on opacity { NumberAnimation {} }
 
             DomainExamples {
+
                 id: deExamples
 
-                Layout.fillWidth: true
+                Layout.preferredWidth: parent.width
 
                 onJsonDataLoaded: {
                     rlDomain.jsonDomain = jsonData;
@@ -174,7 +175,7 @@ Rectangle {
 
             RowLayout {
 
-                Layout.fillWidth: true
+                Layout.preferredWidth: parent.width
                 Layout.fillHeight: true
 
                 FlickableRepeaterNodesSideload {
@@ -184,7 +185,6 @@ Rectangle {
                     id: frnsRows
 
                     Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width
 
                     jsonDomain: rlDomain.jsonDomain
 
@@ -201,7 +201,6 @@ Rectangle {
                     id: frnRows
 
                     Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width
 
                     jsonDomain: rlDomain.jsonDomain
 
@@ -220,7 +219,7 @@ Rectangle {
 
             RowLayout {
 
-                Layout.fillWidth: true
+                Layout.preferredWidth: parent.width
                 Layout.fillHeight: true
 
                 Layout.alignment: Qt.AlignBottom

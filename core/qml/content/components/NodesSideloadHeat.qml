@@ -131,11 +131,11 @@ Item {
         var sideloadValue = StudyCaseHandler.getSingleStudyCaseInformation("sideload" + (index + 1), true);
         var stateValue    = StudyCaseHandler.getSingleStudyCaseInformation("condition-state" + (index + 1), true);
 
-        if ( sideloadValue ) {
+        if ( sideloadValue && sideloadValue !== "false" ) {
             textFieldSideload.text = sideloadValue;
         }
 
-        if ( stateValue ) {
+        if ( stateValue && stateValue !== "false" ) {
             buttonNodeController.state = stateValue;
         }
     }

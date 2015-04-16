@@ -41,7 +41,6 @@ int main(int argc, char *argv[]) {
 
     qmlRegisterType<FileIO>("FileIO", 1, 0, "FileIO");
 
-    StudyCaseHandler studyCaseHandler;
     ProcessHandler processHandler;
     FileIO currentFileIO;
 
@@ -49,6 +48,8 @@ int main(int argc, char *argv[]) {
     Configure *configure;
     configure = Configure::getInstance();
     configure->loadConfiguration(qApp->applicationDirPath() + "/settings.xml");
+
+    StudyCaseHandler studyCaseHandler;
 
     // We make sure those instance are accessible from QML
     engine.rootContext()->setContextProperty("StudyCaseHandler", &studyCaseHandler);

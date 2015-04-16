@@ -23,8 +23,6 @@ RowLayout {
 
     visible: (parentStage !== "") ? true : false
 
-    onStepOnStudyCaseChanged: rMiniChoiceBlock.stepOnStudyCaseChanged()
-
     onMouseEntered : {
         rlMiniOverall.state = "hovered";
         rMiniChoiceBlock.setInfoBox();
@@ -65,7 +63,6 @@ RowLayout {
     Repeater {
 
         signal setInfoBox()
-        signal stepOnStudyCaseChanged()
 
         id: rMiniChoiceBlock
 
@@ -120,7 +117,7 @@ RowLayout {
 
             blockStatus:
                 (stepOnStudyCase > thisBlockStatus) ? "used" :
-                (stepOnStudyCase == thisBlockStatus) ? "default" : "disabled";
+                (stepOnStudyCase === thisBlockStatus) ? "default" : "disabled";
 
             currentStepName : stepName
             isCurrent: parentStage === stage
@@ -132,7 +129,17 @@ RowLayout {
                         Configure.emitMainSignal("setInfoBox", qsTr("<em>Etapa Actual:</em> ") +  stepName)
                     }
                 }
-                onStepOnStudyCaseChanged: {}
+            }
+
+            Connections {
+                target: StudyCaseHandler
+                onStepOfProcessChanged: {
+                    blockStatus =
+                            (newStep > thisBlockStatus) ? "used" :
+                            (newStep === thisBlockStatus) ? "default" : "disabled";
+
+                    console.log(newStep,"newStep");
+                }
             }
         }
 

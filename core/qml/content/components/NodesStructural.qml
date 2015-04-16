@@ -164,15 +164,15 @@ Item {
         var yPointloadValue = StudyCaseHandler.getSingleStudyCaseInformation("pointloady" + (index + 1), true);
         var stateValue     = StudyCaseHandler.getSingleStudyCaseInformation("condition-state" + (index + 1), true);
 
-        if ( xPointloadValue ) {
+        if ( xPointloadValue && xPointloadValue !== "false" ) {
             xTextField.text = xPointloadValue;
         }
 
-        if ( yPointloadValue ) {
+        if ( yPointloadValue && yPointloadValue !== "false" ) {
             yTextField.text = yPointloadValue;
         }
 
-        if ( stateValue ) {
+        if ( stateValue && stateValue !== "false" ) {
             buttonNodeController.state = stateValue;
         }
 

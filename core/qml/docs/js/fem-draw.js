@@ -152,6 +152,8 @@ var domainObject = {
     groupElem                       : false,
     group                           : false,
 
+    showScale                       : true,
+
     resetCanvas : function() {
         $("#draw-shapes-dummy").html('<g></g>');
         $("#draw-shapes").html('<div class="two-container w100p" style="height: 90vh;"></div>');
@@ -191,11 +193,15 @@ var domainObject = {
             paramsTextSVG.x = min_X + width + 10;
             paramsTextSVG.y = y_start + blockHeight * 0.5 + paramsTextSVG["font-size"] * 0.5;
             paramsTextSVG["text-anchor"] = "left";
+            paramsTextSVG["part-of-scale"] = true;
 
             addElementToSVG(getTextSVG(Utils.parseNumber(twoBlock.representedValue), paramsTextSVG));
 
             this.twoScale.add(twoBlock);
         }
+
+        // This is a hack, to actually know which object in the SVG is the scale
+        this.twoScale.opacity = G_SCALE_OPACITY;
 
         this.two.add(this.twoScale);
     },
@@ -308,7 +314,9 @@ var domainObject = {
         // Then we draw the nodes
         for ( var j = 0; j < this.xnode.length; j++ ) {
 
-            twoNode = this.two.makeCircle(this.xnode[j][0], this.xnode[j][1], G_SHAPES_WIDTH * 0.0175);
+            var radius = G_SHAPES_WIDTH * 0.0175;
+
+            twoNode = this.two.makeCircle(this.xnode[j][0], this.xnode[j][1], radius);
 
             if (this.currentValuesToColorise && this.options) {
 
@@ -334,6 +342,7 @@ var domainObject = {
             // And we add the text over the node
             if ( this.options && this.options.localParamsTextSVG ) {
                 paramsTextSVG = this.options.localParamsTextSVG;
+
                 paramsTextSVG.x = this.xnode[j][0];
                 paramsTextSVG.y = this.xnode[j][1] + this.options.localParamsTextSVG['font-size'] * 0.25; // just for the text's vertical alignment
 
@@ -452,7 +461,9 @@ var domainObject = {
         this.group = { 'elems' : this.groupElem, 'nodes' : this.groupNode };
 
         // Add the scale
-        this.drawScale();
+        if (this.showScale) {
+            this.drawScale();
+        }
 
         // Don't forget to tell two to render everything to the screen
         this.two.update();
