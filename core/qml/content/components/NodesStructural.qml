@@ -164,11 +164,11 @@ Item {
         var yPointloadValue = StudyCaseHandler.getSingleStudyCaseInformation("pointloady" + (index + 1), true);
         var stateValue     = StudyCaseHandler.getSingleStudyCaseInformation("condition-state" + (index + 1), true);
 
-        if ( xPointloadValue && xPointloadValue !== "false" ) {
+        if ( xPointloadValue && xPointloadValue !== "false" && xPointloadValue !== "fijado" ) {
             xTextField.text = xPointloadValue;
         }
 
-        if ( yPointloadValue && yPointloadValue !== "false" ) {
+        if ( yPointloadValue && yPointloadValue !== "false" && yPointloadValue !== "fijado" ) {
             yTextField.text = yPointloadValue;
         }
 

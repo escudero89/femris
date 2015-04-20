@@ -141,8 +141,8 @@ Rectangle {
                         }
 
                         PropertyChanges { target: rTip;         visible: false; }
-                        PropertyChanges { target: frnsRows;       visible: true; }
-                        PropertyChanges { target: frnRows;       visible: !StudyCaseHandler.isStudyType('heat'); }
+                        PropertyChanges { target: frnsRows;     visible: true; }
+                        PropertyChanges { target: frnRows;      visible: !StudyCaseHandler.isStudyType('heat'); }
                         PropertyChanges { target: clMainDomain; opacity: 1.0 }
                     }
                 ]
@@ -403,8 +403,8 @@ Rectangle {
 
                 if (temp_x !== '' || temp_y !== '') {
 
-                    temp_x = (temp_x === '') ? 0.0 : parseFloat(temp_x);
-                    temp_y = (temp_y === '') ? 0.0 : parseFloat(temp_y);
+                    temp_x = parseCorrectNumberValue(temp_x);
+                    temp_y = parseCorrectNumberValue(temp_y);
 
                     var N = sideloadNodes[k].length;
                     for ( var j = 0 ; j < N - 1 ; j++ ) {
@@ -430,7 +430,7 @@ Rectangle {
 
                 if (temp_x !== '') {
                     if (temp_x !== qsTr('fijado')) {
-                        pointload.push([ k + 1, 1, parseFloat(temp_x) ]);
+                        pointload.push([ k + 1, 1, parseCorrectNumberValue(temp_x) ]);
 
                     } else {
                         fixnodes.push([ k + 1, 1, 0.0 ]);
@@ -439,7 +439,7 @@ Rectangle {
 
                 if (temp_y !== '') {
                     if (temp_y !== qsTr('fijado')) {
-                        pointload.push([ k + 1, 2, parseFloat(temp_y) ]);
+                        pointload.push([ k + 1, 2, parseCorrectNumberValue(temp_y) ]);
 
                     } else {
                         fixnodes.push([ k + 1, 2, 0.0 ]);
@@ -453,6 +453,18 @@ Rectangle {
                 pointload : pointload
             };
         }
+
+        function parseCorrectNumberValue(value) {
+
+            value = parseFloat(value);
+
+            if ( isNaN(value) ) {
+                value = 0.0;
+            }
+
+            return value;
+        }
+
     }
 
     Connections {

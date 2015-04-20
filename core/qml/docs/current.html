@@ -65,76 +65,75 @@
 
     <div class="container">
         <div class="row" id="mainWrap" style="opacity:0">
-            <div class="jumbotron">
-    <h2>Método de los Elementos Finitos</h2>
-    <p>Esta sección está dedicada a dar un rápido paseo a por el Método de Elementos Finitos. Usaremos un ejemplo para ayudar a visualizar como el método funciona, pero no nos adentraremos demasiado en la lógica matemática que le da sentido a todo.</p>
+            <div class="col-sm-12">
+
+<h3>Descripción General</h3>
+
+<p>Con algunas excepciones, la mayor parte de los sistemas en ciencia e ingeniería son de naturaleza <strong class="tooltipped" data-toggle="tooltip" data-title="Todas las estructuras, a excepción de las formadas por barras, se consideran estructuras continuas."><em>continua</em></strong> y, por tanto, su comportamiento no puede expresarse en forma precisa en función de un número pequeño de variables discretas.</p>
+
+<p>Aunque la mayoría de los sistemas continuos son inherentemente tridimensionales, en algunos casos su comportamiento puede describirse adecuadamente por modelos matemáticos uni o bidimensionales. La gran anología existente entre los conceptos del análisis matricial de sistemas discretos y los del FEM facilitan en gran manera el estudio de éste a los técnicos con dominio de las ideas sobre cálculo matricial.</p>
+
+<p>Es importante destacar desde un principio las analogías entre las etapas básicas del análisis matricial de sistemas discretos y el de una estructura cualquiera por el FEM. Sin entrar en excesivos detalles, las etapas básicas de dicho análisis serían: <button class="btn-success glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="click,hover" data-content="Para ejemplificar, usaremos el caso de un puente -siempre que sea necesario- para extender el entendimiento de la etapa."></button></p>
+
+<hr>
+
+<h4>1. Selección de un <em>modelo matemático</em> adecuado.</h4>
+
+<p>A partir de una realidad física, es necesario primeramente seleccionar un <em>modelo matemático</em> apropiado para describir el comportamiento de la estructura. Para el caso de un puente habría que definir además con detalle las propiedades mecánicas de los materiales involucrados y el carácter de la <em>deformación</em> del mismo (pequeños o grandes movimientos, análisis estático o dinámico, étc.).</p>
+
+<hr>
+
+<h4>2. Discretización del dominio continuo en “<em>elementos finitos</em>”  <small>(generación de la malla)</small></h4>
+
+<p>Una vez seleccionado el modelo matemático se procede a <em>discretizar</em> la estructura en porciones no-intersectantes entre sí, denominadas "<em>elementos finitos</em>", dentro de las cuales se interpolan las variables principales en función de sus valores en una serie de <strong>puntos discretos</strong> del elemento denominados "<strong class="tooltipped" data-toggle="tooltip" data-title="Los elementos se conectan entre sí por los nodos en sus contornos.">nodos</strong>".
+
+<p>Aquí es realmente donde está la raíz de donde surge el nombre del FEM, seindo ésta una parte esencial de la fase de <em>preproceso</em>. El número, tipo, tamaño y ubicación de los elementos suele no poseer ninguna restricción, y la malla de elementos finitos puede incluso estar compuesta por elementos de diferente geometría, tales como elementos bidimensionales acoplados con otros unidimensionales.</p>
+
+<hr>
+
+<h4>3. Aplicación del método de residuos ponderados o formulación débil de la ecuación diferencial del problema sobre un <em>elemento finito</em>.</h4>
+
+<p></p>
+
+<hr>
+
+<h4>4. Obtención del modelo de elementos finitos del problema usando la ecuación obtenida en el paso anterior.</h4>
+
+<p>Este modelo consiste en un conjunto de ecuaciones algebraicas sobre los parámetros desconocidos (<em>grados de libertad</em>) del elemento.</p>
+
+<hr>
+
+<h4>5. Ensamblaje de las ecuaciones elementales.</h4>
+
+<p>Idealmente, las ecuaciones elementales obtenidas anteriormente pueden ser ensambladas en un sistema global de ecuaciones algebraicas. Éste debe ser resuelto de forma simultánea.</p>
+
+<hr>
+
+<h4>6. Aplicación de las condiciones de borde o de las condiciones iniciales.</h4>
+
+<hr>
+
+<h4>7. Obtención de la solución del sistema de ecuaciones algebraicas <small>(solución aproximada)</small></h4>
+
+<p>Para obtener la solución es necesario proceder a una <em>implementación en ordenador</em> del FEM. Ello puede hacerse a partir de un programa propio o creado por un tercero. <em class="help-block">MATfem es quién juega su parte en este último aspecto.</em></p>
+
+<hr>
+
+<h4>8. Post-procesado de la solución y otras cantidades de interés.</h4>
+
+<p>Es decir, convertimos la solución en algo que podamos entender, lo que normalmente se traduce en la visualización del resultado.</p>
+
+<p>Una vez estudiados los resultados, se pueden plantear el efectuar varias modificaciones en cualquiera de las etapas anteriores. Éstos cambios pueden ser de nuevas abstracciones matemáticas, cambios en el dominio de trabajo, o problemas de precisión o de error de máquina. También puede deberse a problemas en los mismos datos de entrada.</p>
+
+<hr>
+
+<p class="well">Desde el punto de vista práctico, la característica más atractiva del FEM, y quizás también la más peligrosa, estriba en el hecho de que es un método <strong>aproximado</strong>. Es por ello que su utilización, sí no se posee de una experiencia previa, debe efectuarse con precaución, para evitar arribar a conclusiones erróneas sobre el comportamiento de un sistema continuo.
+
+
+<div class="help-block small text-right" style="padding-top: 5em">
+    <p>Sí quieres contribuír a éste documento en particular, tanto como por sugerencias, cambios, o correcciones ortográficas, puedes hacerlo directamente en <a href="https://github.com/escudero89/femris/blob/master/core/qml/docs/view/fem/descripcion_general.html">GitHub</a>.</p>
 </div>
-<div class="col-sm-9">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Descripción Rápida <small>Para empezar</small></h3>
-        </div>
-        <div class="panel-body">
-            <p>La principal ventaja de utilizar los <strong class="tooltipped" data-toggle="tooltip" data-title="Un <strong>modelo físico.</strong> hace referencia a una construcción teórica (<em>modelo matemático</em>) de un sistema físico" data-html="true">modelos físicos</strong> es la de predecir el valor de una cantidad desconocida. Sin embargo, no todos las ecuaciones físicas son simples de resolver. Frecuentemente encontramos situaciones que, a pesar de conocer la <em>Ecuación Diferencial</em> que rige el problema, no hay una <strong class="tooltipped" data-toggle="tooltip" title="La mayoría de los problemas reales están definidos sobre dominios que son geométricamente complejos, y que además pueden tener diferentes ecuaciones de contorno en diferentes porciones del contorno, por lo que usualmente es difícil o imposible encontrar solución analítica exacta o generar funciones de aproximación para todo el dominio como las requeridas en métodos tradicionales de aproximación.">forma directa</strong> de calcular su solución. El <strong>Método de Elementos Finitos</strong> (o FEM, del inglés <em>Finite Element Method</em>) es una de las técnicas existente para solventar este problema.</p>
 
-            <p>Dentro del ámbito de la ingeniería, la matemática aplicada, y la física, son básicamente tres las áreas en las que el FEM se aplica:</p>
-            <ol>
-                <li><strong>Problemas de equilibrio (estacionarios):</strong> aquellos en los cuales el sistema no varía en el tiempo.</li>
-                <li><strong>Problemas de autovalores:</strong> que constituyen una extensión de los problemas de equilibrio, en los cuales se determinan valores críticos de ciertos parámetros.</li>
-                <li><strong>Problemas de propagación:</strong> aquellos que comprenden a los fenómenos no estacionarios, es decir, dependientes del tiempo.</li>
-            </ol>
-        </div>
-    </div>
-
-</div>
-<div class="col-sm-3">
-    <img class="img-thumbnail pull-right" src="img/bracket.jpg"/>
-    <p class="help-block"><small><strong>Figura 1.</strong> Herramienta de soporte separada en piezas de tamaño regular para su análisis mediante el FEM.</small></p>
-</div>
-
-<div class="clear-fix"></div>
-
-
-<div class="col-sm-12">
-    <hr>
-
-    <h4>Sistemas discretos y Sistemas Continuos <small>Introducción</small></h4>
-
-    <p>
-    Muchos problemas con los que se encuentra el ingeniero en su labor cotidiana puede caracterizarse por sistemas cuyos comportamiento puede expersarse por modelos matemáticos, más o menos complejos, en los que interviene un conjunto de parámetros.
-    </p>
-
-
-    <p>
-    Una manera natural de abordar el estudio del comportamiento del sistema es simplificar el modelo matemático en lo posible. La opción más sencilla es subdividir el sistema en partes o  elementos  de  estudio  sencillo,  para  luego  volverlo  a  reconstruir  ensamblando  la contribución de cada elemento y predecir así su comportamiento.
-    </p>
-
-   <img class="img pull-left" src="img/discrete_systems.png" style="margin:1em 2em 1em 0; width:50%;" />
-
-    <p>
-        En los sistemas <strong>discretos</strong>, las partes que componen el sistema son evidentes, claramente diferenciables y conectadas entre sí por uniones comúnmente llamadas <strong class="tooltipped" data-toggle="tooltip" data-title="Los <em>nodos</em>no tienen, en general, un significado fíisco tan evidente como los &quot; <em>nudos</em>&quot;. De ahí el hecho de que los denominemos de distinta manera." data-html="true">nudos</strong>. En la figura que acompaña éste texto se pueden apreciar algunos ejemplos de sistemas discretos.
-    </p>
-    <p>
-        Habitualmente, en éstos casos, el resultado del proceso de análisis se reduce a un sistema de ecuaciones lineales simultáneas con variables nodales como incógnitas, a partir de cuya solución se obtendrá el comportamiento del sistema.
-    </p>
-
-    <p>
-        En los sistemas <strong>continuos</strong>, por otro lado, la subdivisión puede proseguir de manera indefinida, con lo que el problema sólo podrá expresarse mediante el concepto de <em>infinitésimo</em>. Esto deriva en un modelo matemático expresado por <strong>ecuaciones diferenciales en derivadas parciales</strong>, que han de ser satisfechas en todos y cada uno de los puntos del sistema.
-    </p>
-
-    <p class="alert alert-info">
-        <span class="glyphicon glyphicon-question-sign"></span>&nbsp;
-        Los sistemas continuos se analizan como sistemas discretos a través de un proceso de <em>discretización</em>.
-    </p>
-
-    <p>
-    En general, salvo casos muy simples, la solución analítica o exacta de las ecuaciones diferenciales que gobiernan el comportamiento de sistemas continuos es, o bien imposible, o bien demasiado laboriosa. Depende del analista el obtener respuestas aproximadas sobre el comportamiento del sistema, a través de técnicas que reduzcan su problema de infinitas <strong class="tooltipped" data-toggle="tooltip" data-title="Grados de libertad">variables incógnitas</strong> a un número finito cuya resolución resulte más accesible.
-    </p>
-
-</div>
-
-<div class="help-block small text-right col-sm-12" style="padding-top: 5em">
-    <p>Sí quieres contribuír a éste documento en particular, tanto como por sugerencias, cambios, o correcciones ortográficas, puedes hacerlo directamente en <a href="https://github.com/escudero89/femris/blob/master/core/qml/docs/view/fem/inicio.html">GitHub</a>.</p>
 </div>
 
 

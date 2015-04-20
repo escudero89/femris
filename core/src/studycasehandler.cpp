@@ -189,7 +189,8 @@ void StudyCaseHandler::saveCurrentStudyCase(QString whereToSave) {
  * @return True if passed, false otherwise
  */
 bool StudyCaseHandler::checkRule(const QString rule, const QString currentValue) {
-    return m_studyCase->checkRule(rule, currentValue, QString());
+    QString failedRule;
+    return m_studyCase->checkRule(rule, currentValue, failedRule);
 }
 
 /**

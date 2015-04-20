@@ -105,6 +105,8 @@ Item {
                     }
                 }
             ]
+
+            Component.onCompleted: StudyCaseHandler.setSingleStudyCaseInformation("condition-state" + (index + 1), buttonNodeController.state, true)
         }
 
 
