@@ -70,8 +70,8 @@ GridLayout {
                     soCalled: "heat"
                 }
 
-                ListElement{ title: "Tensión plana"        ; content: "stress"; soCalled: "plane-stress" }
-                ListElement{ title: "Deformación plana"    ; content: "strain"; soCalled: "plane-strain" }
+                ListElement{ title: "Tensión plana" ; content: "stress"; soCalled: "plane-stress" }
+                ListElement{ title: "Deform. plana" ; content: "strain"; soCalled: "plane-strain" }
             }
 
             ChoiceBlock {
