@@ -67,71 +67,22 @@
         <div class="row" id="mainWrap" style="opacity:0">
             <div class="col-sm-12">
 
-<h3>Descripción General</h3>
+<h3>Un Poco de Historia</h3>
 
-<p>Con algunas excepciones, la mayor parte de los sistemas en ciencia e ingeniería son de naturaleza <strong class="tooltipped" data-toggle="tooltip" data-title="Todas las estructuras, a excepción de las formadas por barras, se consideran estructuras continuas."><em>continua</em></strong> y, por tanto, su comportamiento no puede expresarse en forma precisa en función de un número pequeño de variables discretas.</p>
+<img class="pull-right img-thumbnail" width="45%" style="margin: 0 0 15px 15px;" src="img/teaching.png"/>
 
-<p>Aunque la mayoría de los sistemas continuos son inherentemente tridimensionales, en algunos casos su comportamiento puede describirse adecuadamente por modelos matemáticos uni o bidimensionales. La gran anología existente entre los conceptos del análisis matricial de sistemas discretos y los del FEM facilitan en gran manera el estudio de éste a los técnicos con dominio de las ideas sobre cálculo matricial.</p>
+<p>La manera más sencilla para trabajar con sistemas complejos es el de subdividirlos en componentes o “<em>elementos</em>” más simples de comprender.</p>
 
-<p>Es importante destacar desde un principio las analogías entre las etapas básicas del análisis matricial de sistemas discretos y el de una estructura cualquiera por el FEM. Sin entrar en excesivos detalles, las etapas básicas de dicho análisis serían: <button class="btn-success glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="click,hover" data-content="Para ejemplificar, usaremos el caso de un puente -siempre que sea necesario- para extender el entendimiento de la etapa."></button></p>
+<p>Ahora bien, ¿<em>es el nuevo modelo, reconstruido a partir de elementos más simples, fiel al original</em>? En muchas situaciones, sí lo es. Cuando esto sucede, a estos sistemas los llamamos <strong>discretos</strong>. Ahora bien, sí la subdivisión necesaria para una reconstrucción precisa continúa infinitesimalmente, se crean un número infinito de elementos. Los sistemas de este tipo los llamamos <strong>continuos</strong>.</p>
 
-<hr>
+<p>Con el uso de computadoras, los problemas discretos pueden ser resueltos generalmente incluso sí necesitan de muchos elementos. El problema está en los sistemas continuos, que normalmente no pueden ser resueltos debido a la capacidad finita del computador. Sin embargo, en algunos pocos casos, algunas <strong class="tooltipped" data-toggle="tooltip" title="Claro que estas técnicas matemáticas limitan las posibilidades de su aplicación a situaciones muy simplificadas.">manipulaciones matemáticas</strong> nos permiten llegar a una situación exacta. Sí no fuera el caso, diversas técnicas de “<strong>discretización</strong>” han sido propuestas tanto por ingenieros como por matemáticos, que brindan una <strong>aproximación</strong> a la solución real continua a medida que el número de variables discretas tiende a infinito.</p>
 
-<h4>1. Selección de un <em>modelo matemático</em> adecuado.</h4>
+<p>Aun así, los matemáticos e ingenieros procedieron de forma distintas en el desarrollo de técnicas de discretización. Por un lado, los matemáticos propusieron técnicas generales aplicables directamente a las ecuaciones diferenciales que gobiernan el problema (como por ejemplo, las aproximaciones por diferencias finitas y el método de residuos ponderados). Por otro lado, los ingenieros han creado técnicas que aproximan el problema más intuitivamente al crear una analogía entre los elementos discretos reales y las porciones finitas del dominio continuo.</p>
 
-<p>A partir de una realidad física, es necesario primeramente seleccionar un <em>modelo matemático</em> apropiado para describir el comportamiento de la estructura. Para el caso de un puente habría que definir además con detalle las propiedades mecánicas de los materiales involucrados y el carácter de la <em>deformación</em> del mismo (pequeños o grandes movimientos, análisis estático o dinámico, étc.).</p>
+<p>Desde principios de 1960 se han hecho muchos progresos en estas áreas, y hoy en día ambos enfoques, el matemático y el ingenieril, se encuentran unidos. <em>En base a esto, podemos resumir al FEM como un procedimiento general de discretización de problemas continuos sostenidos por fundamentos matemáticos.</em></p>
 
-<hr>
-
-<h4>2. Discretización del dominio continuo en “<em>elementos finitos</em>”  <small>(generación de la malla)</small></h4>
-
-<p>Una vez seleccionado el modelo matemático se procede a <em>discretizar</em> la estructura en porciones no-intersectantes entre sí, denominadas "<em>elementos finitos</em>", dentro de las cuales se interpolan las variables principales en función de sus valores en una serie de <strong>puntos discretos</strong> del elemento denominados "<strong class="tooltipped" data-toggle="tooltip" data-title="Los elementos se conectan entre sí por los nodos en sus contornos.">nodos</strong>".
-
-<p>Aquí es realmente donde está la raíz de donde surge el nombre del FEM, seindo ésta una parte esencial de la fase de <em>preproceso</em>. El número, tipo, tamaño y ubicación de los elementos suele no poseer ninguna restricción, y la malla de elementos finitos puede incluso estar compuesta por elementos de diferente geometría, tales como elementos bidimensionales acoplados con otros unidimensionales.</p>
-
-<hr>
-
-<h4>3. Aplicación del método de residuos ponderados o formulación débil de la ecuación diferencial del problema sobre un <em>elemento finito</em>.</h4>
-
-<p></p>
-
-<hr>
-
-<h4>4. Obtención del modelo de elementos finitos del problema usando la ecuación obtenida en el paso anterior.</h4>
-
-<p>Este modelo consiste en un conjunto de ecuaciones algebraicas sobre los parámetros desconocidos (<em>grados de libertad</em>) del elemento.</p>
-
-<hr>
-
-<h4>5. Ensamblaje de las ecuaciones elementales.</h4>
-
-<p>Idealmente, las ecuaciones elementales obtenidas anteriormente pueden ser ensambladas en un sistema global de ecuaciones algebraicas. Éste debe ser resuelto de forma simultánea.</p>
-
-<hr>
-
-<h4>6. Aplicación de las condiciones de borde o de las condiciones iniciales.</h4>
-
-<hr>
-
-<h4>7. Obtención de la solución del sistema de ecuaciones algebraicas <small>(solución aproximada)</small></h4>
-
-<p>Para obtener la solución es necesario proceder a una <em>implementación en ordenador</em> del FEM. Ello puede hacerse a partir de un programa propio o creado por un tercero. <em class="help-block">MATfem es quién juega su parte en este último aspecto.</em></p>
-
-<hr>
-
-<h4>8. Post-procesado de la solución y otras cantidades de interés.</h4>
-
-<p>Es decir, convertimos la solución en algo que podamos entender, lo que normalmente se traduce en la visualización del resultado.</p>
-
-<p>Una vez estudiados los resultados, se pueden plantear el efectuar varias modificaciones en cualquiera de las etapas anteriores. Éstos cambios pueden ser de nuevas abstracciones matemáticas, cambios en el dominio de trabajo, o problemas de precisión o de error de máquina. También puede deberse a problemas en los mismos datos de entrada.</p>
-
-<hr>
-
-<p class="well">Desde el punto de vista práctico, la característica más atractiva del FEM, y quizás también la más peligrosa, estriba en el hecho de que es un método <strong>aproximado</strong>. Es por ello que su utilización, sí no se posee de una experiencia previa, debe efectuarse con precaución, para evitar arribar a conclusiones erróneas sobre el comportamiento de un sistema continuo.
-
-
-<div class="help-block small text-right" style="padding-top: 5em">
-    <p>Sí quieres contribuír a éste documento en particular, tanto como por sugerencias, cambios, o correcciones ortográficas, puedes hacerlo directamente en <a href="https://github.com/escudero89/femris/blob/master/core/qml/docs/view/fem/descripcion_general.html">GitHub</a>.</p>
+<div class="help-block small text-right col-sm-12" style="padding-top: 5em">
+    <p>Sí quieres contribuír a éste documento en particular, tanto como por sugerencias, cambios, o correcciones ortográficas, puedes hacerlo directamente en <a href="https://github.com/escudero89/femris/blob/master/core/qml/docs/view/fem/historia.html">GitHub</a>.</p>
 </div>
 
 </div>

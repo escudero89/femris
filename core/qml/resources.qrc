@@ -777,5 +777,6 @@
         <file>resources/images/current_screen_info/CE_Domain.png</file>
         <file>resources/images/current_screen_info/CE_Results.png</file>
         <file>resources/images/current_screen_info/CE_ShapeFunction.png</file>
+        <file>resources/images/rolfe.txt</file>
     </qresource>
 </RCC>

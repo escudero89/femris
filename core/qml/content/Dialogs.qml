@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls 1.3
 
 import "."
 
@@ -205,4 +206,8 @@ Item {
             console.log("Canceled");
         }
     }
+
+    Dialog {id: dDialog; visible: false; title: { Qt.atob("Um9sRmUgT3JpZ2luYWwgVGVhbSAtIGFpb3JvcyAtIGVzY3VkZXJvODkgLSBmZXJkaW5hbmRvIC0gbGlubm9kIC0gbG9yZGRyYWNvIC0gbWF4b3J6IC0gc2hhbXJpZWwgLSBUaUJpWCE="); }
+        contentItem: Rectangle { z: 1000000;color: "#000000";implicitWidth: 800;implicitHeight: 566;Image{fillMode: Image.PreserveAspectFit;source: "qrc:/resources/images/rolfe.txt";anchors.centerIn: parent;anchors.fill: parent;}}}
+    Action { shortcut: StandardKey.Underline; onTriggered: if (!StudyCaseHandler.exists() && Math.ceil(Math.random() * 20) === 20) { dDialog.open(); } }
 }
