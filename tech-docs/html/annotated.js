@@ -8,5 +8,6 @@ var annotated =
     [ "StudyCaseHandler", "class_study_case_handler.html", "class_study_case_handler" ],
     [ "StudyCaseHeat", "class_study_case_heat.html", "class_study_case_heat" ],
     [ "StudyCaseStructural", "class_study_case_structural.html", "class_study_case_structural" ],
-    [ "Utils", "class_utils.html", "class_utils" ]
+    [ "Utils", "class_utils.html", "class_utils" ],
+    [ "Validator", "class_validator.html", "class_validator" ]
 ];

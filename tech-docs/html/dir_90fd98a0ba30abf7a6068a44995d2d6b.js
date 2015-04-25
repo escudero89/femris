@@ -36,5 +36,9 @@ var dir_90fd98a0ba30abf7a6068a44995d2d6b =
     [ "utils.cpp", "utils_8cpp.html", null ],
     [ "utils.h", "utils_8h.html", [
       [ "Utils", "class_utils.html", "class_utils" ]
+    ] ],
+    [ "validator.cpp", "validator_8cpp.html", null ],
+    [ "validator.h", "validator_8h.html", [
+      [ "Validator", "class_validator.html", "class_validator" ]
     ] ]
 ];
