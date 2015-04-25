@@ -33,7 +33,7 @@
             <div class="container" style="width:100%">
                 <div class="navbar-header">
                     <a class="navbar-brand">
-                        <img alt="Logo" width="20" height="20" src="">
+                        <img alt="Logo" width="20" height="20" src="femris.png">
                     </a>
                     <a class="navbar-brand">
                         FEMRIS 1.0.0 <small>Finite Element Method LearnIng Software</small>
@@ -149,12 +149,12 @@ Signals</h2></td></tr>
 <tr class="memitem:a90e6c7a7912c418937e842a357b531d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a90e6c7a7912c418937e842a357b531d2">markedAsNotSaved</a> ()</td></tr>
 <tr class="memdesc:a90e6c7a7912c418937e842a357b531d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">There are some modifications in the Study Case that are not saved.  <a href="#a90e6c7a7912c418937e842a357b531d2">More...</a><br/></td></tr>
 <tr class="separator:a90e6c7a7912c418937e842a357b531d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74f98021a7932a5fe415c454177f6a2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a74f98021a7932a5fe415c454177f6a2e">beforeCheckIfReady</a> ()</td></tr>
-<tr class="memdesc:a74f98021a7932a5fe415c454177f6a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal emmited before checking if the Study Case is ready for MATfem.  <a href="#a74f98021a7932a5fe415c454177f6a2e">More...</a><br/></td></tr>
-<tr class="separator:a74f98021a7932a5fe415c454177f6a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6c958c76c3597d38f2dc06a396ab89a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#af6c958c76c3597d38f2dc06a396ab89a">ready</a> (const bool &amp;status)</td></tr>
-<tr class="memdesc:af6c958c76c3597d38f2dc06a396ab89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Study Case is ready for MATfem.  <a href="#af6c958c76c3597d38f2dc06a396ab89a">More...</a><br/></td></tr>
-<tr class="separator:af6c958c76c3597d38f2dc06a396ab89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64eee857e87dde239aca27f187fdfba9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a64eee857e87dde239aca27f187fdfba9">fail</a> (const QString &amp;failedRuleMessage)</td></tr>
+<tr class="memdesc:a64eee857e87dde239aca27f187fdfba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Study Case failed to be ready for MATfem.  <a href="#a64eee857e87dde239aca27f187fdfba9">More...</a><br/></td></tr>
+<tr class="separator:a64eee857e87dde239aca27f187fdfba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7a6cc79745453259c6895b49557d6a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#ae7a6cc79745453259c6895b49557d6a4">stepOfProcessChanged</a> (unsigned int newStep)</td></tr>
+<tr class="memdesc:ae7a6cc79745453259c6895b49557d6a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Step of the Process in the <a class="el" href="class_study_case_handler.html" title="Main class that handles all the interactions with the StudyCase. ">StudyCaseHandler</a> has changed.  <a href="#ae7a6cc79745453259c6895b49557d6a4">More...</a><br/></td></tr>
+<tr class="separator:ae7a6cc79745453259c6895b49557d6a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -220,9 +220,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7d629fbfabbff8285e0f6bef0c055638"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a7d629fbfabbff8285e0f6bef0c055638">isStudyType</a> (const QString &amp;)</td></tr>
 <tr class="memdesc:a7d629fbfabbff8285e0f6bef0c055638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether if the study type passed as argument is the same as the current one.  <a href="#a7d629fbfabbff8285e0f6bef0c055638">More...</a><br/></td></tr>
 <tr class="separator:a7d629fbfabbff8285e0f6bef0c055638"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a1f460f0d60cd0a1ddc5e2d2cb33cb6"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a9a1f460f0d60cd0a1ddc5e2d2cb33cb6">isReady</a> ()</td></tr>
-<tr class="memdesc:a9a1f460f0d60cd0a1ddc5e2d2cb33cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a> is ready for MATfem.  <a href="#a9a1f460f0d60cd0a1ddc5e2d2cb33cb6">More...</a><br/></td></tr>
-<tr class="separator:a9a1f460f0d60cd0a1ddc5e2d2cb33cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad62f66f799f1110a1782f88b7fbd92cc"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#ad62f66f799f1110a1782f88b7fbd92cc">isReady</a> ()</td></tr>
+<tr class="memdesc:ad62f66f799f1110a1782f88b7fbd92cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a> is ready for MATfem.  <a href="#ad62f66f799f1110a1782f88b7fbd92cc">More...</a><br/></td></tr>
+<tr class="separator:ad62f66f799f1110a1782f88b7fbd92cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95aecff1acbb80bc459c4c6d4540b8a7"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#a95aecff1acbb80bc459c4c6d4540b8a7">checkRule</a> (const QString, const QString)</td></tr>
+<tr class="memdesc:a95aecff1acbb80bc459c4c6d4540b8a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a rule is being passed or not in the study case.  <a href="#a95aecff1acbb80bc459c4c6d4540b8a7">More...</a><br/></td></tr>
+<tr class="separator:a95aecff1acbb80bc459c4c6d4540b8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5526a3c686724f26079b653370e0687"><td class="memItemLeft" align="right" valign="top">Q_INVOKABLE QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#ab5526a3c686724f26079b653370e0687">getRuleMessage</a> (const QString, const QString)</td></tr>
+<tr class="memdesc:ab5526a3c686724f26079b653370e0687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the message associated with a certain rule of the study case.  <a href="#ab5526a3c686724f26079b653370e0687">More...</a><br/></td></tr>
+<tr class="separator:ab5526a3c686724f26079b653370e0687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac59eb997751e3181f35103f5db1f7e43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case_handler.html#ac59eb997751e3181f35103f5db1f7e43">setLastSavedPath</a> (const QString &amp;newPath)</td></tr>
+<tr class="memdesc:ac59eb997751e3181f35103f5db1f7e43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the last saved path.  <a href="#ac59eb997751e3181f35103f5db1f7e43">More...</a><br/></td></tr>
+<tr class="separator:ac59eb997751e3181f35103f5db1f7e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -317,28 +326,39 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a74f98021a7932a5fe415c454177f6a2e"></a>
+<a class="anchor" id="a95aecff1acbb80bc459c4c6d4540b8a7"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void StudyCaseHandler::beforeCheckIfReady </td>
+          <td class="memname">bool StudyCaseHandler::checkRule </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>rule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>currentValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Signal emmited before checking if the Study Case is ready for MATfem. </p>
+<p>Checks if a rule is being passed or not in the study case. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rule</td><td>The rule to be check </td></tr>
+    <tr><td class="paramname">currentValue</td><td>The value for comparison </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if passed, false otherwise </dd></dl>
 
 </div>
 </div>
@@ -476,6 +496,32 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a64eee857e87dde239aca27f187fdfba9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StudyCaseHandler::fail </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>failedRuleMessage</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The Study Case failed to be ready for MATfem. </p>
+
+</div>
+</div>
 <a class="anchor" id="a53d0672bd04fd2151847f61934012d6e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -491,6 +537,42 @@ Protected Attributes</h2></td></tr>
 
 <p>Returns the last saved path. </p>
 <dl class="section return"><dt>Returns</dt><dd>Last saved path (if exists, otherwise it returns empty) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab5526a3c686724f26079b653370e0687"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString StudyCaseHandler::getRuleMessage </td>
+          <td>(</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>rule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>currentValue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the message associated with a certain rule of the study case. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rule</td><td>The rule we are looking for </td></tr>
+    <tr><td class="paramname">currentValue</td><td>The value for comparison </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The related message </dd></dl>
 
 </div>
 </div>
@@ -554,12 +636,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9a1f460f0d60cd0a1ddc5e2d2cb33cb6"></a>
+<a class="anchor" id="ad62f66f799f1110a1782f88b7fbd92cc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void StudyCaseHandler::isReady </td>
+          <td class="memname">bool StudyCaseHandler::isReady </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -568,11 +650,10 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Checks if the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a> is ready for MATfem. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#a74f98021a7932a5fe415c454177f6a2e" title="Signal emmited before checking if the Study Case is ready for MATfem. ">beforeCheckIfReady()</a> </dd>
+<dl class="section return"><dt>Returns</dt><dd>Whether is ready or not</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd>ready() </dd>
 <dd>
-<a class="el" href="class_study_case_handler.html#af6c958c76c3597d38f2dc06a396ab89a" title="The Study Case is ready for MATfem. ">ready()</a> </dd>
-<dd>
-<a class="el" href="class_study_case.html#a34c50b4d58d8b2306c2db8f5f31d8ecc" title="Checks if the Study Case is ready to be processed by MATfem. ">StudyCase::isReady()</a> </dd></dl>
+<a class="el" href="class_study_case.html#aefef5dc389964ef00efc491e7f39abc8" title="Checks if the Study Case is ready to be processed by MATfem. ">StudyCase::isReady()</a> </dd></dl>
 
 </div>
 </div>
@@ -660,7 +741,7 @@ Protected Attributes</h2></td></tr>
 <dd>
 <a class="el" href="class_study_case_handler.html#aeb59468b377aa5ba1a53caf4e433eb6f" title="Set the current Study Case as saved. ">markAsSaved()</a> </dd>
 <dd>
-<a class="el" href="class_study_case_handler.html#a9a1f460f0d60cd0a1ddc5e2d2cb33cb6" title="Checks if the StudyCase is ready for MATfem. ">isReady()</a> </dd></dl>
+<a class="el" href="class_study_case_handler.html#ad62f66f799f1110a1782f88b7fbd92cc" title="Checks if the StudyCase is ready for MATfem. ">isReady()</a> </dd></dl>
 
 </div>
 </div>
@@ -844,32 +925,6 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af6c958c76c3597d38f2dc06a396ab89a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void StudyCaseHandler::ready </td>
-          <td>(</td>
-          <td class="paramtype">const bool &amp;&#160;</td>
-          <td class="paramname"><em>status</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The Study Case is ready for MATfem. </p>
-
-</div>
-</div>
 <a class="anchor" id="a28f59ccf839850ea715db95683aacb42"></a>
 <div class="memitem">
 <div class="memproto">
@@ -973,6 +1028,25 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_study_case_handler.html#a45469c3670f0babdf0cbb6fb0c1dbe47" title="A new Study Case&#39;s type has been chose. ">newStudyCaseChose()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac59eb997751e3181f35103f5db1f7e43"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StudyCaseHandler::setLastSavedPath </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>newPath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the last saved path. </p>
+<dl class="section return"><dt>Returns</dt><dd>Last saved path (if exists, otherwise it returns empty) </dd></dl>
 
 </div>
 </div>
@@ -1130,6 +1204,32 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ae7a6cc79745453259c6895b49557d6a4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StudyCaseHandler::stepOfProcessChanged </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>newStep</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The Step of the Process in the <a class="el" href="class_study_case_handler.html" title="Main class that handles all the interactions with the StudyCase. ">StudyCaseHandler</a> has changed. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a class="anchor" id="a89d8e91b3878ca7748b56302884cbf3d"></a>
 <div class="memitem">
@@ -1276,7 +1376,7 @@ Protected Attributes</h2></td></tr>
         <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
         <ul>
             <li class="navelem"><a class="el" href="class_study_case_handler.html">StudyCaseHandler</a></li>
-            <li class="footer">Generated on Sun Feb 1 2015 20:43:47 for FEMRIS by
+            <li class="footer">Generated on Sat Apr 25 2015 19:19:43 for FEMRIS by
                 <a href="http://www.doxygen.org/index.html">
                 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
             </ul>

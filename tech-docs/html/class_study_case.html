@@ -33,7 +33,7 @@
             <div class="container" style="width:100%">
                 <div class="navbar-header">
                     <a class="navbar-brand">
-                        <img alt="Logo" width="20" height="20" src="">
+                        <img alt="Logo" width="20" height="20" src="femris.png">
                     </a>
                     <a class="navbar-brand">
                         FEMRIS 1.0.0 <small>Finite Element Method LearnIng Software</small>
@@ -153,9 +153,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8ab4cc9b1576a7c2ffc6cf9bc58dea40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a8ab4cc9b1576a7c2ffc6cf9bc58dea40">compressMapOfInformation</a> ()</td></tr>
 <tr class="memdesc:a8ab4cc9b1576a7c2ffc6cf9bc58dea40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compress the stored values in the QMap of the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a> and saves them.  <a href="#a8ab4cc9b1576a7c2ffc6cf9bc58dea40">More...</a><br/></td></tr>
 <tr class="separator:a8ab4cc9b1576a7c2ffc6cf9bc58dea40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34c50b4d58d8b2306c2db8f5f31d8ecc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a34c50b4d58d8b2306c2db8f5f31d8ecc">isReady</a> ()</td></tr>
-<tr class="memdesc:a34c50b4d58d8b2306c2db8f5f31d8ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the Study Case is ready to be processed by MATfem.  <a href="#a34c50b4d58d8b2306c2db8f5f31d8ecc">More...</a><br/></td></tr>
-<tr class="separator:a34c50b4d58d8b2306c2db8f5f31d8ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefef5dc389964ef00efc491e7f39abc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#aefef5dc389964ef00efc491e7f39abc8">isReady</a> (QString &amp;, QString &amp;)</td></tr>
+<tr class="memdesc:aefef5dc389964ef00efc491e7f39abc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the Study Case is ready to be processed by MATfem.  <a href="#aefef5dc389964ef00efc491e7f39abc8">More...</a><br/></td></tr>
+<tr class="separator:aefef5dc389964ef00efc491e7f39abc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90be52648a8d3a270c17ade6e849670c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a90be52648a8d3a270c17ade6e849670c">checkRule</a> (const QString, const QString, QString &amp;)</td></tr>
+<tr class="memdesc:a90be52648a8d3a270c17ade6e849670c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a rule is being passed or not.  <a href="#a90be52648a8d3a270c17ade6e849670c">More...</a><br/></td></tr>
+<tr class="separator:a90be52648a8d3a270c17ade6e849670c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d9d0c8f8826598781892d6d022efd7e"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a8d9d0c8f8826598781892d6d022efd7e">getRuleMessage</a> (const QString, const QString)</td></tr>
+<tr class="memdesc:a8d9d0c8f8826598781892d6d022efd7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the message associated with a certain rule.  <a href="#a8d9d0c8f8826598781892d6d022efd7e">More...</a><br/></td></tr>
+<tr class="separator:a8d9d0c8f8826598781892d6d022efd7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abeb34b3fe1a9982ec8105cc187d89481"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#abeb34b3fe1a9982ec8105cc187d89481">checkIfReady</a> ()</td></tr>
 <tr class="memdesc:abeb34b3fe1a9982ec8105cc187d89481"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if it's ready to be processed in MATfem.  <a href="#abeb34b3fe1a9982ec8105cc187d89481">More...</a><br/></td></tr>
 <tr class="separator:abeb34b3fe1a9982ec8105cc187d89481"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,15 +177,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a922647b3ea9a67d79619a30abf5c1fb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a922647b3ea9a67d79619a30abf5c1fb4">setMapOfInformation</a> (QMap&lt; QString, QString &gt;)</td></tr>
 <tr class="memdesc:a922647b3ea9a67d79619a30abf5c1fb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the new QMap which will store all the information of the Study Case.  <a href="#a922647b3ea9a67d79619a30abf5c1fb4">More...</a><br/></td></tr>
 <tr class="separator:a922647b3ea9a67d79619a30abf5c1fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6afdd38c20ceb6341600edb85e782c60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a6afdd38c20ceb6341600edb85e782c60">setExtraInformation</a> (QMap&lt; QString, QString &gt;)</td></tr>
+<tr class="memdesc:a6afdd38c20ceb6341600edb85e782c60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the QMap which will store all the extra information of the Study Case.  <a href="#a6afdd38c20ceb6341600edb85e782c60">More...</a><br/></td></tr>
+<tr class="separator:a6afdd38c20ceb6341600edb85e782c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a4e26afc627a35dffa73b6868cc8ee819"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a4e26afc627a35dffa73b6868cc8ee819">m_source</a></td></tr>
 <tr class="memdesc:a4e26afc627a35dffa73b6868cc8ee819"><td class="mdescLeft">&#160;</td><td class="mdescRight">Path where the temporary file which stores the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a> is.  <a href="#a4e26afc627a35dffa73b6868cc8ee819">More...</a><br/></td></tr>
 <tr class="separator:a4e26afc627a35dffa73b6868cc8ee819"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cbf4a897f3dcadb603d4269ab830e86"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a8cbf4a897f3dcadb603d4269ab830e86">m_encoded</a></td></tr>
-<tr class="memdesc:a8cbf4a897f3dcadb603d4269ab830e86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encoded QMap with all the info of the Study Case.  <a href="#a8cbf4a897f3dcadb603d4269ab830e86">More...</a><br/></td></tr>
-<tr class="separator:a8cbf4a897f3dcadb603d4269ab830e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a0e13ab7da2736696ddf364788537fe"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a2a0e13ab7da2736696ddf364788537fe">m_created</a></td></tr>
 <tr class="separator:a2a0e13ab7da2736696ddf364788537fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb0ef264ffd9ecd48efb2f2181cedfc5"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#aeb0ef264ffd9ecd48efb2f2181cedfc5">m_modified</a></td></tr>
@@ -187,6 +193,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a84c0cc77a3c86fb457f0b6e6cfc485a3"><td class="memItemLeft" align="right" valign="top">QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a84c0cc77a3c86fb457f0b6e6cfc485a3">m_mapOfInformation</a></td></tr>
 <tr class="memdesc:a84c0cc77a3c86fb457f0b6e6cfc485a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The QMap that stores almost all the information of the <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a>.  <a href="#a84c0cc77a3c86fb457f0b6e6cfc485a3">More...</a><br/></td></tr>
 <tr class="separator:a84c0cc77a3c86fb457f0b6e6cfc485a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b5e97c11051c6c31d90e522da2bfe4e"><td class="memItemLeft" align="right" valign="top">QMap&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a3b5e97c11051c6c31d90e522da2bfe4e">m_extraInformation</a></td></tr>
+<tr class="memdesc:a3b5e97c11051c6c31d90e522da2bfe4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">As m_mapOfInformation, except that stores information that will be stored only encoded.  <a href="#a3b5e97c11051c6c31d90e522da2bfe4e">More...</a><br/></td></tr>
+<tr class="separator:a3b5e97c11051c6c31d90e522da2bfe4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87f65b7857af4d71403bc68ef9f54e5b"><td class="memItemLeft" align="right" valign="top">QMap&lt; QString, <a class="el" href="class_validator.html">Validator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_study_case.html#a87f65b7857af4d71403bc68ef9f54e5b">m_validates</a></td></tr>
+<tr class="memdesc:a87f65b7857af4d71403bc68ef9f54e5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The validation rules for the Study Case are stored here.  <a href="#a87f65b7857af4d71403bc68ef9f54e5b">More...</a><br/></td></tr>
+<tr class="separator:a87f65b7857af4d71403bc68ef9f54e5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="class_study_case.html" title="The StudyCase stores the currently working study case, and all its variables. ">StudyCase</a> stores the currently working study case, and all its variables. </p>
@@ -200,9 +212,6 @@ Protected Attributes</h2></td></tr>
 <a class="anchor" id="a44aec15b8ecab98813221b94a0e7b450"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">StudyCase::StudyCase </td>
@@ -211,11 +220,6 @@ Protected Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>
@@ -268,6 +272,48 @@ Protected Attributes</h2></td></tr>
 <p>Check if it's ready to be processed in MATfem. </p>
 
 <p>Reimplemented in <a class="el" href="class_study_case_heat.html#a5af13502a7fea021b605862eaf588f97">StudyCaseHeat</a>, and <a class="el" href="class_study_case_structural.html#ab67e39e9c845097e2be3c8d201a9d230">StudyCaseStructural</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a90be52648a8d3a270c17ade6e849670c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool StudyCase::checkRule </td>
+          <td>(</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>rule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>currentValue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString &amp;&#160;</td>
+          <td class="paramname"><em>failedRule</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if a rule is being passed or not. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rule</td><td>The rule to be check </td></tr>
+    <tr><td class="paramname">currentValue</td><td>The value for comparison </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if passed, false otherwise </dd></dl>
 
 </div>
 </div>
@@ -354,20 +400,73 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a34c50b4d58d8b2306c2db8f5f31d8ecc"></a>
+<a class="anchor" id="a8d9d0c8f8826598781892d6d022efd7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString StudyCase::getRuleMessage </td>
+          <td>(</td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>rule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString&#160;</td>
+          <td class="paramname"><em>failedRule</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the message associated with a certain rule. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rule</td><td>The rule we are looking for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The related message </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aefef5dc389964ef00efc491e7f39abc8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool StudyCase::isReady </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">QString &amp;&#160;</td>
+          <td class="paramname"><em>failedField</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">QString &amp;&#160;</td>
+          <td class="paramname"><em>failedRule</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Checks if the Study Case is ready to be processed by MATfem. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">failedRule</td><td>Which field failed first </td></tr>
+    <tr><td class="paramname">failedRule</td><td>Which rule failed first </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether is ready or not </dd></dl>
 
 </div>
@@ -445,6 +544,30 @@ Protected Attributes</h2></td></tr>
 <p>Complement of <a class="el" href="class_study_case.html#aaa8d9364c6bcdb1653ffe2b201c3c469" title="Saves the current QMap with all the info of the StudyCase into a file. ">StudyCase::saveCurrentConfiguration()</a> </p>
 
 <p>Reimplemented in <a class="el" href="class_study_case_heat.html#ac0bd5629f0b9bf8b3fb6ee62b3d77d75">StudyCaseHeat</a>, and <a class="el" href="class_study_case_structural.html#ab34641136cd612eabbdc4b492e0c213a">StudyCaseStructural</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6afdd38c20ceb6341600edb85e782c60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StudyCase::setExtraInformation </td>
+          <td>(</td>
+          <td class="paramtype">QMap&lt; QString, QString &gt;&#160;</td>
+          <td class="paramname"><em>newExtraInformation</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the QMap which will store all the extra information of the Study Case. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newMapOfInformation</td><td>QMap with the new extra information about the SC </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -541,7 +664,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8cbf4a897f3dcadb603d4269ab830e86"></a>
+<a class="anchor" id="a3b5e97c11051c6c31d90e522da2bfe4e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -549,7 +672,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">QString StudyCase::m_encoded</td>
+          <td class="memname">QMap&lt;QString, QString&gt; StudyCase::m_extraInformation</td>
         </tr>
       </table>
   </td>
@@ -559,7 +682,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Encoded QMap with all the info of the Study Case. </p>
+<p>As m_mapOfInformation, except that stores information that will be stored only encoded. </p>
 
 </div>
 </div>
@@ -627,6 +750,28 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a87f65b7857af4d71403bc68ef9f54e5b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QMap&lt;QString, <a class="el" href="class_validator.html">Validator</a>&gt; StudyCase::m_validates</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The validation rules for the Study Case are stored here. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>core/src/<a class="el" href="studycase_8h_source.html">studycase.h</a></li>
 <li>core/src/<a class="el" href="studycase_8cpp.html">studycase.cpp</a></li>
@@ -640,7 +785,7 @@ Protected Attributes</h2></td></tr>
         <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
         <ul>
             <li class="navelem"><a class="el" href="class_study_case.html">StudyCase</a></li>
-            <li class="footer">Generated on Sun Feb 1 2015 20:43:47 for FEMRIS by
+            <li class="footer">Generated on Sat Apr 25 2015 19:19:43 for FEMRIS by
                 <a href="http://www.doxygen.org/index.html">
                 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
             </ul>

@@ -13,5 +13,6 @@ var hierarchy =
       [ "StudyCaseHeat", "class_study_case_heat.html", null ],
       [ "StudyCaseStructural", "class_study_case_structural.html", null ]
     ] ],
-    [ "Utils", "class_utils.html", null ]
+    [ "Utils", "class_utils.html", null ],
+    [ "Validator", "class_validator.html", null ]
 ];

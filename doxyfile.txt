@@ -51,14 +51,14 @@ PROJECT_BRIEF          = "Finite Element Method LearnIng Software"
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
 # the logo to the output directory.
 
-PROJECT_LOGO           = E:/Repositorios/femris/core/rc/hicolor/64x64/apps/femris.png
+PROJECT_LOGO           = core/rc/hicolor/64x64/apps/femris.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is
 # entered, it will be relative to the location where doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = E:/Repositorios/femris/tech-docs
+OUTPUT_DIRECTORY       = tech-docs
 
 # If the CREATE_SUBDIRS tag is set to YES then doxygen will create 4096 sub-
 # directories (in 2 levels) under the output directory of each output format and
@@ -768,7 +768,7 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = E:/Repositorios/femris/core/src
+INPUT                  = core/src
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
