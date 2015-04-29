@@ -161,7 +161,7 @@ Item {
             TextArea {
                 text: qsTr(Content.firstTime.welcome)
 
-                Layout.maximumHeight: 120
+                Layout.maximumHeight: contentHeight
                 Layout.fillWidth: true
 
                 backgroundVisible: false
@@ -318,6 +318,8 @@ Item {
 
                     buttonStatus: "danger"
 
+                    tooltip: "Cerrar sin guardar cambios"
+
                     onClicked: {
                         firstTimeModal.visible = false;
 
@@ -335,6 +337,8 @@ Item {
                     buttonLabel: "Guardar"
                     iconSource: "qrc:/resources/icons/save8.png"
                     enabled: false
+
+                    tooltip: "Guardar cambios"
 
                     onClicked: {
                         firstTimeModal.visible = false;

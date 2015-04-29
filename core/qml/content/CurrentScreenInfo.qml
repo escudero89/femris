@@ -34,7 +34,8 @@ Item {
                     'CE_Model',
                     'CE_Domain',
                     'CE_ShapeFunction',
-                    'CE_Results'
+                    'CE_Results',
+                    'Tutorial'
                 ];
 
         // Exists the screen for this step?

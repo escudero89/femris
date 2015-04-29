@@ -187,6 +187,8 @@ Item {
                 textFormat: TextEdit.RichText
                 textColor: Style.color.complement_highlight
 
+                onLinkActivated: globalInfoBox.loadUrlInBrowser(textAreaModal.hoveredLink);
+
             }
 
             Rectangle {

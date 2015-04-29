@@ -8,7 +8,7 @@ import "custom.js" as Custom
 QtObject {
 
     property string appName: "FEMRIS"
-    property string version: "0.9.2"
+    property string version: "1.0.0"
 
     property string baseDir : applicationDirPath + "/docs/inner/"
 
@@ -35,6 +35,7 @@ QtObject {
             var matchResultEnd = line.match(/{{end|(\w+)}}/);
 
             line = line.replace(/\$femris/g, femris);
+            line = line.replace(/\$version/g, version);
 
             if (matchResultEnd) {
                 insideBlock = false;
@@ -52,16 +53,6 @@ QtObject {
                 insideBlock = matchResultStart[1];
             }
         }
-
-        /*
-        for ( var keyContent in mainContent ) {
-            if (!mainContent.hasOwnProperty(keyContent)) {
-                continue;
-            }
-
-            mainContent[keyContent] = Custom.escapeHtmlEntities(mainContent[keyContent]);
-            console.log(mainContent[keyContent]);
-        }*/
 
         return mainContent;
     }

@@ -37,7 +37,7 @@ ApplicationWindow {
                 break;
 
             case "about":
-                //modals.alert.visible = true;
+                modals.alert.visible = true;
 
                 modals.alert.contentTitle = "Acerca de...";
                 modals.alert.contentName = "about";
