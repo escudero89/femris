@@ -23,7 +23,8 @@ RESOURCES += \
     qml/third-party.qrc \
     qml/docs-resources.qrc \
     qml/docs.qrc \
-    qml/qml-content.qrc
+    qml/qml-content.qrc \
+    qml/icons.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -49,4 +50,4 @@ HEADERS += \
 RC_ICONS = rc/logo.ico
 
 # 5.01 for 32 bits, 5.02 for 64 bits (Windows XP)
-QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02

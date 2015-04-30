@@ -73,6 +73,7 @@ Item {
     MessageDialog {
 
         property string parentStage : ""
+        property string switchTo : "CE_Overall"
 
         id: anotherFileAlreadyOpenedDialog
         title: qsTr("Ya hay un Caso de Estudio abierto")
@@ -86,7 +87,8 @@ Item {
             // If we are calling from the NEW button (in Initial)
             if (parentStage === "") {
                 StudyCaseHandler.start();
-                mainWindow.switchSection("CE_Overall");
+                mainWindow.switchSection(switchTo);
+                switchTo = "CE_Overall"; // Resets its value
 
             // Or in another section
             } else {

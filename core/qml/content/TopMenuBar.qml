@@ -6,6 +6,7 @@ import "."
 import "../"
 
 MenuBar {
+
     signal whichMenu(string menuItem)
 
     Menu {
@@ -15,10 +16,7 @@ MenuBar {
             shortcut: "Ctrl+N"
             iconSource: "qrc:/resources/icons/black/file28.png"
 
-            onTriggered: {
-                StudyCaseHandler.start();
-                mainWindow.switchSection("CE_Overall");
-            }
+            onTriggered: checkPreviousStudyCaseBeforeClosing("CE_Overall");
         }
         MenuItem {
             text: qsTr("Cargar Caso de Estudio")
@@ -59,11 +57,7 @@ MenuBar {
 
             text: qsTr("Cerrar Caso de Estudio")
             iconSource: "qrc:/resources/icons/black/cross41.png"
-            onTriggered: {
-                mainWindow.switchSection("Initial");
-                StudyCaseHandler.start();
-                menuItemClose.enabled = StudyCaseHandler.exists();
-            }
+            onTriggered: checkPreviousStudyCaseBeforeClosing("Initial");
 
             enabled: StudyCaseHandler.exists();
         }
@@ -97,6 +91,7 @@ MenuBar {
             iconSource: "qrc:/resources/icons/black/remove11.png"
             onTriggered: whichMenu("close")
         }
+
     }
     Menu {
         title: qsTr("Edición")
@@ -187,5 +182,20 @@ MenuBar {
 
             visible: false
         }
+    }
+
+    function checkPreviousStudyCaseBeforeClosing(switchTo) {
+
+        if (StudyCaseHandler.exists() && !StudyCaseHandler.getSavedStatus()) {
+            dialogs.anotherFileAlreadyOpened.parentStage = "";
+            dialogs.anotherFileAlreadyOpened.switchTo = switchTo;
+            dialogs.anotherFileAlreadyOpened.open();
+
+        } else {
+            mainWindow.switchSection(switchTo);
+            StudyCaseHandler.start();
+        }
+
+        menuItemClose.enabled = StudyCaseHandler.exists();
     }
 }
