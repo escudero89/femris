@@ -6,10 +6,16 @@ Finite Element Method leaRnIng Software
 
 FEMRIS es un programa educativo diseñado para el aprendizaje del [Método de Elementos Finitos]. Trabaja en conjunto con [MATLAB] o [GNU Octave], brindando de una buena compatibilidad con el software [GiD].
 
+Puedes visitar la [página web oficial](http://escudero89.github.io/femris) para descargar el ejecutable.
+
 Versión
 ----
-+ *0.9.2*
- + Fase pre-release (actualización: **9 de Marzo de 2015**).
++ *[1.0.0](https://github.com/escudero89/femris/releases/tag/1.0.0)*
+ + Fase release (actualización: **30 de Abril de 2015**).
++ *[0.9.2](https://github.com/escudero89/femris/releases/tag/0.9.0)*
+ + Fase beta (actualización: **9 de Marzo de 2015**).
++ *[0.9.0](https://github.com/escudero89/femris/releases/tag/0.9.0)*
+ + Fase alfa (actualización: **14 de Diciembre de 2014**).
 
 Licencia
 ----
