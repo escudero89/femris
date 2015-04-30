@@ -157,7 +157,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="list-group">
-                            <a href="#" class="list-group-item">
+                            <a href="https://github.com/escudero89/femris/archive/1.0.0.zip" class="list-group-item">
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <span class="fa fa-windows fa-4x"></span>
@@ -197,7 +197,7 @@
                         </div>
 
                         <div class="list-group">
-                            <a href="#" class="list-group-item">
+                            <a onclick="$('#modal-not-ready').modal('show'); event.preventDefault();" href class="list-group-item list-group-item-warning">
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <span class="fa fa-linux fa-4x"></span>
@@ -314,6 +314,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
 
                   <div class="col-sm-4">
@@ -367,40 +368,6 @@
                     </div>
                   </div>
 
-<!--
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="cform" id="contact-form">
-                            <div id="sendmessage">
-                                 Your message has been sent. Thank you!
-                            </div>
-                            <form action="contact/contact.php" method="post" role="form" class="contactForm">
-                              <div class="form-group">
-                                <label for="name">Your Name</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="maxlen:4" data-msg="Please enter at least 4 chars" />
-                                <div class="validation"></div>
-                              </div>
-                              <div class="form-group">
-                                <label for="email">Your Email</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                                <div class="validation"></div>
-                              </div>
-                              <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="maxlen:4" data-msg="Please enter at least 8 chars of subject" />
-                                <div class="validation"></div>
-                              </div>
-                              <div class="form-group">
-                                <label for="message">Message</label>
-                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us"></textarea>
-                                <div class="validation"></div>
-                              </div>
-
-                              <button type="submit" class="btn btn-theme pull-left">SEND MESSAGE</button>
-                            </form>
-                        </div>
--->
-                    </div>
-                    <!-- ./span12 -->
                 </div>
 
             </div>
@@ -416,6 +383,25 @@
         </section>
 
         <a href="#header" class="scrollup"><i class="fa fa-chevron-up"></i></a>
+
+        <div class="modal fade" id="modal-not-ready">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">FEMRIS Linux 32-bit</h4>
+              </div>
+              <div class="modal-body">
+                <p>El paquete DEB correspondiente a la versión de <em>32 bits</em> se encuentra actualmente <em>pendiente</em>.</p>
+                <p> Disculpe las molestias. El pequeño Timmy <span class="fa fa-child"></span> también se siente triste al respecto.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
 
         <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         <script src="js/jquery.js"></script>
