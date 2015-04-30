@@ -34,7 +34,8 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-                        <li class="active"><a href="index.html">Inicio</a></li>
+                        <li class="active"><a href="#section-home">Inicio</a></li>
+                        <li><a href="#section-downloads">Descargar</a></li>
                         <li><a href="#section-about">Acerca de</a></li>
                         <!--<li><a href="#section-works">Portfolio</a></li>-->
                         <li><a href="#section-contact">Contacto</a></li>
@@ -43,7 +44,7 @@
             </div>
         </div>
 
-        <section class="featured">
+        <section id="section-home" class="featured">
             <div class="container">
                 <div class="row mar-bot40">
                     <div class="col-md-6 col-md-offset-3">
@@ -70,7 +71,7 @@
             <div class="row mar-bot40">
                 <div class="col-lg-4" >
                     <div class="align-center">
-                        <a href="">
+                        <a href="#section-downloads">
                           <i class="fa fa-linux fa-5x mar-bot20"></i>
                         </a>
                         <h4 class="text-bold">Linux</h4>
@@ -83,7 +84,7 @@
 
                 <div class="col-lg-4" >
                     <div class="align-center">
-                        <a href="">
+                        <a href="#section-downloads">
                           <i class="fa fa-windows fa-5x mar-bot20"></i>
                         </a>
                         <h4 class="text-bold">Windows</h4>
@@ -214,164 +215,248 @@
             <div class="align-center pad-top40 pad-bot40">
                 <blockquote class="bigquote">Licencia <a href="https://www.gnu.org/licenses/lgpl-2.1.txt">LGPL 2.1</a></blockquote>
                 <p class="">
-                  FEMRIS es libre de usar dentro de cualquier otra aplicación. Aún así, todo el <em>código fuente</em> que haya sido publicado originalmente bajola licencia LGPL debe seguir siendo publicado como tal y, si se ha modificado, sus modificaciones han de ser publicadas también bajo una licencia LGPL.
+                  FEMRIS es libre de usar dentro de cualquier otra aplicación. Aún así, todo el <em>código fuente</em> que haya sido publicado originalmente bajo la licencia LGPL debe seguir siendo publicado como tal y, si se ha modificado, sus modificaciones han de ser publicadas también bajo una licencia LGPL.
                 </p>
             </div>
             </div>
         </section>
 
         <!-- section works -->
-<!--
-        <section id="section-works" class="section appear clearfix">
+
+        <section id="section-downloads" class="section appear clearfix">
             <div class="container">
 
                 <div class="row mar-bot40">
                     <div class="col-md-offset-3 col-md-6">
                         <div class="section-header">
-                            <h2 class="section-heading animated" data-animation="bounceInUp">Portfolio</h2>
-                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur, adipisci velit, sed quia non numquam.</p>
+                            <h2 class="section-heading animated" data-animation="bounceInUp">Descargar FEMRIS</h2>
+                            <p>Selecciona la versión que mejor se adecúe a tus necesidades.</p>
                         </div>
                     </div>
                 </div>
 
-                        <div class="row">
-                          <nav id="filter" class="col-md-12 text-center">
-                            <ul>
-                              <li><a href="#" class="current btn-theme btn-small" data-filter="*">All</a></li>
-                              <li><a href="#"  class="btn-theme btn-small" data-filter=".webdesign" >Web Design</a></li>
-                              <li><a href="#"  class="btn-theme btn-small" data-filter=".photography">Photography</a></li>
-                              <li ><a href="#" class="btn-theme btn-small" data-filter=".print">Print</a></li>
-                            </ul>
-                          </nav>
-                          <div class="col-md-12">
-                            <div class="row">
-                              <div class="portfolio-items isotopeWrapper clearfix" id="3">
-
-                                <article class="col-md-4 isotopeItem webdesign">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img1.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img1.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-windows fa-4x"></span>
                                     </div>
-                                </article>
-
-                                <article class="col-md-4 isotopeItem photography">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img2.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img2.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
+                                    <div class="col-sm-10">
+                                        <h4 class="list-group-item-heading">FEMRIS Windows 32-bit</h4>
+                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text help help-block">
+                                            <em>Descargar Instalador.</em>
+                                        </p>
                                     </div>
-                                </article>
-
-
-                                <article class="col-md-4 isotopeItem photography">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img3.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img3.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-download fa-2x p20"></span>
                                     </div>
-                                </article>
-
-                                <article class="col-md-4 isotopeItem print">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img4.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img4.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
-                                    </div>
-                                </article>
-
-                                <article class="col-md-4 isotopeItem photography">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img5.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img5.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
-                                    </div>
-                                </article>
-
-                                <article class="col-md-4 isotopeItem webdesign">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img6.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img6.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
-                                    </div>
-                                </article>
-
-                                <article class="col-md-4 isotopeItem print">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img7.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img7.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
-                                    </div>
-                                </article>
-
-                                <article class="col-md-4 isotopeItem photography">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img8.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img8.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
-                                    </div>
-                                </article>
-
-                                <article class="col-md-4 isotopeItem print">
-                                    <div class="portfolio-item">
-                                        <img src="img/portfolio/img9.jpg" alt="" />
-                                         <div class="portfolio-desc align-center">
-                                            <div class="folio-info">
-                                                <h5><a href="#">Portfolio name</a></h5>
-                                                <a href="img/portfolio/img9.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                                             </div>
-                                         </div>
-                                    </div>
-                                </article>
                                 </div>
-
-                            </div>
-
-
-                            </div>
+                            </a>
                         </div>
 
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-windows fa-4x"></span>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <h4 class="list-group-item-heading">FEMRIS Windows 64-bit</h4>
+                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text help help-block">
+                                            <em>Descargar Instalador.</em>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-download fa-2x p20"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-linux fa-4x"></span>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <h4 class="list-group-item-heading">FEMRIS Linux 32-bit</h4>
+                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text help help-block">
+                                            <em>Descargar Paquete DEB.</em>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-download fa-2x p20"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-linux fa-4x"></span>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <h4 class="list-group-item-heading">FEMRIS Linux 64-bit</h4>
+                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text help help-block">
+                                            <em>Descargar Paquete DEB.</em>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-download fa-2x p20"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+<!--
+                <div class="row">
+                  <nav id="filter" class="col-md-12 text-center">
+                    <ul>
+                      <li><a href="#" class="current btn-theme btn-small" data-filter="*">All</a></li>
+                      <li><a href="#"  class="btn-theme btn-small" data-filter=".webdesign" >Web Design</a></li>
+                      <li><a href="#"  class="btn-theme btn-small" data-filter=".photography">Photography</a></li>
+                      <li ><a href="#" class="btn-theme btn-small" data-filter=".print">Print</a></li>
+                    </ul>
+                  </nav>
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="portfolio-items isotopeWrapper clearfix" id="3">
+
+                        <article class="col-md-4 isotopeItem webdesign">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img1.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img1.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+
+                        <article class="col-md-4 isotopeItem photography">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img2.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img2.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+
+
+                        <article class="col-md-4 isotopeItem photography">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img3.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img3.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+
+                        <article class="col-md-4 isotopeItem print">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img4.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img4.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+
+                        <article class="col-md-4 isotopeItem photography">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img5.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img5.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+
+                        <article class="col-md-4 isotopeItem webdesign">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img6.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img6.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+
+                        <article class="col-md-4 isotopeItem print">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img7.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img7.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+
+                        <article class="col-md-4 isotopeItem photography">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img8.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img8.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+
+                        <article class="col-md-4 isotopeItem print">
+                            <div class="portfolio-item">
+                                <img src="img/portfolio/img9.jpg" alt="" />
+                                 <div class="portfolio-desc align-center">
+                                    <div class="folio-info">
+                                        <h5><a href="#">Portfolio name</a></h5>
+                                        <a href="img/portfolio/img9.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                                     </div>
+                                 </div>
+                            </div>
+                        </article>
+                        </div>
+
+                    </div>
+
+
+                    </div>
+                </div>
+-->
             </div>
         </section>
         <section id="parallax2" class="section parallax" data-stellar-background-ratio="0.5">
             <div class="align-center pad-top40 pad-bot40">
-                <blockquote class="bigquote">Indoctum accusamus comprehensam</blockquote>
-                <p class="color-white">Bootstraptaste</p>
+                <blockquote class="bigquote color-white">fabricado con la última tecnología en mates</blockquote>
+                <p class="color-white">9 de cada 10 gauchos lo recomiendan</p>
             </div>
         </section>
--->
+
         <!-- contact -->
         <section id="section-contact" class="section appear clearfix">
             <div class="container">
@@ -478,64 +563,31 @@
 
             </div>
         </section>
-        <!-- map -->
-<!--
-        <section id="section-map" class="clearfix">
-            <div id="map"></div>
-        </section>
--->
 
-    <section id="footer" class="section footer">
-        <div class="container">
-            <div class="row align-center copyright">
-                    <div class="col-sm-12"><p>Copyright &copy; 2014 Amoeba - by <a href="http://bootstraptaste.com">Bootstraptaste</a></p></div>
+        <section id="footer" class="section footer">
+            <div class="container">
+                <div class="row align-center copyright">
+                        <div class="col-sm-12"><p>Copyright &copy; 2014 Amoeba - by <a href="http://bootstraptaste.com">Bootstraptaste</a></p></div>
+                </div>
             </div>
-        </div>
 
-    </section>
-    <a href="#header" class="scrollup"><i class="fa fa-chevron-up"></i></a>
+        </section>
 
-    <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&sensor=false"></script>
-    <script src="js/jquery.isotope.min.js"></script>
-    <script src="js/jquery.nicescroll.min.js"></script>
-    <script src="js/fancybox/jquery.fancybox.pack.js"></script>
-    <script src="js/skrollr.min.js"></script>
-    <script src="js/jquery.scrollTo-1.4.3.1-min.js"></script>
-    <script src="js/jquery.localscroll-1.2.7-min.js"></script>
-    <script src="js/stellar.js"></script>
-    <script src="js/jquery.appear.js"></script>
-    <script src="js/validate.js"></script>
-    <script src="js/main.js"></script>
-        <script type="text/javascript">
-            // When the window has finished loading create our google map below
-            google.maps.event.addDomListener(window, 'load', init);
+        <a href="#header" class="scrollup"><i class="fa fa-chevron-up"></i></a>
 
-            function init() {
-                // Basic options for a simple Google Map
-                // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-                var mapOptions = {
-                    // How zoomed in you want the map to start at (always required)
-                    zoom: 11,
-
-                    // The latitude and longitude to center the map (always required)
-                    center: new google.maps.LatLng(40.6700, -73.9400), // New York
-
-                    // How you would like to style the map.
-                    // This is where you would paste any style found on Snazzy Maps.
-                    styles: [   {       featureType:"all",      elementType:"all",      stylers:[       {           invert_lightness:true       },      {           saturation:10       },      {           lightness:30        },      {           gamma:0.5       },      {           hue:"#1C705B"       }       ]   }   ]
-                };
-
-                // Get the HTML DOM element that will contain your map
-                // We are using a div with id="map" seen below in the <body>
-                var mapElement = document.getElementById('map');
-
-                // Create the Google Map using out element and options defined above
-                var map = new google.maps.Map(mapElement, mapOptions);
-            }
-        </script>
+        <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/jquery.easing.1.3.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.isotope.min.js"></script>
+        <script src="js/jquery.nicescroll.min.js"></script>
+        <script src="js/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="js/skrollr.min.js"></script>
+        <script src="js/jquery.scrollTo-1.4.3.1-min.js"></script>
+        <script src="js/jquery.localscroll-1.2.7-min.js"></script>
+        <script src="js/stellar.js"></script>
+        <script src="js/jquery.appear.js"></script>
+        <script src="js/validate.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>

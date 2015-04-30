@@ -33,3 +33,5 @@ core/
 *.femris.old
 *.femris.bak
 *.fuse_hidden*
+
+installer/
