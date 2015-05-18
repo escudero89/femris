@@ -23,7 +23,7 @@ DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=D:\Repositorios\femris\LICENSE
-OutputBaseFilename=setup
+OutputBaseFilename=setup_x64
 SetupIconFile=D:\Repositorios\femris\core\rc\logo.ico
 Compression=lzma
 SolidCompression=yes
@@ -36,7 +36,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "D:\Dropbox\Mis Cosas de la Facultad\FEMRIS deployment\Windows x86\femris.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Dropbox\Mis Cosas de la Facultad\FEMRIS deployment\Windows x64\femris.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Dropbox\Mis Cosas de la Facultad\FEMRIS deployment\Windows x64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

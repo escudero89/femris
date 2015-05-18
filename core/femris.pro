@@ -1,8 +1,10 @@
+TARGET = Femris
+
 TEMPLATE = app
 
-QT += qml quick widgets xml webengine
+QT += core gui qml quick widgets xml webengine
 
-CONFIG += resources_big
+CONFIG += resources_big warn_on
 
 SOURCES += \
     src/main.cpp \
@@ -51,3 +53,13 @@ RC_ICONS = rc/logo.ico
 
 # 5.01 for 32 bits, 5.02 for 64 bits (Windows XP)
 QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
+
+# Linux Deployment
+DESTDIR = ../bin
+MOC_DIR = ../build/moc
+RCC_DIR = ../build/ui
+
+unix:OBJECTS_DIR = ../build/o/unix
+win32:OBJECTS_DIR = ../build/o/win32
+macx:OBJECTS_DIR = ../build/o/mac
+

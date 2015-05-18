@@ -1,0 +1,3 @@
+bin/femris usr/bin
+femris.desktop usr/share/applications
+src/rc/logo.ico usr/share/pixmaps

@@ -34,5 +34,6 @@ core/temp/
 *.femris.bak
 *.fuse_hidden*
 linux-64/
+bin/
 
 installer/Output/
