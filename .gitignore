@@ -35,5 +35,7 @@ core/temp/
 *.fuse_hidden*
 linux-64/
 bin/
+python-updater/temp/*
+python-updater/*zip
 
 installer/Output/
