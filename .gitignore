@@ -35,7 +35,11 @@ core/temp/
 *.fuse_hidden*
 linux-64/
 bin/
-python-updater/temp/*
-python-updater/*zip
 
+# PYTHON UPDATER
+python-updater/temp/*
+python-updater/*.zip
+python-updater/*.pyc
+
+# BINARIES
 installer/Output/
