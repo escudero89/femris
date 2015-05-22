@@ -8,14 +8,22 @@ import shutil   # To remove folders with files
 from utils import *  # Utils module
 import content  # My own files of strings
 
+def copy_packages_in_linux():
+
+    # First we remove the previous files there
+    shutil.rmtree('/opt/femris')
+
+    # Then we copy the files
+    shutil.copytree('temp', '/opt/femris')
+
 
 def retrieve_file(url, file_name=''):
-    '''
+    """
     Retrieves a file from a certain url, showing a progress bar in console.
     :param url:
     :param file_name:
     :return:
-    '''
+    """
 
     if len(file_name) == 0:
         file_name = url.split('/')[-1]
@@ -48,21 +56,7 @@ def retrieve_file(url, file_name=''):
     f.close()
 
 
-def updater():
-    # Lets show some initial info
-    print colorize(content.es["separator"], 'HEADER')
-
-    print colorize(content.es["intro"], 'HEADER')
-    print "\n" + content.es["steps"],
-
-    print colorize(content.es["separator"], 'BLUE')
-
-    # Checks for the SO name and architecture
-    os_name = get_os()
-    architecture_sz = "64" if check_architecture_x64(os_name) else "32"
-
-    print colorize(content.es["architecture"] % (os_name, architecture_sz),
-                   'BLUE')
+def updater(os_name):
 
     # STEP 1 # We download the zipped file of the main binary
     print colorize(content.es["step_1"], 'BOLD')
@@ -84,6 +78,12 @@ def updater():
     uncompress_file(file_name_main)
     uncompress_file(file_name_resources)
 
+    # STEP 4 # It will try to move the downloaded files into its right direction
+    print content.es["mild_separator"]
+    print colorize(content.es["step_4"], 'BOLD')
+
+    if os_name == "Linux":
+        copy_packages_in_linux()
 
     # STEP 5 # Removing files not longer in need
     print content.es["mild_separator"]
@@ -94,9 +94,30 @@ def updater():
 
 #    shutil.rmtree('temp')
 
-def main():
-    updater()
+def init():
 
+    # Before anything, lets check for the SO name and architecture
+    os_name = get_os()
+    architecture_sz = "64" if check_architecture_x64(os_name) else "32"
+
+    print colorize(content.es["architecture"] % (os_name, architecture_sz),
+                   'BLUE')
+
+    # We ask for higher permission (if required)
+    if os_name == "Linux" and ask_for_sudo() == False:
+        exit(100)
+
+    # Lets show some initial info
+    print colorize(content.es["separator"], 'HEADER')
+
+    print colorize(content.es["intro"], 'HEADER')
+    print "\n" + content.es["steps"],
+
+    print colorize(content.es["separator"], 'BLUE')
+
+
+    updater(os_name)
 
 if __name__ == '__main__':
-    main()
+
+    init()

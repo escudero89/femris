@@ -51,5 +51,8 @@ es = {
 
 warning = {
     "os" : "El Sistema Operativo no es compatible con este script. "
-           "Disculpe las molestias."
+           "Disculpe las molestias.",
+
+    "sudo_password" : "Lo sentimos, pero se necesitan permisos de super-usuario "
+                      "para continuar."
 }
