@@ -115,7 +115,6 @@ def init():
 
     print colorize(content.es["separator"], 'BLUE')
 
-
     updater(os_name)
 
 if __name__ == '__main__':
