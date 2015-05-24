@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # To check for sudo
 import sys
 import os

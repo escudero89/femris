@@ -12,7 +12,15 @@ color = {
 }
 
 github = {
-    "releases" : "https://api.github.com/repos/escudero89/femris/releases"
+    'releases': 'https://api.github.com/repos/escudero89/femris/releases',
+
+    'zip': 'https://github.com/escudero89/femris/archive/%s.zip',
+
+    'exe32': 'https://github.com/escudero89/femris/releases/download/%s/setup_x86.exe',
+    'exe64': 'https://github.com/escudero89/femris/releases/download/%s/setup_x64.exe',
+
+    'bin32': 'https://github.com/escudero89/femris/releases/download/%s/linux_x86.tar.gz',
+    'bin64': 'https://github.com/escudero89/femris/releases/download/%s/linux_x64.tar.gz'
 }
 
 url = {
@@ -50,7 +58,28 @@ es = {
     "step_4" : "4to Paso) Ajustando configuración del sistema...",
     "step_5" : "5to Paso) Removiendo archivos innecesarios...",
 
-    "downloading" : "Descargando: %s [ tamaño: %s MB ]"
+    "downloading" : "Descargando: %s [ tamaño: %s MB ]",
+
+    "right_location" : "Revisaremos el respositorio de femris a continuación, "
+                       "para averiguar si se publicaron nuevos cambios.",
+    "without_changes": "Posees la versión más actualizada de femris.",
+
+    "update_binary" : "Se ha publicado una nueva versión de femris: %s.",
+    "update_resources" : "Se han publicado nuevos recursos para femris, "
+                         "versión %s."
+}
+
+os = {
+    "Linux" : {
+        "update_binary": "Procederemos a descargar el nuevo binario y a moverlo "
+                         "a '/opt/femris'.",
+        "update_resources": "Procederemos a descargar los nuevos recursos."
+    },
+    "Windows" : {
+        "update_binary": "Recomendamos que descargues la nueva versión y que "
+                         "ejecutes el updater una vez que la hayas instalado.",
+        "update_resources": "Procederemos a descargar los nuevos recursos."
+    }
 }
 
 warning = {
