@@ -32,6 +32,7 @@ def retrieve_file(url, file_name=''):
     f = open(file_name, 'wb')
 
     meta = u.info()
+    print meta
     file_size = int(meta.getheaders("Content-Length")[0])
     print content.es["downloading"] % (file_name, to_megabytes(file_size))
 
@@ -105,7 +106,7 @@ def init():
 
     # We ask for higher permission (if required)
     if os_name == "Linux" and ask_for_sudo() == False:
-        exit(100)
+        exit(content.error_codes['ask_for_sudo'])
 
     # Lets show some initial info
     print colorize(content.es["separator"], 'HEADER')
@@ -119,4 +120,7 @@ def init():
 
 if __name__ == '__main__':
 
-    init()
+    retrieve_file("https://github.com/escudero89/femris/releases/latest")
+
+
+    #init()

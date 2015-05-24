@@ -11,6 +11,10 @@ color = {
     'UNDERLINE': '\033[4m'
 }
 
+github = {
+    "releases" : "https://api.github.com/repos/escudero89/femris/releases"
+}
+
 url = {
     "base32": "https://www.dropbox.com/s/3twngokihq09v24/Linux%20x86_64.zip?dl=1",
     "base64": "https://www.dropbox.com/s/3twngokihq09v24/Linux%20x86_64.zip?dl=1",
@@ -50,9 +54,32 @@ es = {
 }
 
 warning = {
+    "wrong_folder" : "femris-updater no se encuentra en el mismo directorio que "
+                     "el archivo ejecutable 'femris'.\n"
+                     "Si desea instalarlo, use el comando "
+                     "'python femris-updater install'.\n"
+                     "Si desea actualizarlo, asegúrese que este directorio se "
+                     "encuentre en la misma ubicación que el ejecutable 'femris'.",
+
     "os" : "El Sistema Operativo no es compatible con este script. "
            "Disculpe las molestias.",
 
     "sudo_password" : "Lo sentimos, pero se necesitan permisos de super-usuario "
                       "para continuar."
+}
+
+error_codes = {
+    'ask_for_sudo' : 100,
+    'get_os' : 101,
+    'check_architecture_x64' : 102,
+    'we_are_in_the_correct_spot' : 110
+}
+
+online_help = 'Intente nuevamente más tarde.\nSi el problema persiste, ' \
+              'solicite ayuda en ' \
+              '"https://github.com/escudero89/femris/wiki/Contacto".'
+
+exceptions = {
+    'unexpected_online' : 'Ha ocurrido un error inesperado.' + online_help,
+    'unavailable' : 'La url "%s" no se encuentra disponible.' + online_help
 }

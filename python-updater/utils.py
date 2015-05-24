@@ -1,11 +1,16 @@
 # To check for sudo
 import sys
 import os
+from fnmatch import fnmatch as _fnmatch  # To search for files
 from subprocess import check_call as _check_call
 
 # To check for the system architecture and name
 import platform
 import struct
+
+# Handlers for requests and JSON
+import requests
+import json
 
 import content  # My own files of strings
 
@@ -41,9 +46,10 @@ def get_os():
 
     else:
         print content.warning["os"]
-        exit(101)
+        exit(content.error_codes['get_os'])
 
     return os
+
 
 def check_architecture_x64(os):
     """
@@ -61,7 +67,8 @@ def check_architecture_x64(os):
         return platform.machine().endswith('64')
 
     print content.warning["os"]
-    exit(102)
+    exit(content.error_codes['check_architecture_x64'])
+
 
 def uncompress_file(file_name, folder = 'temp'):
     """
@@ -93,7 +100,59 @@ def ask_for_sudo():
         return True
 
     # Otherwise, we ask for the sudo
-    print colorize(content.warning["sudo_password"], 'WARNING')
+    print colorize(content.warning["sudo_password"], 'FAIL')
     return False
 
 
+def find(pattern, path):
+    """
+    Will search for files we some patter in certain path. Use:
+        find('*.txt', '/path/to/dir')
+
+    :param pattern:String with the pattern to search for
+    :param path:Where to search for (absolute or relative path)
+    :return:Results of the search
+    """
+    result = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            if _fnmatch(name, pattern):
+                result.append(os.path.join(root, name))
+    return result
+
+
+def file_exists(file_name):
+    """
+    Checks if a file named file_name exists
+    :param file_name:Path to the file, with file included (e.g. "/etc/passwd.txt")
+    :return:True if path is an existing regular file
+    """
+    return os.path.isfile(file_name)
+
+def get_file_contents(file_name):
+    """
+    Gets the contents of a file
+    :param file_name:Name of the file (and location)
+    :return:Content of the file
+    """
+    with open(file_name, 'r') as f:
+        content = f.read()
+    f.closed
+
+    return content
+
+def get_json_online(url):
+    """
+    Get the parsed json from a url as a dictionary of lists
+    :param url:Url to look for the json
+    :return:The parsed json (dictionary of lists)
+    """
+    try:
+        r = requests.get(url)
+        if r.ok:
+            return json.loads(r.text or r.content)
+
+    except:
+        print colorize(content.exceptions['unavailable'] % url, 'FAIL')
+
+    raise EnvironmentError(content.exceptions['unexpected_online'])
