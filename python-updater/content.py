@@ -55,10 +55,17 @@ es = {
 
     "step_1": "1er Paso) Iniciando descarga de la aplicación base...",
     "step_1_jmp": "1er Paso) Binario en su última versión. Paso omitido",
+
     "step_2": "2do Paso) Iniciando descarga de los recursos...",
     "step_2_jmp": "2do Paso) Recursos en su última versión. Paso omitido.",
+
     "step_3": "3er Paso) Descomprimiendo archivos...",
+
     "step_4": "4to Paso) Ajustando configuración del sistema...",
+    "step_4_win": "4to Paso) Instalador de Windows descargado y descomprimido. "
+                  "Por favor, ejecute la instalación de forma manual.\n"
+                  "(el ejecutable se encuentra en '\\temp')",
+
     "step_5": "5to Paso) Removiendo archivos innecesarios...",
 
     "downloading": "Descargando: %s [ tamaño: %s MB ]",

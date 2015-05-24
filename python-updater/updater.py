@@ -9,15 +9,6 @@ from utils import *  # Utils module
 import content  # My own files of strings
 from github_handler import GithubHandler
 
-def copy_packages_in_linux():
-
-    # First we remove the previous files there
-    shutil.rmtree('/opt/femris')
-
-    # Then we copy the files
-    shutil.copytree('temp', '/opt/femris')
-
-
 def retrieve_file(url, file_name=''):
     """
     Retrieves a file from a certain url, showing a progress bar in console.
@@ -62,45 +53,41 @@ def retrieve_file(url, file_name=''):
 
     return file_name
 
-
-def former_updater(os_name):
-
-    # STEP 1 # We download the zipped file of the main binary
-    print colorize(content.es["step_1"], 'BOLD')
-    # retrieve_file(content.url["base" + architecture_sz], "Linux x86_64.zip")
-
-    file_name_main = "test.zip"
-    retrieve_file(content.url["test"], file_name_main)
-
-    # STEP 2 # Then we download the zipped file of the resources
-    print content.es["mild_separator"]
-    print colorize(content.es["step_2"], 'BOLD')
-
-    file_name_resources = "resources.zip"
-    retrieve_file(content.url["resources"], file_name_resources)
+def update_binary_linux(location):
+    file_name = retrieve_file(location)
 
     # STEP 3 # We uncompress the files into a temporal folder
     print content.es["mild_separator"]
     print colorize(content.es["step_3"], 'BOLD')
-    uncompress_file(file_name_main)
-    uncompress_file(file_name_resources)
+    uncompress_file(file_name)
 
-    # STEP 4 # It will try to move the downloaded files into its right direction
+    # STEP 4 # We move the downloaded resources into its right directory
     print content.es["mild_separator"]
     print colorize(content.es["step_4"], 'BOLD')
-
-    if os_name == "Linux":
-        copy_packages_in_linux()
+    copytree('temp', '/opt/femris')
 
     # STEP 5 # Removing files not longer in need
     print content.es["mild_separator"]
     print colorize(content.es["step_5"], 'BOLD')
+    os.remove(file_name)
+    shutil.rmtree('temp')
 
-    os.remove(file_name_main)
-    os.remove(file_name_resources)
+def update_binary_windows(location):
+    file_name = retrieve_file(location)
 
-#    shutil.rmtree('temp')
+    # STEP 3 # We uncompress the files into a temporal folder
+    print content.es["mild_separator"]
+    print colorize(content.es["step_3"], 'BOLD')
+    uncompress_file(file_name)
 
+    # STEP 4 # We inform about the downloaded setup.exe
+    print content.es["mild_separator"]
+    print colorize(content.es["step_4_win"], 'GREEN')
+
+    # STEP 5 # Removing files not longer in need
+    print content.es["mild_separator"]
+    print colorize(content.es["step_5"], 'BOLD')
+    os.remove(file_name)
 
 def update_resources(location):
     file_name = retrieve_file(location)
@@ -131,8 +118,14 @@ def updater(os_name, architecture_sz):
     # STEP 1 # We download the zipped file of the main binary (if we need)
     if github_handler.update_binary['url']:
         print colorize(content.es["step_1"], 'BOLD')
-        retrieve_file(github_handler.update_binary['url'])
+
+        if (os_name == "Windows"):
+            update_binary_windows(github_handler.update_binary['url'])
+        else:
+            update_binary_linux(github_handler.update_binary['url'])
+
         return github_handler
+
     else:
         print colorize(content.es["step_1_jmp"], 'BOLD')
 
