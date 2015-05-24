@@ -32,8 +32,8 @@ url = {
 }
 
 es = {
-    "separator" : "\n------------------------------------------------------------------------",
-    "mild_separator" : "\n...",
+    "separator": "\n------------------------------------------------------------------------",
+    "mild_separator": "\n...",
 
     "intro": "Bienvenido al FEMRIS Updater, elaborado en Python 2.7.           \n" \
              "Licencia LGPL v2.1 (ver LICENSE).                                \n" \
@@ -41,8 +41,9 @@ es = {
 
     "steps": "Pasos que se seguirán durante la instalación:                    \n" \
              "============================================                     \n" \
-             "   1er Paso) Descargar aplicación base (binario).                \n" \
-             "   2do Paso) Descargar recursos (scripts y docs).                \n" \
+             "(antes de comenzar se verificará que existen actualizaciones)    \n" \
+             "   1er Paso) Descargar aplicación base (binario) [si se requiere]\n" \
+             "   2do Paso) Descargar recursos (scripts y docs) [si se requiere]\n" \
              "   3er Paso) Descomprimir y mover paquetes descargados.          \n" \
              "   4to Paso) Terminar de ajustar configuración del sistema.      \n" \
              "   5to Paso) Remover archivos innecesarios.                      \n" \
@@ -50,32 +51,34 @@ es = {
              "El proceso de instalación comenzará a continuación...            \n" \
              "Gracias por elegir FEMRIS.                                         ",
 
-    "architecture" : "(se ha auto-detecado un SO %s de %s bits, ver --help)    \n",
+    "architecture": "(se ha auto-detecado un SO %s de %s bits, ver --help)    \n",
 
-    "step_1" : "1er Paso) Iniciando descarga de la aplicación base...",
-    "step_2" : "2do Paso) Iniciando descarga de los recursos...",
-    "step_3" : "3er Paso) Descomprimiendo archivos...",
-    "step_4" : "4to Paso) Ajustando configuración del sistema...",
-    "step_5" : "5to Paso) Removiendo archivos innecesarios...",
+    "step_1": "1er Paso) Iniciando descarga de la aplicación base...",
+    "step_1_jmp": "1er Paso) Binario en su última versión. Paso omitido",
+    "step_2": "2do Paso) Iniciando descarga de los recursos...",
+    "step_2_jmp": "2do Paso) Recursos en su última versión. Paso omitido.",
+    "step_3": "3er Paso) Descomprimiendo archivos...",
+    "step_4": "4to Paso) Ajustando configuración del sistema...",
+    "step_5": "5to Paso) Removiendo archivos innecesarios...",
 
-    "downloading" : "Descargando: %s [ tamaño: %s MB ]",
+    "downloading": "Descargando: %s [ tamaño: %s MB ]",
 
-    "right_location" : "Revisaremos el respositorio de femris a continuación, "
-                       "para averiguar si se publicaron nuevos cambios.",
-    "without_changes": "Posees la versión más actualizada de femris.",
+    "right_location": "Revisaremos el respositorio de femris a continuación, "
+                      "para averiguar si se publicaron nuevos cambios.",
+    "without_changes": "Posees la versión más actualizada de femris. Finalizando...",
 
-    "update_binary" : "Se ha publicado una nueva versión de femris: %s.",
-    "update_resources" : "Se han publicado nuevos recursos para femris, "
-                         "versión %s."
+    "update_binary": "Se ha publicado una nueva versión de femris: %s.",
+    "update_resources": "Se han publicado nuevos recursos para femris, "
+                        "versión %s."
 }
 
 os = {
-    "Linux" : {
+    "Linux": {
         "update_binary": "Procederemos a descargar el nuevo binario y a moverlo "
                          "a '/opt/femris'.",
         "update_resources": "Procederemos a descargar los nuevos recursos."
     },
-    "Windows" : {
+    "Windows": {
         "update_binary": "Recomendamos que descargues la nueva versión y que "
                          "ejecutes el updater una vez que la hayas instalado.",
         "update_resources": "Procederemos a descargar los nuevos recursos."
@@ -83,25 +86,25 @@ os = {
 }
 
 warning = {
-    "wrong_folder" : "femris-updater no se encuentra en el mismo directorio que "
-                     "el archivo ejecutable 'femris'.\n"
-                     "Si desea instalarlo, use el comando "
-                     "'python femris-updater install'.\n"
-                     "Si desea actualizarlo, asegúrese que este directorio se "
-                     "encuentre en la misma ubicación que el ejecutable 'femris'.",
+    "wrong_folder": "femris-updater no se encuentra en el mismo directorio que "
+                    "el archivo ejecutable 'femris'.\n"
+                    "Si desea instalarlo, use el comando "
+                    "'python femris-updater install'.\n"
+                    "Si desea actualizarlo, asegúrese que este directorio se "
+                    "encuentre en la misma ubicación que el ejecutable 'femris'.",
 
-    "os" : "El Sistema Operativo no es compatible con este script. "
-           "Disculpe las molestias.",
+    "os": "El Sistema Operativo no es compatible con este script. "
+          "Disculpe las molestias.",
 
-    "sudo_password" : "Lo sentimos, pero se necesitan permisos de super-usuario "
-                      "para continuar."
+    "sudo_password": "Lo sentimos, pero se necesitan permisos de super-usuario "
+                     "para continuar."
 }
 
 error_codes = {
-    'ask_for_sudo' : 100,
-    'get_os' : 101,
-    'check_architecture_x64' : 102,
-    'we_are_in_the_correct_spot' : 110
+    'ask_for_sudo': 100,
+    'get_os': 101,
+    'check_architecture_x64': 102,
+    'we_are_in_the_correct_spot': 110
 }
 
 online_help = 'Intente nuevamente más tarde.\nSi el problema persiste, ' \
@@ -109,6 +112,6 @@ online_help = 'Intente nuevamente más tarde.\nSi el problema persiste, ' \
               '"https://github.com/escudero89/femris/wiki/Contacto".'
 
 exceptions = {
-    'unexpected_online' : 'Ha ocurrido un error inesperado.' + online_help,
-    'unavailable' : 'La url "%s" no se encuentra disponible.' + online_help
+    'unexpected_online': 'Ha ocurrido un error inesperado.' + online_help,
+    'unavailable': 'La url "%s" no se encuentra disponible.' + online_help
 }

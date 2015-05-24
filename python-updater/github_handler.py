@@ -124,7 +124,7 @@ class GithubHandler:
             return True
 
         # If nothing changed...
-        print colorize(content.es["without_changes"], 'BLUE')
+        print colorize(content.es["without_changes"], 'GREEN'),
         return False
 
     def get_update_status(self):
@@ -135,6 +135,26 @@ class GithubHandler:
         self.curr_tag_offline = self.get_current_tag_offline()
         return self.get_current_tag_online()
 
+    def update_current(self):
+        """
+        Updates the status of current.json after a successful update
+        """
+        binary_tag = self.update_binary['tag'] \
+            if self.update_binary['tag'] \
+            else self.curr_tag_offline['binary_tag']
+
+        resources_tag = self.update_resources['tag'] \
+            if self.update_resources['tag'] \
+            else self.curr_tag_offline['resources_tag']
+
+        new_content = {
+          "binary_tag": binary_tag,
+          "resources_tag": resources_tag
+        }
+
+        with open('current.json', 'w') as outfile:
+            json.dump(new_content, outfile)
+
     def __init__(self, os_name, architecture_sz):
 
         if os_name != "Linux" and os_name != "Windows":
@@ -144,9 +164,4 @@ class GithubHandler:
         self.architecture_sz = architecture_sz
 
         self.we_are_in_the_correct_spot()
-        print colorize(content.es["right_location"], 'HEADER')
-
-
-
-github_handler = GithubHandler('Linux', '64')
-print github_handler.get_update_status()
+        print colorize(content.es["right_location"], 'BLUE')

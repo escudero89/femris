@@ -7,6 +7,7 @@ import shutil   # To remove folders with files
 # My project modules
 from utils import *  # Utils module
 import content  # My own files of strings
+from github_handler import GithubHandler
 
 def copy_packages_in_linux():
 
@@ -26,14 +27,17 @@ def retrieve_file(url, file_name=''):
     """
 
     if len(file_name) == 0:
-        file_name = url.split('/')[-1]
+        file_name_tmp = url.split('/')[-1]
+        file_name = file_name_tmp.split('?')[0]
 
     u = urllib2.urlopen(url)
     f = open(file_name, 'wb')
 
     meta = u.info()
-    print meta
     file_size = int(meta.getheaders("Content-Length")[0])
+
+    # Let's show some info
+    print meta
     print content.es["downloading"] % (file_name, to_megabytes(file_size))
 
     file_size_dl = 0
@@ -56,8 +60,10 @@ def retrieve_file(url, file_name=''):
 
     f.close()
 
+    return file_name
 
-def updater(os_name):
+
+def former_updater(os_name):
 
     # STEP 1 # We download the zipped file of the main binary
     print colorize(content.es["step_1"], 'BOLD')
@@ -95,6 +101,52 @@ def updater(os_name):
 
 #    shutil.rmtree('temp')
 
+
+def update_resources(location):
+    file_name = retrieve_file(location)
+
+    # STEP 3 # We uncompress the files into a temporal folder
+    print content.es["mild_separator"]
+    print colorize(content.es["step_3"], 'BOLD')
+    uncompress_file(file_name)
+
+    # STEP 4 # We move the downloaded resources into its local directory
+    print content.es["mild_separator"]
+    print colorize(content.es["step_4"], 'BOLD')
+    copytree('temp', '../')
+
+    # STEP 5 # Removing files not longer in need
+    print content.es["mild_separator"]
+    print colorize(content.es["step_5"], 'BOLD')
+    os.remove(file_name)
+    shutil.rmtree('temp')
+
+def updater(os_name, architecture_sz):
+
+    # STEP 0 # We check whether we need to update or not, based on GitHub
+    github_handler = GithubHandler(os_name, architecture_sz)
+    if not github_handler.get_update_status():
+        return False
+
+    # STEP 1 # We download the zipped file of the main binary (if we need)
+    if github_handler.update_binary['url']:
+        print colorize(content.es["step_1"], 'BOLD')
+        retrieve_file(github_handler.update_binary['url'])
+        return github_handler
+    else:
+        print colorize(content.es["step_1_jmp"], 'BOLD')
+
+    # STEP 2 # Then we download the zipped file of the resources (if we need)
+    if github_handler.update_resources['url']:
+        print colorize(content.es["step_2"], 'BOLD')
+        #update_resources(github_handler.update_resources['url'])
+        update_resources(content.url["test"])
+        return github_handler
+    else:
+        print colorize(content.es["step_2_jmp"], 'BOLD')
+
+    return False
+
 def init():
 
     # Before anything, lets check for the SO name and architecture
@@ -116,11 +168,15 @@ def init():
 
     print colorize(content.es["separator"], 'BLUE')
 
-    updater(os_name)
+    # We make the update
+    github_handler = updater(os_name, architecture_sz)
+    if github_handler:
+        # We need to also update our own current.json for future updates
+        github_handler.update_current()
 
 if __name__ == '__main__':
 
-    retrieve_file("https://github.com/escudero89/femris/releases/latest")
+    init()
 
-
-    #init()
+    # Final separator
+    print colorize(content.es["separator"], 'HEADER')
