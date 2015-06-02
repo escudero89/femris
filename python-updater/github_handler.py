@@ -9,37 +9,27 @@ from utils import *  # Utils module
 
 # To solve problems with codification
 import sys
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-# 1er. Chequear que estamos en la carpeta hija de femris.exe
-# 2do. Chequear el tag actual de release de binary y resources
-# 3ro. Chequear online los ultimos tags.
-# 4to.
-#   a) Si son iguales, no hacer nada.
-#   b) Si difieren, y son version mas alta la descargada, informar y salir.
-#   c) Si difieren, y es version mas baja la descargada:
-#       resources -> bajar version nueva y reemplazar resources anteriores.
-#       binary -> (linux) bajar y reemplazar ; (windows) informar.
-
 class GithubHandler:
-
     curr_tag_offline = False
 
     update_binary = {
-        'tag' : False,
-        'url' : False
+        'tag': False,
+        'url': False
     }
 
     update_resources = {
-        'tag' : False,
-        'url' : False
+        'tag': False,
+        'url': False
     }
 
     def we_are_in_the_correct_spot(self):
         if not self.check_binary_exists():
             print colorize(content.warning["wrong_folder"], 'FAIL')
-            exit(content.error_codes['we_are_in_the_correct_spot'])
+            sys.exit(content.error_codes['we_are_in_the_correct_spot'])
 
     def check_binary_exists(self):
         if self.os_name == "Linux":
@@ -49,7 +39,15 @@ class GithubHandler:
             femris_path = "../femris.exe"
             looked_mime = 'application/x-msdos-program'
 
-        return self.check_binary_exists_helper(femris_path, looked_mime)
+        success = self.check_binary_exists_helper(femris_path, looked_mime)
+
+        # If it fails, we check if we are next to the binary
+        if not success:
+            # Remove the "../" from the path
+            femris_path = femris_path[3:]
+            success = self.check_binary_exists_helper(femris_path, looked_mime)
+
+        return success
 
     def check_binary_exists_helper(self, femris_path, looked_mime):
         file_exists(femris_path)
@@ -61,8 +59,8 @@ class GithubHandler:
     def get_current_tag_online(self):
         """
         Here we are going to check for updates in binaries or in resources.
-         To do it so, we are going to compare the tags that are published
-         online with those that we have offline.
+        To do it so, we are going to compare the tags that are published
+        online with those that we have offline.
         :return:True if we need to update; False otherwise.
         """
 
@@ -74,19 +72,23 @@ class GithubHandler:
         next_tag = {
             'binary_tag': False,
             'binary_pos': 0,
-            'resources_tag': False,
+            'resources_tag': previous_item['tag_name'],
             'resources_pos': 0
         }
 
         # We search in the list for our current tag first
         for idx, item in enumerate(json_release):
+            # But we only look for the next binary version (resources are always
+            # the first tag).
+
+            # However, if it doesnt have assets, we ignore them
+            if not len(item['assets']) > 0:
+                previous_item = item
+                continue
+
             if self.curr_tag_offline['binary_tag'] == item['tag_name']:
                 next_tag['binary_tag'] = previous_item['tag_name']
                 next_tag['binary_pos'] = max(idx - 1, 0)
-
-            if self.curr_tag_offline['resources_tag'] == item['tag_name']:
-                next_tag['resources_tag'] = previous_item['tag_name']
-                next_tag['resources_pos'] = max(idx - 1, 0)
 
             previous_item = item
 
@@ -148,8 +150,8 @@ class GithubHandler:
             else self.curr_tag_offline['resources_tag']
 
         new_content = {
-          "binary_tag": binary_tag,
-          "resources_tag": resources_tag
+            "binary_tag": binary_tag,
+            "resources_tag": resources_tag
         }
 
         with open('current.json', 'w') as outfile:

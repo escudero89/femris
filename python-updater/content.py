@@ -95,8 +95,8 @@ os = {
 warning = {
     "wrong_folder": "femris-updater no se encuentra en el mismo directorio que "
                     "el archivo ejecutable 'femris'.\n"
-                    "Si desea instalarlo, use el comando "
-                    "'python femris-updater install'.\n"
+                    "Si desea instalarlo, visite escudero89.github.io/femris "
+                    "para descargar un instalador adecuado.\n"
                     "Si desea actualizarlo, asegúrese que este directorio se "
                     "encuentre en la misma ubicación que el ejecutable 'femris'.",
 

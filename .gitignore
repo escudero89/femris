@@ -37,6 +37,8 @@ linux-64/
 bin/
 
 # PYTHON UPDATER
+python-updater/build
+python-updater/dist
 python-updater/temp/*
 python-updater/*.zip
 python-updater/*.pyc

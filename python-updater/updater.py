@@ -3,6 +3,7 @@
 import urllib2  # To download files
 import os       # To remove files
 import shutil   # To remove folders with files
+import sys      # To exit
 
 # My project modules
 from utils import *  # Utils module
@@ -151,7 +152,7 @@ def init():
 
     # We ask for higher permission (if required)
     if os_name == "Linux" and ask_for_sudo() == False:
-        exit(content.error_codes['ask_for_sudo'])
+        sys.exit(content.error_codes['ask_for_sudo'])
 
     # Lets show some initial info
     print colorize(content.es["separator"], 'HEADER')

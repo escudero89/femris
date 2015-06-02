@@ -52,7 +52,7 @@ def get_os():
 
     else:
         print content.warning["os"]
-        exit(content.error_codes['get_os'])
+        sys.exit(content.error_codes['get_os'])
 
     return os
 
@@ -73,7 +73,7 @@ def check_architecture_x64(os):
         return platform.machine().endswith('64')
 
     print content.warning["os"]
-    exit(content.error_codes['check_architecture_x64'])
+    sys.exit(content.error_codes['check_architecture_x64'])
 
 
 def uncompress_file(file_name, folder = 'temp'):
