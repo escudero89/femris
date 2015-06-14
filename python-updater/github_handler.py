@@ -90,6 +90,9 @@ class GithubHandler:
                 next_tag['binary_tag'] = previous_item['tag_name']
                 next_tag['binary_pos'] = max(idx - 1, 0)
 
+                # once we got our next release, we break the loop
+                break
+
             previous_item = item
 
         # Then we check if we actually need to update
