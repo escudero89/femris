@@ -1,0 +1,4 @@
+<map id="StudyCase" name="StudyCase">
+<area shape="rect" id="node2" href="$class_study_case_heat.html" title="The StudyCaseStructural subclass that deals with the heat transfer problem. " alt="" coords="5,352,227,488"/>
+<area shape="rect" id="node3" href="$class_study_case_structural.html" title="The StudyCaseStructural subclass that deals with the structural problems. " alt="" coords="251,352,472,488"/>
+</map>

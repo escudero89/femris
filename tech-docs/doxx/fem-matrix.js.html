@@ -97,6 +97,8 @@
               </li>
               <li><a href="#setMatrixDrawing"><i class="alert alert-info"></i><span>setMatrixDrawing</span></a>
               </li>
+              <li><a href="#updatePan"><i class="alert alert-info"></i><span>updatePan</span></a>
+              </li>
             </ul>
           </div>
         </div>
@@ -192,9 +194,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>-</td>
+                <td>twoCell</td>
                 <td>Two.Cell()</td>
-                <td>The element cell (it could be probably a Two.makeRectangle)</td>
+                <td>- The element cell (it could be probably a Two.makeRectangle)</td>
               </tr>
               <tr>
                 <td>isCellDifferentFromZero</td>
@@ -425,7 +427,7 @@ drawBackground : function (data, boundingRect) {
           </table>
           <div class="description"> </div>
           <pre><code class="language-javascript">setMatrixDrawing : function (baseSVG, baseSVGdummy, xnode, ielem) {
-    
+
     if (this.TwoMatrix) {
         return this.group;
     }
@@ -459,8 +461,8 @@ drawBackground : function (data, boundingRect) {
     };
 
     this.cellDataVectorF = {
-        'iniPosX' : 
-            ( this.cellDataMatrix.iniPosX + this.cellDataMatrix.sideCell * xnode.length + 
+        'iniPosX' :
+            ( this.cellDataMatrix.iniPosX + this.cellDataMatrix.sideCell * xnode.length +
               this.cellDataVectorPhi.iniPosX ) * 0.5,
         'iniPosY' : this.cellDataMatrix.iniPosY,
         'sideCell': this.cellDataMatrix.sideCell
@@ -486,12 +488,18 @@ drawBackground : function (data, boundingRect) {
     this.TwoMatrix.update();
 
     this.updatePan();
-    this.setModals();
 
     return this.group;
-},
-
-updatePan : function() {
+},</code></pre>
+          <section id="updatePan">
+            <h1>updatePan</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>updatePan()</span>
+            </p>
+          </section>
+          <div class="description"><p>Updates the SVG by adding controls of it (such as zoom and pan).</p> </div>
+          <pre><code class="language-javascript">updatePan : function() {
     svgPanZoom('#draw-matrix svg', {
         panEnabled: true,
         controlIconsEnabled: true,
@@ -509,8 +517,6 @@ updatePan : function() {
         onPan: function(){}
     });
 },
-
-setModals : function() { return true; }
 
 };</code></pre>
         </div>
