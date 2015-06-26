@@ -45,3 +45,4 @@ python-updater/*.pyc
 
 # BINARIES
 installer/Output/
+build/

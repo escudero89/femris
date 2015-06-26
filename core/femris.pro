@@ -1,4 +1,4 @@
-TARGET = Femris
+TARGET = femris
 
 TEMPLATE = app
 
@@ -55,7 +55,7 @@ RC_ICONS = rc/logo.ico
 QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
 
 # Linux Deployment
-DESTDIR = ../bin
+# DESTDIR = ../bin
 MOC_DIR = ../build/moc
 RCC_DIR = ../build/ui
 

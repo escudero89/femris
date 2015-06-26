@@ -52,7 +52,8 @@ Item {
                 ListElement {
                     stage: "CE_Model"
 
-                    header: "MODELO FÍSICO"
+                    headerText: qsTr("MODELO FÍSICO")
+                    footerText: qsTr("Elegir")
                     imageSource: "model"
                     iconSource: "qrc:/resources/icons/function.png"
 
@@ -61,7 +62,8 @@ Item {
                 ListElement {
                     stage: "CE_Domain"
 
-                    header: "DOMINIO"
+                    headerText: qsTr("DOMINIO")
+                    footerText: qsTr("Crear")
                     imageSource: "domain"
                     iconSource: "qrc:/resources/icons/keyboard50.png"
 
@@ -71,7 +73,8 @@ Item {
                 ListElement {
                     stage: "CE_ShapeFunction"
 
-                    header: "FUNC. DE FORMA"
+                    headerText: qsTr("FUNC. DE FORMA")
+                    footerText: qsTr("Repasar")
                     imageSource: "shape_function"
                     iconSource: "qrc:/resources/icons/stats1.png"
 
@@ -80,7 +83,8 @@ Item {
                 ListElement {
                     stage: "CE_Results"
 
-                    header: "RESULTADOS"
+                    headerText: qsTr("RESULTADOS")
+                    footerText: qsTr("Ver")
                     imageSource: "results"
                     iconSource: "qrc:/resources/icons/calculator70.png"
 
@@ -94,12 +98,12 @@ Item {
 
                 Layout.preferredWidth: ( rlOverall.width - (lmChoiceBlock.count - 1) * rlOverall.spacing ) / lmChoiceBlock.count
 
-                header.text: "MODELO FÍSICO"
+                header.text: headerText
                 textArea.text: Content.overall[imageSource]
 
                 image.source : "qrc:/resources/images/overall/" + imageSource + ".png"
 
-                button.buttonLabel: "Elegir"
+                button.buttonLabel: footerText
                 button.onClicked : mainWindow.switchSection(stage)
                 button.iconSource: iconSource
 
