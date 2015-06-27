@@ -103,24 +103,9 @@ function toggleViews(setElementalView) {
 
 }
 
-var toggledScale = false;
-
 function toggleScale() {
-
-    var minOpacity = 0.00001;
-
-    if (toggledScale) {
-        $("div#draw-shapes svg g[opacity='" + minOpacity + "']").attr('opacity', G_SCALE_OPACITY);
-        $("div#draw-shapes svg g text[part-of-scale='true']").attr('opacity', G_SCALE_OPACITY);
-
-    } else {
-        $("div#draw-shapes svg g[opacity='" + G_SCALE_OPACITY + "']").attr('opacity', minOpacity);
-        $("div#draw-shapes svg g text[part-of-scale='true']").attr('opacity', minOpacity);
-    }
-
-    toggledScale = !toggledScale;
+    domainObject.toggleScale();
 }
-
 
 function viewGlobalStiffnessMatrix() {
     var modalBody = $('#modalStiffnessMatrix').find('.output');

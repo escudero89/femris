@@ -159,6 +159,24 @@ var domainObject = {
         $("#draw-shapes").html('<div class="two-container w100p" style="height: 90vh;"></div>');
     },
 
+    toggleScale : function() {
+
+        this.showScale = !this.showScale;
+        var minOpacity = 0.00001234;
+
+        if (this.showScale) {
+            $("div#draw-shapes svg g[opacity='" + minOpacity + "']").attr('opacity', G_SCALE_OPACITY);
+            $("div#draw-shapes svg g text[part-of-scale='true']").attr('opacity', G_SCALE_OPACITY);
+            $("#toggleScaleBtn").css({"background-color":"#5bc0de"});
+
+        } else {
+            $("div#draw-shapes svg g[opacity='" + G_SCALE_OPACITY + "']").attr('opacity', minOpacity);
+            $("div#draw-shapes svg g text[part-of-scale='true']").attr('opacity', minOpacity);
+            $("#toggleScaleBtn").css({"background-color":"#144f61"});
+        }
+
+    },
+
     drawScale : function() {
 
         this.twoScale = new Two.Group();
@@ -188,7 +206,7 @@ var domainObject = {
             var gamma = kBlock / ( N_blocks - 1 );
             twoBlock.representedValue = (1 - gamma) * this.options.minValue + gamma * this.options.maxValue;
 
-            paramsTextSVG = this.options.localParamsTextSVG;
+            paramsTextSVG = $.extend({}, false, this.options.localParamsTextSVG);
 
             paramsTextSVG.x = min_X + width + 10;
             paramsTextSVG.y = y_start + blockHeight * 0.5 + paramsTextSVG["font-size"] * 0.5;
@@ -204,6 +222,14 @@ var domainObject = {
         this.twoScale.opacity = G_SCALE_OPACITY;
 
         this.two.add(this.twoScale);
+
+        // Dissapear if needed
+        if (!this.showScale) {
+            setTimeout(function() {
+               this.toggleScale();
+               this.toggleScale();
+           }, 1);
+        }
     },
 
     drawElement : function (k, isTriangle) {
@@ -461,9 +487,7 @@ var domainObject = {
         this.group = { 'elems' : this.groupElem, 'nodes' : this.groupNode };
 
         // Add the scale
-        if (this.showScale) {
-            this.drawScale();
-        }
+        this.drawScale();
 
         // Don't forget to tell two to render everything to the screen
         this.two.update();

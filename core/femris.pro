@@ -52,7 +52,7 @@ HEADERS += \
 RC_ICONS = rc/logo.ico
 
 # 5.01 for 32 bits, 5.02 for 64 bits (Windows XP)
-QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
+QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
 
 # Linux Deployment
 # DESTDIR = ../bin
