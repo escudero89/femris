@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>docs/css/bootstrap.min.css</file>
+        <file>docs/fonts/glyphicons-halflings-regular.eot</file>
+        <file>docs/fonts/glyphicons-halflings-regular.svg</file>
+        <file>docs/fonts/glyphicons-halflings-regular.ttf</file>
+        <file>docs/fonts/glyphicons-halflings-regular.woff</file>
+        <file>docs/js/fem.js</file>
+        <file>docs/js/fem-draw.js</file>
+        <file>docs/js/fem-logic.js</file>
+        <file>docs/js/fem-matrix.js</file>
+        <file>docs/js/femris-utils.js</file>
+        <file>docs/js/femris-globals.js</file>
+        <file>docs/js/femris-shapefunctions.js</file>
+        <file>docs/jsxgraph/jsxgraph.css</file>
+        <file>docs/jsxgraph/jsxgraphcore.js</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,484 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>FEMRIS - Funciones de forma</title>
+    <meta name="author" content="Cristian Escudero">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="jsxgraph/jsxgraph.css" />
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap-yeti.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/ce_results.css">
+
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<style>
+    .list-unstyled > li {padding: 0.3em inherit;}
+    .popover { width: 200px;}
+</style>
+
+<body style="background:#ddd">
+
+    <!-- Loader -->
+    <div id="loader">
+        <img class="img-responsive img-center" src="img/loader-inverse.gif"/>
+        <span style="bottom:10px; left:10px; position:absolute;">Cargando...</span>
+    </div>
+
+    <div class="container-fluid" id="mainShapeFunction" style="opacity:0">
+
+        <!-- Menu Bar -->
+        <div class="navbar-sm">
+        <div class="navbar-primary">
+        <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-brand" href style="padding:3px">
+                        <div id="miniLoader" class="form-group" data-toggle="tooltip" data-placement="bottom" title="Estado de la carga de la página.">
+                            <div class="form-control" style="background-color:transparent;  padding: 0; margin:0;">
+                                <img class="img-responsive" src="img/loader.gif" alt="Cargando" title="Cargando..." width="26" style="background-color:transparent; padding: 3px 0; margin: 0 7px; opacity: 0;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left" role="search" style="margin:3px">
+                        <div class="form-group">
+                            <span class="alert-warning form-control text-right" id="errorValue" data-toggle="tooltip" data-placement="bottom" title="Valor cuadrático medio presente en la función f(x) siendo aproximada por las funciones de forma elegidas.">Root Mean Square: 00.00%</span>
+                        </div>
+                    </form>
+                    <form class="navbar-form navbar-left" role="search" style="margin:0;">
+                        <ul class="nav navbar-nav" role="tablist">
+                            <li role="presentation" class="active" data-toggle="tooltip" data-placement="bottom" title="Selecciona aquí las funciones de forma para aproximar una cierta f(x).">
+                                <a href="#shapefunction" aria-controls="shapefunction" role="tab" data-toggle="tab">Función de Forma</a>
+                            </li>
+                            <li role="presentation" data-toggle="tooltip" data-placement="bottom" title="Aquí puedes ver como la función f(x) elegida ha sido aproximada mediante las funciones de formas determinadas.">
+                                <a href="#approximation" aria-controls="approximation" role="tab" data-toggle="tab">Aproximación</a>
+                            </li>
+                        </ul>
+                    </form>
+                    <form class="navbar-form navbar-right" style="margin:3px">
+                        <button id="updateGraphButton" class="btn btn-primary" type="button" onclick="updateRightGraph()" title="Actualizar gráfico en la pestaña actual." data-toggle="tooltip" data-placement="bottom">
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+                        <button class="btn btn-info" type="button" data-toggle="modal" data-tooltip="tooltip" data-target="#modalInfo" title="Más funciones útiles para usar en el campo de f(x)." data-placement="bottom">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
+                        <a class="btn btn-femris" target="_blank" title="Ver ayuda online"  data-toggle="tooltip" data-placement="bottom" href="https://github.com/escudero89/femris/wiki/Funciones-de-Forma">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        </div>
+        </div>
+
+        <div class="separator" style="height:10px; width:100%;"></div>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Customization -->
+            <div role="tabpanel" class="tab-pane active" id="shapefunction">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="panel-left" class="panel panel-default" style="height:90vh; overflow-y:auto">
+                            <div class="panel-body col-sm-6">
+
+                                <div class="row">
+                                    <div class="col-md-12" onchange="updateShapeFunction()">
+
+                                        <div class="form-group" onchange="updateShapeFunction()">
+                                            <label>Elige un tipo de <strong>Función de Forma</strong></label>
+                                            <div class="radio" id="shapeFunctionChose">
+
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="lagrange" checked>
+                                                    Lagrange
+                                                </label>
+
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="custom">
+                                                    Personalizada
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-group">
+                                            <label>Cantidad de nodos por elemento</label>
+
+                                            <div id="quantityOfNodes" class="">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioNodes" id="inlineRadio2" value="2" checked> 2
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioNodes" id="inlineRadio3" value="3"> 3
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioNodes" id="inlineRadio4" value="4"> 4
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="inlineRadioNodes" id="inlineRadio5" value="5"> 5
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Cantidad de elementos</label>
+
+                                            <div id="quantityOfElements" class="">
+                                                <label class="radio-inline"><input type="radio" name="inlineRadioElements" id="inlineRadio1" value="1" checked>1</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="form-group col-md-12" role="form">
+                                        <label>Datos de la función <tt>f(x)</tt> a aproximar</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">f(x)</div>
+                                            <input class="form-control" id="baseFunction" value="7*sin(x)^2"/>
+                                            <div class="input-group-addon" style="padding: 0 4px;">
+                                                <button type="button" class="btn btn-xs" data-trigger="focus" data-toggle="popover" data-html="true" data-placement="auto" title="Elegir función predefinida" data-content="
+                                                <ul class='list-unstyled list-group'>
+                                                    <li><a class='list-group-item' href='#'>7*sin(x)^2</a></li>
+                                                    <li><a class='list-group-item' href='#'>x^3 + 4 * x^2 + x + 3</a></li>
+                                                    <li><a class='list-group-item' href='#'>1 + exp(-x)</a></li>
+                                                    <li><a class='list-group-item' href='#'>2 * sin(10 * x * PI)</a></li>
+                                                    <li><a class='list-group-item' href='#'>sin(x) + cos(x)</a></li>
+                                                    <li><a class='list-group-item' href='#'>x^(3/2) / (1 + x)</a></li>
+                                                    <li><a class='list-group-item' href='#'>2/(1 + exp(-x)) - 1</a></li>
+                                                </ul>
+                                                ">
+                                                <span class="glyphicon glyphicon-save"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                x
+                                                <sub>0</sub>
+                                            </div>
+                                            <input class="form-control w100p" id="domainFrom" value="0"/>
+                                            <div class="input-group-addon">
+                                                x
+                                                <sub>f</sub>
+                                            </div>
+                                            <input class="form-control" id="domainTo" value="2"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                y
+                                                <sub>0</sub>
+                                            </div>
+                                            <input class="form-control" id="rangeFrom" placeholder="auto"/>
+                                            <div class="input-group-addon">
+                                                y
+                                                <sub>f</sub>
+                                            </div>
+                                            <input class="form-control" id="rangeTo" placeholder="auto"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body col-sm-6" id="rightPanelInputs">
+
+                                <div class="form-group">
+                                    <div id="singleShapeFunction" class="jxgbox w100p" style="height:34vh" ></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Posición de nodos internos y Funciones de Forma</label>
+                                    <div class="row" id="innerNodes">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    X <sub>2</sub>
+                                                </div>
+                                                <input class="form-control" size="5" type="number" step="0.01" min="0" max="1" placeholder="0.25"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    X <sub>3</sub>
+                                                </div>
+                                                <input class="form-control" type="number" maxlength="5" step="0.01" min="0" max="1" placeholder="0.50" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    X
+                                                    <sub>4</sub>
+                                                </div>
+                                                <input class="form-control" type="number" maxlength="5" step="0.01" min="0" max="1" placeholder="0.75" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="shapeFunctions">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>1</sub>
+                                            </div>
+                                            <input class="form-control" id="N1" value="" type="text" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>2</sub>
+                                            </div>
+                                            <input class="form-control" id="N2" value="" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>3</sub>
+                                            </div>
+                                            <input class="form-control" id="N3" value="" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group hidden">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>4</sub>
+                                            </div>
+                                            <input class="form-control" id="N4" value="" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group hidden">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                N
+                                                <sub>5</sub>
+                                            </div>
+                                            <input class="form-control" id="N5" value="" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div role="tabpanel" class="tab-pane" id="approximation">
+                <div class="col-sm-12">
+                    <div id="panel-right" class="panel panel-default"  style="height:90vh; overflow-y:hidden;">
+                        <div class="panel-body">
+                            <div id="box" class="" style="width:100%; height:52vh;"></div>
+                            <hr>
+                            <div id="boxShapeFunctions" class="" style="width:100%; height:30vh;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div> <!-- End Tab Panel -->
+    </div> <!-- End Container -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:90%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Información Extra</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Las siguientes funciones están disponibles para ser usadas como parte de la función base <strong>f(x)</strong>:</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal">
+                                <dt>sin(x)</dt>
+                                <dd>Seno de x (x en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>cos(x)</dt>
+                                <dd>Coseno de x (x en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>tan(x)</dt>
+                                <dd>Tangente de x (x en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>asin(x)</dt>
+                                <dd>Arcoseno de x (en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>acos(x)</dt>
+                                <dd>Arcocoseno de x (en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>atan(x)</dt>
+                                <dd>Arcotangente de x (en radianes).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>sqrt(x)</dt>
+                                <dd>Raíz de x (x debe ser positiva).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>log(x)</dt>
+                                <dd>Algoritmo <b>natural</b> de x.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>abs(x)</dt>
+                                <dd>Valor absoluto de x.</dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal">
+                                <dt>ceil(x)</dt>
+                                <dd>Techo de x - el menor entero que satisface >= x.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>floor(x)</dt>
+                                <dd>Suelo de x — el mayor entero que satisface <= x.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>round(x)</dt>
+                                <dd>Redondear x al entero más cercano.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>exp(x)</dt>
+                                <dd>Elevar e a la x (antilogaritmo natural).</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>min(a,b,…)</dt>
+                                <dd>Obtener el menor valor de la lista.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>max(a,b,…)</dt>
+                                <dd>Obtener el mayor valor de la lista.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>pow(x, y)</dt>
+                                <dd>Alternativa de colocar x^y.</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>atan2(y, x)</dt>
+                                <dd>Arcotangente de x/y, es decir, el ángulo entre (0, 0) y (x, y) en radianes.</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/third-party/jquery-1.11.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/third-party/bootstrap.min.js"></script>
+
+<script src="js/third-party/js-expression-eval-parser.js"></script>
+<script type="text/javascript" src="jsxgraph/jsxgraphcore.js"></script>
+
+<script type="text/javascript" src="js/femris-shapefunctions.js"></script>
+<script type="text/javascript" src="js/femris-utils.js"></script>
+<script type="text/javascript">
+
+jQuery(document).ready(function() {
+
+    // Append more options to the quantity of elements
+    for (var kQuantity = 2 ; kQuantity <= 15 ; kQuantity++ ) {
+
+        var inlineRadio = "inlineRadio" + kQuantity;
+
+        $("#quantityOfElements").append(
+            '<label class="radio-inline">' +
+            '<input type="radio" name="inlineRadioElements" id="' + inlineRadio + '" value="' + kQuantity + '">' +
+            kQuantity + '</label>'
+        );
+    }
+
+    function showShapeFunction() {
+        jQuery("#loader").fadeOut(function() {
+            jQuery("#mainShapeFunction").css({'opacity':0}).animate({'opacity':1});
+         });
+    };
+
+
+    setTimeout(function() {
+        updateShapeFunction(true);
+        setTimeout(function() {
+            //updateGraph(true);
+            setTimeout(function() {
+                showShapeFunction();
+            }, 5);
+        }, 5);
+    }, 5);
+
+    jQuery('[data-toggle="tooltip"]').tooltip();
+    jQuery('[data-tooltip="tooltip"]').tooltip();
+
+    jQuery('[data-toggle="popover"]').popover().on('shown.bs.popover', function () {
+        var $baseFunction = jQuery("#baseFunction");
+        jQuery('.list-unstyled > li > a').on('click', function() {
+            $baseFunction.val(jQuery(this).html());
+            //updateGraph();
+        });
+    });
+
+    var alreadyUpdatedMainGraph = false;
+
+    jQuery("[role='tablist'] a").on('click', function() {
+        if (jQuery(this).attr("href") === "#approximation" &&!alreadyUpdatedMainGraph) {
+            updateGraph();
+            alreadyUpdatedMainGraph = true;
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>

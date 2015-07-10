@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <Configuration>
+        <item setting="firstTime" value="false" />
+        <item setting="os" value="linux" />
+        <item setting="interpreter" value="octave" />
+        <item setting="interpreterPath" value="null" />
+
+        <item setting="lastAccessDate" value="datetime" />
+        <item setting="lastExitDate" value="datetime" />
+        <item setting="crashed" value="false" />
+
+        <item setting="lastWindowsSize" value="4" />
+        <item setting="lastVisitedPath" value="" />
+
+        <item setting="showScreenInfo" value="true" />
+
+    </Configuration>

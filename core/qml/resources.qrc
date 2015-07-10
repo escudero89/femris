@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/images/square_shadow.png</file>
+        <file>resources/images/button_default.png</file>
+        <file>resources/images/button_pressed.png</file>
+        <file>resources/images/navigation_next_item.png</file>
+        <file>resources/images/navigation_previous_item.png</file>
+        <file>resources/images/tab_selected.png</file>
+        <file>resources/images/tabs_standard.png</file>
+        <file>resources/images/textinput.png</file>
+        <file>resources/images/toolbar.png</file>
+        <file>resources/images/loader.gif</file>
+        <file>resources/images/femris_logo.png</file>
+        <file>resources/images/femris_load.png</file>
+        <file>resources/images/femris_logo_big.png</file>
+        <file>resources/images/femris_new.png</file>
+        <file>resources/images/femris_tutorial.png</file>
+        <file>resources/images/femris_tutorial2.png</file>
+        <file>resources/images/square_shadow_disabled.png</file>
+        <file>resources/config.xml</file>
+        <file>resources/images/overall/domain.png</file>
+        <file>resources/images/overall/geometry1.png</file>
+        <file>resources/images/overall/layout10.png</file>
+        <file>resources/images/overall/model.png</file>
+        <file>resources/images/overall/results.png</file>
+        <file>resources/images/overall/shape_function.png</file>
+        <file>resources/images/splash-screen.png</file>
+        <file>resources/images/current_screen_info/CE_Model.png</file>
+        <file>resources/images/current_screen_info/CE_Overall.png</file>
+        <file>resources/images/current_screen_info/CE_Domain.png</file>
+        <file>resources/images/current_screen_info/CE_Results.png</file>
+        <file>resources/images/current_screen_info/CE_ShapeFunction.png</file>
+        <file>resources/images/rolfe.txt</file>
+        <file>resources/images/current_screen_info/Tutorial.png</file>
+    </qresource>
+</RCC>

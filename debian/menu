@@ -1,0 +1,4 @@
+?package(femris):needs="x11" \
+	section="Applications/Tools" \
+	title="FEMRIS" \
+	command="/usr/bin/femris"

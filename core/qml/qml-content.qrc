@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/">
+        <file>content/AndroidDelegate.qml</file>
+        <file>content/ChoiceBlock.qml</file>
+        <file>content/Index.qml</file>
+        <file>content/PrimaryButton.qml</file>
+        <file>content/StackIndex.qml</file>
+        <file>content/TopMenuBar.qml</file>
+        <file>content/LeftContentBox.qml</file>
+        <file>content/CE_RightBlock.qml</file>
+        <file>content/MiddleTutorialBox.qml</file>
+        <file>content/smallBoxes/ModelElectionSBox.qml</file>
+        <file>content/smallBoxes/TutorialSBox.qml</file>
+        <file>content/smallBoxes/CodeSBox.qml</file>
+        <file>content/smallBoxes/PropertiesAssignationSBox.qml</file>
+        <file>content/FlickableRepeaterNodesSideload.qml</file>
+        <file>content/FlickableRepeaterNodes.qml</file>
+        <file>content/ScrollBar.qml</file>
+        <file>content/smallBoxes/MyToolTip.qml</file>
+        <file>content/components/NodesSideloadStructural.qml</file>
+        <file>content/components/NodesStructural.qml</file>
+        <file>content/components/FooterButtons.qml</file>
+        <file>content/components/MiniOverall.qml</file>
+        <file>content/components/MiniChoiceBlock.qml</file>
+        <file>content/components/FirstTimeHere.qml</file>
+        <file>content/components/NodesHeat.qml</file>
+        <file>content/components/NodesSideloadHeat.qml</file>
+        <file>content/components/FlickableRepeaterHeader.qml</file>
+        <file>content/Modals.qml</file>
+        <file>content/modals/AlertModal.qml</file>
+        <file>content/modals/FirstTimeModal.qml</file>
+        <file>content/modals/LoadingModal.qml</file>
+        <file>content/Dialogs.qml</file>
+        <file>content/CurrentScreenInfo.qml</file>
+        <file>content/DomainExamples.qml</file>
+    </qresource>
+</RCC>

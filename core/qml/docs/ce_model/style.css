@@ -1,0 +1,27 @@
+.output {
+background-color: #f3f3f3;
+  overflow: scroll;
+}
+
+.tooltipped {
+    cursor: default;
+    text-decoration: underline;
+    color: #ca428b;
+}
+
+.background-image {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: -101;
+
+  display: block;
+  background: transparent url("../img/femris_dark.png") no-repeat fixed center;
+  background-size: 100%;
+
+  height: 100%;
+  width: 100%;
+
+  opacity: 0.05;
+}

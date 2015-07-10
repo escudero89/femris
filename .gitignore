@@ -29,9 +29,28 @@ build-*
 *.autosave
 
 # FEMRIS
+<<<<<<< HEAD
 core/
 *.femris.old
 *.femris.bak
 *.fuse_hidden*
 
 installer/
+=======
+core/temp/
+*.femris.old
+*.femris.bak
+*.fuse_hidden*
+linux-64/
+bin/
+
+# PYTHON UPDATER
+python-updater/build
+python-updater/dist
+python-updater/temp/*
+python-updater/*.zip
+python-updater/*.pyc
+
+# BINARIES
+installer/Output/
+>>>>>>> d2386c8f4fb727d5b6632fef8cfba1a964e1ebf3

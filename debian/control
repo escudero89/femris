@@ -1,0 +1,15 @@
+Source: femris
+Section: editors
+Priority: optional
+Maintainer: Cristian Escudero <escudero89+femris@gmail.com>
+Build-Depends: debhelper (>= 9), qtbase5-dev, qtbase5-dev-tools, qt5-qmake
+Standards-Version: 1.0.0
+Homepage: https://escudero89.github.io/femris
+
+Package: femris
+Architecture: any
+Depends: libqt5gui5, libqt5widgets5, libqt5core5a, ${misc:Depends}, ${shlibs:Depends}
+Description: femris is a learning software for the FEM
+ femris is based on Qt and C++.
+ It is a Learning Software for the Finite Element Method.
+ It is licensed under LGPL 2.1. See LICENSE for more information.

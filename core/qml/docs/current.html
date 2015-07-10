@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">
+    -->
+    <title>FEMRIS - Tutorial</title>
+    <meta name="author" content="Cristian Escudero">
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap-yeti.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/ce_results.css">
+
+    <link href="css/matlab-highlighter-1.55.css" rel="stylesheet" type="text/css">
+
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.HTML.Cookie.Set("menu",{});
+
+    MathJax.Hub.Register.StartupHook("MathMenu Ready",function () {
+        MathJax.Menu.BGSTYLE["z-index"] = 1100;
+    });
+
+    MathJax.Hub.Config({
+        imageFont:null,
+
+        TeX: {
+            extensions: ["color.js"]
+        },
+
+         asciimath2jax: {
+             delimiters: [['`','`']],
+             skipTags: ["script","noscript","style","textarea","pre","code"]
+         },
+
+         extensions: ["tex2jax.js", "asciimath2jax.js"],
+
+         jax: ["input/TeX","output/HTML-CSS", "input/AsciiMath"],
+
+         "HTML-CSS": {
+             availableFonts:[],
+             styles: {".MathJax_Preview": {visibility: "hidden"}},
+             minScaleAdjust: 110
+        }
+    });
+    </script>
+    <script type="text/javascript" src="js/third-party/MathJax.js"></script>
+</head>
+<body>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/third-party/jquery-1.11.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/third-party/bootstrap.min.js"></script>
+
+    <div class="background-image"></div>
+
+    <div class="container">
+        <div class="row" id="mainWrap" style="opacity:0">
+            <div class="jumbotron">
+    <h2>Bienvenido <small>Primeros pasos en el tutorial</small></h2>
+
+    <p>Antes de comenzar, vamos a comprender un poco más las virtudes y limitaciones del presente tutorial. La idea del mismo es el de brindarte una cierta noción básica sobre el <strong class="tooltipped" data-toggle="tooltip" title="Que abreviaremos como &quot;FEM&quot; por Finite Element Method">Método de los Elementos Finitos</strong>, como así también aprender a utilizar correctamente éste software.</p>
+</div>
+
+<div class="col-sm-12">
+
+<hr>
+
+<h3>Estilos Utilizados</h3>
+
+<p>El texto de este tutorial presentará diversos <em>formatos</em>, cada uno de ellos indicando una interacción diferente con el usuario:</p>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong class="btn-default form-control tooltipped text-center" data-toggle="tooltip" title="Aquí aparecería un mensaje corto pero informativo :)">Pon el <em>mouse</em> arriba</strong>
+            </div>
+            <div class="panel-body">
+                Esta clase de texto indica información puntual sobre el objeto resaltado.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button class="btn btn-primary form-control" data-toggle="modal" data-target="#myModal">
+                ¡<em>Click</em> para abrir!
+                </button>
+            </div>
+            <div class="panel-body">
+                Hace referencia a que, cuando le haga <em>click</em> con el puntero, abrirá una descripción más detallada sobre el elemento señalizado.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button
+                type="button"
+                class="btn btn-success form-control"
+                data-toggle="popover"
+                data-trigger="focus"
+                data-html="true"
+                data-placement="auto"
+                data-template='<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                title="¿No mucha sorpresa, eh?"
+                data-content="Cuando veas un botón <strong>señalizado</strong> (<span class='glyphicon glyphicon-cog'></span>) podrás aprender más sobre cómo las cosas fueron hechas en <strong>FEMRIS</strong>. Por ejemplo, <em>¿sabías qué el contenido de éste tutorial es en su <strong>mayor</strong> parte <a href='http://www.w3.org/'>HTML</a> con <a href='http://getbootstrap.com/'>Bootstrap</a>? ¿Sorprendido? Yo sí</em>.">
+                <span class="glyphicon glyphicon-cog"></span> <em>Click</em> para sorprenderte</button>
+            </div>
+            <div class="panel-body">
+                 Esto indica un popover, es decir, un cuadro de texto que aparecerá encima del mismo texto cuando el usuario coloque su puntero encima del texto señalizado.
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<h3>Algunos comentarios finales</h3>
+
+<p>Este tutorial fue hecho mediante una mezcla de diferentes lenguajes de programación y plugins, como <strong class="tooltipped" data-toggle="tooltip" title="¡Sí! Habrá &quot;LaTeX&quot; en el tutorial y en el mismo FEMRIS.">`MathJax`</strong>.</p>
+
+<!--
+<div class="embed-responsive embed-responsive-16by9">
+    <video class="embed-responsive-item" controls>
+        <source src="view/movie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>-->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">¡Hola!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Soy un <em>"modal"</em>, y en esta parte colocaré contenido relacionado al botón que acabas de hacer <em>click</em>.</p>
+        <p>Para cerrarme, haz <em>click</em> en el botón de <strong>cerrar</strong>, o haz <em>click</em> fuera de éste modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+function getHeightRight() {
+    var panel = jQuery(".panel > .panel-body");
+    var max_height = 0;
+
+    jQuery.each(panel, function (idx, val) {
+        jQuery(val).css("height", "auto");
+    });
+
+    jQuery.each(panel, function (idx, val) {
+        var valHeight = jQuery(val).css("height");
+        if (max_height < parseInt(valHeight)) {
+            max_height = parseInt(valHeight);
+        }
+    });
+
+    jQuery.each(panel, function (idx, val) {
+        jQuery(val).css("height", max_height + "px");
+    });
+}
+
+// This is just for getting the same height in the three blocks
+getHeightRight();
+
+// If the window changes its size, we reload the heights
+jQuery(window).resize(function() {
+    getHeightRight();
+});
+
+</script>
+
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("[data-toggle=popover]").popover();
+            $('[data-toggle=tooltip]').tooltip({html: true});
+
+            // Wait until MathJax is ready before showing the page
+            MathJax.Hub.Queue(function () {
+                setTimeout(function() {$("#mainWrap").css({'opacity':0}).animate({'opacity':1}, 1000)}, 500)
+            });
+        });
+    </script>
+</body>
+</html>
+

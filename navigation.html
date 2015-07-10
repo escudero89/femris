@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <!-- BASICS -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <title>FEMRIS - El Software Educativo</title>
+        <meta name="description" content="FEMRIS : Finite Element Method leaRnIng Software">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+        <link rel="stylesheet" type="text/css" href="css/isotope.css" media="screen" />
+        <link rel="stylesheet" href="js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.css">
+        <link rel="stylesheet" href="css/style.css">
+        <!-- skin -->
+        <link rel="stylesheet" href="skin/default.css">
+    </head>
+
+    <body>
+        <section id="header" class="appear"></section>
+        <div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);">
+             <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="fa fa-bars color-white"></span>
+                    </button>
+                    <h1><a class="navbar-brand" href="index.html" data-0="line-height:90px;" data-300="line-height:50px;">          FEMRIS
+                    </a></h1>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
+                        <li class="active"><a href="#section-home">Inicio</a></li>
+                        <li><a href="#section-downloads">Descargar</a></li>
+                        <li><a href="#section-about">Acerca de</a></li>
+                        <!--<li><a href="#section-works">Portfolio</a></li>-->
+                        <li><a href="#section-contact">Contacto</a></li>
+                    </ul>
+                </div><!--/.navbar-collapse -->
+            </div>
+        </div>
+
+
+        <!-- section dowloads -->
+        <section id="section-downloads" class="featured">
+            <div class="container">
+
+                <div class="row mar-bot40">
+                    <div class="col-md-offset-3 col-md-6">
+                        <div class="section-header">
+                            <h2 class="section-heading animated" data-animation="bounceInUp">Descargar FEMRIS</h2>
+                            <p>Selecciona la versión que mejor se adecúe a tus necesidades.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="list-group">
+                            <a href="https://github.com/escudero89/femris/releases/download/1.0.0/setup_x86.exe" class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-windows fa-4x"></span>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <h4 class="list-group-item-heading">FEMRIS Windows 32-bit</h4>
+                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text help help-block">
+                                            <em>Descargar Instalador.</em>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-download fa-2x p20"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="list-group">
+                            <a href="https://github.com/escudero89/femris/releases/download/1.0.0/setup_x64.exe" class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-windows fa-4x"></span>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <h4 class="list-group-item-heading">FEMRIS Windows 64-bit</h4>
+                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text help help-block">
+                                            <em>Descargar Instalador.</em>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-download fa-2x p20"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="list-group">
+                            <a onclick="$('#modal-not-ready').modal('show'); event.preventDefault();" href class="list-group-item list-group-item-warning">
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-linux fa-4x"></span>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <h4 class="list-group-item-heading">FEMRIS Linux 32-bit</h4>
+                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text help help-block">
+                                            <em>Descargar Paquete DEB.</em>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-download fa-2x p20"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="list-group">
+                            <a href="https://www.dropbox.com/s/3twngokihq09v24/Linux%20x86_64.zip?dl=1" class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-linux fa-4x"></span>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <h4 class="list-group-item-heading">FEMRIS Linux 64-bit</h4>
+                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text help help-block">
+                                            <em>Descargar versi&oacute;n comprimida.</em>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span class="fa fa-download fa-2x p20"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/jquery.easing.1.3.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.isotope.min.js"></script>
+        <script src="js/jquery.nicescroll.min.js"></script>
+        <script src="js/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="js/skrollr.min.js"></script>
+        <script src="js/jquery.scrollTo-1.4.3.1-min.js"></script>
+        <script src="js/jquery.localscroll-1.2.7-min.js"></script>
+        <script src="js/stellar.js"></script>
+        <script src="js/jquery.appear.js"></script>
+        <script src="js/validate.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

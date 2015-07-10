@@ -1,0 +1,134 @@
+body { margin-top: 40px; }
+.box { margin-top: 10px; }
+
+.output {
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 1em;
+}
+
+a.femris {
+    color: #ca428b;
+    font-weight: bold;
+}
+
+span.femris {
+    color: #ca428b;
+    font-weight: bold;
+}
+
+strong.tooltipped {
+    cursor: default;
+    text-decoration: underline;
+    color: #ca428b;
+}
+
+strong.popovered {
+    cursor: default;
+    text-decoration: underline;
+    color: #43ac6a;
+}
+
+.background-image {
+  position: fixed;
+
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: -101;
+
+  display: block;
+  background: transparent url("../img/femris_light.png") no-repeat fixed center;
+  background-size: 50%;
+
+  height: 100%;
+  width: 100%;
+
+  opacity: 0.02;
+
+}
+
+/* MathJax */
+
+.MathJax_Menu { z-index: 1200 !important;}
+.MathJax_MenuItem { z-index: 1300 !important;}
+
+/* pills */
+.nav-pills > li > a { background-color: slategray; color: #DDDDDD; font-family: Consolas, Monaco, 'Andale Mono', monospace; margin-top: 5px; padding: 5px 10px; }
+.nav-pills > li > a:hover { background-color: #999999; color: #slategray; }
+.nav-pills > li.active > a { background-color: #66d9ef !important; color: #slategray!important; }
+
+/* navbar */
+.navbar-primary .navbar { background:#333; border-bottom:none; }
+.navbar-primary .navbar .nav > li > a {color: #eee;}
+.navbar-primary .navbar .nav > li > a:hover {color: #fff; background-color: #555;}
+.navbar-primary .navbar .nav .active > a,.navbar .nav .active > a:hover {color: #fff; background-color: #555;}
+.navbar-primary .navbar .nav li > a .caret, .tnav .navbar .nav li > a:hover .caret {border-top-color: #fff;border-bottom-color: #fff;}
+.navbar-primary .navbar .nav > li.dropdown.open.active > a:hover {}
+.navbar-primary .navbar .nav > li.dropdown.open > a {color: #fff;background-color: #111;border-color: #fff;}
+.navbar-primary .navbar .nav > li.dropdown.open.active > a:hover .caret, .tnav .navbar .nav > li.dropdown.open > a .caret {border-top-color: #fff;}
+.navbar-primary .navbar .navbar-brand {color:#fff;}
+.navbar-primary .navbar .nav.pull-right {margin-left: 10px; margin-right: 0;}
+
+.navbar-form .form-control { padding: 8px 12px; }
+.navbar .btn { padding: 8px 12px; }
+
+/* others */
+img.img-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px; /* Half the height */
+    margin-left: -50px; /* Half the width */
+}
+
+/* btn-femris */
+.btn-femris {
+  color: #FFFFFF;
+  background-color: #CA428B;
+  border-color: #962a64;
+}
+
+.btn-femris:hover,
+.btn-femris:focus,
+.btn-femris:active,
+.btn-femris.active,
+.open .dropdown-toggle.btn-femris {
+  color: #FFFFFF;
+  background-color: #a93071;
+  border-color: #962a64;
+}
+
+.btn-femris:active,
+.btn-femris.active,
+.open .dropdown-toggle.btn-femris {
+  background-image: none;
+}
+
+.btn-femris.disabled,
+.btn-femris[disabled],
+fieldset[disabled] .btn-femris,
+.btn-femris.disabled:hover,
+.btn-femris[disabled]:hover,
+fieldset[disabled] .btn-femris:hover,
+.btn-femris.disabled:focus,
+.btn-femris[disabled]:focus,
+fieldset[disabled] .btn-femris:focus,
+.btn-femris.disabled:active,
+.btn-femris[disabled]:active,
+fieldset[disabled] .btn-femris:active,
+.btn-femris.disabled.active,
+.btn-femris[disabled].active,
+fieldset[disabled] .btn-femris.active {
+  background-color: #CA428B;
+  border-color: #962a64;
+}
+
+.btn-femris .badge {
+  color: #CA428B;
+  background-color: #FFFFFF;
+}
