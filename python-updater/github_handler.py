@@ -54,7 +54,13 @@ class GithubHandler:
         return mimetypes.guess_type(femris_path)[0] == looked_mime
 
     def get_current_tag_offline(self):
-        return json.loads(get_file_contents('current.json'))
+        contents = get_file_contents('current.json')
+
+        if contents:
+            return json.loads(contents)
+
+        # If the file doesn't exists, we return a fixed value
+        return {'binary_tag': 0, 'resources_tag': 0}
 
     def get_current_tag_online(self):
         """
@@ -83,17 +89,12 @@ class GithubHandler:
 
             # However, if it doesnt have assets, we ignore them
             if not len(item['assets']) > 0:
-                previous_item = item
                 continue
 
-            if self.curr_tag_offline['binary_tag'] == item['tag_name']:
-                next_tag['binary_tag'] = previous_item['tag_name']
-                next_tag['binary_pos'] = max(idx - 1, 0)
-
-                # once we got our next release, we break the loop
-                break
-
-            previous_item = item
+            # once we got our next release, we break the loop
+            next_tag['binary_tag'] = item['tag_name']
+            next_tag['binary_pos'] = idx
+            break
 
         # Then we check if we actually need to update
         if self.curr_tag_offline['binary_tag'] < next_tag['binary_tag']:

@@ -17,12 +17,15 @@ def retrieve_file(url, file_name=''):
     :param file_name:
     :return:
     """
-
     if len(file_name) == 0:
         file_name_tmp = url.split('/')[-1]
         file_name = file_name_tmp.split('?')[0]
 
-    u = urllib2.urlopen(url)
+    try:
+        u = urllib2.urlopen(url)
+    except:
+        raise EnvironmentError(content.exceptions['unavailable'] % url)
+
     f = open(file_name, 'wb')
 
     meta = u.info()
@@ -133,8 +136,8 @@ def updater(os_name, architecture_sz):
     # STEP 2 # Then we download the zipped file of the resources (if we need)
     if github_handler.update_resources['url']:
         print colorize(content.es["step_2"], 'BOLD')
-        #update_resources(github_handler.update_resources['url'])
-        update_resources(content.url["test"])
+        update_resources(github_handler.update_resources['url'])
+        #update_resources(content.url["test"])
         return github_handler
     else:
         print colorize(content.es["step_2_jmp"], 'BOLD')
@@ -146,6 +149,7 @@ def init():
     # Before anything, lets check for the SO name and architecture
     os_name = get_os()
     architecture_sz = "64" if check_architecture_x64(os_name) else "32"
+    current_os = os_name
 
     print colorize(content.es["architecture"] % (os_name, architecture_sz),
                    'BLUE')
@@ -174,3 +178,5 @@ if __name__ == '__main__':
 
     # Final separator
     print colorize(content.es["separator"], 'HEADER')
+
+    k = raw_input(content.es["salir"])

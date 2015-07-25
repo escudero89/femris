@@ -35,6 +35,9 @@ def colorize(text, tag):
     :param tag: Which tag shall we use (see content.py for more)
     :return: The text with the color tag
     """
+    if get_os() == "Windows":
+        return text
+
     return content.color[tag] + text + content.color['END_C']
 
 
@@ -137,10 +140,13 @@ def file_exists(file_name):
 
 def get_file_contents(file_name):
     """
-    Gets the contents of a file
+    Gets the contents of a file (if exists)
     :param file_name:Name of the file (and location)
-    :return:Content of the file
+    :return:Content of the file or false (if not exists)
     """
+    if not os.path.isfile(file_name):
+        return False
+
     with open(file_name, 'r') as f:
         content = f.read()
     f.closed

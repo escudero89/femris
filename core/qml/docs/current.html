@@ -65,217 +65,130 @@
 
     <div class="container">
         <div class="row" id="mainWrap" style="opacity:0">
-            <div class="col-sm-12">
+            <div class="jumbotron">
+    <h2>Bienvenido <small>Primeros pasos en el tutorial</small></h2>
 
-<h3>Problema de Ejemplo</h3>
-
-<div class="well">
-
-    <h4>Observación</h4>
-
-    <p>El comportamiento de los sistemas continuos puede generalmente expresarse mediante ecuaciones diferenciales con sus adecuadas condiciones de contorno.</p>
-
-    <p>Dada una ecuación diferencial o un sistema de éstas, con sus condiciones de contorno, son los caminos posibles para abordar su resolución:</p>
-
-    <ul>
-        <li>Recurrir a la integración directa, obteniendo la denominada solución analítica (<strong>método exacto</strong>), siempre que ésta no sea imposible ni extremadamente laboriosa;</li>
-        <li>Buscar una solución aproximada por otros procedimientos (<strong>método aproximado</strong>)</li>
-    </ul>
-
-    <p>
-    Sí se opta por el segundo método, el estudio se puede enfocar a partir de la ecuación diferencial original (<strong>método de diferencias finitas</strong>), o bien trabajar con una formulación integral equivalente. Ésta última alternativa dispone de dos procedimientos distintos para aplicar el FEM:
-    </p>
-
-    <ol>
-        <li>Formulaciones <strong>variacionales</strong>, qué buscan la solución al problema a partir de la resolución de una ecuación integral que representa una propiedad general del sistema (por ejemplo, la expresión de energía mínima).</li>
-        <li>Formulaciones <strong>residuales</strong>, qué están basadas en el <em>Método de Residuos Ponderados</em>.</li>
-    </ol>
-
-    <p>
-        De ésta manera se puede decir que el FEM es sólo un procedimiento más entre tantos para la solución de las ecuaciones matemáticas que expresan el comportamiento de un problema físico, y que puede aplicarse por vía de una formulación variacional o bien residual (qué suelen ser generalmente más ventajosos).
-    </p>
-
+    <p>Antes de comenzar, vamos a comprender un poco más las virtudes y limitaciones del presente tutorial. La idea del mismo es el de brindarte una cierta noción básica sobre el <strong class="tooltipped" data-toggle="tooltip" title="Que abreviaremos como &quot;FEM&quot; por Finite Element Method">Método de los Elementos Finitos</strong>, como así también aprender a utilizar correctamente éste software.</p>
 </div>
 
-<h4>Introducción al Ejemplo</h4>
-
-<div class="output pull-right" style="width:40%">
-    <img class="img-responsive img-thumbnail pull-right" src="img/bridge-example.jpg" />
-    <p class="help-block"><strong>Figura 1.</strong> Ejemplo de un puente dividido en <em>elementos finitos</em> 3D más simples.</p>
-</div>
-
-<p>Un ingeniero desea construir un puente sobre un río y que una dos ciudades muy transitadas. Para ello, necesita conocer cómo la estructura que él propone se comportará bajo una determinada carga. Las ecuaciones que describen la distribución de tensiones estructurales son conocidas, pero no pueden ser resueltas de forma <strong class="tooltipped" data-toggle="tooltip" data-title="Es decir, mediante fórmulas, y no numericamente.">analítica</strong> para formas complicadas como las de un puente.</p>
-
-<p>Sin embargo, las ecuaciones sí pueden ser resueltas para figuras de geometría sencilla, como lo son los triángulos y rectángulos. <em>El FEM toma ventaja de este hecho.</em></p>
-
-<p>Reemplazamos entonces la forma única y complicada del puente con una estructura aproximadamente similar conformada por <strong class="tooltipped" data-toggle="tooltip" title="Como triángulos o rectángulos.">elementos más simples</strong>. Esta nueva composición de elementos se le hace referencia por el nombre de <strong class="tooltipped" data-toggle="tooltip" title="O simplemente “malla” o “retícula” sí hablamos dentro del contexto del FEM.">“malla de elementos finitos”</strong>.</p>
+<div class="col-sm-12">
 
 <hr>
 
+<h3>Estilos Utilizados</h3>
 
-<h4>Selección del tipo de Elemento</h4>
+<p>El texto de este tutorial presentará diversos <em>formatos</em>, cada uno de ellos indicando una interacción diferente con el usuario:</p>
 
-<p>Una de las primeras decisiones para realizar un cálculo mediante el FEM  es la elección del tipo de elemento ha utilizar para el análisis. Dado a que pueden existir varios tipos de elementos utilizables, todos ellos con diferentes grados de precisión, la decisión de cual utilizar es muy importante, y se debería tomar en base a:</p>
-
-<ol>
-    <li>En caso de que se tenga una cierta idea de la <em>forma polinómica</em> de la solución, conviene utilizar elementos con funciones de forma del <strong>mismo grado</strong> que la solución conocida. Ésto no sólo favorece la obtención de la solución exacta en los nodos, sino también garantiza que la variación de los desplazamientos en el interior de cada elemento es la correcta. Desafortunadamente, ésta situación <strong>no</strong> ocurre en la mayor parte de los casos de interés práctico.</li>
-    <li>En zonas donde se intuya que pueden existir <strong>gradientes elevados</strong> es más adecuado utilizar <strong>elementos de mayor orden</strong>. Por el contrario, en zonas donde dicha variación sea más uniforme puede obtenerse una buena aproximación con elementos menos precisos.</li>
-    <li>Dadas las crecientes posibilidades de rapidez de cálculo y de capacidad de almacenamiento de los ordenadores actuales, se recomienda utilizar elementos finitos <strong>sencillos</strong> (<em>pocos nodos</em>) frente a elementos <strong>complejos</strong> (<em>muchos nodos</em>).</li>
-</ol>
-
-<p class="alert alert-info"><span class="glyphicon glyphicon-question-sign"></span> La selección de un elemento u otro se basa finalmente en la experiencia del usuario. La tendencia actual es la de utilizar elementos sencillos de orden de aproximación bajo.</p>
-
-<p>
-Es evidente que los elementos más sencillos tienen una capacidad menor de aproximar soluciones en las que el campo de desplazamientos "<em>exacto</em>" sea una función polinómica de alto grado. Por consiguiente, para obtener una buena aproximación en dichos casos será necesario utilizar un <strong>mayor número de elementos</strong> que sí se emplearan directamente elementos de órdenes superiores. Sin embargo, la mayor sencillez de los elementos de menor orden hace que el cálculo de las matrices del elemento sea más económico que en el caso de elementos más complejos. Ésto justifica la competitividad de los primeros, aún utilizándose en mayor número, puesto que los problemas asociados al mayor número de variables son cada vez menos importantes, dado al creciente incremento en la velocidad de las computadoras. Claro que el problema surgiría al tener que elegir entre elementos de órdenes similares, y es ahí dónde entra la experiencia del calculista en juego.
-</p>
-
-<div class="alert alert-success">
-    <p><span class="glyphicon glyphicon-info-sign"></span> Mira la sección <strong>Funciones de Forma</strong> en éste mismo tutorial para aprender más sobre como éstas afectan la aproximación de una ecuación dada.</p>
-</div>
-
-<hr><h4>De nuevo al problema del puente</h4>
-
-<p>Para la malla del puente, hemos decidido optar por elementos 2D con forma de <strong class="tooltipped" data-toggle="tooltip" data-placement="top" data-html="true" title="<img class='img-responsive' src='img/8_nodes_rectangle.png' />">rectángulos de ocho puntos</strong> <small>(9 nodos sí contamos el central)</small>. Estos puntos son referidos como “<strong>nodos</strong>”. En general, consideramos a cada nodo como capaces de desplazarse tanto vertical como horizontalmente. La excepción sería que estos nodos no pueden ir más allá que los límites del borde que les hemos establecido: estas son, las <strong>condiciones de borde</strong> del problema. Éstas deben estar incluidas en el modelo físico para que de esa manera la solución obtenida sea <strong>ÚNICA</strong>.</p>
-
-<blockquote>Una vez establecida la malla y los elementos que la componen, como así también las <strong>propiedades materiales</strong> del objeto, establecemos que tipos de carga se desean aplicar a la estructura.</blockquote>
-
-<p>Supongamos que tenemos una sola carga en nuestra estructura, en el centro del puente. El objetivo sería arribar a una expresión matemática que describa el comportamiento de todo el sistema.</p>
-
-<hr><h4>Estableciendo los desplazamientos en los nodos</h4>
-
-<p>Comenzaremos con una descripción simple de las relaciones básicas de <strong>desplazamiento</strong> de cada nodo como funciones en las coordenadas `(x,y)`.</p>
-
-<p>Supongamos en primer lugar que el desplazamiento `u(x,y)` se exprese como forma polinómica de `x` e `y`. Para asegurar la continuidad del desplazamiento dentro del elemento a lo largo del eje de coordenadas, la variación debe ser <u><strong>CUADRÁTICA</strong></u>.</p>
-
-<img class="img-responsive pull-left" src="img/shapefunction_rectangle.png" />
-
-<p>Sí tenemos dos elementos rectangulares que comparten un mismo lado, a su vez éstos tienen en común tres nodos, y puesto que <strong id="tooltip1-ex" class="tooltipped" data-toggle="tooltip" data-placement="top" data-html="true" title="Una función cuadrática está dada por <tt>f(x)=a+bx+cx^2</tt>. Determinando los valores de los coeficientes <tt>a</tt>, <tt>b</tt>, <tt>c</tt> obtenemos una función cuadrática unívoca.">tres valores determinan una función cuadrática de forma única</strong>, aseguramos de esta forma que a lo largo de dicho lado las funciones correspondientes a los desplazamientos serán iguales. Lo anterior ocurre en ambos lados del elemento rectangular. Por consiguiente, escribimos:</p>
-
-<div class="output">
-\[
-\begin{align*}
-u(x,y)&=(a+bx+cx^2) \cdot (d+ey+fy^2) \\
-u(x,y)&=
-\alpha_1 +
-\alpha_2 x +
-\alpha_3 y+
-\alpha_4 x y+
-\alpha_5 x^2 +
-\alpha_6 y^2 +
-\alpha_7 x^2 y+
-\alpha_8 x y^2+
-\alpha_9 x^2 y^2
-\end{align*}
-\]
-</div>
-
-<blockquote>Puesto que la variación de la función de desplazamiento ha de venir determinada unívocamente por la cantidad X de nodos del elemento, sólo pueden <strong class="tooltipped" data-toggle="tooltip" title="Y en general se retienen solo los coeficientes de menor grado posible.">retenerse</strong> X coeficientes de desarrollo.</blockquote>
-
-<hr><h4>Obtención de la Matriz de Rigidez de cada elemento</h4>
-
-<p>En nuestro ejemplo, cada elemento posee 8 nodos, y por cada uno de estos describimos el desplazamiento de estos como funciones de sus coordenadas:</p>
-
-<div class="output">
-\[
-
-\begin{bmatrix}
-u(x_1,y_1 ) \\
-u(x_2,y_2 ) \\
-u(x_3,y_3 ) \\
-u(x_4,y_4 ) \\
-u(x_5,y_5 ) \\
-u(x_6,y_6 ) \\
-u(x_7,y_7 ) \\
-u(x_8,y_8 ) \\
-u(x_9,y_9 ) \\
-\end{bmatrix}
-=
-\begin{bmatrix}
-1 & x_1 & y_1 & x_1 y_1 & x_1^2 & y_1^2 & x_1^2 y_1 & x_1 y_1^2 & x_1^2 y_1^2 \\
-1 & x_2 & y_2 & x_2 y_2 & x_2^2 & y_2^2 & x_2^2 y_2 & x_2 y_2^2 & x_2^2 y_2^2 \\
-1 & x_3 & y_3 & x_3 y_3 & x_3^2 & y_3^2 & x_3^2 y_3 & x_3 y_3^2 & x_3^2 y_3^2 \\
-1 & x_4 & y_4 & x_4 y_4 & x_4^2 & y_4^2 & x_4^2 y_4 & x_4 y_4^2 & x_4^2 y_4^2 \\
-1 & x_5 & y_5 & x_5 y_5 & x_5^2 & y_5^2 & x_5^2 y_5 & x_5 y_5^2 & x_5^2 y_5^2 \\
-1 & x_6 & y_6 & x_6 y_6 & x_6^2 & y_6^2 & x_6^2 y_6 & x_6 y_6^2 & x_6^2 y_6^2 \\
-1 & x_7 & y_7 & x_7 y_7 & x_7^2 & y_7^2 & x_7^2 y_7 & x_7 y_7^2 & x_7^2 y_7^2 \\
-1 & x_8 & y_8 & x_8 y_8 & x_8^2 & y_8^2 & x_8^2 y_8 & x_8 y_8^2 & x_8^2 y_8^2 \\
-1 & x_9 & y_9 & x_9 y_9 & x_9^2 & y_9^2 & x_9^2 y_9 & x_9 y_9^2 & x_9^2 y_9^2 \\
-\end{bmatrix}
-\cdot
-\begin{bmatrix}
-\alpha_1 \\
-\alpha_2 \\
-\alpha_3 \\
-\alpha_4 \\
-\alpha_5 \\
-\alpha_6 \\
-\alpha_7 \\
-\alpha_8 \\
-\alpha_9 \\
-\end{bmatrix}
-
-\]
-</div>
-
-<p>Del conjunto de ecuaciones anterior, obtenemos de forma abreviada el <strong class="tooltipped" data-toggle="tooltip" title="Las incógnitas en este tipo de sistema son siempre valores numéricos.">sistema de ecuaciones algebraicas</strong> siguiente:</p>
-
-<div class="output">
-\[ \mathbf{u}^e = \mathbf{C} \cdot \mathbf{\alpha}^e \]
-</div>
-
-<blockquote>El <strong>superíndice</strong> `e` indicará siempre que el vector o matriz con dicha notación pertenecerá a un <strong>elemento en particular</strong>, más que al sistema de ecuaciones global.</blockquote>
-
-<p>Hemos alcanzado de esta forma el punto inicial de una serie de pasos que van a estar basados en las leyes fundamentales de la mecánica.</p>
-
-<p>El primer paso relaciona los desplazamientos con las <strong>tensiones</strong>, y mediante la utilización del <strong>Principio de los Trabajos Virtuales</strong>, llegamos a obtener una relación entre los desplazamientos y las <strong>fuerzas externas</strong> aplicadas al elemento:</p>
-
-<div class="output">
-\[ \mathbf{f}_{\text{ext}}^e = \mathbf{K}^e\cdot \mathbf{u}^e \]
-</div>
-
-<p>Obtuvimos entonces una <strong>matriz de rigidez</strong> `\mathbf{K}^e` por cada elemento `e` de la malla.</p>
-
-<hr><h4>Obtención de la Matriz de Rigidez global</h4>
-
-<p>El siguiente paso es combinar todas estas matrices individuales de rigidez `\mathbf{K}^e` que obtuvimos por cada elemento en una única y gran matriz `\mathbf{K}` que represente la <strong>rigidez</strong> de <u>todo</u> el sistema.</p>
-
-<p>Es en este momento en que podemos empezar a hacer simplificaciones. Por ejemplo, las ecuaciones asociadas a nodos en común entre elementos aparecerán en varias matrices. De esta forma, se pueden realizar simplificaciones al obtener la matriz global.</p>
-
-<div class="output text-center">
-    <img class="img-responsive img-thumbnail" src="img/ensamblaje.png" style="margin:10px" />
-    <p class="help-block"><strong>Figura 2.</strong> Ensamblaje global de los cincos elementos interconectados de la figura (a).</p>
-</div>
-
-<p>Una vez ensamblada la nueva matriz global, podemos obtener los valores de los desplazamientos tras determinar las <em>fuerzas externas</em> aplicadas, al resolver:</p>
-
-<div class="output">
-\[ \mathbf{f}_{\text{ext}} = \mathbf{K} \cdot \mathbf{u}  \]
-</div>
-
-<p>El vector `\mathbf{u}` contendrá <strong class="tooltip" data-toggle="tooltip" title="Los grados de libertad en los nodos participantes impacta en la cantidad de filas y columnas que se pueden simplificar en el sistema global">a lo sumo</strong> una fila por cada nodo de la malla. De esta manera, una forma simple de obtener los desplazamientos en el <strong>interior</strong> de los elementos es la de <strong>interpolar</strong> estos valores conocidos en los nodos.</p>
-
-<blockquote>Dado a que el tamaño de la matriz obtenida `\mathbf{K}` puede ser muy grande para ser resuelta mediante calculaciones manuales, se procede a utilizar el poder de cómputo para resolverla. Una ventaja que existe aquí es que la matriz de rigidez global <strong>no</strong> ha de tener que volverse a recalcular sí cambiamos las fuerzas externas actuantes.</blockquote>
-
-
-    <div class="well">
-
-        <img class="img img-thumbnail img-responsive pull-right" style="margin: 0 0 1em 1em;" src="img/matrix_band.png" />
-
-        <h4>Consideraciones sobre la Matriz Global</h4>
-
-        <p>La matriz de coeficientes del sistema de ecuaciones `\mathbf{K}` que se obtiene al realizar el proceso de ensamblaje posee una serie de características importantes y útiles.</p>
-
-        <p>En primera instancia, se puede observar que la misma presenta coeficientes <strong>no-nulos</strong> en una <strong>banda centrada en la diagonal principal</strong>, mientras que todos los coeficientes fuera de ella son nulos. Las matrices que presentan esta particularidad son llamadas <strong>matrices en banda</strong>. La obtención de este tipo de matriz vacía (<em>con muchos elementos iguales a cero</em>) al realizar el proceso de ensamblaje, se debe a que cada elemento tiene relativamente pocos nodos comparados con la totalidad de nodos del sistema y solamente algunos elementos son los que comparten cada nodo. Cabe destacar que, sí se utiliza una <strong>numeración eficiente</strong> de cada uno de los nodos, el ancho de la banda puede ser <strong>minimizado</strong>. La figura de la derecha muestra esquemáticamente una matriz típica para un sistema de elementos finitos. La región de la matriz incluida por las líneas punteadas es la <strong>banda</strong> que contiene los coeficientes no-nulos. El ancho de esta banda se relaciona directamente con la <em>diferencia máxima</em> de la numeración global de dos nodos cualesquiera de un elemento. Otra característica importante es que este tipo de matrices es generalmente <strong>simétrica</strong>, razón por la cual a menudo se aprovecha esta ventaja para almacenar las matrices.</p>
-
-        <p>En el caso de sistemas grandes con un alto porcentaje de elementos nulos, es más conveniente utilizar los <strong>métodos iterativos</strong> ya que minimizan tanto el esfuerzo computacional como el tiempo de cómputo. Estos métodos rara vez se usan para resolver sistemas lineales de pequeña dimensión, ya que el tiempo necesario para obtener una aproximación satisfactoria supera el que requieren los métodos directos.</p>
-
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong class="btn-default form-control tooltipped text-center" data-toggle="tooltip" title="Aquí aparecería un mensaje corto pero informativo :)">Pon el <em>mouse</em> arriba</strong>
+            </div>
+            <div class="panel-body">
+                Esta clase de texto indica información puntual sobre el objeto resaltado.
+            </div>
+        </div>
     </div>
 
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button class="btn btn-primary form-control" data-toggle="modal" data-target="#myModal">
+                ¡<em>Click</em> para abrir!
+                </button>
+            </div>
+            <div class="panel-body">
+                Hace referencia a que, cuando le haga <em>click</em> con el puntero, abrirá una descripción más detallada sobre el elemento señalizado.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button
+                type="button"
+                class="btn btn-success form-control"
+                data-toggle="popover"
+                data-trigger="focus"
+                data-html="true"
+                data-placement="auto"
+                data-template='<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                title="¿No mucha sorpresa, eh?"
+                data-content="Cuando veas un botón <strong>señalizado</strong> (<span class='glyphicon glyphicon-cog'></span>) podrás aprender más sobre cómo las cosas fueron hechas en <strong>FEMRIS</strong>. Por ejemplo, <em>¿sabías qué el contenido de éste tutorial es en su <strong>mayor</strong> parte <a href='http://www.w3.org/'>HTML</a> con <a href='http://getbootstrap.com/'>Bootstrap</a>? ¿Sorprendido? Yo sí</em>.">
+                <span class="glyphicon glyphicon-cog"></span> <em>Click</em> para sorprenderte</button>
+            </div>
+            <div class="panel-body">
+                 Esto indica un popover, es decir, un cuadro de texto que aparecerá encima del mismo texto cuando el usuario coloque su puntero encima del texto señalizado.
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="help-block small text-right col-sm-12" style="padding-top: 5em">
-    <p>Sí quieres contribuír a éste documento en particular, tanto como por sugerencias, cambios, o correcciones ortográficas, puedes hacerlo directamente en <a href="https://github.com/escudero89/femris/blob/master/core/qml/docs/view/fem/problema_ejemplo.html">GitHub</a>.</p>
+<hr>
+
+<h3>Algunos comentarios finales</h3>
+
+<p>Este tutorial fue hecho mediante una mezcla de diferentes lenguajes de programación y plugins, como <strong class="tooltipped" data-toggle="tooltip" title="¡Sí! Habrá &quot;LaTeX&quot; en el tutorial y en el mismo FEMRIS.">`MathJax`</strong>.</p>
+
+<!--
+<div class="embed-responsive embed-responsive-16by9">
+    <video class="embed-responsive-item" controls>
+        <source src="view/movie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>-->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">¡Hola!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Soy un <em>"modal"</em>, y en esta parte colocaré contenido relacionado al botón que acabas de hacer <em>click</em>.</p>
+        <p>Para cerrarme, haz <em>click</em> en el botón de <strong>cerrar</strong>, o haz <em>click</em> fuera de éste modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script type="text/javascript">
+function getHeightRight() {
+    var panel = jQuery(".panel > .panel-body");
+    var max_height = 0;
+
+    jQuery.each(panel, function (idx, val) {
+        jQuery(val).css("height", "auto");
+    });
+
+    jQuery.each(panel, function (idx, val) {
+        var valHeight = jQuery(val).css("height");
+        if (max_height < parseInt(valHeight)) {
+            max_height = parseInt(valHeight);
+        }
+    });
+
+    jQuery.each(panel, function (idx, val) {
+        jQuery(val).css("height", max_height + "px");
+    });
+}
+
+// This is just for getting the same height in the three blocks
+getHeightRight();
+
+// If the window changes its size, we reload the heights
+jQuery(window).resize(function() {
+    getHeightRight();
+});
+
+</script>
 
 
         </div>

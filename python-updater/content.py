@@ -76,7 +76,9 @@ es = {
 
     "update_binary": "Se ha publicado una nueva versión de femris: %s.",
     "update_resources": "Se han publicado nuevos recursos para femris, "
-                        "versión %s."
+                        "versión %s.",
+
+    "salir": "Presiona una tecla para salir"
 }
 
 os = {
@@ -119,6 +121,6 @@ online_help = 'Intente nuevamente más tarde.\nSi el problema persiste, ' \
               '"https://github.com/escudero89/femris/wiki/Contacto".'
 
 exceptions = {
-    'unexpected_online': 'Ha ocurrido un error inesperado.' + online_help,
-    'unavailable': 'La url "%s" no se encuentra disponible.' + online_help
+    'unexpected_online': 'Ha ocurrido un error inesperado. ' + online_help,
+    'unavailable': 'La url "%s" no se encuentra disponible. ' + online_help
 }
