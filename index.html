@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="css/style.css">
         <!-- skin -->
         <link rel="stylesheet" href="skin/default.css">
+
+        <link href="css/prism.css" rel="stylesheet" />
     </head>
 
     <body>
@@ -157,14 +159,14 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="list-group">
-                            <a href="https://github.com/escudero89/femris/releases/download/1.0.0/setup_x86.exe" class="list-group-item">
+                            <a href="https://github.com/escudero89/femris/releases/download/1.0.2/setup_x86.exe" class="list-group-item">
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <span class="fa fa-windows fa-4x"></span>
                                     </div>
                                     <div class="col-sm-10">
                                         <h4 class="list-group-item-heading">FEMRIS Windows 32-bit</h4>
-                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text">Versión <span class="versionFemris"></span></p>
                                         <p class="list-group-item-text help help-block">
                                             <em>Descargar Instalador.</em>
                                         </p>
@@ -177,14 +179,14 @@
                         </div>
 
                         <div class="list-group">
-                            <a href="https://github.com/escudero89/femris/releases/download/1.0.0/setup_x64.exe" class="list-group-item">
+                            <a href="https://github.com/escudero89/femris/releases/download/1.0.2/setup_x64.exe" class="list-group-item">
                                 <div class="row">
                                     <div class="col-sm-1">
                                         <span class="fa fa-windows fa-4x"></span>
                                     </div>
                                     <div class="col-sm-10">
                                         <h4 class="list-group-item-heading">FEMRIS Windows 64-bit</h4>
-                                        <p class="list-group-item-text">Versión 1.0.0</p>
+                                        <p class="list-group-item-text">Versión <span class="versionFemris"></span></p>
                                         <p class="list-group-item-text help help-block">
                                             <em>Descargar Instalador.</em>
                                         </p>
@@ -196,44 +198,96 @@
                             </a>
                         </div>
 
-                        <div class="list-group">
-                            <a onclick="$('#modal-not-ready').modal('show'); event.preventDefault();" href class="list-group-item list-group-item-warning">
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <span class="fa fa-linux fa-4x"></span>
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                              <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      <div class="row">
+                                        <div class="col-sm-1">
+                                            <span class="fa fa-linux fa-4x"></span>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <h4 class="list-group-item-heading">FEMRIS Linux 32/64-bit</h4>
+                                            <p class="list-group-item-text">Versión <span class="versionFemris"></span></p>
+                                            <p class="list-group-item-text help help-block">
+                                                <em>Instrucciones al hacer click.</em>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <span class="fa fa-download fa-2x p20"></span>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-10">
-                                        <h4 class="list-group-item-heading">FEMRIS Linux 32-bit</h4>
-                                        <p class="list-group-item-text">Versión 1.0.0</p>
-                                        <p class="list-group-item-text help help-block">
-                                            <em>Descargar Paquete DEB.</em>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="fa fa-download fa-2x p20"></span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="list-group">
-                            <a href="https://www.dropbox.com/s/3twngokihq09v24/Linux%20x86_64.zip?dl=1" class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <span class="fa fa-linux fa-4x"></span>
-                                    </div>
-                                    <div class="col-sm-10">
-                                        <h4 class="list-group-item-heading">FEMRIS Linux 64-bit</h4>
-                                        <p class="list-group-item-text">Versión 1.0.0</p>
-                                        <p class="list-group-item-text help help-block">
-                                            <em>Descargar versi&oacute;n comprimida.</em>
-                                        </p>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="fa fa-download fa-2x p20"></span>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                              <div class="panel-body" style="color:#222222">
+                                  <p>
+                                  La instalación en Linux es la más complicada (<em>sin sorpresas ahí</em>). 
+                                  Decidimos no proveer paquetes de instalación para cada una de las distribuciones de Linux por dos razones principalmente:
+                                  </p>
+                                  <ul>
+                                      <li>Hay muchas distribuciones de Linux en el mundo, por lo que cada una requiere su propio paquete de instalación.</li>
+                                      <li>Son difíciles de crear los paquetes de instalación :/.</li>
+                                  </ul>
+                                  <p>
+                                  Lo que hicimos fue directamente distribuir los binarios de FEMRIS. Lo malo es que, de esta forma, para ejecutar el software hay que seguir un cierto procedimiento (que no es tan fácil como solo instalarlo desde un paquete como <tt>.deb</tt>).
+                                  </p>
+                                  <hr>
+                                  <p>
+                                  Para hacer la vida más sencilla a todos, cree un instalador en <a href="https://www.python.org/downloads/" target="_blank">Python</a> que se encarga de todo el trabajo. Por esta razón, necesitamos tener Python instalado antes de proceder (versión 2.7.X). Desde la terminal, escribe:
+                                  <pre><code class="language-bash">$ python --version</code></pre>
+                                  De esta forma, puedes descubrir la versión que tienes instalada (y si tienes alguna).
+                                  </p>
+                                  <p>
+                                  En caso de que Linux no encuentre el comando, ejecuta la siguiente linea para instalar Python:
+                                  <pre><code class="language-bash">$ sudo apt-get install python2.7</code></pre>
+                                  </p>
+                                  <p>
+                                  Ahora que ya tenemos Python instalado, vamos a instalar FEMRIS. Para ello, descarga el siguiente script:
+                                      <a target="_blank" href="https://github.com/escudero89/femris/releases/download/1.0.2/updater-linux.tar.gz">
+                                        <h4>
+                                      DESCARGAR INSTALADOR DE FEMRIS PARA LINUX <small><em>(script en Python)</em></small>
+                                        </h4>
+                                      </a>
+                                  </p>
+                                  <p>
+                                  Una vez hecho eso, es ahora el momento de descomprimir y ejecutar el instalador. Para ello, coloca los siguientes comandos en tu terminal:
+<pre><code class="language-bash">
+$ cd Downloads    # La idea es estar parado en la misma carpeta que el archivo descargado
+$ tar xfz updater-linux.tar.gz
+$ cd updater-linux
+</code></pre>
+                                  Finalmente, ejecutamos el script (necesitamos permisos de super-usuario para ello):
+                                  <pre><code class="language-bash">$ sudo python updater.py</code></pre>
+                                  <small>Si llega a fallar, vuélvelo a ejecutar. A veces simplemente falla porque no logra conectarse al servidor remoto. En caso de que el error persista, revisa las advertencias que arroja el script al finalizar.</small>
+                                  </p>
+                                  <p>
+                                  Si has seguido todos los pasos éxitosamente, puedes visitar la carpeta donde FEMRIS se ha instalado: <tt>/opt/femris</tt>.
+                                  </p>
+                                  <p>
+                                  Finalmente, puedes ejecutar FEMRIS haciendo:
+<pre><code class="language-bash">
+$ cd /opt/femris
+$ ./execute
+</code></pre>
+                                  Nótese que usamos el archivo <tt>execute</tt> en vez de <tt>femris</tt>. Esto es para ayudar a enlazar las bibliotecas que el software requiere.
+                                  <br>
+                                  <small>
+                                  <strong>Nota:</strong> si no puedes ejecutar el archivo <tt>execute</tt>, revisa los <a href="http://www.linuxtotal.com.mx/index.php?cont=info_admon_011" target="_blank">permisos de los archivos</a>.
+                                  </small>
+                                  </p>
+                                  <hr>
+                                  <p>
+                                    <strong><em>"¡No quiero un script, dame los archivos binarios que yo me encargo!"</em></strong>
+                                  </p>
+                                  <p>
+                                    Bueno, bueno, tranquilo. Todos los archivos binarios están en <a href="https://github.com/escudero89/femris/releases" target="_blank">RELEASES</a>, dentro del <a href="https://github.com/escudero89/femris" target="_blank">repositorio oficial de FEMRIS en GitHub</a>.
+                                  </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -246,7 +300,7 @@
         <section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">
             <div class="container" style="background-color:rgba(247,247,247,0.9);">
             <div class="align-center pad-top40 pad-bot40">
-                <blockquote class="bigquote">Licencia <a href="https://www.gnu.org/licenses/lgpl-2.1.txt">LGPL 2.1</a></blockquote>
+                <blockquote class="bigquote">licencia <a href="https://www.gnu.org/licenses/lgpl-2.1.txt">LGPL 2.1</a></blockquote>
                 <p class="">
                   FEMRIS es libre de usar dentro de cualquier otra aplicación. Aún así, todo el <em>código fuente</em> que haya sido publicado originalmente bajo la licencia LGPL debe seguir siendo publicado como tal y, si se ha modificado, sus modificaciones han de ser publicadas también bajo una licencia LGPL.
                 </p>
@@ -417,5 +471,11 @@
         <script src="js/jquery.appear.js"></script>
         <script src="js/validate.js"></script>
         <script src="js/main.js"></script>
+
+        <script src="js/prism.js"></script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function() { jQuery(".versionFemris").html('1.0.2'); });
+        </script>
     </body>
 </html>
